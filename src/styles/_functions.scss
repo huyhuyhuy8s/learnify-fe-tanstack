@@ -1,0 +1,6 @@
+@use "sass:math";
+
+@function toRem($value) {
+  $unitlessValue: math.div($value, ($value * 0 + 1));
+  @return math.div($unitlessValue, 16) * 1rem;
+}

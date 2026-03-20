@@ -1,0 +1,166 @@
+/*
+ * PRIMARY
+*/
+$green-100: #F4F6F4;
+$green-150: #E3E8E4;
+$green-200: #D2DAD3;
+$green-250: #B6C3B8;
+$green-300: #9AAC9C;
+$green-400: #708F74;
+$green-500: #567659;
+$green-600: #3F5A42;
+$green-700: #2A3E2C;
+$mode-green: #2A3E2C;
+$green-800: #242E25;
+$green-900: #1D201D;
+
+$green-pastel-100: #D0F1D3;
+$green-pastel-200: #ADEBB4;
+
+/*
+ * SECONDARY
+ */
+$neutral-100: #F5F5F5;
+$neutral-150: #EBEBEB;
+$neutral-200: #DBDBDB;
+$neutral-250: #C7C7C7;
+$neutral-300: #ADADAD;
+$neutral-400: #8F8F8F;
+$neutral-500: #757575;
+$neutral-600: #5C5C5C;
+$neutral-700: #474747;
+$mode-neutral: #474747;
+$neutral-800: #2E2E2E;
+$neutral-900: #151515;
+$neutral-pastel-100: #E0E0E0;
+$neutral-pastel-200: #CCCCCC;
+
+$orange-100: #F8E4DF;
+$orange-150: #F4D2CA;
+$orange-200: #EEB8AD;
+$orange-250: #E89A8C;
+$orange-300: #E7956C;
+$orange-400: #D97A6E;
+$orange-500: #D85E45;
+$orange-600: #D65B40;
+$orange-700: #E64C2E;
+$mode-orange: #E64C2E;
+$orange-800: #B94A32;
+$orange-900: #9F402A;
+$orange-pastel-100: #F1D6D0;
+$orange-pastel-200: #EBB9AD;
+
+$salmon-100: #FDF0EC;
+$salmon-150: #FBE3DD;
+$salmon-200: #F8D2CA;
+$salmon-250: #F4BEB3;
+$salmon-300: #F0AAA0;
+$salmon-400: #ED9C91;
+$salmon-500: #EB9689;
+$salmon-600: #EA9285;
+$salmon-700: #EC9A8D;
+$mode-salmon: #EC9A8D;
+$salmon-800: #D28276;
+$salmon-900: #B86F64;
+$salmon-pastel-100: #F1D4D0;
+$salmon-pastel-200: #EBB6AD;
+
+$dark-green-100: #DADDD9;
+$dark-green-150: #C9CEC8;
+$dark-green-200: #B5BDB3;
+$dark-green-250: #98A394;
+$dark-green-300: #7B8979;
+$dark-green-400: #5E6F5D;
+$dark-green-500: #485847;
+$dark-green-600: #3A4B3F;
+$dark-green-700: #242E25;
+$mode-dark-green: #242E25;
+$dark-green-800: #1D251E;
+$dark-green-900: #171C18;
+$dark-green-pastel-100: #D0F1D3;
+$dark-green-pastel-200: #ADEBB4;
+
+$navy-100: #E1E4E8;
+$navy-150: #CFD4DB;
+$navy-200: #B8C0CA;
+$navy-250: #9CA6B4;
+$navy-300: #808C9E;
+$navy-400: #647387;
+$navy-500: #556477;
+$navy-600: #4B5A6C;
+$navy-700: #2B323D;
+$mode-navy: #2B323D;
+$navy-800: #232932;
+$navy-900: #1C2128;
+$navy-pastel-100: #D0DDF1;
+$navy-pastel-200: #ADC5EB;
+
+$brown-100: #E8E1DA;
+$brown-150: #D9CFC4;
+$brown-200: #C6B7A6;
+$brown-250: #AF9B86;
+$brown-300: #978065;
+$brown-400: #7F664C;
+$brown-500: #6E5740;
+$brown-600: #624F39;
+$brown-700: #4C3824;
+$mode-brown: #4C3824;
+$brown-800: #3E2E1E;
+$brown-900: #322519;
+$brown-pastel-100: #F1E0D0;
+$brown-pastel-200: #EBCCAD;
+
+$yellow-100: #FFF7EB;
+$yellow-150: #FDEDD8;
+$yellow-200: #FCE1BF;
+$yellow-250: #FBD5A6;
+$yellow-300: #FAC98D;
+$yellow-400: #F9C07A;
+$yellow-500: #F9BA70;
+$yellow-600: #F8B668;
+$yellow-700: #FFBB65;
+$mode-yellow: #FFBB65;
+$yellow-800: #D9A55F;
+$yellow-900: #B88C4F;
+$yellow-pastel-100: #F1E2D0;
+$yellow-pastel-200: #EBD0AD;
+
+$warm-100: #FDF9F2;
+$warm-200: #F6F0E3;
+$warm-250: #EDE6D9;
+$warm-300: #DBD4C7;
+$warm-400: #B8B2A2;
+$warm-500: #979286;
+$warm-600: #6B6861;
+$warm-700: #4A4845;
+$warm-800: #302F2C;
+$warm-900: #201F1D;
+
+$cool-100: #FAFAF9;
+$cool-200: #ECECE9;
+$cool-250: #DBDBD4;
+$cool-300: #C8C9C4;
+$cool-400: #B2B3AF;
+$cool-500: #989A9A;
+$cool-600: #646A6B;
+$cool-700: #494F4F;
+$cool-800: #303535;
+$cool-900: #191B1B;
+
+$black: #151515;
+$white: #FEFBFF;
+$grey: #4C4F69;
+
+/*
+ * ACCENTS
+ */
+
+$accent-smoothing-lime: #DAEF68;
+$accent-lilac-vodka: #C0BAF2;
+$accent-minty: #73D29E;
+$accent-light-truffle: #BAA694;
+$accent-blue-celeste: #81C2EC;
+$accent-classic-pink: #FA9CC6;
+$accent-dark-yellow: #FFCE00;
+$accent-portage: #8F9BFF;
+$accent-indicolite: #91FA91FAEDED;

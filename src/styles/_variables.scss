@@ -1,0 +1,44 @@
+@use 'functions' as *;
+
+/*
+ * FONT SIZE
+ */
+$fs-heading1: toRem(61.04);
+$fs-heading2: toRem(48.83);
+$fs-heading3: toRem(39.06);
+$fs-heading4: toRem(31.25);
+$fs-heading5: toRem(25);
+$fs-heading6: toRem(20);
+$fs-paragraph: toRem(16);
+$fs-small: toRem(12.8);
+$fs-smaller: toRem(10.24);
+
+/*
+ * FONT WEIGHT
+ */
+$fw-thin: 100;
+$fw-extralight: 200;
+$fw-light: 300;
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-semibold: 600;
+$fw-bold: 700;
+$fw-extrabold: 800;
+$fw-black: 900;
+
+/*
+ * BORDER RADIUS
+ */
+$br-none: toRem(0);
+$br-xs: toRem(5);
+$br-sm: toRem(10);
+$br-md: toRem(15);
+$br-lg: toRem(20);
+$br-xl: toRem(25);
+$br-xxl: toRem(30);
+$br-xtl: toRem(35);
+$br-xxtl: toRem(40);
+$br-xxxtl: toRem(45);
+$br-rounded: toRem(50);
+
+
