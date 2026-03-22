@@ -1,7 +1,5 @@
 import { lazy, Suspense } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-
-// Import mock data từ thư mục data
 import { ABOUT_STATS, ABOUT_VALUES } from "~/data/about";
 
 const TeamImage = lazy(() => import("@/components/ui/TeamImage"));
@@ -16,7 +14,6 @@ function AboutPage() {
       className="w-full min-h-screen px-6 py-4"
       style={{ background: "#eef3ee" }}
     >
-      {/* ── Hero banner ── */}
       <div
         className="rounded-2xl px-10 py-10 mb-6 relative overflow-hidden"
         style={{
@@ -24,7 +21,6 @@ function AboutPage() {
             "linear-gradient(135deg, #c8d8f8 0%, #dce8ff 50%, #d4eed4 100%)",
         }}
       >
-        {/* Decorative blobs */}
         <div
           className="absolute right-12 top-1/2 -translate-y-1/2 w-28 h-28 rounded-3xl rotate-12 opacity-70"
           style={{
@@ -50,10 +46,7 @@ function AboutPage() {
           </p>
         </div>
       </div>
-
-      {/* ── Two-column: Mission + Values ── */}
       <div className="grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-4 mb-4">
-        {/* Mission card */}
         <div className="bg-white rounded-2xl p-7 shadow-sm">
           <h2 className="text-base font-bold text-gray-800 mb-1">
             Our Mission
@@ -73,7 +66,6 @@ function AboutPage() {
             pass the next exam.
           </p>
 
-          {/* Stats row */}
           <div className="grid grid-cols-3 gap-3 mt-6 pt-6 border-t border-gray-50">
             {ABOUT_STATS.map((stat) => (
               <div key={stat.label} className="text-center">
@@ -88,7 +80,6 @@ function AboutPage() {
           </div>
         </div>
 
-        {/* Values card */}
         <div className="bg-white rounded-2xl p-6 shadow-sm flex flex-col gap-3">
           <div>
             <h2 className="text-base font-bold text-gray-800 mb-1">
@@ -131,7 +122,6 @@ function AboutPage() {
         </div>
       </div>
 
-      {/* ── Team section ── */}
       <div className="bg-white rounded-2xl p-7 shadow-sm mb-4">
         <div className="flex items-center justify-between mb-6">
           <div>
@@ -145,7 +135,6 @@ function AboutPage() {
           </span>
         </div>
 
-        {/* Team image if available - Bọc trong Suspense để hỗ trợ lazy load */}
         <div className="mb-6">
           <Suspense
             fallback={
@@ -157,7 +146,6 @@ function AboutPage() {
         </div>
       </div>
 
-      {/* ── Contact CTA ── */}
       <div
         className="rounded-2xl px-8 py-7 flex items-center justify-between"
         style={{

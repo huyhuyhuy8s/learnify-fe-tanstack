@@ -6,7 +6,6 @@ export const Route = createFileRoute('/learner/about')({
 
 function AboutLayout() {
   return (
-    // Outlet chính là nơi nội dung của index.tsx sẽ được chèn vào
     <Outlet />
   )
 }

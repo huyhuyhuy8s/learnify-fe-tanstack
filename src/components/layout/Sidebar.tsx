@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
 
-// Tự vẽ icon Mindmaps để giống trong ảnh nhất
 const MindmapIcon = ({ className }: { className?: string }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +32,6 @@ const menuItems = [
 export const Sidebar = () => {
   return (
     <aside className="flex flex-col h-screen w-16 bg-[#F4F6F4] p-2 items-center justify-between border-r border-[#3F4F42]/10">
-      {/* Khu vực trên cùng */}
       <div className="flex flex-col gap-8 w-full items-center mt-4">
         {menuItems.map((item, index) => (
           <Link
@@ -41,14 +39,11 @@ export const Sidebar = () => {
             to={item.href}
             className="flex flex-col items-center gap-1 group w-full text-center text-[#3F4F42]"
             activeProps={{
-              // Kiểu dáng khi mục đang hoạt động (active state)
               className: "bg-[#2D3E33] text-white p-3 rounded-2xl",
             }}
           >
-            {/* Bo góc và nền cho mục active hoặc hover */}
             <div
               className={`flex flex-col items-center gap-1 p-3 w-full rounded-2xl group-hover:bg-[#2D3E33]/10 ${
-                // Thêm đệm cho mục active, trừ đi đệm của Link container
                 item.href === "/search" ? "text-white" : ""
               }`}
             >
@@ -62,8 +57,6 @@ export const Sidebar = () => {
           </Link>
         ))}
       </div>
-
-      {/* Khu vực dưới cùng */}
       <div className="flex flex-col gap-4 mt-auto mb-6">
         <button
           title="Change language"

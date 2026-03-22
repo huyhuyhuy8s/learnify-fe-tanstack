@@ -6,7 +6,6 @@ export const Route = createFileRoute('/learner/roadmaps')({
 
 function RoadmapsLayout() {
   return (
-    // Outlet chính là nơi nội dung của index.tsx sẽ được chèn vào
     <Outlet />
   )
 }

@@ -1,8 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import IconButton from "../components/ui/IconButton";
 import "@styles/_global.scss";
-
-// Import dữ liệu từ file mock
 import { MOCK_COURSES, MOCK_USER, WEEK_DAYS } from "~/data/home";
 
 export const Route = createFileRoute("/")({
@@ -10,7 +8,6 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  // Trích xuất dữ liệu từ các biến mock
   const featuredCourses = MOCK_COURSES.slice(0, 3);
   const streak = MOCK_USER.streak;
   const achievements = MOCK_USER.achievements;
@@ -20,7 +17,7 @@ function HomePage() {
 
   return (
     <div className="w-full min-h-screen" style={{ background: "#eef3ee" }}>
-      {/* ── Hero banner ── */}
+
       <div
         className="mx-6 mt-2 mb-6 rounded-2xl flex items-center gap-6 px-10 py-8 relative overflow-hidden"
         style={{
@@ -29,7 +26,6 @@ function HomePage() {
           minHeight: "140px",
         }}
       >
-        {/* Decorative blob */}
         <div
           className="absolute right-10 top-1/2 -translate-y-1/2 w-28 h-28 rounded-3xl rotate-12 opacity-80"
           style={{
@@ -66,9 +62,7 @@ function HomePage() {
         </div>
       </div>
 
-      {/* ── Main content grid ── */}
       <div className="mx-6 grid grid-cols-1 xl:grid-cols-[1fr_300px] gap-6">
-        {/* Left: featured courses */}
         <div>
           <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 px-1">
             Featured Courses
@@ -107,8 +101,7 @@ function HomePage() {
                     </div>
                   </Link>
                 ))
-              : // Skeleton placeholders
-                [1, 2, 3].map((i) => (
+              : [1, 2, 3].map((i) => (
                   <div
                     key={i}
                     className="bg-white rounded-2xl p-5 flex flex-col gap-3 shadow-sm animate-pulse"
@@ -129,9 +122,7 @@ function HomePage() {
           </div>
         </div>
 
-        {/* Right: Streak + Achievements */}
         <div className="flex flex-col gap-4">
-          {/* Streak card */}
           <div className="bg-white rounded-2xl p-5 shadow-sm">
             <div className="flex items-center gap-3 mb-4">
               <span className="text-5xl font-bold text-gray-900 leading-none">
@@ -146,7 +137,7 @@ function HomePage() {
                 </span>
               </div>
             </div>
-            {/* Week tracker */}
+
             <div className="grid grid-cols-7 gap-1">
               {WEEK_DAYS.map((day, i) => (
                 <div key={day} className="flex flex-col items-center gap-1">
@@ -165,7 +156,6 @@ function HomePage() {
             </div>
           </div>
 
-          {/* Achievements card */}
           <div className="bg-white rounded-2xl p-5 shadow-sm flex-1">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-sm font-bold text-gray-800">Achievements</h3>
