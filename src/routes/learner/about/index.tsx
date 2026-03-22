@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { ABOUT_STATS, ABOUT_VALUES } from "~/data/about";
+import { ABOUT_STATS, ABOUT_VALUES } from "~/mock/about";
 
 const TeamImage = lazy(() => import("@/components/ui/TeamImage"));
 

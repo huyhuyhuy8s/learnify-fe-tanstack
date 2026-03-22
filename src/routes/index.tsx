@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import IconButton from "../components/ui/IconButton";
 import "@styles/_global.scss";
-import { MOCK_COURSES, MOCK_USER, WEEK_DAYS } from "~/data/home";
+import { MOCK_COURSES, MOCK_USER, WEEK_DAYS } from "~/mock/home";
 
 export const Route = createFileRoute("/")({
   component: HomePage,

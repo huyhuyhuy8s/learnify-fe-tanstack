@@ -1,5 +1,5 @@
 import { OptimizeImage } from './Images';
-import { teamMembers } from '~/data/team-member';
+import { teamMembers } from '~/mock/team-member';
 
 interface TeamMemberProps {
   name: string;

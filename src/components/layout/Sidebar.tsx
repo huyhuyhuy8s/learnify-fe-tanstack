@@ -26,7 +26,7 @@ const menuItems = [
   { label: "Courses", icon: "menu_book", href: "/learner/courses" },
   { label: "Roadmaps", icon: "account_tree", href: "/learner/roadmaps" },
   { label: "Friends", icon: "group", href: "/learner/friends" },
-  { label: "About", icon: "information_circle", href: "/learner/about" },
+  { label: "About", icon: "info", href: "/learner/about" },
 ];
 
 export const Sidebar = () => {
