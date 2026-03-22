@@ -26,7 +26,6 @@
   },
   "homepage": "https://github.com/huyhuyhuy8s/learnify-fe-tanstack#readme",
   "dependencies": {
-    "@heroicons/react": "^2.2.0",
     "@tanstack/react-query": "^5.91.0",
     "@tanstack/react-query-devtools": "^5.91.3",
     "@tanstack/react-router": "^1.167.4",
