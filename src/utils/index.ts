@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
-import _ from 'lodash'
+import isNaN from 'lodash/isNaN'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export const formatDate = (dateString: string) => {
   const date = new Date(dateString);
-  if (_.isNaN(date.getTime())) return "-"; 
+  if (isNaN(date.getTime())) return "-";
 
   const time = new Intl.DateTimeFormat("vi-VN", {
     hour: "2-digit",
