@@ -1,8 +1,8 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link, Outlet, createFileRoute } from '@tanstack/react-router'
-import { postsQueryOptions } from '~/utils/posts'
+import { postsQueryOptions } from '../../utils/posts'
 
-export const Route = createFileRoute('/learner/courses')({
+export const Route = createFileRoute('/posts')({
   loader: async ({ context }) => {
     await context.queryClient.ensureQueryData(postsQueryOptions())
   },
@@ -25,7 +25,7 @@ function PostsComponent() {
           return (
             <li key={post.id} className="whitespace-nowrap">
               <Link
-                to="/learner/courses/$postId"
+                to="/posts/$postId"
                 params={{
                   postId: post.id,
                 }}
