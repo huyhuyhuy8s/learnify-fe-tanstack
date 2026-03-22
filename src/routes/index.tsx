@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import IconButton from "../components/ui/IconButton";
+import IconButton from "@/components/ui/IconButton";
 import "@styles/_global.scss";
 import { MOCK_COURSES, MOCK_USER, WEEK_DAYS } from "~/mock/home";
 

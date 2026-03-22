@@ -15,6 +15,7 @@ import { Route as PathlessLayoutRouteImport } from './routes/_pathlessLayout'
 import { Route as UsersRouteRouteImport } from './routes/users/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as UsersIndexRouteImport } from './routes/users/index'
+import { Route as UsersUserIdRouteImport } from './routes/users/$userId'
 import { Route as ApiUsersRouteImport } from './routes/api/users'
 import { Route as PathlessLayoutNestedLayoutRouteImport } from './routes/_pathlessLayout/_nested-layout'
 import { Route as LearnerRoadmapsRouteRouteImport } from './routes/learner/roadmaps/route'
@@ -58,6 +59,11 @@ const IndexRoute = IndexRouteImport.update({
 const UsersIndexRoute = UsersIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => UsersRouteRoute,
+} as any)
+const UsersUserIdRoute = UsersUserIdRouteImport.update({
+  id: '/$userId',
+  path: '/$userId',
   getParentRoute: () => UsersRouteRoute,
 } as any)
 const ApiUsersRoute = ApiUsersRouteImport.update({
@@ -148,6 +154,7 @@ export interface FileRoutesByFullPath {
   '/learner/friends': typeof LearnerFriendsRouteRouteWithChildren
   '/learner/roadmaps': typeof LearnerRoadmapsRouteRouteWithChildren
   '/api/users': typeof ApiUsersRouteWithChildren
+  '/users/$userId': typeof UsersUserIdRoute
   '/users/': typeof UsersIndexRoute
   '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
@@ -164,6 +171,7 @@ export interface FileRoutesByTo {
   '/deferred': typeof DeferredRoute
   '/redirect': typeof RedirectRoute
   '/api/users': typeof ApiUsersRouteWithChildren
+  '/users/$userId': typeof UsersUserIdRoute
   '/users': typeof UsersIndexRoute
   '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
@@ -188,6 +196,7 @@ export interface FileRoutesById {
   '/learner/roadmaps': typeof LearnerRoadmapsRouteRouteWithChildren
   '/_pathlessLayout/_nested-layout': typeof PathlessLayoutNestedLayoutRouteWithChildren
   '/api/users': typeof ApiUsersRouteWithChildren
+  '/users/$userId': typeof UsersUserIdRoute
   '/users/': typeof UsersIndexRoute
   '/_pathlessLayout/_nested-layout/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/_pathlessLayout/_nested-layout/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
@@ -211,6 +220,7 @@ export interface FileRouteTypes {
     | '/learner/friends'
     | '/learner/roadmaps'
     | '/api/users'
+    | '/users/$userId'
     | '/users/'
     | '/route-a'
     | '/route-b'
@@ -227,6 +237,7 @@ export interface FileRouteTypes {
     | '/deferred'
     | '/redirect'
     | '/api/users'
+    | '/users/$userId'
     | '/users'
     | '/route-a'
     | '/route-b'
@@ -250,6 +261,7 @@ export interface FileRouteTypes {
     | '/learner/roadmaps'
     | '/_pathlessLayout/_nested-layout'
     | '/api/users'
+    | '/users/$userId'
     | '/users/'
     | '/_pathlessLayout/_nested-layout/route-a'
     | '/_pathlessLayout/_nested-layout/route-b'
@@ -318,6 +330,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/users/'
       preLoaderRoute: typeof UsersIndexRouteImport
+      parentRoute: typeof UsersRouteRoute
+    }
+    '/users/$userId': {
+      id: '/users/$userId'
+      path: '/$userId'
+      fullPath: '/users/$userId'
+      preLoaderRoute: typeof UsersUserIdRouteImport
       parentRoute: typeof UsersRouteRoute
     }
     '/api/users': {
@@ -429,10 +448,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface UsersRouteRouteChildren {
+  UsersUserIdRoute: typeof UsersUserIdRoute
   UsersIndexRoute: typeof UsersIndexRoute
 }
 
 const UsersRouteRouteChildren: UsersRouteRouteChildren = {
+  UsersUserIdRoute: UsersUserIdRoute,
   UsersIndexRoute: UsersIndexRoute,
 }
 
