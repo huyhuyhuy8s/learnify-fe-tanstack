@@ -35,7 +35,6 @@ const IconButton = (props: IconButtonProp) => {
   } = props;
 
   const buttonClassName = classNames('icon-button', type, state, shape, size);
-  const iconClassName = classNames('material-symbols-rounded', {'filled': fill});
 
   return (
     <button
@@ -45,7 +44,7 @@ const IconButton = (props: IconButtonProp) => {
         color,
       }}
     >
-      <span className={iconClassName}>
+      <span>
         {name}
       </span>
     </button>

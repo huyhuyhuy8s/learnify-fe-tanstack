@@ -2,9 +2,8 @@ import { QueryClient } from '@tanstack/react-query'
 import { createRouter } from '@tanstack/react-router'
 import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query'
 import { routeTree } from './routeTree.gen'
-import DefaultCatchBoundary from './components/DefaultCatchBoundary'
-import NotFound from './components/NotFound'
-import 'material-symbols/rounded.scss'
+import DefaultCatchBoundary from './components/ui/DefaultCatchBoundary'
+import NotFound from './components/ui/NotFound'
 
 export function getRouter() {
   const queryClient = new QueryClient()
