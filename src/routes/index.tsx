@@ -1,38 +1,40 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
-import IconButton from '../components/ui/IconButton'
-import '@styles/_global.scss';
-import { ArrowRight, Flame, ChevronRight } from 'lucide-react'
+import { createFileRoute, Link } from "@tanstack/react-router";
+import IconButton from "../components/ui/IconButton";
+import "@styles/_global.scss";
 
 // Import dữ liệu từ file mock
-import { MOCK_COURSES, MOCK_USER, WEEK_DAYS } from '~/data/home';
+import { MOCK_COURSES, MOCK_USER, WEEK_DAYS } from "~/data/home";
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute("/")({
   component: HomePage,
-})
+});
 
 function HomePage() {
   // Trích xuất dữ liệu từ các biến mock
-  const featuredCourses = MOCK_COURSES.slice(0, 3)
-  const streak = MOCK_USER.streak
-  const achievements = MOCK_USER.achievements
-  const achievementCount = achievements.length
-  const achievementTotal = MOCK_USER.achievementTotal
-  const activeDays = MOCK_USER.activeDays
+  const featuredCourses = MOCK_COURSES.slice(0, 3);
+  const streak = MOCK_USER.streak;
+  const achievements = MOCK_USER.achievements;
+  const achievementCount = achievements.length;
+  const achievementTotal = MOCK_USER.achievementTotal;
+  const activeDays = MOCK_USER.activeDays;
 
   return (
-    <div className="w-full min-h-screen" style={{ background: '#eef3ee' }}>
+    <div className="w-full min-h-screen" style={{ background: "#eef3ee" }}>
       {/* ── Hero banner ── */}
       <div
         className="mx-6 mt-2 mb-6 rounded-2xl flex items-center gap-6 px-10 py-8 relative overflow-hidden"
         style={{
-          background: 'linear-gradient(135deg, #d6e4ff 0%, #e8d5f5 60%, #c8e6c9 100%)',
-          minHeight: '140px',
+          background:
+            "linear-gradient(135deg, #d6e4ff 0%, #e8d5f5 60%, #c8e6c9 100%)",
+          minHeight: "140px",
         }}
       >
         {/* Decorative blob */}
         <div
           className="absolute right-10 top-1/2 -translate-y-1/2 w-28 h-28 rounded-3xl rotate-12 opacity-80"
-          style={{ background: 'linear-gradient(135deg, #a8d5a2 0%, #6bcb77 100%)' }}
+          style={{
+            background: "linear-gradient(135deg, #a8d5a2 0%, #6bcb77 100%)",
+          }}
         />
         <div className="flex-1 z-10">
           <p className="text-xs font-semibold uppercase tracking-widest text-indigo-400 mb-1">
@@ -56,7 +58,9 @@ function HomePage() {
             to="/learner/courses"
             className="inline-flex items-center gap-2 bg-[#2d4a3e] text-white text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-[#3a5f50] transition-all duration-200 shadow-sm"
           >
-            <ArrowRight size={15} />
+            <span className="material-symbols-rounded text-[18px]">
+              arrow_forward
+            </span>
             Explore courses
           </Link>
         </div>
@@ -96,10 +100,9 @@ function HomePage() {
                     </div>
                     <div className="flex justify-end mt-1">
                       <div className="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-[#2d4a3e] group-hover:border-[#2d4a3e] transition-all duration-200">
-                        <ArrowRight
-                          size={15}
-                          className="text-gray-400 group-hover:text-white transition-colors"
-                        />
+                        <span className="material-symbols-rounded text-[18px]">
+                          arrow_forward
+                        </span>
                       </div>
                     </div>
                   </Link>
@@ -135,7 +138,9 @@ function HomePage() {
                 {streak}
               </span>
               <div className="flex flex-col">
-                <Flame size={20} className="text-orange-500 mb-0.5" />
+                <span className="material-symbols-rounded text-[24px] text-orange-500 mb-0.5">
+                  local_fire_department
+                </span>
                 <span className="text-xs text-gray-500 font-medium">
                   Current streak
                 </span>
@@ -148,8 +153,8 @@ function HomePage() {
                   <div
                     className={`w-7 h-7 rounded-full border-2 transition-all duration-200 ${
                       activeDays.includes(i)
-                        ? 'bg-[#2d4a3e] border-[#2d4a3e]'
-                        : 'border-gray-200 bg-white'
+                        ? "bg-[#2d4a3e] border-[#2d4a3e]"
+                        : "border-gray-200 bg-white"
                     }`}
                   />
                   <span className="text-[10px] text-gray-400 font-medium">
@@ -173,9 +178,11 @@ function HomePage() {
                 <div
                   key={i}
                   className="w-full aspect-square rounded-xl flex items-center justify-center text-white text-lg"
-                  style={{ background: i < achievementCount ? '#2d4a3e' : '#eef3ee' }}
+                  style={{
+                    background: i < achievementCount ? "#2d4a3e" : "#eef3ee",
+                  }}
                 >
-                  {i < achievementCount ? '🏆' : '🔒'}
+                  {i < achievementCount ? "🏆" : "🔒"}
                 </div>
               ))}
             </div>
@@ -185,12 +192,12 @@ function HomePage() {
                 className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-700 border border-gray-200 px-4 py-2 rounded-full hover:border-[#2d4a3e] hover:text-[#2d4a3e] transition-all duration-200"
               >
                 More
-                <ChevronRight size={14} />
+                
               </Link>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }

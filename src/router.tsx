@@ -4,6 +4,7 @@ import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query
 import { routeTree } from './routeTree.gen'
 import DefaultCatchBoundary from './components/ui/DefaultCatchBoundary'
 import NotFound from './components/ui/NotFound'
+import 'material-symbols/rounded.scss'
 
 export function getRouter() {
   const queryClient = new QueryClient()

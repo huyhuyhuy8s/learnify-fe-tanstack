@@ -1,29 +1,27 @@
-import { Heart, Zap, Globe, Users } from "lucide-react";
-
 export const ABOUT_VALUES = [
   {
-    icon: Heart,
+    icon: "favorite",
     title: "Learner First",
     desc: "Every decision we make starts with the learner's experience in mind.",
     color: "#fce8e8",
     iconColor: "#e05b5b",
   },
   {
-    icon: Zap,
+    icon: "bolt",
     title: "Innovation",
     desc: "We embrace AI and modern tech to make education more effective.",
     color: "#fff8e8",
     iconColor: "#e0a03b",
   },
   {
-    icon: Globe,
+    icon: "public",
     title: "Accessibility",
     desc: "Quality learning should be available to everyone, everywhere.",
     color: "#e8f4ff",
     iconColor: "#3b82f6",
   },
   {
-    icon: Users,
+    icon: "group",
     title: "Community",
     desc: "Growing together through collaboration, sharing, and support.",
     color: "#eef3ee",
