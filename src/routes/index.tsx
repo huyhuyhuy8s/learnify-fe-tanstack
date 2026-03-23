@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import IconButton from "@/components/ui/IconButton";
+import IconButton from "@/components/IconButton";
 import "@styles/_global.scss";
-import { MOCK_COURSES, MOCK_USER, WEEK_DAYS } from "~/mock/home";
+import { MOCK_COURSES, MOCK_USER, WEEK_DAYS } from "@/mock/home";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -182,7 +182,7 @@ function HomePage() {
                 className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-700 border border-gray-200 px-4 py-2 rounded-full hover:border-[#2d4a3e] hover:text-[#2d4a3e] transition-all duration-200"
               >
                 More
-                
+
               </Link>
             </div>
           </div>

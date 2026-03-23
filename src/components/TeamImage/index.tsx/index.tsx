@@ -1,4 +1,4 @@
-import { OptimizeImage } from './Images';
+import { OptimizeImage } from '@/components/Images';
 import { teamMembers } from '~/mock/team-member';
 
 interface TeamMemberProps {
@@ -10,7 +10,7 @@ interface TeamMemberProps {
   };
 }
 
-const AIMembers = teamMembers.filter(member => 
+const AIMembers = teamMembers.filter(member =>
   member.jobTitle.includes('AI')
 )
 
@@ -26,9 +26,9 @@ function TeamMember({ name, jobTitle, image }: TeamMemberProps) {
   return (
     <div className="flex flex-col items-center">
       <div className="lg:size-[300px] rounded-full shrink-0 grow-0 shadow-xl overflow-hidden">
-        <OptimizeImage 
-          src={image.name} 
-          alt={name} 
+        <OptimizeImage
+          src={image.name}
+          alt={name}
           folder={image.folder}
           className="size-full"
         />

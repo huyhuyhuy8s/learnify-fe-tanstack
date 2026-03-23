@@ -1,8 +1,8 @@
 import { lazy, Suspense } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { ABOUT_STATS, ABOUT_VALUES } from "~/mock/about";
+import { ABOUT_STATS, ABOUT_VALUES } from "@/mock/about";
 
-const TeamImage = lazy(() => import("@/components/ui/TeamImage"));
+const TeamImage = lazy(() => import("@/components/TeamImage/index.tsx"));
 
 export const Route = createFileRoute("/learner/about/")({
   component: AboutPage,
