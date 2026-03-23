@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import axios from 'redaxios'
-import type { User } from '../../utils/users'
+import type { User } from '@/utils/users'
 
 export const Route = createFileRoute('/api/users')({
   server: {

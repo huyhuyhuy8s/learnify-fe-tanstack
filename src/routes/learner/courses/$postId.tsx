@@ -1,10 +1,11 @@
 import { ErrorComponent, Link, createFileRoute } from '@tanstack/react-router'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { postQueryOptions } from '../../utils/posts'
+import { postQueryOptions } from '~/utils/posts'
 import type { ErrorComponentProps } from '@tanstack/react-router'
-import { NotFound } from '~/components/NotFound'
+import NotFound from '~/components/ui/NotFound'
+import PostErrorComponent from '~/components/ui/PostErrorComponent'
 
-export const Route = createFileRoute('/posts/$postId')({
+export const Route = createFileRoute('/learner/courses/$postId')({
   loader: async ({ params: { postId }, context }) => {
     const data = await context.queryClient.ensureQueryData(
       postQueryOptions(postId),
@@ -33,7 +34,7 @@ function PostComponent() {
       <h4 className="text-xl font-bold underline">{postQuery.data.title}</h4>
       <div className="text-sm">{postQuery.data.body}</div>
       <Link
-        to="/posts/$postId/deep"
+        to="/learner/posts/$postId/deep"
         params={{
           postId: postQuery.data.id,
         }}
