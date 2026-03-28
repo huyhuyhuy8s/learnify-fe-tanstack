@@ -1,7 +1,6 @@
 /// <reference types="vite/client" />
 import {
   HeadContent,
-  Link,
   Outlet,
   Scripts,
   createRootRouteWithContext,
@@ -14,8 +13,8 @@ import DefaultCatchBoundary from "@/components/DefaultCatchBoundary";
 import NotFound from "@/components/NotFound";
 import appCss from "@/styles/app.css?url";
 import { seo } from "@/utils/seo";
-import { Sidebar } from "@/layouts/Sidebar";
 import LeftNav from "@/components/LeftNav";
+import TopNav from "@/components/TopNav";
 import "@styles/_global.scss"
 
 export const Route = createRootRouteWithContext<{
@@ -84,11 +83,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <div className="flex h-screen w-full">
-          <LeftNav />
-          <main className="flex-1 p-8 overflow-y-auto">
+        <LeftNav />
+        <div className="body">
+          <TopNav />
+          <article className="content">
             {children}
-          </main>
+          </article>
         </div>
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />

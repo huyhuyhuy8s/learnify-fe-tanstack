@@ -11,13 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RedirectRouteImport } from './routes/redirect'
 import { Route as DeferredRouteImport } from './routes/deferred'
-import { Route as PathlessLayoutRouteImport } from './routes/_pathlessLayout'
 import { Route as UsersRouteRouteImport } from './routes/users/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as UsersIndexRouteImport } from './routes/users/index'
 import { Route as UsersUserIdRouteImport } from './routes/users/$userId'
 import { Route as ApiUsersRouteImport } from './routes/api/users'
-import { Route as PathlessLayoutNestedLayoutRouteImport } from './routes/_pathlessLayout/_nested-layout'
 import { Route as LearnerRoadmapsRouteRouteImport } from './routes/learner/roadmaps/route'
 import { Route as LearnerFriendsRouteRouteImport } from './routes/learner/friends/route'
 import { Route as LearnerCoursesRouteRouteImport } from './routes/learner/courses/route'
@@ -28,8 +26,6 @@ import { Route as LearnerCoursesIndexRouteImport } from './routes/learner/course
 import { Route as LearnerAboutIndexRouteImport } from './routes/learner/about/index'
 import { Route as LearnerCoursesPostIdRouteImport } from './routes/learner/courses/$postId'
 import { Route as ApiUsersIdRouteImport } from './routes/api/users.$id'
-import { Route as PathlessLayoutNestedLayoutRouteBRouteImport } from './routes/_pathlessLayout/_nested-layout/route-b'
-import { Route as PathlessLayoutNestedLayoutRouteARouteImport } from './routes/_pathlessLayout/_nested-layout/route-a'
 import { Route as LearnerPostsPostIdDeepRouteImport } from './routes/learner/posts_/$postId/deep'
 
 const RedirectRoute = RedirectRouteImport.update({
@@ -40,10 +36,6 @@ const RedirectRoute = RedirectRouteImport.update({
 const DeferredRoute = DeferredRouteImport.update({
   id: '/deferred',
   path: '/deferred',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PathlessLayoutRoute = PathlessLayoutRouteImport.update({
-  id: '/_pathlessLayout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const UsersRouteRoute = UsersRouteRouteImport.update({
@@ -71,11 +63,6 @@ const ApiUsersRoute = ApiUsersRouteImport.update({
   path: '/api/users',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PathlessLayoutNestedLayoutRoute =
-  PathlessLayoutNestedLayoutRouteImport.update({
-    id: '/_nested-layout',
-    getParentRoute: () => PathlessLayoutRoute,
-  } as any)
 const LearnerRoadmapsRouteRoute = LearnerRoadmapsRouteRouteImport.update({
   id: '/learner/roadmaps',
   path: '/learner/roadmaps',
@@ -126,18 +113,6 @@ const ApiUsersIdRoute = ApiUsersIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => ApiUsersRoute,
 } as any)
-const PathlessLayoutNestedLayoutRouteBRoute =
-  PathlessLayoutNestedLayoutRouteBRouteImport.update({
-    id: '/route-b',
-    path: '/route-b',
-    getParentRoute: () => PathlessLayoutNestedLayoutRoute,
-  } as any)
-const PathlessLayoutNestedLayoutRouteARoute =
-  PathlessLayoutNestedLayoutRouteARouteImport.update({
-    id: '/route-a',
-    path: '/route-a',
-    getParentRoute: () => PathlessLayoutNestedLayoutRoute,
-  } as any)
 const LearnerPostsPostIdDeepRoute = LearnerPostsPostIdDeepRouteImport.update({
   id: '/learner/posts_/$postId/deep',
   path: '/learner/posts/$postId/deep',
@@ -156,8 +131,6 @@ export interface FileRoutesByFullPath {
   '/api/users': typeof ApiUsersRouteWithChildren
   '/users/$userId': typeof UsersUserIdRoute
   '/users/': typeof UsersIndexRoute
-  '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
-  '/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
   '/api/users/$id': typeof ApiUsersIdRoute
   '/learner/courses/$postId': typeof LearnerCoursesPostIdRoute
   '/learner/about/': typeof LearnerAboutIndexRoute
@@ -173,8 +146,6 @@ export interface FileRoutesByTo {
   '/api/users': typeof ApiUsersRouteWithChildren
   '/users/$userId': typeof UsersUserIdRoute
   '/users': typeof UsersIndexRoute
-  '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
-  '/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
   '/api/users/$id': typeof ApiUsersIdRoute
   '/learner/courses/$postId': typeof LearnerCoursesPostIdRoute
   '/learner/about': typeof LearnerAboutIndexRoute
@@ -187,19 +158,15 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/users': typeof UsersRouteRouteWithChildren
-  '/_pathlessLayout': typeof PathlessLayoutRouteWithChildren
   '/deferred': typeof DeferredRoute
   '/redirect': typeof RedirectRoute
   '/learner/about': typeof LearnerAboutRouteRouteWithChildren
   '/learner/courses': typeof LearnerCoursesRouteRouteWithChildren
   '/learner/friends': typeof LearnerFriendsRouteRouteWithChildren
   '/learner/roadmaps': typeof LearnerRoadmapsRouteRouteWithChildren
-  '/_pathlessLayout/_nested-layout': typeof PathlessLayoutNestedLayoutRouteWithChildren
   '/api/users': typeof ApiUsersRouteWithChildren
   '/users/$userId': typeof UsersUserIdRoute
   '/users/': typeof UsersIndexRoute
-  '/_pathlessLayout/_nested-layout/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
-  '/_pathlessLayout/_nested-layout/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
   '/api/users/$id': typeof ApiUsersIdRoute
   '/learner/courses/$postId': typeof LearnerCoursesPostIdRoute
   '/learner/about/': typeof LearnerAboutIndexRoute
@@ -222,8 +189,6 @@ export interface FileRouteTypes {
     | '/api/users'
     | '/users/$userId'
     | '/users/'
-    | '/route-a'
-    | '/route-b'
     | '/api/users/$id'
     | '/learner/courses/$postId'
     | '/learner/about/'
@@ -239,8 +204,6 @@ export interface FileRouteTypes {
     | '/api/users'
     | '/users/$userId'
     | '/users'
-    | '/route-a'
-    | '/route-b'
     | '/api/users/$id'
     | '/learner/courses/$postId'
     | '/learner/about'
@@ -252,19 +215,15 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/users'
-    | '/_pathlessLayout'
     | '/deferred'
     | '/redirect'
     | '/learner/about'
     | '/learner/courses'
     | '/learner/friends'
     | '/learner/roadmaps'
-    | '/_pathlessLayout/_nested-layout'
     | '/api/users'
     | '/users/$userId'
     | '/users/'
-    | '/_pathlessLayout/_nested-layout/route-a'
-    | '/_pathlessLayout/_nested-layout/route-b'
     | '/api/users/$id'
     | '/learner/courses/$postId'
     | '/learner/about/'
@@ -277,7 +236,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   UsersRouteRoute: typeof UsersRouteRouteWithChildren
-  PathlessLayoutRoute: typeof PathlessLayoutRouteWithChildren
   DeferredRoute: typeof DeferredRoute
   RedirectRoute: typeof RedirectRoute
   LearnerAboutRouteRoute: typeof LearnerAboutRouteRouteWithChildren
@@ -302,13 +260,6 @@ declare module '@tanstack/react-router' {
       path: '/deferred'
       fullPath: '/deferred'
       preLoaderRoute: typeof DeferredRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_pathlessLayout': {
-      id: '/_pathlessLayout'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof PathlessLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/users': {
@@ -345,13 +296,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/users'
       preLoaderRoute: typeof ApiUsersRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/_pathlessLayout/_nested-layout': {
-      id: '/_pathlessLayout/_nested-layout'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof PathlessLayoutNestedLayoutRouteImport
-      parentRoute: typeof PathlessLayoutRoute
     }
     '/learner/roadmaps': {
       id: '/learner/roadmaps'
@@ -423,20 +367,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiUsersIdRouteImport
       parentRoute: typeof ApiUsersRoute
     }
-    '/_pathlessLayout/_nested-layout/route-b': {
-      id: '/_pathlessLayout/_nested-layout/route-b'
-      path: '/route-b'
-      fullPath: '/route-b'
-      preLoaderRoute: typeof PathlessLayoutNestedLayoutRouteBRouteImport
-      parentRoute: typeof PathlessLayoutNestedLayoutRoute
-    }
-    '/_pathlessLayout/_nested-layout/route-a': {
-      id: '/_pathlessLayout/_nested-layout/route-a'
-      path: '/route-a'
-      fullPath: '/route-a'
-      preLoaderRoute: typeof PathlessLayoutNestedLayoutRouteARouteImport
-      parentRoute: typeof PathlessLayoutNestedLayoutRoute
-    }
     '/learner/posts_/$postId/deep': {
       id: '/learner/posts_/$postId/deep'
       path: '/learner/posts/$postId/deep'
@@ -459,36 +389,6 @@ const UsersRouteRouteChildren: UsersRouteRouteChildren = {
 
 const UsersRouteRouteWithChildren = UsersRouteRoute._addFileChildren(
   UsersRouteRouteChildren,
-)
-
-interface PathlessLayoutNestedLayoutRouteChildren {
-  PathlessLayoutNestedLayoutRouteARoute: typeof PathlessLayoutNestedLayoutRouteARoute
-  PathlessLayoutNestedLayoutRouteBRoute: typeof PathlessLayoutNestedLayoutRouteBRoute
-}
-
-const PathlessLayoutNestedLayoutRouteChildren: PathlessLayoutNestedLayoutRouteChildren =
-  {
-    PathlessLayoutNestedLayoutRouteARoute:
-      PathlessLayoutNestedLayoutRouteARoute,
-    PathlessLayoutNestedLayoutRouteBRoute:
-      PathlessLayoutNestedLayoutRouteBRoute,
-  }
-
-const PathlessLayoutNestedLayoutRouteWithChildren =
-  PathlessLayoutNestedLayoutRoute._addFileChildren(
-    PathlessLayoutNestedLayoutRouteChildren,
-  )
-
-interface PathlessLayoutRouteChildren {
-  PathlessLayoutNestedLayoutRoute: typeof PathlessLayoutNestedLayoutRouteWithChildren
-}
-
-const PathlessLayoutRouteChildren: PathlessLayoutRouteChildren = {
-  PathlessLayoutNestedLayoutRoute: PathlessLayoutNestedLayoutRouteWithChildren,
-}
-
-const PathlessLayoutRouteWithChildren = PathlessLayoutRoute._addFileChildren(
-  PathlessLayoutRouteChildren,
 )
 
 interface LearnerAboutRouteRouteChildren {
@@ -552,7 +452,6 @@ const ApiUsersRouteWithChildren = ApiUsersRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   UsersRouteRoute: UsersRouteRouteWithChildren,
-  PathlessLayoutRoute: PathlessLayoutRouteWithChildren,
   DeferredRoute: DeferredRoute,
   RedirectRoute: RedirectRoute,
   LearnerAboutRouteRoute: LearnerAboutRouteRouteWithChildren,

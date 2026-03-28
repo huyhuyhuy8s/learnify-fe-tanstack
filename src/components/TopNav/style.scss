@@ -1,0 +1,55 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/functions" as *;
+@use "@styles/mixins" as *;
+
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: toRem(12) toRem(24);
+
+  &-left,
+  &-right {
+    display: flex;
+    place-items: center;
+  }
+
+  &-left {
+    gap: toRem(10);
+
+    span,
+    p {
+      font-variation-settings: 'FILL' 1;
+      color: $black;
+    }
+  }
+
+  &-right {
+    gap: toRem(30);
+
+    .crystal,
+    .streak {
+      display: flex;
+      gap: toRem(10);
+      place-items: center;
+
+      span {
+        font-variation-settings: 'FILL' 1;
+        font-size: toRem(25);
+      }
+
+      p {
+        color: $black;
+      }
+    }
+
+    .crystal {
+      color: $accent-blue-celeste;
+    }
+
+    .streak {
+      color: $mode-orange;
+    }
+  }
+}

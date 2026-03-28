@@ -1,55 +1,34 @@
-@use './variables' as *;
+@use 'variables' as *;
 
-$font-family-base: 'Google Sans Flex', 'Inter', sans-serif;
-
-h1, h2, h3, h4, h5, h6, small, small.smaller, span.smaller {
-  font-family: $font-family-base;
-  font-weight: $fw-bold;
-  &.normal, &.regular {
-    font-weight: $fw-regular;
-  }
-
-  &.semibold {
-    font-weight: $fw-semibold;
-  }
-
-  &.medium {
-    font-weight: $fw-medium;
-  }
+body {
+  font-family: "Google Sans Flex", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "slnt" 0,
+    "GRAD" 0,
+    "ROND" 0;
 }
 
-h1 {
-  font-size: $fs-heading1;
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: $fw-regular;
 }
 
-h2 {
-  font-size: $fs-heading2;
-}
+h1 { font-size: $fs-heading1; }
+h2 { font-size: $fs-heading2; }
+h3 { font-size: $fs-heading3; }
+h4 { font-size: $fs-heading4; }
+h5 { font-size: $fs-heading5; }
+h6 { font-size: $fs-heading6; }
 
-h3 {
-  font-size: $fs-heading3;
-}
+/* Text */
+p { font-size: $fs-paragraph; }
 
-h4 {
-  font-size: $fs-heading4;
-}
+small { font-size: $fs-small; }
+.smaller { font-size: $fs-smaller; }
 
-h5 {
-  font-size: $fs-heading5;
-}
-
-h6 {
-  font-size: $fs-heading6;
-}
-
-p {
-  font-size: $fs-paragraph;
-}
-
-small {
-  font-size: $fs-small;
-}
-
-small.smaller, span.smaller {
-  font-size: $fs-smaller;
-}
+/* Utilities */
+.font-regular { font-weight: $fw-regular; }
+.font-medium { font-weight: $fw-medium; }
+.font-semibold { font-weight: $fw-semibold; }

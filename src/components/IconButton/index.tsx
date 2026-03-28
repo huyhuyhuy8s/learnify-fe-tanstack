@@ -1,41 +1,42 @@
 import './style.scss';
 import classNames from 'classnames';
+import { useState, useMemo } from "react";
 
 interface IconButtonProp {
-  name: string;
+  icon: string;
   type?: "primary" | "special" | "secondary" | "outlined" | "custom";
   state?: "default" | "hover" | "clicked" | "clickedHover";
-  shape?: "square" | "hover";
-  specialIcon?: "search" | "person" | "notification" | "language" | "mode";
-  stage?: 1 | 2;
+  shape?: "square" | "circle";
+  specialIcon?: string;
   size?: "tiny" | "small" | "medium" | "large";
   color?: string;
   backgroundColor?: string;
   fill?: boolean;
-  weight?: number;
-  grade?: number;
-  opticalSize?: number;
 }
 
 const IconButton = (props: IconButtonProp) => {
   const {
-    name,
+    icon,
     type = "primary",
     state = "default",
     shape = "square",
     specialIcon = "search",
-    stage = 1,
     size = "medium",
     color = "#fff",
     backgroundColor = "none",
     fill = false,
-    weight = 600,
-    grade = 0,
-    opticalSize = 24,
   } = props;
 
+  const [clicked, setClicked] = useState(false)
   const buttonClassName = classNames('icon-button', type, state, shape, size);
-  const iconClassName = classNames('material-symbols-rounded', {'filled': fill});
+  const iconClassName = classNames('material-symbols-rounded', { 'filled': fill });
+  const iconVal = useMemo(
+    () => (clicked ? specialIcon : icon)
+    , [clicked])
+
+  const handleClick = () => {
+    setClicked(!clicked);
+  }
 
   return (
     <button
@@ -44,9 +45,10 @@ const IconButton = (props: IconButtonProp) => {
         backgroundColor,
         color,
       }}
+      onClick={handleClick}
     >
       <span className={iconClassName}>
-        {name}
+        {iconVal}
       </span>
     </button>
   )
