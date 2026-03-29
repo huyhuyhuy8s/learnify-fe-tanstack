@@ -15,7 +15,7 @@ const LeftNav = () => {
 
   return (
     <nav className={navClassNames}>
-      <LeftNavTop pathname={pathname} />
+      <LeftNavTop pathname={pathnames} />
       <LeftNavBot />
     </nav>
   )

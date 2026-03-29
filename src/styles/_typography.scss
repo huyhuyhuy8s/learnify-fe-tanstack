@@ -1,4 +1,6 @@
 @use 'variables' as *;
+@use 'mixins' as *;
+@use 'colors' as *;
 
 body {
   font-family: "Google Sans Flex", sans-serif;
@@ -10,25 +12,90 @@ body {
     "ROND" 0;
 }
 
-/* Headings */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: $fw-medium;
+  color: $black;
+
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}
+
+h1 {
+  font-size: $fs-heading1;
+}
+
+h2 {
+  font-size: $fs-heading2;
+}
+
+h3 {
+  font-size: $fs-heading3;
+}
+
+h4 {
+  font-size: $fs-heading4;
+}
+
+h5 {
+  font-size: $fs-heading5;
+}
+
+h6 {
+  font-size: $fs-heading6;
+}
+
+p,
+small,
+.smaller {
+  color: $black;
+  font-weight: $fw-regular;
+
+  &:first-letter {
+    text-transform: uppercase;
+  }
+}
+
+p {
+  font-size: $fs-paragraph;
+}
+
+small {
+  font-size: $fs-small;
+}
+
+.smaller {
+  font-size: $fs-smaller;
+}
+
+.font-regular {
   font-weight: $fw-regular;
 }
 
-h1 { font-size: $fs-heading1; }
-h2 { font-size: $fs-heading2; }
-h3 { font-size: $fs-heading3; }
-h4 { font-size: $fs-heading4; }
-h5 { font-size: $fs-heading5; }
-h6 { font-size: $fs-heading6; }
+.font-medium {
+  font-weight: $fw-medium;
+}
 
-/* Text */
-p { font-size: $fs-paragraph; }
+.font-semibold {
+  font-weight: $fw-semibold;
+}
 
-small { font-size: $fs-small; }
-.smaller { font-size: $fs-smaller; }
+a.link {
+  color: $green-400;
+  text-decoration-line: underline;
+  @include transition;
+  transition-property: color;
 
-/* Utilities */
-.font-regular { font-weight: $fw-regular; }
-.font-medium { font-weight: $fw-medium; }
-.font-semibold { font-weight: $fw-semibold; }
+  &:hover {
+    color: $green-600;
+  }
+
+  &:active {
+    color: $green-800;
+  }
+}

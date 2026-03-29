@@ -11,10 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RedirectRouteImport } from './routes/redirect'
 import { Route as DeferredRouteImport } from './routes/deferred'
-import { Route as UsersRouteRouteImport } from './routes/users/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as UsersIndexRouteImport } from './routes/users/index'
-import { Route as UsersUserIdRouteImport } from './routes/users/$userId'
+import { Route as LearnerIndexRouteImport } from './routes/learner/index'
 import { Route as ApiUsersRouteImport } from './routes/api/users'
 import { Route as LearnerRoadmapsRouteRouteImport } from './routes/learner/roadmaps/route'
 import { Route as LearnerFriendsRouteRouteImport } from './routes/learner/friends/route'
@@ -26,7 +24,6 @@ import { Route as LearnerCoursesIndexRouteImport } from './routes/learner/course
 import { Route as LearnerAboutIndexRouteImport } from './routes/learner/about/index'
 import { Route as LearnerCoursesPostIdRouteImport } from './routes/learner/courses/$postId'
 import { Route as ApiUsersIdRouteImport } from './routes/api/users.$id'
-import { Route as LearnerPostsPostIdDeepRouteImport } from './routes/learner/posts_/$postId/deep'
 
 const RedirectRoute = RedirectRouteImport.update({
   id: '/redirect',
@@ -38,25 +35,15 @@ const DeferredRoute = DeferredRouteImport.update({
   path: '/deferred',
   getParentRoute: () => rootRouteImport,
 } as any)
-const UsersRouteRoute = UsersRouteRouteImport.update({
-  id: '/users',
-  path: '/users',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const UsersIndexRoute = UsersIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => UsersRouteRoute,
-} as any)
-const UsersUserIdRoute = UsersUserIdRouteImport.update({
-  id: '/$userId',
-  path: '/$userId',
-  getParentRoute: () => UsersRouteRoute,
+const LearnerIndexRoute = LearnerIndexRouteImport.update({
+  id: '/learner/',
+  path: '/learner/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ApiUsersRoute = ApiUsersRouteImport.update({
   id: '/api/users',
@@ -113,15 +100,9 @@ const ApiUsersIdRoute = ApiUsersIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => ApiUsersRoute,
 } as any)
-const LearnerPostsPostIdDeepRoute = LearnerPostsPostIdDeepRouteImport.update({
-  id: '/learner/posts_/$postId/deep',
-  path: '/learner/posts/$postId/deep',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/users': typeof UsersRouteRouteWithChildren
   '/deferred': typeof DeferredRoute
   '/redirect': typeof RedirectRoute
   '/learner/about': typeof LearnerAboutRouteRouteWithChildren
@@ -129,35 +110,30 @@ export interface FileRoutesByFullPath {
   '/learner/friends': typeof LearnerFriendsRouteRouteWithChildren
   '/learner/roadmaps': typeof LearnerRoadmapsRouteRouteWithChildren
   '/api/users': typeof ApiUsersRouteWithChildren
-  '/users/$userId': typeof UsersUserIdRoute
-  '/users/': typeof UsersIndexRoute
+  '/learner/': typeof LearnerIndexRoute
   '/api/users/$id': typeof ApiUsersIdRoute
   '/learner/courses/$postId': typeof LearnerCoursesPostIdRoute
   '/learner/about/': typeof LearnerAboutIndexRoute
   '/learner/courses/': typeof LearnerCoursesIndexRoute
   '/learner/friends/': typeof LearnerFriendsIndexRoute
   '/learner/roadmaps/': typeof LearnerRoadmapsIndexRoute
-  '/learner/posts/$postId/deep': typeof LearnerPostsPostIdDeepRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/deferred': typeof DeferredRoute
   '/redirect': typeof RedirectRoute
   '/api/users': typeof ApiUsersRouteWithChildren
-  '/users/$userId': typeof UsersUserIdRoute
-  '/users': typeof UsersIndexRoute
+  '/learner': typeof LearnerIndexRoute
   '/api/users/$id': typeof ApiUsersIdRoute
   '/learner/courses/$postId': typeof LearnerCoursesPostIdRoute
   '/learner/about': typeof LearnerAboutIndexRoute
   '/learner/courses': typeof LearnerCoursesIndexRoute
   '/learner/friends': typeof LearnerFriendsIndexRoute
   '/learner/roadmaps': typeof LearnerRoadmapsIndexRoute
-  '/learner/posts/$postId/deep': typeof LearnerPostsPostIdDeepRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/users': typeof UsersRouteRouteWithChildren
   '/deferred': typeof DeferredRoute
   '/redirect': typeof RedirectRoute
   '/learner/about': typeof LearnerAboutRouteRouteWithChildren
@@ -165,21 +141,18 @@ export interface FileRoutesById {
   '/learner/friends': typeof LearnerFriendsRouteRouteWithChildren
   '/learner/roadmaps': typeof LearnerRoadmapsRouteRouteWithChildren
   '/api/users': typeof ApiUsersRouteWithChildren
-  '/users/$userId': typeof UsersUserIdRoute
-  '/users/': typeof UsersIndexRoute
+  '/learner/': typeof LearnerIndexRoute
   '/api/users/$id': typeof ApiUsersIdRoute
   '/learner/courses/$postId': typeof LearnerCoursesPostIdRoute
   '/learner/about/': typeof LearnerAboutIndexRoute
   '/learner/courses/': typeof LearnerCoursesIndexRoute
   '/learner/friends/': typeof LearnerFriendsIndexRoute
   '/learner/roadmaps/': typeof LearnerRoadmapsIndexRoute
-  '/learner/posts_/$postId/deep': typeof LearnerPostsPostIdDeepRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/users'
     | '/deferred'
     | '/redirect'
     | '/learner/about'
@@ -187,34 +160,29 @@ export interface FileRouteTypes {
     | '/learner/friends'
     | '/learner/roadmaps'
     | '/api/users'
-    | '/users/$userId'
-    | '/users/'
+    | '/learner/'
     | '/api/users/$id'
     | '/learner/courses/$postId'
     | '/learner/about/'
     | '/learner/courses/'
     | '/learner/friends/'
     | '/learner/roadmaps/'
-    | '/learner/posts/$postId/deep'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/deferred'
     | '/redirect'
     | '/api/users'
-    | '/users/$userId'
-    | '/users'
+    | '/learner'
     | '/api/users/$id'
     | '/learner/courses/$postId'
     | '/learner/about'
     | '/learner/courses'
     | '/learner/friends'
     | '/learner/roadmaps'
-    | '/learner/posts/$postId/deep'
   id:
     | '__root__'
     | '/'
-    | '/users'
     | '/deferred'
     | '/redirect'
     | '/learner/about'
@@ -222,20 +190,17 @@ export interface FileRouteTypes {
     | '/learner/friends'
     | '/learner/roadmaps'
     | '/api/users'
-    | '/users/$userId'
-    | '/users/'
+    | '/learner/'
     | '/api/users/$id'
     | '/learner/courses/$postId'
     | '/learner/about/'
     | '/learner/courses/'
     | '/learner/friends/'
     | '/learner/roadmaps/'
-    | '/learner/posts_/$postId/deep'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  UsersRouteRoute: typeof UsersRouteRouteWithChildren
   DeferredRoute: typeof DeferredRoute
   RedirectRoute: typeof RedirectRoute
   LearnerAboutRouteRoute: typeof LearnerAboutRouteRouteWithChildren
@@ -243,7 +208,7 @@ export interface RootRouteChildren {
   LearnerFriendsRouteRoute: typeof LearnerFriendsRouteRouteWithChildren
   LearnerRoadmapsRouteRoute: typeof LearnerRoadmapsRouteRouteWithChildren
   ApiUsersRoute: typeof ApiUsersRouteWithChildren
-  LearnerPostsPostIdDeepRoute: typeof LearnerPostsPostIdDeepRoute
+  LearnerIndexRoute: typeof LearnerIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -262,13 +227,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DeferredRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/users': {
-      id: '/users'
-      path: '/users'
-      fullPath: '/users'
-      preLoaderRoute: typeof UsersRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -276,19 +234,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/users/': {
-      id: '/users/'
-      path: '/'
-      fullPath: '/users/'
-      preLoaderRoute: typeof UsersIndexRouteImport
-      parentRoute: typeof UsersRouteRoute
-    }
-    '/users/$userId': {
-      id: '/users/$userId'
-      path: '/$userId'
-      fullPath: '/users/$userId'
-      preLoaderRoute: typeof UsersUserIdRouteImport
-      parentRoute: typeof UsersRouteRoute
+    '/learner/': {
+      id: '/learner/'
+      path: '/learner'
+      fullPath: '/learner/'
+      preLoaderRoute: typeof LearnerIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/users': {
       id: '/api/users'
@@ -367,29 +318,8 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiUsersIdRouteImport
       parentRoute: typeof ApiUsersRoute
     }
-    '/learner/posts_/$postId/deep': {
-      id: '/learner/posts_/$postId/deep'
-      path: '/learner/posts/$postId/deep'
-      fullPath: '/learner/posts/$postId/deep'
-      preLoaderRoute: typeof LearnerPostsPostIdDeepRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
-
-interface UsersRouteRouteChildren {
-  UsersUserIdRoute: typeof UsersUserIdRoute
-  UsersIndexRoute: typeof UsersIndexRoute
-}
-
-const UsersRouteRouteChildren: UsersRouteRouteChildren = {
-  UsersUserIdRoute: UsersUserIdRoute,
-  UsersIndexRoute: UsersIndexRoute,
-}
-
-const UsersRouteRouteWithChildren = UsersRouteRoute._addFileChildren(
-  UsersRouteRouteChildren,
-)
 
 interface LearnerAboutRouteRouteChildren {
   LearnerAboutIndexRoute: typeof LearnerAboutIndexRoute
@@ -451,7 +381,6 @@ const ApiUsersRouteWithChildren = ApiUsersRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  UsersRouteRoute: UsersRouteRouteWithChildren,
   DeferredRoute: DeferredRoute,
   RedirectRoute: RedirectRoute,
   LearnerAboutRouteRoute: LearnerAboutRouteRouteWithChildren,
@@ -459,7 +388,7 @@ const rootRouteChildren: RootRouteChildren = {
   LearnerFriendsRouteRoute: LearnerFriendsRouteRouteWithChildren,
   LearnerRoadmapsRouteRoute: LearnerRoadmapsRouteRouteWithChildren,
   ApiUsersRoute: ApiUsersRouteWithChildren,
-  LearnerPostsPostIdDeepRoute: LearnerPostsPostIdDeepRoute,
+  LearnerIndexRoute: LearnerIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

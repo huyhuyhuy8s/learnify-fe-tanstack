@@ -7,7 +7,7 @@ interface LeftNavItemProps {
   iconName: string;
   label: string;
   href: string;
-  active?: boolean;
+  className?: string;
 }
 
 const LeftNavItem = (props: LeftNavItemProps) => {
@@ -15,14 +15,18 @@ const LeftNavItem = (props: LeftNavItemProps) => {
     iconName,
     label,
     href,
-    active = false,
+    className = '',
   } = props
   const [fill, setFill] = useState(false)
-  const iconClassName = classNames('material-symbols-rounded', { 'filled': fill }, { "active": active });
+  const iconClassName = classNames(
+    'material-symbols-rounded',
+    { 'filled': fill },
+    className
+  );
 
   return (
     <div className="left-nav-top-item">
-      <Link className="link-box" to={href}>
+      <Link className="link-box" to={href} activeOptions={{ exact: true }}>
         <div className="icon-box">
           <span className={iconClassName}>
             {iconName}

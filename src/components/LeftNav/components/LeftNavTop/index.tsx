@@ -3,7 +3,7 @@ import LeftNavItem from "../LeftNavItem";
 import { topItems } from "../../constants";
 
 interface LeftNavTopProps {
-  pathname: string[];
+  pathname: string;
 }
 
 const LeftNavTop = (props: LeftNavTopProps) => {
@@ -19,7 +19,7 @@ const LeftNavTop = (props: LeftNavTopProps) => {
             iconName={item.iconName}
             label={item.label}
             href={item.href}
-            active={pathname[0] === item.href}
+            active={pathname === item.href}
           />
         ))}
       </div>

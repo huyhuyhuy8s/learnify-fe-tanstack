@@ -1,0 +1,72 @@
+import { useState, useRef, useEffect } from 'react'
+import { Image } from '@unpic/react'
+import { cn } from '@/utils'
+import './style.scss'
+
+type OptimizeImageProps = {
+  src: string
+  alt: string
+  folder?: string
+  className?: string
+}
+
+const OptimizeImage = ({
+  src,
+  alt,
+  folder,
+  className
+}: OptimizeImageProps) => {
+  const [isLoaded, setIsLoaded] = useState<boolean>(false)
+  const imgRef = useRef<HTMLImageElement>(null)
+
+  useEffect(() => {
+    if (imgRef.current?.complete) {
+      setIsLoaded(true)
+    } else {
+      setIsLoaded(false)
+    }
+  }, [src])
+
+  const renderContent = () => {
+    if (!src) {
+      return (
+        <div className="optimize-image-empty">
+          <span className="optimize-image-empty-text">No image available</span>
+        </div>
+      )
+    }
+
+    const isExternal = src.startsWith('http') || src.startsWith('/') || src.startsWith('data:')
+    const imageKitURL = isExternal
+      ? src
+      : `https://ik.imagekit.io/q4phit8d9e/${folder ? `${folder}/` : ''}${src}.png`
+
+    return (
+      <>
+        {!isLoaded && <div className="optimize-image-skeleton" />}
+        <Image
+          ref={imgRef}
+          src={imageKitURL}
+          layout="fullWidth"
+          alt={alt}
+          loading="lazy"
+          decoding="async"
+          onLoad={() => setIsLoaded(true)}
+          className={cn(
+            'optimize-image-element',
+            isLoaded ? 'optimize-image-loaded' : 'optimize-image-loading',
+            className
+          )}
+        />
+      </>
+    )
+  }
+
+  return (
+    <div className="optimize-image-container">
+      {renderContent()}
+    </div>
+  )
+}
+
+export default OptimizeImage

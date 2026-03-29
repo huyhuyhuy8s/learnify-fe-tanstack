@@ -85,10 +85,15 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body>
         <LeftNav />
         <div className="body">
-          <TopNav />
+          <header>
+            <TopNav />
+          </header>
           <article className="content">
             {children}
           </article>
+          <footer>
+
+          </footer>
         </div>
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />

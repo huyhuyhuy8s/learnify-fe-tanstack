@@ -7,6 +7,7 @@ bootstrap:
 	pnpm install
 
 dev:
+	pnpm install
 	pnpm dev
 
 build:
