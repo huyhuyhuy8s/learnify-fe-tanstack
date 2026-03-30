@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RedirectRouteImport } from './routes/redirect'
 import { Route as DeferredRouteImport } from './routes/deferred'
+import { Route as LearnerRouteRouteImport } from './routes/learner/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LearnerIndexRouteImport } from './routes/learner/index'
 import { Route as ApiUsersRouteImport } from './routes/api/users'
@@ -35,15 +36,20 @@ const DeferredRoute = DeferredRouteImport.update({
   path: '/deferred',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LearnerRouteRoute = LearnerRouteRouteImport.update({
+  id: '/learner',
+  path: '/learner',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LearnerIndexRoute = LearnerIndexRouteImport.update({
-  id: '/learner/',
-  path: '/learner/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => LearnerRouteRoute,
 } as any)
 const ApiUsersRoute = ApiUsersRouteImport.update({
   id: '/api/users',
@@ -51,24 +57,24 @@ const ApiUsersRoute = ApiUsersRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const LearnerRoadmapsRouteRoute = LearnerRoadmapsRouteRouteImport.update({
-  id: '/learner/roadmaps',
-  path: '/learner/roadmaps',
-  getParentRoute: () => rootRouteImport,
+  id: '/roadmaps',
+  path: '/roadmaps',
+  getParentRoute: () => LearnerRouteRoute,
 } as any)
 const LearnerFriendsRouteRoute = LearnerFriendsRouteRouteImport.update({
-  id: '/learner/friends',
-  path: '/learner/friends',
-  getParentRoute: () => rootRouteImport,
+  id: '/friends',
+  path: '/friends',
+  getParentRoute: () => LearnerRouteRoute,
 } as any)
 const LearnerCoursesRouteRoute = LearnerCoursesRouteRouteImport.update({
-  id: '/learner/courses',
-  path: '/learner/courses',
-  getParentRoute: () => rootRouteImport,
+  id: '/courses',
+  path: '/courses',
+  getParentRoute: () => LearnerRouteRoute,
 } as any)
 const LearnerAboutRouteRoute = LearnerAboutRouteRouteImport.update({
-  id: '/learner/about',
-  path: '/learner/about',
-  getParentRoute: () => rootRouteImport,
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => LearnerRouteRoute,
 } as any)
 const LearnerRoadmapsIndexRoute = LearnerRoadmapsIndexRouteImport.update({
   id: '/',
@@ -103,6 +109,7 @@ const ApiUsersIdRoute = ApiUsersIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/learner': typeof LearnerRouteRouteWithChildren
   '/deferred': typeof DeferredRoute
   '/redirect': typeof RedirectRoute
   '/learner/about': typeof LearnerAboutRouteRouteWithChildren
@@ -134,6 +141,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/learner': typeof LearnerRouteRouteWithChildren
   '/deferred': typeof DeferredRoute
   '/redirect': typeof RedirectRoute
   '/learner/about': typeof LearnerAboutRouteRouteWithChildren
@@ -153,6 +161,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/learner'
     | '/deferred'
     | '/redirect'
     | '/learner/about'
@@ -183,6 +192,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/learner'
     | '/deferred'
     | '/redirect'
     | '/learner/about'
@@ -201,14 +211,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LearnerRouteRoute: typeof LearnerRouteRouteWithChildren
   DeferredRoute: typeof DeferredRoute
   RedirectRoute: typeof RedirectRoute
-  LearnerAboutRouteRoute: typeof LearnerAboutRouteRouteWithChildren
-  LearnerCoursesRouteRoute: typeof LearnerCoursesRouteRouteWithChildren
-  LearnerFriendsRouteRoute: typeof LearnerFriendsRouteRouteWithChildren
-  LearnerRoadmapsRouteRoute: typeof LearnerRoadmapsRouteRouteWithChildren
   ApiUsersRoute: typeof ApiUsersRouteWithChildren
-  LearnerIndexRoute: typeof LearnerIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -227,6 +233,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DeferredRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/learner': {
+      id: '/learner'
+      path: '/learner'
+      fullPath: '/learner'
+      preLoaderRoute: typeof LearnerRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -236,10 +249,10 @@ declare module '@tanstack/react-router' {
     }
     '/learner/': {
       id: '/learner/'
-      path: '/learner'
+      path: '/'
       fullPath: '/learner/'
       preLoaderRoute: typeof LearnerIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof LearnerRouteRoute
     }
     '/api/users': {
       id: '/api/users'
@@ -250,31 +263,31 @@ declare module '@tanstack/react-router' {
     }
     '/learner/roadmaps': {
       id: '/learner/roadmaps'
-      path: '/learner/roadmaps'
+      path: '/roadmaps'
       fullPath: '/learner/roadmaps'
       preLoaderRoute: typeof LearnerRoadmapsRouteRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof LearnerRouteRoute
     }
     '/learner/friends': {
       id: '/learner/friends'
-      path: '/learner/friends'
+      path: '/friends'
       fullPath: '/learner/friends'
       preLoaderRoute: typeof LearnerFriendsRouteRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof LearnerRouteRoute
     }
     '/learner/courses': {
       id: '/learner/courses'
-      path: '/learner/courses'
+      path: '/courses'
       fullPath: '/learner/courses'
       preLoaderRoute: typeof LearnerCoursesRouteRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof LearnerRouteRoute
     }
     '/learner/about': {
       id: '/learner/about'
-      path: '/learner/about'
+      path: '/about'
       fullPath: '/learner/about'
       preLoaderRoute: typeof LearnerAboutRouteRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof LearnerRouteRoute
     }
     '/learner/roadmaps/': {
       id: '/learner/roadmaps/'
@@ -367,6 +380,26 @@ const LearnerRoadmapsRouteRouteChildren: LearnerRoadmapsRouteRouteChildren = {
 const LearnerRoadmapsRouteRouteWithChildren =
   LearnerRoadmapsRouteRoute._addFileChildren(LearnerRoadmapsRouteRouteChildren)
 
+interface LearnerRouteRouteChildren {
+  LearnerAboutRouteRoute: typeof LearnerAboutRouteRouteWithChildren
+  LearnerCoursesRouteRoute: typeof LearnerCoursesRouteRouteWithChildren
+  LearnerFriendsRouteRoute: typeof LearnerFriendsRouteRouteWithChildren
+  LearnerRoadmapsRouteRoute: typeof LearnerRoadmapsRouteRouteWithChildren
+  LearnerIndexRoute: typeof LearnerIndexRoute
+}
+
+const LearnerRouteRouteChildren: LearnerRouteRouteChildren = {
+  LearnerAboutRouteRoute: LearnerAboutRouteRouteWithChildren,
+  LearnerCoursesRouteRoute: LearnerCoursesRouteRouteWithChildren,
+  LearnerFriendsRouteRoute: LearnerFriendsRouteRouteWithChildren,
+  LearnerRoadmapsRouteRoute: LearnerRoadmapsRouteRouteWithChildren,
+  LearnerIndexRoute: LearnerIndexRoute,
+}
+
+const LearnerRouteRouteWithChildren = LearnerRouteRoute._addFileChildren(
+  LearnerRouteRouteChildren,
+)
+
 interface ApiUsersRouteChildren {
   ApiUsersIdRoute: typeof ApiUsersIdRoute
 }
@@ -381,14 +414,10 @@ const ApiUsersRouteWithChildren = ApiUsersRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LearnerRouteRoute: LearnerRouteRouteWithChildren,
   DeferredRoute: DeferredRoute,
   RedirectRoute: RedirectRoute,
-  LearnerAboutRouteRoute: LearnerAboutRouteRouteWithChildren,
-  LearnerCoursesRouteRoute: LearnerCoursesRouteRouteWithChildren,
-  LearnerFriendsRouteRoute: LearnerFriendsRouteRouteWithChildren,
-  LearnerRoadmapsRouteRoute: LearnerRoadmapsRouteRouteWithChildren,
   ApiUsersRoute: ApiUsersRouteWithChildren,
-  LearnerIndexRoute: LearnerIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

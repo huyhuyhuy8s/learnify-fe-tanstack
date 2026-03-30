@@ -83,18 +83,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <LeftNav />
-        <div className="body">
-          <header>
-            <TopNav />
-          </header>
-          <article className="content">
-            {children}
-          </article>
-          <footer>
-
-          </footer>
-        </div>
+        {children}
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />
         <Scripts />
