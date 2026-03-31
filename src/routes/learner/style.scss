@@ -1,3 +1,4 @@
+@use '@styles/mixins' as *;
 @use "@styles/functions" as *;
 @use "@styles/colors" as *;
 @use 'sass:math';
@@ -10,7 +11,6 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
-  width: calc(100dvw - toRem(97.5));
 
   .inner {
     display: flex;
@@ -22,5 +22,21 @@ body {
 
   .content {
     min-height: calc(100dvh - toRem(65));
+  }
+}
+
+@include break(md) {
+  .body {
+    .inner {
+      padding: toRem(100) toRem(75);
+    }
+  }
+}
+
+@include break(s) {
+  .body {
+    .inner {
+      padding: toRem(75) toRem(50);
+    }
   }
 }
