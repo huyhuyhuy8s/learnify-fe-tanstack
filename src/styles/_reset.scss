@@ -25,8 +25,8 @@ h6 {
 
 html,
 body {
-  overflow-x: hidden;
-  background-color: $white;
+  overflow-x: visible;
+  background-color: $green-100;
 }
 
 html {
@@ -35,7 +35,7 @@ html {
 
 /* Set core body defaults */
 body {
-  min-height: 100vh;
+  min-height: 100dvh;
   font-family: sans-serif;
   font-size: 100%;
   line-height: 1;

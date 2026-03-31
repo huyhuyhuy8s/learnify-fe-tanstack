@@ -1,0 +1,72 @@
+@use '@styles/variables' as *;
+@use '@styles/functions' as *;
+@use '@styles/colors' as *;
+
+footer {
+  display: flex;
+  flex-direction: column;
+  gap: toRem(50);
+}
+
+.footer-banner {
+  border-radius: $br-xl;
+  object-fit: cover;
+  aspect-ratio: 3 / 1;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 toRem(50);
+
+  .item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: toRem(100);
+
+    >h6 {
+      color: $neutral-400;
+    }
+  }
+
+  .item-1 {
+    h1 {
+      color: $mode-green;
+    }
+
+    a {
+      color: $accent-minty;
+    }
+  }
+
+  .item-2,
+  .item-3 {
+
+    .navigation,
+    .socials {
+      display: flex;
+      flex-direction: column;
+      gap: toRem(20);
+
+      &>h6 {
+        color: $neutral-400;
+      }
+
+      .navigation-context,
+      .socials-context {
+        display: flex;
+        gap: toRem(20);
+      }
+
+      .socials-context h6:not(:last-child):after {
+        content: "/";
+        margin-left: toRem(10);
+      }
+    }
+  }
+
+  button.icon-button {
+    align-self: start;
+  }
+}

@@ -73,16 +73,24 @@ small {
   font-size: $fs-smaller;
 }
 
-.font-regular {
+.regular {
   font-weight: $fw-regular;
 }
 
-.font-medium {
+.medium {
   font-weight: $fw-medium;
 }
 
-.font-semibold {
+.semibold {
   font-weight: $fw-semibold;
+}
+
+.bold {
+  font-weight: $fw-bold;
+}
+
+.black {
+  font-weight: $fw-black;
 }
 
 a.link {
