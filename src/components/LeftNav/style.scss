@@ -1,0 +1,33 @@
+@use '@styles/variables' as *;
+@use '@styles/colors' as *;
+@use '@styles/functions' as *;
+
+.left-nav {
+  position: sticky;
+  inset: 0;
+  justify-content: space-between;
+  padding: toRem(20) toRem(15);
+  border-right: toRem(1) solid transparent;
+  height: 100dvh;
+
+  &,
+  &-top,
+  &-bot,
+  .item-list {
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+  }
+
+  &-top {
+    row-gap: toRem(40);
+  }
+
+  &-bot {
+    row-gap: toRem(24);
+  }
+
+  .item-list {
+    row-gap: toRem(20);
+  }
+}

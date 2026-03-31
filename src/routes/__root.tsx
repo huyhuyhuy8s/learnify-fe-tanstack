@@ -1,7 +1,6 @@
 /// <reference types="vite/client" />
 import {
   HeadContent,
-  Link,
   Outlet,
   Scripts,
   createRootRouteWithContext,
@@ -10,11 +9,13 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import * as React from "react";
 import type { QueryClient } from "@tanstack/react-query";
-import DefaultCatchBoundary from "~/components/ui/DefaultCatchBoundary";
-import NotFound from "~/components/ui/NotFound";
-import appCss from "~/styles/app.css?url";
-import { seo } from "~/utils/seo";
-import { Sidebar } from "~/components/layout/Sidebar";
+import DefaultCatchBoundary from "@/components/DefaultCatchBoundary";
+import NotFound from "@/components/NotFound";
+import appCss from "@/styles/app.css?url";
+import { seo } from "@/utils/seo";
+import LeftNav from "@/components/LeftNav";
+import TopNav from "@/components/TopNav";
+import "@styles/_global.scss"
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
@@ -29,9 +30,8 @@ export const Route = createRootRouteWithContext<{
         content: "width=device-width, initial-scale=1",
       },
       ...seo({
-        title:
-          "TanStack Start | Type-Safe, Client-First, Full-Stack React Framework",
-        description: `TanStack Start is a type-safe, client-first, full-stack React framework. `,
+        title: "Learnify | Smart learning. Real skills. Ready careers.",
+        description: "Learnify is an educational platform that highlights the future and craft of learning—from foundational concepts to hands-on practice to career-ready mastery. By showcasing the innovative technology and the 3D AI Lecturers behind our courses, we hope to demystify how modern education is built and deepen your connection with your own potential. Our approach begins with curiosity: we want to give you a window into the way interactive learning actually works.",
       }),
     ],
     links: [
@@ -45,13 +45,13 @@ export const Route = createRootRouteWithContext<{
         rel: "icon",
         type: "image/png",
         sizes: "32x32",
-        href: "/favicon-32x32.png",
+        href: "/favicon-32x32.svg",
       },
       {
         rel: "icon",
         type: "image/png",
         sizes: "16x16",
-        href: "/favicon-16x16.png",
+        href: "/favicon-16x16.svg",
       },
       { rel: "manifest", href: "/site.webmanifest", color: "#fffff" },
       { rel: "icon", href: "/favicon.ico" },
@@ -83,12 +83,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <div className="flex h-screen w-full">
-          <Sidebar />
-          <main className="flex-1 p-8 overflow-y-auto">
-            {children}
-          </main>
-        </div>
+        {children}
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />
         <Scripts />

@@ -1,20 +1,28 @@
-@use './variables' as *;
+@use 'variables' as *;
+@use 'mixins' as *;
+@use 'colors' as *;
 
-$font-family-base: 'Google Sans Flex', 'Inter', sans-serif;
+body {
+  font-family: "Google Sans Flex", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "slnt" 0,
+    "GRAD" 0,
+    "ROND" 0;
+}
 
-h1, h2, h3, h4, h5, h6, small, small.smaller, span.smaller {
-  font-family: $font-family-base;
-  font-weight: $fw-bold;
-  &.normal, &.regular {
-    font-weight: $fw-regular;
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: $fw-medium;
+  color: $black;
 
-  &.semibold {
-    font-weight: $fw-semibold;
-  }
-
-  &.medium {
-    font-weight: $fw-medium;
+  &::first-letter {
+    text-transform: uppercase;
   }
 }
 
@@ -42,6 +50,17 @@ h6 {
   font-size: $fs-heading6;
 }
 
+p,
+small,
+.smaller {
+  color: $black;
+  font-weight: $fw-regular;
+
+  &:first-letter {
+    text-transform: uppercase;
+  }
+}
+
 p {
   font-size: $fs-paragraph;
 }
@@ -50,6 +69,33 @@ small {
   font-size: $fs-small;
 }
 
-small.smaller, span.smaller {
+.smaller {
   font-size: $fs-smaller;
+}
+
+.font-regular {
+  font-weight: $fw-regular;
+}
+
+.font-medium {
+  font-weight: $fw-medium;
+}
+
+.font-semibold {
+  font-weight: $fw-semibold;
+}
+
+a.link {
+  color: $green-400;
+  text-decoration-line: underline;
+  @include transition;
+  transition-property: color;
+
+  &:hover {
+    color: $green-600;
+  }
+
+  &:active {
+    color: $green-800;
+  }
 }

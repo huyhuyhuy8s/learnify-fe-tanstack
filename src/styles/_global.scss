@@ -4,3 +4,21 @@
 @use 'colors' as *;
 @use 'typography' as *;
 @use 'functions' as *;
+@use 'sass:math';
+
+body {
+  width: 100dvw;
+  display: flex;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100dvh;
+
+  article.content {
+    min-height: calc(100% - toRem(64));
+    background-color: $green-100;
+  }
+}

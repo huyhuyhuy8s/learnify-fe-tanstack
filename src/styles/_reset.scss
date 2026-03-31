@@ -2,6 +2,7 @@
  * [Modified] Modern CSS Reset
  * @link https://github.com/hankchizljaw/modern-css-reset
 */
+@use 'colors' as *;
 
 /* Box sizing rules */
 *,
@@ -19,11 +20,13 @@ h4,
 h5,
 h6 {
   margin: 0;
+  font-weight: normal;
 }
 
 html,
 body {
   overflow-x: hidden;
+  background-color: $white;
 }
 
 html {
@@ -55,6 +58,7 @@ select {
 
 /* Remove all animations and transitions for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {

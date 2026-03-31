@@ -1,0 +1,7 @@
+@use 'variables' as *;
+
+@mixin transition {
+  transition-duration: $transition-duration;
+  transition-delay: $transition-delay;
+  transition-timing-function: $transition-timing-function;
+}

@@ -1,9 +1,13 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import IconButton from "@/components/ui/IconButton";
-import "@styles/_global.scss";
-import { MOCK_COURSES, MOCK_USER, WEEK_DAYS } from "~/mock/home";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
+import "@/styles/_global.scss";
+import { MOCK_COURSES, MOCK_USER, WEEK_DAYS } from "@/mock/home";
 
 export const Route = createFileRoute("/")({
+  beforeLoad: async () => {
+    throw redirect({
+      to: '/learner',
+    })
+  },
   component: HomePage,
 });
 
@@ -16,7 +20,7 @@ function HomePage() {
   const activeDays = MOCK_USER.activeDays;
 
   return (
-    <div className="w-full min-h-screen" style={{ background: "#eef3ee" }}>
+    <div className="" style={{ background: "#eef3ee" }}>
 
       <div
         className="mx-6 mt-2 mb-6 rounded-2xl flex items-center gap-6 px-10 py-8 relative overflow-hidden"
@@ -70,55 +74,55 @@ function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {featuredCourses.length > 0
               ? featuredCourses.map((course) => (
-                  <Link
-                    key={course.id}
-                    to={`/learner/courses`}
-                    className="group bg-white rounded-2xl p-5 flex flex-col gap-3 shadow-sm hover:shadow-md transition-all duration-200 border border-transparent hover:border-[#2d4a3e]/10"
-                  >
-                    <div className="flex gap-2 flex-wrap">
-                      <span className="inline-flex items-center gap-1 bg-[#eef3ee] text-[#2d4a3e] text-[11px] font-semibold px-2.5 py-1 rounded-full">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#2d4a3e]" />
-                        Featured
+                <Link
+                  key={course.id}
+                  to={`/learner/courses`}
+                  className="group bg-white rounded-2xl p-5 flex flex-col gap-3 shadow-sm hover:shadow-md transition-all duration-200 border border-transparent hover:border-[#2d4a3e]/10"
+                >
+                  <div className="flex gap-2 flex-wrap">
+                    <span className="inline-flex items-center gap-1 bg-[#eef3ee] text-[#2d4a3e] text-[11px] font-semibold px-2.5 py-1 rounded-full">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#2d4a3e]" />
+                      Featured
+                    </span>
+                    <span className="inline-flex items-center gap-1 bg-[#f0f0ff] text-indigo-600 text-[11px] font-semibold px-2.5 py-1 rounded-full">
+                      AI
+                    </span>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-[0.95rem] font-bold text-gray-800 leading-snug mb-1.5 line-clamp-2">
+                      {course.courseName}
+                    </h3>
+                    <p className="text-xs text-gray-500 line-clamp-3 leading-relaxed">
+                      {course.abstract}
+                    </p>
+                  </div>
+                  <div className="flex justify-end mt-1">
+                    <div className="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-[#2d4a3e] group-hover:border-[#2d4a3e] transition-all duration-200">
+                      <span className="material-symbols-rounded text-[18px]">
+                        arrow_forward
                       </span>
-                      <span className="inline-flex items-center gap-1 bg-[#f0f0ff] text-indigo-600 text-[11px] font-semibold px-2.5 py-1 rounded-full">
-                        AI
-                      </span>
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-[0.95rem] font-bold text-gray-800 leading-snug mb-1.5 line-clamp-2">
-                        {course.courseName}
-                      </h3>
-                      <p className="text-xs text-gray-500 line-clamp-3 leading-relaxed">
-                        {course.abstract}
-                      </p>
-                    </div>
-                    <div className="flex justify-end mt-1">
-                      <div className="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-[#2d4a3e] group-hover:border-[#2d4a3e] transition-all duration-200">
-                        <span className="material-symbols-rounded text-[18px]">
-                          arrow_forward
-                        </span>
-                      </div>
-                    </div>
-                  </Link>
-                ))
-              : [1, 2, 3].map((i) => (
-                  <div
-                    key={i}
-                    className="bg-white rounded-2xl p-5 flex flex-col gap-3 shadow-sm animate-pulse"
-                  >
-                    <div className="flex gap-2">
-                      <div className="h-6 w-20 bg-gray-100 rounded-full" />
-                      <div className="h-6 w-12 bg-gray-100 rounded-full" />
-                    </div>
-                    <div className="h-4 bg-gray-100 rounded w-4/5" />
-                    <div className="h-4 bg-gray-100 rounded w-3/5" />
-                    <div className="h-3 bg-gray-100 rounded w-full" />
-                    <div className="h-3 bg-gray-100 rounded w-2/3" />
-                    <div className="flex justify-end">
-                      <div className="w-9 h-9 bg-gray-100 rounded-full" />
                     </div>
                   </div>
-                ))}
+                </Link>
+              ))
+              : [1, 2, 3].map((i) => (
+                <div
+                  key={i}
+                  className="bg-white rounded-2xl p-5 flex flex-col gap-3 shadow-sm animate-pulse"
+                >
+                  <div className="flex gap-2">
+                    <div className="h-6 w-20 bg-gray-100 rounded-full" />
+                    <div className="h-6 w-12 bg-gray-100 rounded-full" />
+                  </div>
+                  <div className="h-4 bg-gray-100 rounded w-4/5" />
+                  <div className="h-4 bg-gray-100 rounded w-3/5" />
+                  <div className="h-3 bg-gray-100 rounded w-full" />
+                  <div className="h-3 bg-gray-100 rounded w-2/3" />
+                  <div className="flex justify-end">
+                    <div className="w-9 h-9 bg-gray-100 rounded-full" />
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
 
@@ -142,11 +146,10 @@ function HomePage() {
               {WEEK_DAYS.map((day, i) => (
                 <div key={day} className="flex flex-col items-center gap-1">
                   <div
-                    className={`w-7 h-7 rounded-full border-2 transition-all duration-200 ${
-                      activeDays.includes(i)
-                        ? "bg-[#2d4a3e] border-[#2d4a3e]"
-                        : "border-gray-200 bg-white"
-                    }`}
+                    className={`w-7 h-7 rounded-full border-2 transition-all duration-200 ${activeDays.includes(i)
+                      ? "bg-[#2d4a3e] border-[#2d4a3e]"
+                      : "border-gray-200 bg-white"
+                      }`}
                   />
                   <span className="text-[10px] text-gray-400 font-medium">
                     {day}
@@ -182,7 +185,7 @@ function HomePage() {
                 className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-700 border border-gray-200 px-4 py-2 rounded-full hover:border-[#2d4a3e] hover:text-[#2d4a3e] transition-all duration-200"
               >
                 More
-                
+
               </Link>
             </div>
           </div>

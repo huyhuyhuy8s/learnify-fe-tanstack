@@ -41,4 +41,8 @@ $br-xxtl: toRem(40);
 $br-xxxtl: toRem(45);
 $br-rounded: toRem(50);
 
-
+// TRANSITION
+$transition-duration: 400ms;
+$transition-delay: 50ms;
+$transition-timing-function: cubic-bezier(0.19, 0.63, 0.00, 0.95);
+$transition: all $transition-duration $transition-timing-function $transition-delay;
