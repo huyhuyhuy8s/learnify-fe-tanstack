@@ -1,6 +1,8 @@
 import LeftNav from '@/components/LeftNav'
 import TopNav from '@/components/TopNav'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
+import Footer from '@/components/Footer'
+import './style.scss';
 
 export const Route = createFileRoute('/learner')({
   head: () => ({
@@ -15,17 +17,18 @@ export const Route = createFileRoute('/learner')({
 })
 
 function RouteComponent() {
-  return <>
-    <LeftNav />
-    <div className="body">
-      <header>
+  return (
+    <>
+      <LeftNav />
+      <article className="body">
         <TopNav />
-      </header>
-      <article className="content">
-        <Outlet />
+        <div className="inner">
+          <div className="content">
+            <Outlet />
+          </div>
+          <Footer />
+        </div>
       </article>
-      <footer>
-      </footer>
-    </div>
-  </>
+    </>
+  )
 }

@@ -2,12 +2,19 @@
 @use "@styles/colors" as *;
 @use "@styles/functions" as *;
 @use "@styles/mixins" as *;
+@use 'sass:math';
 
 .top-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
   justify-content: space-between;
-  width: 100%;
   padding: toRem(12) toRem(24);
+  background-color: $white;
+  @include transition;
+  transition-property: background-color, border-color;
+  border-bottom: toRem(1) solid $neutral-200;
 
   &-left,
   &-right {
@@ -52,4 +59,9 @@
       color: $mode-orange;
     }
   }
+}
+
+.top {
+  background-color: transparent;
+  border-color: transparent;
 }

@@ -1,0 +1,42 @@
+@use '@styles/mixins' as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+@use 'sass:math';
+
+body {
+  display: flex;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+
+  .inner {
+    display: flex;
+    flex-direction: column;
+    background-color: $green-100;
+    padding: toRem(100);
+    padding-bottom: toRem(50);
+  }
+
+  .content {
+    min-height: calc(100dvh - toRem(65));
+  }
+}
+
+@include break(md) {
+  .body {
+    .inner {
+      padding: toRem(100) toRem(75);
+    }
+  }
+}
+
+@include break(s) {
+  .body {
+    .inner {
+      padding: toRem(75) toRem(50);
+    }
+  }
+}
