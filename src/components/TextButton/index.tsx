@@ -1,92 +1,60 @@
-import classNames from 'classnames';
-import { prepare, layout } from '@chenglou/pretext'
 import './style.scss';
+import { ITextButtonProps } from './type';
+import Icon from './components/Icon';
+import { Tooltip } from 'react-tooltip';
+import useButton from './hooks/useButton';
 
-interface TextButtonProps {
-  icon?: string;
-  leftIcon?: boolean;
-  rightIcon?: boolean;
-  text: string;
-  type?: "primary" | "secondary" | "outlined" | "special";
-  roundedCorner?:
-  "rounded" |
-  "exceptUpperLeft" |
-  "exceptLowerLeft" |
-  "exceptUpperRight" |
-  "exceptLowerRight" |
-  "exceptLeft" |
-  "exceptRight" |
-  "exceptUpper" |
-  "exceptLower" |
-  "onlyUpperLeft" |
-  "onlyLowerLeft" |
-  "onlyUpperRight" |
-  "onlyLowerRight";
-  size?: "large" | "medium" | "small" | "tiny";
-  typeSecondary?:
-  "default" |
-  "neutral" |
-  "yellow" |
-  "orange" |
-  "salmon" |
-  "darkGreen" |
-  "navy" |
-  "brown" |
-  "green" |
-  "pastelNeutral" |
-  "pastelYellow" |
-  "pastelOrange" |
-  "pastelSalmon" |
-  "pastelDarkGreen" |
-  "pastelNavy" |
-  "pastelBrown" |
-  "pastelGreen";
-  shape?: "circular";
-  typeSpecial?:
-  "lesson" |
-  "lab" |
-  "check" |
-  "roadmap" |
-  "course" |
-  "certificate" |
-  "private" |
-  "public";
-  style?: React.CSSProperties;
-}
-
-const TextButton = (props: TextButtonProps) => {
+const TextButton = (props: ITextButtonProps) => {
   const {
-    icon = "search",
-    leftIcon = false,
+    icon = 'search',
+    leftIcon = true,
     rightIcon = false,
-    text = "Button",
-    type = "primary",
-    roundedCorner = "rounded",
-    size = "large",
-    typeSecondary = "default",
-    shape = "circular",
-    typeSpecial = "lesson",
+    text = 'Button',
+    type = 'primary',
+    roundedCorner = 'rounded',
+    size = 'large',
+    typeSecondary = 'default',
+    shape = 'circular',
+    typeSpecial = 'lesson',
+    tooltip = '',
     style,
   } = props;
 
-  const buttonClassNames = classNames(
-    'text-button',
+  const { buttonClassNames, iconLabel, toolTipContent } = useButton({
     type,
-    [`corner-${roundedCorner}`],
+    roundedCorner,
     size,
-    { [`typeSecondary-${typeSecondary}`]: type === 'secondary' },
+    typeSecondary,
     shape,
-    { [`typeSpecial-${typeSpecial}`]: type === 'special' },
-  )
+    typeSpecial,
+    text,
+    tooltip,
+  });
 
   return (
     <button style={style} className={buttonClassNames}>
-      {leftIcon && <span className="material-symbols-rounded">{icon}</span>}
-      <span className="text">{text}</span>
-      {rightIcon && <span className="material-symbols-rounded">{icon}</span>}
+      <Icon
+        visible={leftIcon}
+        type={type}
+        typeSpecial={typeSpecial}
+        icon={icon}
+      />
+      <span className="text">{iconLabel}</span>
+      <Icon
+        visible={rightIcon}
+        type={type}
+        typeSpecial={typeSpecial}
+        icon={icon}
+      />
+      {toolTipContent && (
+        <Tooltip
+          anchorSelect={`.${buttonClassNames.split(' ').join('.')}`}
+          content={toolTipContent}
+          className="tooltip"
+        />
+      )}
     </button>
-  )
-}
+  );
+};
 
 export default TextButton;
-

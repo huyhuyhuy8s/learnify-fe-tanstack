@@ -1,7 +1,7 @@
-@use "@styles/functions" as *;
-@use "@styles/variables" as *;
-@use "@styles/mixins" as *;
-@use "@styles/colors" as *;
+@use '@styles/functions' as *;
+@use '@styles/variables' as *;
+@use '@styles/mixins' as *;
+@use '@styles/colors' as *;
 
 .text-button {
   display: flex;
@@ -11,6 +11,10 @@
   transition-duration: 500ms;
   border-style: dashed;
   border-color: transparent;
+
+  .tooltip {
+    max-width: toRem(400);
+  }
 
   &:hover {
     border-radius: $br-xs;
@@ -24,6 +28,10 @@
     @include transition;
     transition-property: all;
     color: $neutral-100;
+
+    &:not(.material-symbols-rounded)::first-letter {
+      text-transform: uppercase;
+    }
   }
 
   &.large {
@@ -164,6 +172,30 @@
       }
     }
   }
+
+  &.special.typeSpecial {
+    &-lesson,
+    &-roadmap,
+    &-lab,
+    &-course,
+    &-check,
+    &-certificate {
+      background-color: $navy-pastel-200;
+
+      span {
+        color: $neutral-800;
+      }
+    }
+
+    &-private,
+    &-public {
+      background-color: $mode-neutral;
+
+      span {
+        color: $white;
+      }
+    }
+  }
 }
 
 .corner {
@@ -218,28 +250,28 @@
   &-onlyUpperLeft {
     border-radius: $br-lg;
     border-top-left-radius: $br-xtl;
-    border-bottom-left-radius: $br-lg;
   }
 
   &-onlyUpperRight {
     border-radius: $br-lg;
     border-top-right-radius: $br-xtl;
-    border-bottom-right-radius: $br-lg;
   }
 
   &-onlyLowerLeft {
     border-radius: $br-lg;
     border-bottom-left-radius: $br-xtl;
-    border-top-left-radius: $br-lg;
   }
 
   &-onlyLowerRight {
     border-radius: $br-lg;
     border-bottom-right-radius: $br-xtl;
-    border-top-right-radius: $br-lg;
   }
 
   &-rounded {
     border-radius: $br-xl;
+  }
+
+  &-roundedSquare {
+    border-radius: $br-sm;
   }
 }

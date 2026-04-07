@@ -1,0 +1,32 @@
+import * as React from 'react';
+interface IProps {
+  color?: string;
+  size?: string;
+  style?: React.CSSProperties;
+}
+const Pill = (props: IProps) => {
+  const { color, size = '15px', style } = props;
+
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 380 380"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        color: color,
+        justifyContent: 'center',
+        ...style,
+      }}
+    >
+      <path
+        d="M116.116 71.7851C169.162 18.7383 255.168 18.7383 308.215 71.7851C361.262 124.832 361.262 210.838 308.215 263.884L263.884 308.215C210.838 361.262 124.832 361.262 71.7851 308.215C18.7383 255.168 18.7383 169.162 71.7851 116.116L116.116 71.7851Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
+export default Pill;

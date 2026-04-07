@@ -1,7 +1,7 @@
-@use "@styles/variables" as *;
-@use "@styles/colors" as *;
-@use "@styles/functions" as *;
-@use "@styles/mixins" as *;
+@use '@styles/variables' as *;
+@use '@styles/colors' as *;
+@use '@styles/functions' as *;
+@use '@styles/mixins' as *;
 @use 'sass:math';
 
 .top-nav {
@@ -14,7 +14,7 @@
   background-color: $white;
   @include transition;
   transition-property: background-color, border-color;
-  border-bottom: toRem(1) solid $neutral-200;
+  border-bottom: toRem(1) solid $navy-pastel-200;
 
   &-left,
   &-right {
