@@ -26,9 +26,13 @@
     gap: toRem(10);
 
     span,
-    p {
+    a {
       font-variation-settings: 'FILL' 1;
       color: $black;
+    }
+
+    a::first-letter {
+      text-transform: uppercase;
     }
   }
 
