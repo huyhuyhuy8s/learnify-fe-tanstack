@@ -6,7 +6,8 @@ export type TSpecial =
   | 'course'
   | 'certificate'
   | 'private'
-  | 'public';
+  | 'public'
+  | TSubscription;
 export type TType = 'primary' | 'secondary' | 'outlined' | 'special';
 export type TRoundedCorner =
   | 'rounded'

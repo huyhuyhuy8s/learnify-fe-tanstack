@@ -4,3 +4,14 @@
 @use 'colors' as *;
 @use 'typography' as *;
 @use 'functions' as *;
+
+.separator {
+  width: 100%;
+  height: toRem(1);
+  background-color: $neutral-400;
+  border-radius: $br-xl;
+}
+
+.invisible {
+  visibility: hidden;
+}

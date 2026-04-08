@@ -50,6 +50,15 @@ const Icon = (props: IIcon) => {
             public
           </span>
         );
+
+      case 'starter':
+        return <span className="material-symbols-rounded">sell</span>;
+      case 'pro':
+        return (
+          <span className="material-symbols-rounded">business_center</span>
+        );
+      case 'career':
+        return <span className="material-symbols-rounded">star</span>;
     }
   }
 

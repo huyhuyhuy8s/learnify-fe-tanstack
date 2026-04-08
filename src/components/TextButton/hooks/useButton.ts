@@ -7,7 +7,7 @@ import {
 } from '../type';
 import classNames from 'classnames';
 
-interface IUseButtonProps {
+export interface IUseButtonProps {
   type: TType;
   roundedCorner: TRoundedCorner;
   size: TSize;
@@ -18,7 +18,7 @@ interface IUseButtonProps {
   tooltip: string;
 }
 
-const useButton = (props: IUseButtonProps) => {
+export const useButton = (props: IUseButtonProps) => {
   const {
     type,
     roundedCorner,
@@ -58,6 +58,11 @@ const useButton = (props: IUseButtonProps) => {
       "Foundational, 'evergreen' lessons accessible to everyone and indexed by search engines.",
     private:
       'Restricted content for specific organizations or memberships that require prerequisites to unlock.',
+    starter:
+      'Start learning with basic access to hands-on labs and earn your first skill badges.',
+    pro: 'Unlock unlimited hands-on learning from beginner to advanced levels.',
+    career:
+      'Launch your career in high-paying fields with the skills employers are looking for.',
   };
 
   const toolTipContent =
@@ -69,5 +74,3 @@ const useButton = (props: IUseButtonProps) => {
     toolTipContent,
   };
 };
-
-export default useButton;

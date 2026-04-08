@@ -1,0 +1,60 @@
+@use '@styles/variables' as *;
+@use '@styles/colors' as *;
+@use '@styles/functions' as *;
+@use '@styles/mixins' as *;
+
+.account-menu {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: toRem(20);
+  width: toRem(300);
+  padding: toRem(20);
+  border-radius: $br-xl;
+  border: toRem(2) solid $neutral-200;
+  background-color: $white;
+  top: toRem(65);
+  right: toRem(10);
+
+  .information {
+    display: flex;
+    gap: toRem(10);
+
+    .avatar {
+      background-color: $mode-neutral;
+      aspect-ratio: 1;
+      width: toRem(75);
+      border-radius: 50%;
+    }
+
+    .context {
+      display: flex;
+      flex-direction: column;
+      gap: toRem(5);
+
+      h6 {
+        color: $neutral-800;
+      }
+
+      p::first-letter {
+        text-transform: none;
+        color: $mode-neutral;
+      }
+    }
+  }
+
+  &-item {
+    display: flex;
+    place-items: center;
+    gap: toRem(15);
+
+    span,
+    p {
+      color: $mode-neutral;
+    }
+
+    span {
+      font-size: toRem(25);
+    }
+  }
+}

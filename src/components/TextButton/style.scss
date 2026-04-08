@@ -7,7 +7,9 @@
   display: flex;
   place-items: center;
   @include transition;
-  transition-property: all;
+  transition-property:
+    color, background-color, border-color, border-radius,
+    font-variation-settings;
   transition-duration: 500ms;
   border-style: dashed;
   border-color: transparent;
@@ -26,7 +28,7 @@
 
   span {
     @include transition;
-    transition-property: all;
+    transition-property: color;
     color: $neutral-100;
 
     &:not(.material-symbols-rounded)::first-letter {
@@ -193,6 +195,16 @@
 
       span {
         color: $white;
+      }
+    }
+
+    &-starter,
+    &-pro,
+    &-career {
+      background-color: $orange-pastel-200;
+
+      span {
+        color: $neutral-800;
       }
     }
   }

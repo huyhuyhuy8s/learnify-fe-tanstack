@@ -1,0 +1,11 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/functions" as *;
+@use "@styles/mixins" as *;
+
+.account-menu {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  gap: toRem(20);
+}

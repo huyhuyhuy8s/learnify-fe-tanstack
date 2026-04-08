@@ -1,14 +1,15 @@
 import './style.scss';
 import classNames from 'classnames';
-import { useState, useMemo } from "react";
+import { useState, useMemo } from 'react';
 
 interface IconButtonProp {
   icon: string;
-  type?: "primary" | "special" | "secondary" | "outlined" | "custom";
-  state?: "default" | "hover" | "clicked" | "clickedHover";
-  shape?: "square" | "circle";
+  onClick: () => void;
+  type?: 'primary' | 'special' | 'secondary' | 'outlined' | 'custom';
+  state?: 'default' | 'hover' | 'clicked' | 'clickedHover';
+  shape?: 'square' | 'circle';
   specialIcon?: string;
-  size?: "tiny" | "small" | "medium" | "large";
+  size?: 'tiny' | 'small' | 'medium' | 'large';
   color?: string;
   backgroundColor?: string;
   fill?: boolean;
@@ -17,26 +18,31 @@ interface IconButtonProp {
 const IconButton = (props: IconButtonProp) => {
   const {
     icon,
-    type = "primary",
-    state = "default",
-    shape = "square",
-    specialIcon = "search",
-    size = "medium",
-    color = "#fff",
-    backgroundColor = "none",
+    onClick,
+    type = 'primary',
+    state = 'default',
+    shape = 'square',
+    specialIcon = 'search',
+    size = 'medium',
+    color = '#fff',
+    backgroundColor = 'none',
     fill = false,
   } = props;
 
-  const [clicked, setClicked] = useState(false)
+  const [clicked, setClicked] = useState(false);
   const buttonClassName = classNames('icon-button', type, state, shape, size);
-  const iconClassName = classNames('material-symbols-rounded', { 'filled': fill });
+  const iconClassName = classNames('material-symbols-rounded', {
+    filled: fill,
+  });
   const iconVal = useMemo(
-    () => (clicked ? specialIcon : icon)
-    , [clicked])
+    () => (clicked ? specialIcon : icon),
+    [clicked, specialIcon, icon]
+  );
 
   const handleClick = () => {
     setClicked(!clicked);
-  }
+    onClick();
+  };
 
   return (
     <button
@@ -47,11 +53,9 @@ const IconButton = (props: IconButtonProp) => {
       }}
       onClick={handleClick}
     >
-      <span className={iconClassName}>
-        {iconVal}
-      </span>
+      <span className={iconClassName}>{iconVal}</span>
     </button>
-  )
-}
+  );
+};
 
 export default IconButton;
