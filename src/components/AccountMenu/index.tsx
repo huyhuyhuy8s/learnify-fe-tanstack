@@ -21,7 +21,6 @@ const AccountMenu = (props: IAccountMenuProps) => {
     <div className={`account-menu ${className}`}>
       <div className="information">
         <Link to={userProfileLink}>
-          {' '}
           <div className="avatar"></div>
         </Link>
         <div className="context">
