@@ -1,33 +1,52 @@
+import { Fragment } from 'react';
 import { Link } from '@tanstack/react-router';
+import { Tooltip } from 'react-tooltip';
 
 interface TopNavLeftProps {
   pathname: string[];
+  lastPathname: string;
+  pathnameWithoutLast: string[];
 }
 
 const TopNavLeft = (props: TopNavLeftProps) => {
-  const { pathname, ...rest } = props;
+  const { pathname, lastPathname, pathnameWithoutLast } = props;
 
-  const content = pathname.length >= 2 && (
-    <>
-      <Link to="/learner">
-        <span className="material-symbols-rounded">home</span>
-      </Link>
-      {pathname.map((item, index) => (
-        <>
-          <span key={index} className="material-symbols-rounded">
-            keyboard_arrow_right
-          </span>
-          <Link
-            href={`/learner/${pathname.slice(0, index + 1).join('/')}`}
-            to="/learner"
-            key={item}
-          >
-            {item}
-          </Link>
-        </>
-      ))}
-    </>
-  );
+  const content =
+    pathname.length >= 4 ? (
+      <>
+        <Link to="/learner">
+          <span className="material-symbols-rounded">home</span>
+        </Link>
+        <span className="material-symbols-rounded">keyboard_arrow_right</span>
+        <button className="more medium">...</button>
+        <span className="material-symbols-rounded">keyboard_arrow_right</span>
+        <button className="medium">{lastPathname}</button>
+        <Tooltip
+          anchorSelect=".more"
+          content={pathnameWithoutLast.join(' / ')}
+        />
+      </>
+    ) : pathname.length >= 2 ? (
+      <>
+        <Link to="/learner">
+          <span className="material-symbols-rounded">home</span>
+        </Link>
+        {pathname.map((item, index) => (
+          <Fragment key={item}>
+            <span className="material-symbols-rounded">
+              keyboard_arrow_right
+            </span>
+            <Link
+              href={`/learner/${pathname.slice(0, index + 1).join('/')}`}
+              to="/learner"
+              className="medium"
+            >
+              {item}
+            </Link>
+          </Fragment>
+        ))}
+      </>
+    ) : null;
 
   return <div className="top-nav-left">{content}</div>;
 };

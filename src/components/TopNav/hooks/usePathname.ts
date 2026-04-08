@@ -3,13 +3,17 @@ interface IProps {
 }
 
 const usePathname = (props: IProps) => {
-  const { pathnames, ...rest } = props;
+  const { pathnames } = props;
   const pathname = pathnames
     .substring(1)
     .split('/')
     .filter((item, index) => index !== 0);
+  const lastPathname = pathname[pathname.length - 1];
+  const pathnameWithoutLast = pathname.slice(0, pathname.length - 1);
   return {
     pathname,
+    lastPathname,
+    pathnameWithoutLast,
   };
 };
 
