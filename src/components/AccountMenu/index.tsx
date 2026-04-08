@@ -2,21 +2,28 @@ import TextButton from '@/components/TextButton';
 import AccountMenuItem from './components/AccountMenuItem';
 import './style.scss';
 import { TSubscription } from '@/types/global';
+import { Link } from '@tanstack/react-router';
 
 interface IAccountMenuProps {
   username: string;
   uid: string;
+  id: string;
   subscription: TSubscription;
   className?: string;
 }
 
 const AccountMenu = (props: IAccountMenuProps) => {
-  const { username, uid, subscription, className } = props;
+  const { username, uid, subscription, className, id } = props;
+
+  const userProfileLink = `/learner/user/${id}`;
 
   return (
     <div className={`account-menu ${className}`}>
       <div className="information">
-        <div className="avatar"></div>
+        <Link to={userProfileLink}>
+          {' '}
+          <div className="avatar"></div>
+        </Link>
         <div className="context">
           <h6 className="bold">{username}</h6>
           <p>{uid}</p>
@@ -29,10 +36,20 @@ const AccountMenu = (props: IAccountMenuProps) => {
         </div>
       </div>
       <div className="separator"></div>
-      <AccountMenuItem icon="person" text="Profile" />
-      <AccountMenuItem icon="subscriptions" text="Subscription" />
-      <AccountMenuItem icon="settings" text="Settings" />
-      <AccountMenuItem icon="logout" text="Logout" />
+      <div className="item-holder">
+        <AccountMenuItem icon="person" text="Profile" to={userProfileLink} />
+        <AccountMenuItem
+          icon="subscriptions"
+          text="Subscription"
+          to="/learner/subscription"
+        />
+        <AccountMenuItem
+          icon="settings"
+          text="Settings"
+          to="/learner/settings"
+        />
+        <AccountMenuItem icon="logout" text="Logout" to="/learner/logout" />
+      </div>
     </div>
   );
 };

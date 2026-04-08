@@ -1,13 +1,16 @@
+import { Link } from '@tanstack/react-router';
+
 interface IAccountMenuItemProps {
   icon: string;
   text: string;
+  to: string;
 }
 
-const AccountMenuItem = ({ icon, text }: IAccountMenuItemProps) => (
-  <div className="account-menu-item">
-    <span className="material-symbols-rounded">{icon}</span>
-    <p className="medium">{text}</p>
-  </div>
+const AccountMenuItem = ({ icon, text, to }: IAccountMenuItemProps) => (
+  <Link className="account-menu-item" to={to}>
+    <span className="material-symbols-rounded"> {icon}</span>
+    <small className="medium">{text}</small>
+  </Link>
 );
 
 export default AccountMenuItem;

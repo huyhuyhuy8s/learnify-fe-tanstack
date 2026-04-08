@@ -27,13 +27,15 @@ const TopNavRight = () => {
       </div>
       <IconButton
         icon="notifications_active"
+        specialIcon="notifications"
         type="outlined"
         size="tiny"
         shape="circle"
         onClick={() => {}}
       />
       <IconButton
-        icon="person_alert"
+        icon="person"
+        specialIcon="person"
         type="outlined"
         size="tiny"
         shape="circle"
@@ -42,6 +44,7 @@ const TopNavRight = () => {
       <AccountMenu
         username="huybua"
         uid="@huybua"
+        id="123"
         subscription="starter"
         className={accountMenuClassName}
       />
