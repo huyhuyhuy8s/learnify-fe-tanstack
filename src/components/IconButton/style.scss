@@ -18,116 +18,116 @@
     transition-property: font-variation-settings color;
     aspect-ratio: 1 / 1;
   }
-}
 
-.medium {
-  padding: toRem(18);
-  width: toRem(70);
-
-  span {
-    font-size: toRem(30);
-  }
-}
-
-.small {
-  padding: toRem(13);
-  width: toRem(56);
-
-  span {
-    font-size: toRem(24);
-  }
-}
-
-.tiny {
-  padding: toRem(8);
-  width: toRem(40);
-  border-width: toRem(1) !important;
-
-  span {
-    font-size: toRem(18);
-  }
-}
-
-.material-symbols-rounded.filled {
-  font-variation-settings: 'FILL' 1;
-}
-
-.primary {
-  background-color: $mode-green;
-
-  span {
-    color: $neutral-200;
-  }
-
-  &:hover {
-    background-color: $green-600;
+  &.medium {
+    padding: toRem(18);
+    width: toRem(70);
 
     span {
-      font-variation-settings: 'FILL' 1;
-      color: $neutral-100;
+      font-size: toRem(30);
     }
   }
 
-  &:active {
-    background-color: $green-500;
+  &.small {
+    padding: toRem(13);
+    width: toRem(56);
 
     span {
-      color: $neutral-900;
-    }
-  }
-}
-
-.secondary {
-  background-color: inherit;
-
-  span {
-    color: $mode-green;
-  }
-
-  &:hover {
-    span {
-      font-variation-settings: 'FILL' 1;
-      color: $green-600;
+      font-size: toRem(24);
     }
   }
 
-  &:active {
-    span {
-      color: $green-500;
-    }
-  }
-}
-
-.outlined {
-  background-color: inherit;
-  border: toRem(2) solid $mode-green;
-
-  span {
-    color: $mode-green;
-  }
-
-  &:hover {
-    border-color: $green-600;
+  &.tiny {
+    padding: toRem(8);
+    width: toRem(40);
+    border-width: toRem(1) !important;
 
     span {
-      font-variation-settings: 'FILL' 1;
-      color: $green-600;
+      font-size: toRem(18);
     }
   }
 
-  &:active {
-    border-color: $green-500;
+  &.material-symbols-rounded.filled {
+    font-variation-settings: 'FILL' 1;
+  }
+
+  &.primary {
+    background-color: $mode-green;
 
     span {
-      color: $green-500;
+      color: $neutral-200;
+    }
+
+    &:hover {
+      background-color: $green-600;
+
+      span {
+        font-variation-settings: 'FILL' 1;
+        color: $neutral-100;
+      }
+    }
+
+    &:active {
+      background-color: $green-500;
+
+      span {
+        color: $neutral-900;
+      }
     }
   }
-}
 
-.square {
-  border-radius: $br-md;
-}
+  &.secondary {
+    background-color: inherit;
 
-.circle {
-  border-radius: $br-rounded;
+    span {
+      color: $mode-green;
+    }
+
+    &:hover {
+      span {
+        font-variation-settings: 'FILL' 1;
+        color: $green-600;
+      }
+    }
+
+    &:active {
+      span {
+        color: $green-500;
+      }
+    }
+  }
+
+  &.outlined {
+    background-color: inherit;
+    border: toRem(2) solid $mode-green;
+
+    span {
+      color: $mode-green;
+    }
+
+    &:hover {
+      border-color: $green-600;
+
+      span {
+        font-variation-settings: 'FILL' 1;
+        color: $green-600;
+      }
+    }
+
+    &:active {
+      border-color: $green-500;
+
+      span {
+        color: $green-500;
+      }
+    }
+  }
+
+  &.square {
+    border-radius: $br-md;
+  }
+
+  &.circle {
+    border-radius: $br-rounded;
+  }
 }

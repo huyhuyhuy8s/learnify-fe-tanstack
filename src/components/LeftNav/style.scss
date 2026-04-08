@@ -14,7 +14,7 @@
   background-color: $white;
   @include transition;
   transition-property: background-color, border-color, margin-left;
-  border-right: toRem(1) solid $neutral-200;
+  border-right: toRem(1) solid $navy-pastel-200;
 
   &.active {
     margin-left: 0;

@@ -1,0 +1,32 @@
+import * as React from 'react';
+interface IProps {
+  color?: string;
+  size?: string;
+  style?: React.CSSProperties;
+}
+const PixelTriangle = (props: IProps) => {
+  const { color, size = '15px', style } = props;
+
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 380 380"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        color: color,
+        justifyContent: 'center',
+        ...style,
+      }}
+    >
+      <path
+        d="M121.641 30H66V350H121.641V322.174H164.564V295.739H209.077V265.13H245.641V240.086H282.205V209.478H314V170.522H282.205V139.912H245.641V114.869H209.077V84.2609H164.564V57.8262H121.641V30Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
+export default PixelTriangle;

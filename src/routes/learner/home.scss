@@ -1,0 +1,15 @@
+@use '@styles/mixins' as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+@use "@styles/variables" as *;
+
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: toRem(50);
+
+  &>div {
+    display: flex;
+    gap: toRem(10);
+  }
+}

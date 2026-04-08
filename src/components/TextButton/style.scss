@@ -1,0 +1,277 @@
+@use '@styles/functions' as *;
+@use '@styles/variables' as *;
+@use '@styles/mixins' as *;
+@use '@styles/colors' as *;
+
+.text-button {
+  display: flex;
+  place-items: center;
+  @include transition;
+  transition-property: all;
+  transition-duration: 500ms;
+  border-style: dashed;
+  border-color: transparent;
+
+  .tooltip {
+    max-width: toRem(400);
+  }
+
+  &:hover {
+    border-radius: $br-xs;
+  }
+
+  &:active {
+    font-variation-settings: 'FILL' 1;
+  }
+
+  span {
+    @include transition;
+    transition-property: all;
+    color: $neutral-100;
+
+    &:not(.material-symbols-rounded)::first-letter {
+      text-transform: uppercase;
+    }
+  }
+
+  &.large {
+    padding: toRem(10) toRem(25);
+    gap: toRem(10);
+    border-width: toRem(2);
+
+    .material-symbols-rounded {
+      font-size: toRem(30);
+    }
+
+    .text {
+      font-size: $fs-heading6;
+      font-weight: $fw-semibold;
+      line-height: 125%;
+    }
+  }
+
+  &.medium {
+    padding: toRem(10) toRem(20);
+    gap: toRem(10);
+    border-width: toRem(2);
+
+    .material-symbols-rounded {
+      font-size: toRem(25);
+    }
+
+    .text {
+      font-size: $fs-heading6;
+      font-weight: $fw-medium;
+      line-height: 125%;
+    }
+  }
+
+  &.small {
+    padding: toRem(7.5) toRem(15);
+    gap: toRem(10);
+    border-width: toRem(1);
+
+    .material-symbols-rounded {
+      font-size: toRem(20);
+    }
+
+    .text {
+      font-size: $fs-paragraph;
+      font-weight: $fw-medium;
+      line-height: 125%;
+    }
+  }
+
+  &.tiny {
+    padding: toRem(5) toRem(10);
+    border-width: toRem(1);
+    gap: toRem(5);
+
+    .material-symbols-rounded {
+      font-size: toRem(15);
+    }
+
+    .text {
+      font-size: $fs-smaller;
+      font-weight: $fw-regular;
+    }
+  }
+
+  &.primary {
+    background-color: $mode-green;
+
+    span {
+      color: $neutral-100;
+    }
+
+    &:hover {
+      background-color: $green-600;
+
+      span {
+        color: $neutral-200;
+      }
+    }
+
+    &:active {
+      background-color: $green-400;
+
+      span {
+        color: $neutral-900;
+      }
+    }
+  }
+
+  &.secondary {
+    background-color: transparent;
+
+    span {
+      color: $neutral-800;
+    }
+
+    &:hover {
+      border-color: $neutral-900;
+
+      span {
+        color: $neutral-900;
+      }
+    }
+
+    &:active {
+      border-color: $neutral-900;
+      background-color: $neutral-250;
+
+      span {
+        color: $neutral-900;
+      }
+    }
+  }
+
+  &.outlined {
+    background-color: transparent;
+    border-color: $neutral-800;
+    border-style: solid;
+
+    span {
+      color: $neutral-800;
+    }
+
+    &:hover {
+      border-color: $neutral-900;
+
+      span {
+        color: $neutral-900;
+      }
+    }
+
+    &:active {
+      border-color: $neutral-900;
+      background-color: $neutral-250;
+
+      span {
+        color: $neutral-900;
+      }
+    }
+  }
+
+  &.special.typeSpecial {
+    &-lesson,
+    &-roadmap,
+    &-lab,
+    &-course,
+    &-check,
+    &-certificate {
+      background-color: $navy-pastel-200;
+
+      span {
+        color: $neutral-800;
+      }
+    }
+
+    &-private,
+    &-public {
+      background-color: $mode-neutral;
+
+      span {
+        color: $white;
+      }
+    }
+  }
+}
+
+.corner {
+  &-exceptLowerLeft {
+    border-radius: $br-rounded;
+    border-top-left-radius: $br-xtl;
+    border-bottom-left-radius: $br-lg;
+  }
+
+  &-exceptLowerRight {
+    border-radius: $br-rounded;
+    border-top-right-radius: $br-xtl;
+    border-bottom-right-radius: $br-lg;
+  }
+
+  &-exceptUpperLeft {
+    border-radius: $br-rounded;
+    border-bottom-left-radius: $br-xtl;
+    border-top-left-radius: $br-lg;
+  }
+
+  &-exceptUpperRight {
+    border-radius: $br-rounded;
+    border-bottom-right-radius: $br-xtl;
+    border-top-right-radius: $br-lg;
+  }
+
+  &-exceptLeft {
+    border-radius: $br-xtl;
+    border-top-left-radius: $br-lg;
+    border-bottom-left-radius: $br-lg;
+  }
+
+  &-exceptRight {
+    border-radius: $br-xtl;
+    border-top-right-radius: $br-lg;
+    border-bottom-right-radius: $br-lg;
+  }
+
+  &-exceptUpper {
+    border-radius: $br-xtl;
+    border-top-left-radius: $br-lg;
+    border-top-right-radius: $br-lg;
+  }
+
+  &-exceptLower {
+    border-radius: $br-xtl;
+    border-bottom-left-radius: $br-lg;
+    border-bottom-right-radius: $br-lg;
+  }
+
+  &-onlyUpperLeft {
+    border-radius: $br-lg;
+    border-top-left-radius: $br-xtl;
+  }
+
+  &-onlyUpperRight {
+    border-radius: $br-lg;
+    border-top-right-radius: $br-xtl;
+  }
+
+  &-onlyLowerLeft {
+    border-radius: $br-lg;
+    border-bottom-left-radius: $br-xtl;
+  }
+
+  &-onlyLowerRight {
+    border-radius: $br-lg;
+    border-bottom-right-radius: $br-xtl;
+  }
+
+  &-rounded {
+    border-radius: $br-xl;
+  }
+
+  &-roundedSquare {
+    border-radius: $br-sm;
+  }
+}
