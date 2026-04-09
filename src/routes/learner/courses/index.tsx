@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { MOCK_COURSES } from '@/mock/course';
-import CourseCard from '@/components/Card/components/CourseCard';
 import './style.scss';
+import SpecialCard from '@/components/Card/components/SpecialCard';
 export const Route = createFileRoute('/learner/courses/')({
   component: PostsIndexComponent,
 });
@@ -25,14 +25,15 @@ function PostsIndexComponent() {
       </div>
       <div className="course-list">
         {MOCK_COURSES.map((course) => (
-          <CourseCard
-            key={course.id}
-            titleIcon={course.titleIcon}
-            type={course.type}
-            typeSpecial={course.typeSpecial}
-            title={course.title}
-            description={course.description}
-            duration={course.duration}
+          <SpecialCard
+            key={course?.id}
+            titleIcon={course?.titleIcon}
+            typeSpecial={course?.typeSpecial}
+            title={course?.title}
+            description={course?.description}
+            duration={course?.duration}
+            status={course?.status}
+            percentage={course?.percentage}
             onClick={() => console.log(`Clicked on course: ${course.title}`)}
           />
         ))}

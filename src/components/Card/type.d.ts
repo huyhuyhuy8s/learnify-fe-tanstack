@@ -1,6 +1,7 @@
 import { TSpecial, TType } from '../TextButton/type';
-import { type } from './../TextButton/type.d';
+import { type } from '@/components/TextButton/type';
 
+export type StatusCard = 'default' | 'inProgress' | 'completed' | 'locked';
 export interface CourseCardProps {
   className?: string;
   onClick: () => void;
@@ -8,6 +9,7 @@ export interface CourseCardProps {
   description: string;
   duration?: string;
   titleIcon: string;
-  type?: TType;
   typeSpecial?: TSpecial;
+  status?: StatusCard;
+  percentage?: number;
 }
