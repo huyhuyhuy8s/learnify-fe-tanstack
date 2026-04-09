@@ -1,5 +1,5 @@
 {
   "semicolons": true,
-  "quoteStyle": "single",
+  "quoteStyle": "double",
   "generatedRouteTree": "src/routeTree.gen.ts"
 }
