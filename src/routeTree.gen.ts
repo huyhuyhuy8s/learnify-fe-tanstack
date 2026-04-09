@@ -448,7 +448,7 @@ const LearnerRouteRouteChildren: LearnerRouteRouteChildren = {
 };
 
 const LearnerRouteRouteWithChildren = LearnerRouteRoute._addFileChildren(
-  LearnerRouteRouteChildren
+  LearnerRouteRouteChildren,
 );
 
 interface ApiUsersRouteChildren {
@@ -460,7 +460,7 @@ const ApiUsersRouteChildren: ApiUsersRouteChildren = {
 };
 
 const ApiUsersRouteWithChildren = ApiUsersRoute._addFileChildren(
-  ApiUsersRouteChildren
+  ApiUsersRouteChildren,
 );
 
 const rootRouteChildren: RootRouteChildren = {

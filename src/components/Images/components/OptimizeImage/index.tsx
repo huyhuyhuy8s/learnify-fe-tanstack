@@ -1,31 +1,31 @@
-import { useState, useRef, useEffect } from 'react'
-import { Image } from '@unpic/react'
-import { cn } from '@/utils'
-import './style.scss'
+import { useState, useRef, useEffect } from 'react';
+import { Image } from '@unpic/react';
+import { cn } from '@/utils';
+import './style.scss';
 
 type OptimizeImageProps = {
-  src: string
-  alt: string
-  folder?: string
-  className?: string
-}
+  src: string;
+  alt: string;
+  folder?: string;
+  className?: string;
+};
 
-const OptimizeImage = ({
-  src,
-  alt,
-  folder,
-  className
-}: OptimizeImageProps) => {
-  const [isLoaded, setIsLoaded] = useState<boolean>(false)
-  const imgRef = useRef<HTMLImageElement>(null)
+const OptimizeImage = ({ src, alt, folder, className }: OptimizeImageProps) => {
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [currentSrc, setCurrentSrc] = useState<string>(src);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  if (src !== currentSrc) {
+    setCurrentSrc(src);
+    setIsLoaded(false);
+  }
 
   useEffect(() => {
-    if (imgRef.current?.complete) {
-      setIsLoaded(true)
-    } else {
-      setIsLoaded(false)
+    if (imgRef.current?.complete && !isLoaded) {
+      const timer = setTimeout(() => setIsLoaded(true), 0);
+      return () => clearTimeout(timer);
     }
-  }, [src])
+  }, [currentSrc, isLoaded]);
 
   const renderContent = () => {
     if (!src) {
@@ -33,13 +33,14 @@ const OptimizeImage = ({
         <div className="optimize-image-empty">
           <span className="optimize-image-empty-text">No image available</span>
         </div>
-      )
+      );
     }
 
-    const isExternal = src.startsWith('http') || src.startsWith('/') || src.startsWith('data:')
+    const isExternal =
+      src.startsWith('http') || src.startsWith('/') || src.startsWith('data:');
     const imageKitURL = isExternal
       ? src
-      : `https://ik.imagekit.io/q4phit8d9e/${folder ? `${folder}/` : ''}${src}.png`
+      : `https://ik.imagekit.io/q4phit8d9e/${folder ? `${folder}/` : ''}${src}.png`;
 
     return (
       <>
@@ -59,14 +60,10 @@ const OptimizeImage = ({
           )}
         />
       </>
-    )
-  }
+    );
+  };
 
-  return (
-    <div className="optimize-image-container">
-      {renderContent()}
-    </div>
-  )
-}
+  return <div className="optimize-image-container">{renderContent()}</div>;
+};
 
-export default OptimizeImage
+export default OptimizeImage;

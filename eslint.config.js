@@ -9,7 +9,23 @@ import pluginQuery from '@tanstack/eslint-plugin-query';
 import pluginRouter from '@tanstack/eslint-plugin-router';
 
 export default tseslint.config(
-  { ignores: ['dist', 'build', '.output', 'node_modules', '.vinxi'] },
+  {
+    ignores: [
+      'dist',
+      'build',
+      '.output',
+      'node_modules',
+      '.vinxi',
+      'src/routeTree.gen.ts',
+      'lambda',
+      'scripts',
+      'config',
+      '.history',
+      'public',
+      'dist',
+      'mock',
+    ],
+  },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx,js,jsx}'],
