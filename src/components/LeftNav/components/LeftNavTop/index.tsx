@@ -1,4 +1,4 @@
-import IconButton from '@/components/IconButton';
+import IconButton from "@/components/IconButton";
 import LeftNavItem from "../LeftNavItem";
 import { topItems } from "../../constants";
 
@@ -7,11 +7,11 @@ interface LeftNavTopProps {
 }
 
 const LeftNavTop = (props: LeftNavTopProps) => {
-  const { pathname, ...rest } = props
+  const { pathname, ...rest } = props;
 
   return (
     <div className="left-nav-top">
-      <IconButton icon="search" size='small' />
+      <IconButton icon="search" size="small" />
       <div className="item-list">
         {topItems.map((item) => (
           <LeftNavItem
@@ -24,7 +24,7 @@ const LeftNavTop = (props: LeftNavTopProps) => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LeftNavTop
+export default LeftNavTop;

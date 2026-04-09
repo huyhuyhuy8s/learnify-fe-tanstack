@@ -1,4 +1,4 @@
-import IconButton from '@/components/IconButton';
+import IconButton from "@/components/IconButton";
 
 const LeftNavBot = () => {
   return (
@@ -18,7 +18,7 @@ const LeftNavBot = () => {
         size="small"
       />
     </div>
-  )
-}
+  );
+};
 
-export default LeftNavBot
+export default LeftNavBot;

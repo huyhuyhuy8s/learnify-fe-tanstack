@@ -1,1 +1,1 @@
-export type TSubscription = 'starter' | 'pro' | 'career';
+export type TSubscription = "starter" | "pro" | "career";

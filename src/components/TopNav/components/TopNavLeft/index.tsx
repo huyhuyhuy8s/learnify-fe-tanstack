@@ -1,6 +1,6 @@
-import { Fragment } from 'react';
-import { Link } from '@tanstack/react-router';
-import { Tooltip } from 'react-tooltip';
+import { Fragment } from "react";
+import { Link } from "@tanstack/react-router";
+import { Tooltip } from "react-tooltip";
 
 interface TopNavLeftProps {
   pathname: string[];
@@ -23,7 +23,7 @@ const TopNavLeft = (props: TopNavLeftProps) => {
         <button className="medium">{lastPathname}</button>
         <Tooltip
           anchorSelect=".more"
-          content={pathnameWithoutLast.join(' / ')}
+          content={pathnameWithoutLast.join(" / ")}
         />
       </>
     ) : pathname.length >= 2 ? (
@@ -37,7 +37,7 @@ const TopNavLeft = (props: TopNavLeftProps) => {
               keyboard_arrow_right
             </span>
             <Link
-              href={`/learner/${pathname.slice(0, index + 1).join('/')}`}
+              href={`/learner/${pathname.slice(0, index + 1).join("/")}`}
               to="/learner"
               className="medium"
             >

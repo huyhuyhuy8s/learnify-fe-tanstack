@@ -1,7 +1,7 @@
-import classNames from 'classnames'
-import { useState } from 'react'
-import { Link } from '@tanstack/react-router'
-import './style.scss'
+import classNames from "classnames";
+import { useState } from "react";
+import { Link } from "@tanstack/react-router";
+import "./style.scss";
 
 interface LeftNavItemProps {
   iconName: string;
@@ -11,16 +11,11 @@ interface LeftNavItemProps {
 }
 
 const LeftNavItem = (props: LeftNavItemProps) => {
-  const {
-    iconName,
-    label,
-    href,
-    className = '',
-  } = props
-  const [fill, setFill] = useState(false)
+  const { iconName, label, href, className = "" } = props;
+  const [fill, setFill] = useState(false);
   const iconClassName = classNames(
-    'material-symbols-rounded',
-    { 'filled': fill },
+    "material-symbols-rounded",
+    { filled: fill },
     className
   );
 
@@ -28,16 +23,12 @@ const LeftNavItem = (props: LeftNavItemProps) => {
     <div className="left-nav-top-item">
       <Link className="link-box" to={href} activeOptions={{ exact: true }}>
         <div className="icon-box">
-          <span className={iconClassName}>
-            {iconName}
-          </span>
+          <span className={iconClassName}>{iconName}</span>
         </div>
-        <small>
-          {label}
-        </small>
+        <small>{label}</small>
       </Link>
     </div>
-  )
-}
+  );
+};
 
-export default LeftNavItem
+export default LeftNavItem;

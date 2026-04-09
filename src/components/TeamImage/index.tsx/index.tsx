@@ -1,5 +1,5 @@
-import { OptimizeImage } from '@/components/Images';
-import { teamMembers } from '@/mock/team-member';
+import { OptimizeImage } from "@/components/Images";
+import { teamMembers } from "@/mock/team-member";
 
 interface TeamMemberProps {
   name: string;
@@ -10,17 +10,17 @@ interface TeamMemberProps {
   };
 }
 
-const AIMembers = teamMembers.filter(member =>
-  member.jobTitle.includes('AI')
-)
+const AIMembers = teamMembers.filter((member) =>
+  member.jobTitle.includes("AI")
+);
 
-const fullstackMembers = teamMembers.filter(member =>
-  member.jobTitle.includes('Fullstack')
-)
+const fullstackMembers = teamMembers.filter((member) =>
+  member.jobTitle.includes("Fullstack")
+);
 
-const frontendMembers = teamMembers.filter(member =>
-  member.jobTitle.includes('Frontend')
-)
+const frontendMembers = teamMembers.filter((member) =>
+  member.jobTitle.includes("Frontend")
+);
 
 function TeamMember({ name, jobTitle, image }: TeamMemberProps) {
   return (
@@ -38,7 +38,7 @@ function TeamMember({ name, jobTitle, image }: TeamMemberProps) {
         <p className="text-[1.5rem] font-normal">{jobTitle}</p>
       </div>
     </div>
-  )
+  );
 }
 
 export default function TeamImage() {
@@ -58,5 +58,5 @@ export default function TeamImage() {
         ))}
       </div>
     </div>
-  )
+  );
 }

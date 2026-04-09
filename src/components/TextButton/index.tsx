@@ -1,22 +1,22 @@
-import './style.scss';
-import { ITextButtonProps } from './type';
-import Icon from './components/Icon';
-import { Tooltip } from 'react-tooltip';
-import { useButton } from './hooks/useButton';
+import "./style.scss";
+import { ITextButtonProps } from "./type";
+import Icon from "./components/Icon";
+import { Tooltip } from "react-tooltip";
+import { useButton } from "./hooks/useButton";
 
 const TextButton = (props: ITextButtonProps) => {
   const {
-    icon = 'search',
+    icon = "search",
     leftIcon = true,
     rightIcon = false,
-    text = 'Button',
-    type = 'primary',
-    roundedCorner = 'rounded',
-    size = 'large',
-    typeSecondary = 'default',
-    shape = 'circular',
-    typeSpecial = 'lesson',
-    tooltip = '',
+    text = "Button",
+    type = "primary",
+    roundedCorner = "rounded",
+    size = "large",
+    typeSecondary = "default",
+    shape = "circular",
+    typeSpecial = "lesson",
+    tooltip = "",
     style,
   } = props;
 
@@ -48,7 +48,7 @@ const TextButton = (props: ITextButtonProps) => {
       />
       {toolTipContent && (
         <Tooltip
-          anchorSelect={`.${buttonClassNames.split(' ').join('.')}`}
+          anchorSelect={`.${buttonClassNames.split(" ").join(".")}`}
           content={toolTipContent}
           className="tooltip"
         />

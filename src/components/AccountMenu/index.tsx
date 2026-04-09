@@ -1,8 +1,8 @@
-import TextButton from '@/components/TextButton';
-import AccountMenuItem from './components/AccountMenuItem';
-import './style.scss';
-import { TSubscription } from '@/types/global';
-import { Link } from '@tanstack/react-router';
+import TextButton from "@/components/TextButton";
+import AccountMenuItem from "./components/AccountMenuItem";
+import "./style.scss";
+import { TSubscription } from "@/types/global";
+import { Link } from "@tanstack/react-router";
 
 interface IAccountMenuProps {
   username: string;

@@ -1,8 +1,8 @@
-import AccountMenu from '@/components/AccountMenu';
-import IconButton from '@/components/IconButton';
-import classNames from 'classnames';
-import { useMemo, useState, useRef } from 'react';
-import useOnClickOutside from '@/hooks/useOnClickOutside';
+import AccountMenu from "@/components/AccountMenu";
+import IconButton from "@/components/IconButton";
+import classNames from "classnames";
+import { useMemo, useState, useRef } from "react";
+import useOnClickOutside from "@/hooks/useOnClickOutside";
 
 const TopNavRight = () => {
   const [accountMenuVisible, setAccountMenuVisible] = useState(false);
