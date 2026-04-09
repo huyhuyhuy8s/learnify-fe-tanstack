@@ -2,11 +2,14 @@ import { createFileRoute } from '@tanstack/react-router';
 import { MOCK_COURSES } from '@/mock/course';
 import './style.scss';
 import SpecialCard from '@/components/Card/components/SpecialCard';
+import { useNavigate } from '@tanstack/react-router';
 export const Route = createFileRoute('/learner/courses/')({
   component: PostsIndexComponent,
 });
 
 function PostsIndexComponent() {
+  const navigate = useNavigate();
+
   return (
     <div className="container">
       <h3 className="title"> Explore Our Courses that are the best for you</h3>
@@ -34,7 +37,12 @@ function PostsIndexComponent() {
             duration={course?.duration}
             status={course?.status}
             percentage={course?.percentage}
-            onClick={() => console.log(`Clicked on course: ${course.title}`)}
+            onClick={() =>
+              navigate({
+                to: '/learner/courses/$postId',
+                params: { postId: course.id.toString() },
+              })
+            }
           />
         ))}
       </div>

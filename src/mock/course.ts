@@ -9,6 +9,7 @@ type MockCourse = {
   description: string;
   duration: string;
   status?: StatusCard;
+  listFeature?: string[];
   percentage?: number;
 };
 
@@ -22,6 +23,7 @@ export const MOCK_COURSES: MockCourse[] = [
       'In this course, you learn how Gemini, a generative AI-powered collaborator from Google Cloud, helps analyze customer data, predict trends, and optimize workflows.',
     duration: '2 hours',
     status: 'inProgress',
+    listFeature: ['Data Analysis', 'Trend Prediction', 'Workflow Optimization'],
     percentage: 14,
   },
   {
@@ -33,6 +35,7 @@ export const MOCK_COURSES: MockCourse[] = [
       'Learn the fundamentals of Generative AI, how it differs from traditional machine learning, and explore the core technologies behind large language models.',
     duration: '45 mins',
     status: 'default',
+    listFeature: ['Data Analysis', 'Trend Prediction', 'Workflow Optimization'],
   },
   {
     id: 3,
@@ -43,6 +46,7 @@ export const MOCK_COURSES: MockCourse[] = [
       'Master routing, data fetching, and state management in modern React applications using the powerful TanStack ecosystem.',
     duration: '3.5 hours',
     status: 'completed',
+    listFeature: ['Data Analysis', 'Trend Prediction', 'Workflow Optimization'],
   },
   {
     id: 3,
@@ -53,5 +57,6 @@ export const MOCK_COURSES: MockCourse[] = [
       'Master routing, data fetching, and state management in modern React applications using the powerful TanStack ecosystem.',
     duration: '3.5 hours',
     status: 'locked',
+    listFeature: ['Data Analysis', 'Trend Prediction', 'Workflow Optimization'],
   },
 ];

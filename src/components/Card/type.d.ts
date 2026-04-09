@@ -13,3 +13,13 @@ export interface CourseCardProps {
   status?: StatusCard;
   percentage?: number;
 }
+
+export interface DecorationCardProps {
+  className?: string;
+  title: string;
+  titleIcon: string;
+  listFeature?: string[];
+  typeSpecial?: TSpecial;
+  status?: StatusCard;
+  percentage?: number;
+}
