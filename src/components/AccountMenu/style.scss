@@ -1,7 +1,7 @@
-@use '@styles/variables' as *;
-@use '@styles/colors' as *;
-@use '@styles/functions' as *;
-@use '@styles/mixins' as *;
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/functions" as *;
+@use "@styles/mixins" as *;
 
 .account-menu {
   position: absolute;
@@ -73,7 +73,7 @@
     }
 
     &:hover {
-      background-color: $neutral-250;
+      background-color: $neutral-150;
 
       span,
       small {
@@ -82,11 +82,11 @@
     }
 
     &:active {
-      background-color: $neutral-400;
+      background-color: $neutral-250;
 
       span,
       small {
-        color: $neutral-100;
+        color: $neutral-900;
       }
     }
   }
