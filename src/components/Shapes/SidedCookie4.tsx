@@ -1,10 +1,10 @@
 import * as React from "react";
-interface IProps {
+type TIProps = {
   color?: string;
   size?: string;
   style?: React.CSSProperties;
-}
-const SidedCookie4 = (props: IProps) => {
+};
+const SidedCookie4 = (props: TIProps) => {
   const { color, size = "15px", style } = props;
 
   return (

@@ -1,10 +1,10 @@
 import * as React from "react";
-interface IProps {
+type TIProps = {
   color?: string;
   size?: string;
   style?: React.CSSProperties;
-}
-const Hexagon = (props: IProps) => {
+};
+const Hexagon = (props: TIProps) => {
   const { color, size = "15px", style } = props;
 
   return (

@@ -1,4 +1,4 @@
-import {
+import type {
   TRoundedCorner,
   TSize,
   TSpecial,
@@ -7,7 +7,7 @@ import {
 } from "../type";
 import classNames from "classnames";
 
-export interface IUseButtonProps {
+export type TUseButtonProps = {
   type: TType;
   roundedCorner: TRoundedCorner;
   size: TSize;
@@ -16,9 +16,9 @@ export interface IUseButtonProps {
   typeSpecial: TSpecial;
   text: string;
   tooltip: string;
-}
+};
 
-export const useButton = (props: IUseButtonProps) => {
+export const useButton = (props: TUseButtonProps) => {
   const {
     type,
     roundedCorner,

@@ -2,12 +2,12 @@ import IconButton from "@/components/IconButton";
 import LeftNavItem from "../LeftNavItem";
 import { topItems } from "../../constants";
 
-interface LeftNavTopProps {
+type TLeftNavTopProps = {
   pathname: string;
-}
+};
 
-const LeftNavTop = (props: LeftNavTopProps) => {
-  const { pathname, ...rest } = props;
+const LeftNavTop = (props: TLeftNavTopProps) => {
+  const { pathname } = props;
 
   return (
     <div className="left-nav-top">

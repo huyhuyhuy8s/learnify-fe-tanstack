@@ -44,7 +44,7 @@ export type TTypeSecondary =
   | "pastelBrown"
   | "pastelGreen";
 
-export interface ITextButtonProps {
+export type TTextButtonProps = {
   icon?: string;
   leftIcon?: boolean;
   rightIcon?: boolean;
@@ -57,11 +57,11 @@ export interface ITextButtonProps {
   typeSpecial?: TSpecial;
   tooltip?: string;
   style?: React.CSSProperties;
-}
+};
 
-export interface IIcon {
+export type TIconProps = {
   visible: boolean;
   type: TType;
   typeSpecial?: TSpecial;
   icon?: string;
-}
+};

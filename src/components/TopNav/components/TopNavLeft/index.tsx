@@ -2,13 +2,13 @@ import { Fragment } from "react";
 import { Link } from "@tanstack/react-router";
 import { Tooltip } from "react-tooltip";
 
-interface TopNavLeftProps {
+type TTopNavLeftProps = {
   pathname: string[];
   lastPathname: string;
   pathnameWithoutLast: string[];
-}
+};
 
-const TopNavLeft = (props: TopNavLeftProps) => {
+const TopNavLeft = (props: TTopNavLeftProps) => {
   const { pathname, lastPathname, pathnameWithoutLast } = props;
 
   const content =

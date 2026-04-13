@@ -1,4 +1,4 @@
-import { IIcon } from "../../type";
+import type { TIconProps } from "../../type";
 import SidedCookie4 from "@/components/Shapes/SidedCookie4";
 import Triangle from "@/components/Shapes/Triangle";
 import Sunny from "@/components/Shapes/Sunny";
@@ -6,7 +6,7 @@ import Circle from "@/components/Shapes/Circle";
 import GhostIsh from "@/components/Shapes/GhostIsh";
 import { colors } from "@/styles/colors";
 
-const Icon = (props: IIcon) => {
+const Icon = (props: TIconProps) => {
   const { visible, type, typeSpecial, icon } = props;
 
   if (!visible) return null;

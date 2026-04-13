@@ -1,10 +1,10 @@
 import "./style.scss";
-import { ITextButtonProps } from "./type";
+import type { TTextButtonProps } from "./type";
 import Icon from "./components/Icon";
 import { Tooltip } from "react-tooltip";
 import { useButton } from "./hooks/useButton";
 
-const TextButton = (props: ITextButtonProps) => {
+const TextButton = (props: TTextButtonProps) => {
   const {
     icon = "search",
     leftIcon = true,
