@@ -1,11 +1,9 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/learner/roadmaps')({
+export const Route = createFileRoute("/learner/roadmaps")({
   component: RoadmapsLayout,
-})
+});
 
 function RoadmapsLayout() {
-  return (
-    <Outlet />
-  )
+  return <Outlet />;
 }

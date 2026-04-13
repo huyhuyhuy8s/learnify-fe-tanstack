@@ -1,11 +1,11 @@
-import * as React from 'react';
+import * as React from "react";
 interface IProps {
   color?: string;
   size?: string;
   style?: React.CSSProperties;
 }
 const SidedCookie12 = (props: IProps) => {
-  const { color, size = '15px', style } = props;
+  const { color, size = "15px", style } = props;
 
   return (
     <svg
@@ -15,10 +15,10 @@ const SidedCookie12 = (props: IProps) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       style={{
-        display: 'flex',
-        alignItems: 'center',
+        display: "flex",
+        alignItems: "center",
         color: color,
-        justifyContent: 'center',
+        justifyContent: "center",
         ...style,
       }}
     >

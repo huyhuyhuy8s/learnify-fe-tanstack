@@ -2,7 +2,7 @@
  * [Modified] Modern CSS Reset
  * @link https://github.com/hankchizljaw/modern-css-reset
 */
-@use 'colors' as *;
+@use "colors" as *;
 
 /* Box sizing rules */
 *,
@@ -59,7 +59,6 @@ select {
 
 /* Remove all animations and transitions for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {
-
   *,
   *::before,
   *::after {
@@ -72,4 +71,8 @@ select {
   html {
     scroll-behavior: initial;
   }
+}
+
+button {
+  cursor: pointer;
 }

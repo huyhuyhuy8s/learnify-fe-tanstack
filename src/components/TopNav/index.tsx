@@ -1,24 +1,32 @@
 import TopNavLeft from "./components/TopNavLeft";
 import TopNavRight from "./components/TopNavRight";
-import { useRouterState } from '@tanstack/react-router'
+import { useRouterState } from "@tanstack/react-router";
 import usePathname from "./hooks/usePathname";
 import { useScrollTop } from "@/hooks/useScrollTop";
 import classnames from "classnames";
-import './style.scss';
+import "./style.scss";
 
 const TopNav = () => {
-  const pathnames = useRouterState({ select: (state) => state.location.pathname })
-  const { pathname } = usePathname({ pathnames: pathnames })
+  const pathnames = useRouterState({
+    select: (state) => state.location.pathname,
+  });
+  const { pathname, lastPathname, pathnameWithoutLast } = usePathname({
+    pathnames,
+  });
   const isTop = useScrollTop();
 
-  const navClassNames = classnames("top-nav", { "top": isTop });
+  const navClassNames = classnames("top-nav", { top: isTop });
 
   return (
     <nav className={navClassNames}>
-      <TopNavLeft pathname={pathname} />
+      <TopNavLeft
+        pathname={pathname}
+        lastPathname={lastPathname}
+        pathnameWithoutLast={pathnameWithoutLast}
+      />
       <TopNavRight />
     </nav>
-  )
-}
+  );
+};
 
-export default TopNav
+export default TopNav;

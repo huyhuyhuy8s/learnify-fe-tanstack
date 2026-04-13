@@ -12,3 +12,9 @@ dev:
 
 build:
 	pnpm build
+
+lint:
+	pnpm lint
+
+lint-fix:
+	pnpm lint:fix

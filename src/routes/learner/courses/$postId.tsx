@@ -1,13 +1,13 @@
-import { ErrorComponent, Link, createFileRoute } from '@tanstack/react-router';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { postQueryOptions } from '@/utils/posts';
-import type { ErrorComponentProps } from '@tanstack/react-router';
-import NotFound from '@/components/NotFound';
-import PostErrorComponent from '@/components/PostErrorComponent';
-import { MOCK_COURSES } from '@/mock/course';
-import DecorationCard from '@/components/Card/components/DecorationCard';
+import { ErrorComponent, Link, createFileRoute } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { postQueryOptions } from "@/utils/posts";
+import type { ErrorComponentProps } from "@tanstack/react-router";
+import NotFound from "@/components/NotFound";
+import PostErrorComponent from "@/components/PostErrorComponent";
+import { MOCK_COURSES } from "@/mock/course";
+import DecorationCard from "@/components/Card/components/DecorationCard";
 
-export const Route = createFileRoute('/learner/courses/$postId')({
+export const Route = createFileRoute("/learner/courses/$postId")({
   loader: async ({ params: { postId }, context }) => {
     const data = await context.queryClient.ensureQueryData(
       postQueryOptions(postId)
@@ -54,8 +54,8 @@ function PostComponent() {
     <div className="container">
       <DecorationCard
         typeSpecial={course.typeSpecial}
-        title={course.title ?? ''}
-        status={course.status ?? 'default'}
+        title={course.title ?? ""}
+        status={course.status ?? "default"}
         listFeature={course.listFeature}
         percentage={course.percentage ?? 0}
       />

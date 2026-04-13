@@ -1,47 +1,48 @@
 export type TSpecial =
-  | 'lesson'
-  | 'lab'
-  | 'check'
-  | 'roadmap'
-  | 'course'
-  | 'certificate'
-  | 'private'
-  | 'public';
-export type TType = 'primary' | 'secondary' | 'outlined' | 'special';
+  | "lesson"
+  | "lab"
+  | "check"
+  | "roadmap"
+  | "course"
+  | "certificate"
+  | "private"
+  | "public"
+  | TSubscription;
+export type TType = "primary" | "secondary" | "outlined" | "special";
 export type TRoundedCorner =
-  | 'rounded'
-  | 'roundedSquare'
-  | 'exceptUpperLeft'
-  | 'exceptLowerLeft'
-  | 'exceptUpperRight'
-  | 'exceptLowerRight'
-  | 'exceptLeft'
-  | 'exceptRight'
-  | 'exceptUpper'
-  | 'exceptLower'
-  | 'onlyUpperLeft'
-  | 'onlyLowerLeft'
-  | 'onlyUpperRight'
-  | 'onlyLowerRight';
-export type TSize = 'large' | 'medium' | 'small' | 'tiny';
+  | "rounded"
+  | "roundedSquare"
+  | "exceptUpperLeft"
+  | "exceptLowerLeft"
+  | "exceptUpperRight"
+  | "exceptLowerRight"
+  | "exceptLeft"
+  | "exceptRight"
+  | "exceptUpper"
+  | "exceptLower"
+  | "onlyUpperLeft"
+  | "onlyLowerLeft"
+  | "onlyUpperRight"
+  | "onlyLowerRight";
+export type TSize = "large" | "medium" | "small" | "tiny";
 export type TTypeSecondary =
-  | 'default'
-  | 'neutral'
-  | 'yellow'
-  | 'orange'
-  | 'salmon'
-  | 'darkGreen'
-  | 'navy'
-  | 'brown'
-  | 'green'
-  | 'pastelNeutral'
-  | 'pastelYellow'
-  | 'pastelOrange'
-  | 'pastelSalmon'
-  | 'pastelDarkGreen'
-  | 'pastelNavy'
-  | 'pastelBrown'
-  | 'pastelGreen';
+  | "default"
+  | "neutral"
+  | "yellow"
+  | "orange"
+  | "salmon"
+  | "darkGreen"
+  | "navy"
+  | "brown"
+  | "green"
+  | "pastelNeutral"
+  | "pastelYellow"
+  | "pastelOrange"
+  | "pastelSalmon"
+  | "pastelDarkGreen"
+  | "pastelNavy"
+  | "pastelBrown"
+  | "pastelGreen";
 
 export interface ITextButtonProps {
   icon?: string;
@@ -52,7 +53,7 @@ export interface ITextButtonProps {
   roundedCorner?: TRoundedCorner;
   size?: TSize;
   typeSecondary?: TTypeSecondary;
-  shape?: 'circular';
+  shape?: "circular";
   typeSpecial?: TSpecial;
   tooltip?: string;
   style?: React.CSSProperties;
