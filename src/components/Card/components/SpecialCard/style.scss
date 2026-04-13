@@ -7,8 +7,8 @@
   display: flex;
   flex-direction: column;
   gap: toRem(12);
-  padding: toRem(20);
-  background-color: $navy-100;
+  padding: toRem(30);
+  background-color: white;
   border-radius: toRem(12);
   cursor: pointer;
   box-shadow: 15px toRem(10) toRem(12) rgba(0, 0, 0, 0.06);
@@ -20,14 +20,14 @@
   .title {
     font-size: toRem(22);
     font-weight: 500;
-    color: $warm-900;
+    color: $mode-neutral;
     margin: 0;
     text-align: left;
     line-height: 1.3;
   }
   .description {
     font-size: toRem(15);
-    color: $warm-600;
+    color: $mode-neutral;
     line-height: 1.5;
     margin: 0;
     text-align: left;
@@ -36,18 +36,18 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  .footer {
+    margin-top: toRem(20);
+  }
   .flex {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: toRem(8) 0;
+    padding: toRem(10) 0;
     .duration {
-      font-size: toRem(13);
-      color: $warm-600;
-
-      .time {
-        margin-left: toRem(4);
-      }
+      font-size: toRem(1);
+      color: $neutral-900;
+      gap: toRem(9);
     }
     .enter-course {
       display: flex;
@@ -57,7 +57,7 @@
       width: toRem(48);
       height: toRem(48);
       border-radius: 50%;
-      border: toRem(1.5) solid $warm-800;
+      border: toRem(1.5) solid $mode-green;
       background: transparent;
       cursor: pointer;
       padding: 0;
@@ -65,14 +65,14 @@
 
       .material-symbols-rounded {
         font-size: toRem(24);
-        color: $warm-800;
+        color: $mode-green;
         line-height: 1;
         margin: 0;
 
         @include transition;
       }
       &:hover {
-        background-color: $warm-800;
+        background-color: $mode-green;
 
         .material-symbols-rounded {
           color: $warm-100;
@@ -108,19 +108,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: toRem(32);
-    height: toRem(32);
+    width: toRem(48);
+    height: toRem(48);
     border-radius: 50%;
-    background-color: $navy-250;
-    color: $navy-100;
+    background-color: $neutral-300;
+    color: $neutral-100;
     font-size: toRem(16);
   }
   .complete-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: toRem(32);
-    height: toRem(32);
+    width: toRem(48);
+    height: toRem(48);
     border-radius: 50%;
     background-color: $navy-pastel-200;
     color: $warm-900;

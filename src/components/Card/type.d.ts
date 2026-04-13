@@ -6,7 +6,7 @@ export interface CourseCardProps {
   className?: string;
   onClick: () => void;
   title: string;
-  description: string;
+  description?: string;
   duration?: string;
   typeSpecial?: TSpecial;
   status?: StatusCard;
@@ -20,10 +20,17 @@ export interface DecorationCardProps {
   typeSpecial?: TSpecial;
   status?: StatusCard;
   percentage?: number;
+  star?: number;
 }
 export interface UseSpecialCardFooterProps {
   status: 'default' | 'inProgress' | 'completed' | 'locked';
   percentage?: number;
   duration?: string;
+  onClick?: () => void;
+}
+export interface UseDecorationCardFooterProps {
+  status: 'default' | 'inProgress' | 'completed' | 'locked';
+  percentage?: number;
+  star?: number;
   onClick?: () => void;
 }

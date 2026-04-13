@@ -5,8 +5,8 @@ type MockCourse = {
   id: number;
   typeSpecial: TSpecial;
   title: string;
-  description: string;
-  duration: string;
+  description?: string;
+  duration?: string;
   status?: StatusCard;
   listFeature?: string[];
   percentage?: number;
@@ -45,7 +45,7 @@ export const MOCK_COURSES: MockCourse[] = [
     listFeature: ['Data Analysis', 'Trend Prediction', 'Workflow Optimization'],
   },
   {
-    id: 3,
+    id: 4,
     typeSpecial: 'lesson',
     title: 'Advanced React with TanStack',
     description:
@@ -53,5 +53,11 @@ export const MOCK_COURSES: MockCourse[] = [
     duration: '3.5 hours',
     status: 'locked',
     listFeature: ['Data Analysis', 'Trend Prediction', 'Workflow Optimization'],
+  },
+  {
+    id: 5,
+    typeSpecial: 'lesson',
+    title: 'Course Survey',
+    status: 'default',
   },
 ];

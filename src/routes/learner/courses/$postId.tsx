@@ -32,6 +32,10 @@ function PostComponent() {
   const postQuery = useSuspenseQuery(postQueryOptions(postId));
   const course = MOCK_COURSES.find((course) => course.id === Number(postId));
 
+  if (!course) {
+    return <NotFound />;
+  }
+
   return (
     // <div className="space-y-2">
     //   <h4 className="text-xl font-bold underline">{postQuery.data.title}</h4>
@@ -49,11 +53,11 @@ function PostComponent() {
     // </div>
     <div className="container">
       <DecorationCard
-        typeSpecial={course?.typeSpecial ?? 'course'}
-        title={course?.title ?? ''}
-        status={course?.status ?? 'default'}
-        listFeature={course?.listFeature}
-        percentage={course?.percentage ?? 0}
+        typeSpecial={course.typeSpecial}
+        title={course.title ?? ''}
+        status={course.status ?? 'default'}
+        listFeature={course.listFeature}
+        percentage={course.percentage ?? 0}
       />
       <div className="content">
         <h3 className="title">{course?.title}</h3>

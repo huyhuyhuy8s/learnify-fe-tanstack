@@ -29,13 +29,13 @@ function PostsIndexComponent() {
       <div className="course-list">
         {MOCK_COURSES.map((course) => (
           <SpecialCard
-            key={course?.id}
-            typeSpecial={course?.typeSpecial}
-            title={course?.title}
-            description={course?.description}
-            duration={course?.duration}
-            status={course?.status}
-            percentage={course?.percentage}
+            key={course.id}
+            typeSpecial={course.typeSpecial}
+            title={course.title}
+            description={course.description}
+            duration={course.duration}
+            status={course.status}
+            percentage={course.percentage}
             onClick={() =>
               navigate({
                 to: '/learner/courses/$postId',

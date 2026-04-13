@@ -23,10 +23,12 @@ export const useSpecialCardFooter = ({
       case 'completed':
         return (
           <div className="completed flex">
-            <div className="duration flex">
-              <span className="material-symbols-rounded">schedule</span>
-              <p className="time">{duration}</p>
-            </div>
+            {duration && (
+              <div className="duration flex">
+                <span className="material-symbols-rounded">schedule</span>
+                <p className="time">{duration}</p>
+              </div>
+            )}
             <span className="material-symbols-rounded complete-btn">check</span>
           </div>
         );
@@ -43,10 +45,14 @@ export const useSpecialCardFooter = ({
       case 'default':
         return (
           <div className="flex">
-            <div className="duration flex">
-              <span className="material-symbols-rounded">schedule</span>
-              <p className="time">{duration}</p>
-            </div>
+            {duration ? (
+              <div className="duration flex">
+                <span className="material-symbols-rounded">schedule</span>
+                <p className="time">{duration}</p>
+              </div>
+            ) : (
+              <div></div>
+            )}
             <button className="enter-course" onClick={onClick}>
               <span className="material-symbols-rounded">arrow_forward</span>
             </button>

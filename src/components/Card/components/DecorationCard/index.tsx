@@ -1,18 +1,26 @@
-import classnames from 'classnames';
 import './style.scss';
 import { DecorationCardProps } from '@/components/Card/type';
 import TextButton from '@/components/TextButton';
-import { features } from 'node:process';
+import { useDecorationCardFooter } from '@/components/Card/hooks/useDecorationCardFooter';
 
 const DecorationCard = (props: DecorationCardProps) => {
   const {
-    className,
     title,
     typeSpecial,
     listFeature = [],
     status = 'default',
     percentage = 0,
+    star = 0,
   } = props;
+
+  const footerContent = useDecorationCardFooter({
+    status,
+    percentage,
+    star,
+    onClick: () => {
+      console.log('DecorationCard clicked');
+    },
+  });
 
   return (
     <div className="decoration-card">
@@ -32,47 +40,10 @@ const DecorationCard = (props: DecorationCardProps) => {
           </p>
         ))}
       </div>
-      <div className="status flex">
-        {status === 'completed' ? (
-          <div className="completed flex">
-            <p>Completed</p>
-            <span className="material-symbols-rounded complete-btn">check</span>
-          </div>
-        ) : status === 'locked' ? (
-          <div className="locked flex">
-            <p>Locked</p>
-            <span className="material-symbols-rounded lock-btn">lock</span>
-          </div>
-        ) : (
-          <div className="continued flex">
-            <button>
-              <span
-                className="material-symbols-rounded"
-                style={{ fontSize: '18px' }}
-              >
-                arrow_forward
-              </span>
-              Start
-            </button>
-
-            <div className="progress-bar">
-              <div
-                className="progress"
-                style={{ width: `${percentage}%` }}
-              ></div>
-            </div>
-
-            <div className="percentage flex">
-              <span
-                className="material-symbols-rounded"
-                style={{ fontSize: '14px' }}
-              >
-                star
-              </span>
-              {percentage}
-            </div>
-          </div>
-        )}
+      <div className="status flex">{footerContent}</div>
+      <div className="foot-decoration">
+        <div className="white-space"></div>
+        <div className="colorful-space"></div>
       </div>
     </div>
   );

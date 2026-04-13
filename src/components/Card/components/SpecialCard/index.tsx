@@ -38,8 +38,8 @@ const SpecialCard = (props: CourseCardProps) => {
         />
       </div>
       <h3 className="title">{title}</h3>
-      <div className="description">{description}</div>
-      {footerContent}
+      {description && <div className="description">{description}</div>}
+      <div className="footer">{footerContent}</div>
     </button>
   );
 };
