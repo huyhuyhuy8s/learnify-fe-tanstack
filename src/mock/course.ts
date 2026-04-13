@@ -3,7 +3,6 @@ import { TSpecial, TType } from '@/components/TextButton/type';
 
 type MockCourse = {
   id: number;
-  titleIcon: string;
   typeSpecial: TSpecial;
   title: string;
   description: string;
@@ -16,7 +15,6 @@ type MockCourse = {
 export const MOCK_COURSES: MockCourse[] = [
   {
     id: 1,
-    titleIcon: 'Roadmap',
     typeSpecial: 'roadmap',
     title: 'Gemini for Data Scientists and Analysts',
     description:
@@ -28,7 +26,6 @@ export const MOCK_COURSES: MockCourse[] = [
   },
   {
     id: 2,
-    titleIcon: 'New',
     typeSpecial: 'course',
     title: 'Introduction to Generative AI',
     description:
@@ -39,7 +36,6 @@ export const MOCK_COURSES: MockCourse[] = [
   },
   {
     id: 3,
-    titleIcon: 'Popular',
     typeSpecial: 'lab',
     title: 'Advanced React with TanStack',
     description:
@@ -50,7 +46,6 @@ export const MOCK_COURSES: MockCourse[] = [
   },
   {
     id: 3,
-    titleIcon: 'Popular',
     typeSpecial: 'lesson',
     title: 'Advanced React with TanStack',
     description:

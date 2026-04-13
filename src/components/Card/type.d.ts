@@ -8,7 +8,6 @@ export interface CourseCardProps {
   title: string;
   description: string;
   duration?: string;
-  titleIcon: string;
   typeSpecial?: TSpecial;
   status?: StatusCard;
   percentage?: number;
@@ -17,9 +16,14 @@ export interface CourseCardProps {
 export interface DecorationCardProps {
   className?: string;
   title: string;
-  titleIcon: string;
   listFeature?: string[];
   typeSpecial?: TSpecial;
   status?: StatusCard;
   percentage?: number;
+}
+export interface UseSpecialCardFooterProps {
+  status: 'default' | 'inProgress' | 'completed' | 'locked';
+  percentage?: number;
+  duration?: string;
+  onClick?: () => void;
 }

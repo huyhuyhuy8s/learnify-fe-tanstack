@@ -49,7 +49,6 @@ function PostComponent() {
     // </div>
     <div className="container">
       <DecorationCard
-        titleIcon={course?.titleIcon ?? ''}
         typeSpecial={course?.typeSpecial ?? 'course'}
         title={course?.title ?? ''}
         status={course?.status ?? 'default'}

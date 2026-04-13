@@ -30,7 +30,6 @@ function PostsIndexComponent() {
         {MOCK_COURSES.map((course) => (
           <SpecialCard
             key={course?.id}
-            titleIcon={course?.titleIcon}
             typeSpecial={course?.typeSpecial}
             title={course?.title}
             description={course?.description}

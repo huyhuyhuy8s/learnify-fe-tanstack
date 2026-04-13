@@ -8,7 +8,6 @@ const DecorationCard = (props: DecorationCardProps) => {
   const {
     className,
     title,
-    titleIcon,
     typeSpecial,
     listFeature = [],
     status = 'default',
@@ -18,7 +17,12 @@ const DecorationCard = (props: DecorationCardProps) => {
   return (
     <div className="decoration-card">
       <div className="badge">
-        <TextButton text={titleIcon} type="special" typeSpecial={typeSpecial} />
+        <TextButton
+          text="text"
+          size="tiny"
+          type="special"
+          typeSpecial={typeSpecial}
+        />
       </div>
       <h3 className="title">{title}</h3>
       <div className="list-feature flex">
