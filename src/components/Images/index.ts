@@ -1,1 +1,1 @@
-export { default as OptimizeImage } from './components/OptimizeImage'
+export { default as OptimizeImage } from "./components/OptimizeImage";
