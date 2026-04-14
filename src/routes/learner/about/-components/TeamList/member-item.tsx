@@ -1,7 +1,7 @@
-import { MemberProps } from "@/routes/learner/about/-types/about";
+import { IMemberProps } from "@/routes/learner/about/-types/about";
 import { OptimizeImage } from "@/components/Images";
 
-const MemberItem = (props: MemberProps) => {
+const MemberItem = (props: IMemberProps) => {
   const { name, jobTitle, image } = props;
   const imageSrc = image.name || "";
   const imageFolder = image.folder || "";

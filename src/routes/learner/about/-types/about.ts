@@ -1,10 +1,10 @@
-export type Label = "Trusted Learners" | "Courses" | "Satisfaction";
-export interface AboutStatProps {
-  label: Label;
+export type TLabel = "Trusted Learners" | "Courses" | "Satisfaction";
+export interface IAboutStatProps {
+  label: TLabel;
   value: string;
 }
 
-export interface MemberProps {
+export interface IMemberProps {
   name: string;
   jobTitle: string;
   image: {
