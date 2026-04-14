@@ -1,7 +1,7 @@
-@use '@styles/functions' as *;
-@use '@styles/variables' as *;
-@use '@styles/mixins' as *;
-@use '@styles/colors' as *;
+@use "@styles/functions" as *;
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "@styles/colors" as *;
 
 .text-button {
   display: flex;
@@ -23,7 +23,7 @@
   }
 
   &:active {
-    font-variation-settings: 'FILL' 1;
+    font-variation-settings: "FILL" 1;
   }
 
   span {

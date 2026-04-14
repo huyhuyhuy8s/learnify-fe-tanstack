@@ -1,8 +1,8 @@
-@use '@styles/variables' as *;
-@use '@styles/colors' as *;
-@use '@styles/functions' as *;
-@use '@styles/mixins' as *;
-@use 'sass:math';
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/functions" as *;
+@use "@styles/mixins" as *;
+@use "sass:math";
 
 .top-nav {
   position: sticky;
@@ -28,7 +28,7 @@
     span,
     button,
     a {
-      font-variation-settings: 'FILL' 1;
+      font-variation-settings: "FILL" 1;
       color: $black;
     }
 
@@ -48,7 +48,7 @@
       place-items: center;
 
       span {
-        font-variation-settings: 'FILL' 1;
+        font-variation-settings: "FILL" 1;
         font-size: toRem(25);
       }
 
