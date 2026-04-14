@@ -1,0 +1,45 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+.container-stat {
+  position: relative;
+  width: toRem(300);
+  height: toRem(300);
+  padding: toRem(130) toRem(30) toRem(30) toRem(30);
+  background-color: $accent-minty;
+  border-radius: 15%;
+
+  &:hover {
+    scale: calc(1.1);
+    transition: all 1.5s;
+  }
+
+  .type {
+    order: 2;
+    font-size: toRem(20);
+    font-weight: 500;
+    color: #446452;
+    margin: 0;
+    font-family: sans-serif;
+  }
+
+  .total {
+    order: 1;
+    font-size: toRem(60);
+    font-weight: 800;
+    color: $neutral-900;
+    margin: 0 0 toRem(12) 0;
+    line-height: 1;
+    letter-spacing: toRem(-2);
+    font-family: sans-serif;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    .total {
+      font-size: toRem(50);
+    }
+  }
+}

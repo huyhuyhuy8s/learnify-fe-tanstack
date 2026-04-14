@@ -1,0 +1,68 @@
+/* member-item.scss */
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+.team-container {
+  width: 100%;
+}
+
+.team-grid-unified {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: toRem(48);
+}
+
+.member-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: toRem(25);
+  max-width: toRem(280);
+
+  .avatar-wrapper {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    border-radius: toRem(20);
+    overflow: hidden;
+    margin-bottom: toRem(20);
+    box-shadow: 0 toRem(12) toRem(24) rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-8px);
+    }
+
+    .optimize-image-container {
+      width: 100%;
+      height: 100%;
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .info {
+    text-align: center;
+
+    .name {
+      font-size: toRem(35);
+      font-weight: 700;
+      color: $neutral-900;
+      margin: 0 0 toRem(8) 0;
+      letter-spacing: -0.5px;
+    }
+
+    .job-title {
+      font-size: toRem(20);
+      color: $neutral-400;
+      margin: 0;
+    }
+  }
+}

@@ -1,0 +1,51 @@
+/* about-page.scss */
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+.about-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: toRem(1200);
+  margin: 0 auto;
+  padding: 0 toRem(24);
+  font-family: "Inter", sans-serif;
+  color: #111;
+
+  .section-title {
+    font-size: toRem(40);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: toRem(40);
+    letter-spacing: toRem(-1);
+  }
+}
+
+.stats-section {
+  .stats-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: toRem(32);
+    flex-wrap: wrap;
+  }
+}
+
+.team-section {
+  padding: toRem(40) 0 toRem(100);
+
+  .team-header {
+    text-align: center;
+    margin-bottom: toRem(60);
+
+    .section-title {
+      margin-bottom: toRem(16);
+    }
+
+    .section-subtitle {
+      font-size: toRem(20);
+      color: #666;
+    }
+  }
+}

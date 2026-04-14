@@ -1,3 +1,5 @@
+import { AboutStatProps } from "@/routes/learner/about/-types/about";
+
 export const ABOUT_VALUES = [
   {
     icon: "favorite",
@@ -29,8 +31,8 @@ export const ABOUT_VALUES = [
   },
 ];
 
-export const ABOUT_STATS = [
-  { value: "10K+", label: "Learners" },
+export const ABOUT_STATS: AboutStatProps[] = [
+  { value: "10K+", label: "Trusted Learners" },
   { value: "200+", label: "Courses" },
   { value: "98%", label: "Satisfaction" },
 ];
