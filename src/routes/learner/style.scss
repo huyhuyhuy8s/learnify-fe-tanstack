@@ -18,6 +18,7 @@ body {
     background-color: $green-100;
     padding: toRem(100);
     padding-bottom: toRem(50);
+    gap: 10dvh;
   }
 
   .content {
