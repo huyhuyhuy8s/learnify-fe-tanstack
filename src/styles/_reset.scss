@@ -2,7 +2,8 @@
  * [Modified] Modern CSS Reset
  * @link https://github.com/hankchizljaw/modern-css-reset
 */
-@use 'colors' as *;
+@use "colors" as *;
+@import url("https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap");
 
 /* Box sizing rules */
 *,

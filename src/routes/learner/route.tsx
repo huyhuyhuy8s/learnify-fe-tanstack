@@ -20,7 +20,7 @@ export const Route = createFileRoute("/learner")({
 function RouteComponent() {
   return (
     <>
-      <Loader />
+      <Loader disabled />
       <LeftNav />
       <article className="body">
         <TopNav />

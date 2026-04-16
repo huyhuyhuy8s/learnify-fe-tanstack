@@ -13,6 +13,8 @@ type TconButtonProp = {
   color?: string;
   backgroundColor?: string;
   fill?: boolean;
+  tooltip?: string;
+  className?: string;
 };
 
 const IconButton = (props: TconButtonProp) => {
@@ -27,10 +29,19 @@ const IconButton = (props: TconButtonProp) => {
     color = "#fff",
     backgroundColor = "none",
     fill = false,
+    tooltip,
+    className,
   } = props;
 
   const [clicked, setClicked] = useState(false);
-  const buttonClassName = classNames("icon-button", type, state, shape, size);
+  const buttonClassName = classNames(
+    "icon-button",
+    type,
+    state,
+    shape,
+    size,
+    className
+  );
   const iconClassName = classNames("material-symbols-rounded", {
     filled: fill,
   });
@@ -52,6 +63,7 @@ const IconButton = (props: TconButtonProp) => {
         color,
       }}
       onClick={handleClick}
+      title={tooltip}
     >
       <span className={iconClassName}>{iconVal}</span>
     </button>

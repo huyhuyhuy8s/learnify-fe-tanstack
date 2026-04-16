@@ -1,7 +1,7 @@
-@use '@styles/functions' as *;
-@use '@styles/variables' as *;
-@use '@styles/mixins' as *;
-@use '@styles/colors' as *;
+@use "@styles/functions" as *;
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "@styles/colors" as *;
 
 .text-button {
   display: flex;
@@ -11,19 +11,15 @@
     color, background-color, border-color, border-radius,
     font-variation-settings;
   transition-duration: 500ms;
-  border-style: dashed;
+  border-style: solid;
   border-color: transparent;
-
-  .tooltip {
-    max-width: toRem(400);
-  }
 
   &:hover {
     border-radius: $br-xs;
   }
 
   &:active {
-    font-variation-settings: 'FILL' 1;
+    font-variation-settings: "FILL" 1;
   }
 
   span {
@@ -36,8 +32,16 @@
     }
   }
 
+  &.disabled {
+    background-color: $neutral-400;
+
+    span {
+      color: $white;
+    }
+  }
+
   &.large {
-    padding: toRem(10) toRem(25);
+    padding: toRem(10) toRem(30);
     gap: toRem(10);
     border-width: toRem(2);
 
@@ -53,7 +57,7 @@
   }
 
   &.medium {
-    padding: toRem(10) toRem(20);
+    padding: toRem(10) toRem(25);
     gap: toRem(10);
     border-width: toRem(2);
 
@@ -62,8 +66,8 @@
     }
 
     .text {
-      font-size: $fs-heading6;
-      font-weight: $fw-medium;
+      font-size: $fs-paragraph;
+      font-weight: $fw-semibold;
       line-height: 125%;
     }
   }
@@ -124,8 +128,6 @@
   }
 
   &.secondary {
-    background-color: transparent;
-
     span {
       color: $neutral-800;
     }

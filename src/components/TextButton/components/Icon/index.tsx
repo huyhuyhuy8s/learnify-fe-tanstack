@@ -4,30 +4,32 @@ import Triangle from "@/components/Shapes/Triangle";
 import Sunny from "@/components/Shapes/Sunny";
 import Circle from "@/components/Shapes/Circle";
 import GhostIsh from "@/components/Shapes/GhostIsh";
-import { colors } from "@/styles/colors";
+import { COLORS } from "@/styles/colors";
 
 const Icon = (props: TIconProps) => {
-  const { visible, type, typeSpecial, icon } = props;
+  const { visible, type, typeSpecial, icon, color } = props;
 
   if (!visible) return null;
+
+  const specialIconColor = color || COLORS.neutral800;
 
   if (type === "special") {
     switch (typeSpecial) {
       case "lesson":
-        return <Circle color={colors.neutral800} />;
+        return <Circle color={specialIconColor} />;
       case "roadmap":
-        return <Sunny color={colors.neutral800} />;
+        return <Sunny color={specialIconColor} />;
       case "lab":
-        return <Triangle color={colors.neutral800} />;
+        return <Triangle color={specialIconColor} />;
       case "course":
-        return <SidedCookie4 color={colors.neutral800} />;
+        return <SidedCookie4 color={specialIconColor} />;
       case "check":
-        return <GhostIsh color={colors.neutral800} />;
+        return <GhostIsh color={specialIconColor} />;
       case "certificate":
         return (
           <span
             className="material-symbols-rounded"
-            style={{ color: colors.neutral800 }}
+            style={{ color: specialIconColor }}
           >
             verified
           </span>
@@ -36,7 +38,7 @@ const Icon = (props: TIconProps) => {
         return (
           <span
             className="material-symbols-rounded"
-            style={{ color: colors.white }}
+            style={{ color: color || COLORS.white }}
           >
             lock
           </span>
@@ -45,7 +47,7 @@ const Icon = (props: TIconProps) => {
         return (
           <span
             className="material-symbols-rounded"
-            style={{ color: colors.white }}
+            style={{ color: color || COLORS.white }}
           >
             public
           </span>
@@ -62,6 +64,15 @@ const Icon = (props: TIconProps) => {
     }
   }
 
-  return <span className="material-symbols-rounded">{icon}</span>;
+  return (
+    <span
+      className="material-symbols-rounded"
+      style={{
+        color,
+      }}
+    >
+      {icon}
+    </span>
+  );
 };
 export default Icon;

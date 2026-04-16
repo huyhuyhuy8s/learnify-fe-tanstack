@@ -1,0 +1,90 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
+.course-container {
+  margin: 0 auto;
+  padding: toRem(64) toRem(24);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 0 toRem(200);
+
+  // .title {
+  //   font-size: toRem(48);
+  //   font-weight: 500;
+  //   color: #1f1f1f;
+  //   text-align: center;
+  //   max-width: toRem(600);
+  //   line-height: 1.2;
+  //   margin-top: 0;
+  //   margin-bottom: toRem(24);
+  // }
+  //
+  // .description {
+  //   font-size: toRem(16);
+  //   color: #444746;
+  //   text-align: center;
+  //   max-width: toRem(800);
+  //   line-height: 1.6;
+  //   margin-bottom: toRem(48);
+  // }
+  //
+  // .search {
+  //   display: flex;
+  //   align-items: center;
+  //   width: 100%;
+  //   max-width: toRem(700);
+  //   background-color: #ffffff;
+  //   border: toRem(1) solid #747775;
+  //   border-radius: toRem(32);
+  //   padding: toRem(8) toRem(16);
+  //   margin-bottom: toRem(48);
+  //   @include transition;
+  //
+  //   &:focus-within {
+  //     border-color: #1f1f1f;
+  //     box-shadow: 0 0 0 toRem(1) #1f1f1f;
+  //   }
+  //
+  //   input {
+  //     flex: 1;
+  //     border: none;
+  //     outline: none;
+  //     background: transparent;
+  //     font-size: toRem(16);
+  //     color: #1f1f1f;
+  //     padding: toRem(8);
+  //
+  //     &::placeholder {
+  //       color: #747775;
+  //     }
+  //   }
+  //
+  //   button {
+  //     background: transparent;
+  //     border: none;
+  //     cursor: pointer;
+  //     padding: toRem(8);
+  //     color: #444746;
+  //     @include transition;
+  //
+  //     &:hover {
+  //       color: #1f1f1f;
+  //     }
+  //
+  //     .material-symbols-rounded {
+  //       font-size: toRem(24);
+  //     }
+  //   }
+  // }
+
+  .course-list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(toRem(320), 1fr));
+    gap: toRem(24);
+    align-items: stretch;
+  }
+}
