@@ -1,0 +1,27 @@
+@use "@styles/colors" as *;
+@use "@styles/variables" as *;
+@use "@styles/functions" as *;
+
+.search {
+  display: flex;
+  width: 100%;
+  border: toRem(2) solid $black;
+  border-radius: $br-rounded;
+  gap: toRem(20);
+  padding: toRem(10) toRem(30);
+  place-items: center;
+
+  > input {
+    color: $black;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  > button > span {
+    color: $black;
+    font-size: toRem(30);
+  }
+}
