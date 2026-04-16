@@ -1,15 +1,135 @@
-@use '@styles/mixins' as *;
+@use "@styles/mixins" as *;
 @use "@styles/functions" as *;
 @use "@styles/colors" as *;
 @use "@styles/variables" as *;
 
 .home {
+  padding-top: 20dvh;
   display: flex;
   flex-direction: column;
   gap: toRem(50);
+  place-items: center;
 
-  &>div {
+  & > div {
     display: flex;
-    gap: toRem(10);
+    place-items: center;
+    flex-direction: column;
+    gap: toRem(20);
+
+    h1,
+    h5 {
+      text-align: center;
+    }
+  }
+
+  > .search-container {
+    width: fit-content;
+
+    > .search-suggestions {
+      gap: toRem(20);
+      display: flex;
+    }
+  }
+
+  section.decoration-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100dvh;
+    width: 100dvw;
+    pointer-events: none;
+
+    span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      color: $black;
+    }
+
+    > div {
+      position: absolute;
+    }
+
+    .gem {
+      top: 2%;
+      left: 7%;
+      rotate: -40deg;
+
+      span {
+        font-size: toRem(170);
+      }
+    }
+
+    .pill {
+      top: 14%;
+      right: 50%;
+      rotate: 65deg;
+    }
+
+    .soft-burst {
+      top: 4%;
+      right: 17%;
+      rotate: 15deg;
+    }
+
+    .experiment {
+      top: 44%;
+      right: 7%;
+      rotate: 40deg;
+
+      span {
+        font-size: toRem(120);
+      }
+    }
+
+    .stylus_fountain_pen {
+      bottom: 46%;
+      left: 14%;
+      rotate: 210deg;
+
+      span {
+        font-size: toRem(120);
+      }
+    }
+
+    .flower {
+      bottom: 3%;
+      left: 2%;
+      rotate: 12deg;
+    }
+
+    .school {
+      bottom: 5%;
+      left: 30%;
+      rotate: -30deg;
+
+      span {
+        font-size: toRem(125);
+      }
+    }
+
+    .semicircle {
+      display: flex;
+      flex-direction: column;
+      bottom: 2%;
+      right: 30%;
+      rotate: 140deg;
+
+      svg:first-child {
+        margin-bottom: -8dvh;
+      }
+    }
+
+    .clover {
+      right: 3%;
+      bottom: 6%;
+      rotate: -30deg;
+
+      span {
+        font-size: toRem(100);
+      }
+    }
   }
 }

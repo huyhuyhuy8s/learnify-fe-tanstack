@@ -1,9 +1,9 @@
 import "./style.scss";
-import Arrow from "@/components/Shapes/Arrow";
 import { COLORS } from "@/styles/colors";
 import type { TProgress, TStatusCard } from "@/types/global";
 import DecorationCardContext from "./components/DecorationCardContext";
 import DecorationCardStatus from "./components/DecorationCardStatus";
+import { Arrow } from "@/components/Shapes";
 
 export type TDecorationCardProps = {
   className?: string;

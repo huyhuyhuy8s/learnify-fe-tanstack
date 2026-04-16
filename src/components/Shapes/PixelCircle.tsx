@@ -3,9 +3,11 @@ type TIProps = {
   color?: string;
   size?: string;
   style?: React.CSSProperties;
+  stroke?: string;
+  strokeWidth?: number;
 };
-const PixelCircle = (props: TIProps) => {
-  const { color, size = "15px", style } = props;
+export const PixelCircle = (props: TIProps) => {
+  const { color, size = "15px", style, stroke, strokeWidth } = props;
 
   return (
     <svg
@@ -21,6 +23,8 @@ const PixelCircle = (props: TIProps) => {
         justifyContent: "center",
         ...style,
       }}
+      stroke={stroke}
+      strokeWidth={strokeWidth}
     >
       <path
         d="M253.556 34H126.444V54.2217H83.1111V80.2222H57.1111V126.444H34V253.556H57.1111V299.778H83.1111V325.777H126.444V346H253.556V325.777H296.889V299.778H322.889V253.556H346V126.444H322.889V80.2222H296.889V54.2217H253.556V34Z"
@@ -29,4 +33,3 @@ const PixelCircle = (props: TIProps) => {
     </svg>
   );
 };
-export default PixelCircle;

@@ -4,6 +4,7 @@ import "./style.scss";
 import Card from "@/components/Card";
 import { useNavigate } from "@tanstack/react-router";
 import TextButton from "@/components/TextButton";
+import Search from "@/components/Search";
 export const Route = createFileRoute("/learner/courses/")({
   component: PostsIndexComponent,
 });
@@ -26,12 +27,7 @@ function PostsIndexComponent() {
         </p>
       </div>
       <div className="course-content">
-        <form aria-checked className="search">
-          <input type="text" placeholder="Search for courses..." id="search" />
-          <button>
-            <span className="material-symbols-rounded">search</span>
-          </button>
-        </form>
+        <Search />
         <div className="controls">
           <div className="filter">
             <TextButton

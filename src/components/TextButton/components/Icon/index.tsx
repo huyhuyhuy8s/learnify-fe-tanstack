@@ -1,10 +1,12 @@
 import type { TIconProps } from "../../type";
-import SidedCookie4 from "@/components/Shapes/SidedCookie4";
-import Triangle from "@/components/Shapes/Triangle";
-import Sunny from "@/components/Shapes/Sunny";
-import Circle from "@/components/Shapes/Circle";
-import GhostIsh from "@/components/Shapes/GhostIsh";
 import { COLORS } from "@/styles/colors";
+import {
+  Circle,
+  Sunny,
+  Triangle,
+  SidedCookie4,
+  GhostIsh,
+} from "@/components/Shapes";
 
 const Icon = (props: TIconProps) => {
   const { visible, type, typeSpecial, icon, color } = props;

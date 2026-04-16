@@ -14,6 +14,7 @@ import { Route as DeferredRouteImport } from "./routes/deferred";
 import { Route as LearnerRouteRouteImport } from "./routes/learner/route";
 import { Route as IndexRouteImport } from "./routes/index";
 import { Route as LearnerIndexRouteImport } from "./routes/learner/index";
+import { Route as LearnerDashboardRouteImport } from "./routes/learner/dashboard";
 import { Route as ApiUsersRouteImport } from "./routes/api/users";
 import { Route as LearnerUserRouteRouteImport } from "./routes/learner/user/route";
 import { Route as LearnerRoadmapsRouteRouteImport } from "./routes/learner/roadmaps/route";
@@ -51,6 +52,11 @@ const IndexRoute = IndexRouteImport.update({
 const LearnerIndexRoute = LearnerIndexRouteImport.update({
   id: "/",
   path: "/",
+  getParentRoute: () => LearnerRouteRoute,
+} as any);
+const LearnerDashboardRoute = LearnerDashboardRouteImport.update({
+  id: "/dashboard",
+  path: "/dashboard",
   getParentRoute: () => LearnerRouteRoute,
 } as any);
 const ApiUsersRoute = ApiUsersRouteImport.update({
@@ -130,6 +136,7 @@ export interface FileRoutesByFullPath {
   "/learner/roadmaps": typeof LearnerRoadmapsRouteRouteWithChildren;
   "/learner/user": typeof LearnerUserRouteRouteWithChildren;
   "/api/users": typeof ApiUsersRouteWithChildren;
+  "/learner/dashboard": typeof LearnerDashboardRoute;
   "/learner/": typeof LearnerIndexRoute;
   "/api/users/$id": typeof ApiUsersIdRoute;
   "/learner/courses/$postId": typeof LearnerCoursesPostIdRoute;
@@ -145,6 +152,7 @@ export interface FileRoutesByTo {
   "/redirect": typeof RedirectRoute;
   "/learner/user": typeof LearnerUserRouteRouteWithChildren;
   "/api/users": typeof ApiUsersRouteWithChildren;
+  "/learner/dashboard": typeof LearnerDashboardRoute;
   "/learner": typeof LearnerIndexRoute;
   "/api/users/$id": typeof ApiUsersIdRoute;
   "/learner/courses/$postId": typeof LearnerCoursesPostIdRoute;
@@ -166,6 +174,7 @@ export interface FileRoutesById {
   "/learner/roadmaps": typeof LearnerRoadmapsRouteRouteWithChildren;
   "/learner/user": typeof LearnerUserRouteRouteWithChildren;
   "/api/users": typeof ApiUsersRouteWithChildren;
+  "/learner/dashboard": typeof LearnerDashboardRoute;
   "/learner/": typeof LearnerIndexRoute;
   "/api/users/$id": typeof ApiUsersIdRoute;
   "/learner/courses/$postId": typeof LearnerCoursesPostIdRoute;
@@ -188,6 +197,7 @@ export interface FileRouteTypes {
     | "/learner/roadmaps"
     | "/learner/user"
     | "/api/users"
+    | "/learner/dashboard"
     | "/learner/"
     | "/api/users/$id"
     | "/learner/courses/$postId"
@@ -203,6 +213,7 @@ export interface FileRouteTypes {
     | "/redirect"
     | "/learner/user"
     | "/api/users"
+    | "/learner/dashboard"
     | "/learner"
     | "/api/users/$id"
     | "/learner/courses/$postId"
@@ -223,6 +234,7 @@ export interface FileRouteTypes {
     | "/learner/roadmaps"
     | "/learner/user"
     | "/api/users"
+    | "/learner/dashboard"
     | "/learner/"
     | "/api/users/$id"
     | "/learner/courses/$postId"
@@ -276,6 +288,13 @@ declare module "@tanstack/react-router" {
       path: "/";
       fullPath: "/learner/";
       preLoaderRoute: typeof LearnerIndexRouteImport;
+      parentRoute: typeof LearnerRouteRoute;
+    };
+    "/learner/dashboard": {
+      id: "/learner/dashboard";
+      path: "/dashboard";
+      fullPath: "/learner/dashboard";
+      preLoaderRoute: typeof LearnerDashboardRouteImport;
       parentRoute: typeof LearnerRouteRoute;
     };
     "/api/users": {
@@ -435,6 +454,7 @@ interface LearnerRouteRouteChildren {
   LearnerFriendsRouteRoute: typeof LearnerFriendsRouteRouteWithChildren;
   LearnerRoadmapsRouteRoute: typeof LearnerRoadmapsRouteRouteWithChildren;
   LearnerUserRouteRoute: typeof LearnerUserRouteRouteWithChildren;
+  LearnerDashboardRoute: typeof LearnerDashboardRoute;
   LearnerIndexRoute: typeof LearnerIndexRoute;
 }
 
@@ -444,6 +464,7 @@ const LearnerRouteRouteChildren: LearnerRouteRouteChildren = {
   LearnerFriendsRouteRoute: LearnerFriendsRouteRouteWithChildren,
   LearnerRoadmapsRouteRoute: LearnerRoadmapsRouteRouteWithChildren,
   LearnerUserRouteRoute: LearnerUserRouteRouteWithChildren,
+  LearnerDashboardRoute: LearnerDashboardRoute,
   LearnerIndexRoute: LearnerIndexRoute,
 };
 
