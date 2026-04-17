@@ -15,3 +15,12 @@
 .invisible {
   visibility: hidden;
 }
+
+.beauty {
+  background: linear-gradient(to right, $accent-minty, $accent-blue-celeste);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  display: inline-block;
+}

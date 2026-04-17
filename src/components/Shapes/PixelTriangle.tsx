@@ -1,10 +1,10 @@
 import * as React from "react";
-interface IProps {
+type TIProps = {
   color?: string;
   size?: string;
   style?: React.CSSProperties;
-}
-const PixelTriangle = (props: IProps) => {
+};
+const PixelTriangle = (props: TIProps) => {
   const { color, size = "15px", style } = props;
 
   return (

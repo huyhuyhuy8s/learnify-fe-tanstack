@@ -1,4 +1,4 @@
-export const colors = {
+export const COLORS = {
   /*
    * PRIMARY
    */
@@ -167,4 +167,4 @@ export const colors = {
 } as const;
 
 // Optional: Export a type derived from the colors object
-export type ThemeColors = typeof colors;
+export type ThemeColors = typeof COLORS;

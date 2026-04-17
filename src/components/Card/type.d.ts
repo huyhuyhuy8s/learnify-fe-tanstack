@@ -1,36 +1,25 @@
-import { TSpecial, TType } from '../TextButton/type';
-import { type } from '@/components/TextButton/type';
+import type { TSpecial } from "@/types/global";
 
-export type StatusCard = 'default' | 'inProgress' | 'completed' | 'locked';
-export interface CourseCardProps {
+export type TCourseCardProps = {
   className?: string;
   onClick: () => void;
   title: string;
   description?: string;
   duration?: string;
   typeSpecial?: TSpecial;
-  status?: StatusCard;
+  status?: TStatusCard;
   percentage?: number;
-}
+};
 
-export interface DecorationCardProps {
-  className?: string;
-  title: string;
-  listFeature?: string[];
-  typeSpecial?: TSpecial;
-  status?: StatusCard;
-  percentage?: number;
-  star?: number;
-}
-export interface UseSpecialCardFooterProps {
-  status: 'default' | 'inProgress' | 'completed' | 'locked';
+export type TUseSpecialCardFooterProps = {
+  status: "default" | "inProgress" | "completed" | "locked";
   percentage?: number;
   duration?: string;
   onClick?: () => void;
-}
-export interface UseDecorationCardFooterProps {
-  status: 'default' | 'inProgress' | 'completed' | 'locked';
+};
+export type TUseDecorationCardFooterProps = {
+  status: "default" | "inProgress" | "completed" | "locked";
   percentage?: number;
   star?: number;
   onClick?: () => void;
-}
+};

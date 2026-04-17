@@ -1,10 +1,10 @@
 import * as React from "react";
-interface IProps {
+type TIProps = {
   color?: string;
   size?: string;
   style?: React.CSSProperties;
-}
-const Burst = (props: IProps) => {
+};
+const Burst = (props: TIProps) => {
   const { color, size = "15px", style } = props;
 
   return (

@@ -3,14 +3,15 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import "./style.scss";
 
-interface LeftNavItemProps {
+type TLeftNavItemProps = {
   iconName: string;
   label: string;
   href: string;
   className?: string;
-}
+  active?: boolean;
+};
 
-const LeftNavItem = (props: LeftNavItemProps) => {
+const LeftNavItem = (props: TLeftNavItemProps) => {
   const { iconName, label, href, className = "" } = props;
   const [fill, setFill] = useState(false);
   const iconClassName = classNames(

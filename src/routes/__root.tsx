@@ -14,6 +14,13 @@ import NotFound from "@/components/NotFound";
 import appCss from "@/styles/app.css?url";
 import { seo } from "@/utils/seo";
 import "@styles/_global.scss";
+import gsap from "gsap";
+import CustomEase from "gsap/CustomEase";
+import { SplitText } from "gsap/SplitText";
+
+gsap.registerPlugin(SplitText, CustomEase);
+CustomEase.create("hop", "0.9, 0, 0.1, 1");
+CustomEase.create("glide", "0.8, 0, 0.2, 1");
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;

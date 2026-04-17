@@ -1,0 +1,75 @@
+@use "@styles/mixins" as *;
+@use "@styles/variables" as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+
+.loader-container {
+  position: fixed;
+  z-index: 2;
+
+  .logo {
+    background-color: transparent;
+
+    position: absolute;
+    inset: 0;
+    width: 100dvw;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    justify-content: end;
+    padding: toRem(40) 0;
+    gap: toRem(10);
+
+    .char {
+      transform: translateY(100%);
+      will-change: transform;
+    }
+
+    h2 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      overflow: hidden;
+    }
+
+    .spinner-tracker {
+      stroke: $black;
+    }
+
+    small {
+      text-align: center;
+    }
+  }
+
+  .loader {
+    &-1,
+    &-2,
+    &-3,
+    &-4 {
+      position: absolute;
+      inset: 0;
+      width: 100dvw;
+      height: 100dvh;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 100% 100%, 0 100%);
+      will-change: clip-path;
+    }
+
+    &-4 {
+      background-color: $white;
+    }
+
+    &-3 {
+      background-color: $mode-yellow;
+    }
+
+    &-2 {
+      background-color: $mode-salmon;
+    }
+
+    &-1 {
+      background-color: $mode-orange;
+    }
+  }
+}

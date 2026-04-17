@@ -1,14 +1,13 @@
 import { Fragment } from "react";
 import { Link } from "@tanstack/react-router";
-import { Tooltip } from "react-tooltip";
 
-interface TopNavLeftProps {
+type TTopNavLeftProps = {
   pathname: string[];
   lastPathname: string;
   pathnameWithoutLast: string[];
-}
+};
 
-const TopNavLeft = (props: TopNavLeftProps) => {
+const TopNavLeft = (props: TTopNavLeftProps) => {
   const { pathname, lastPathname, pathnameWithoutLast } = props;
 
   const content =
@@ -18,13 +17,11 @@ const TopNavLeft = (props: TopNavLeftProps) => {
           <span className="material-symbols-rounded">home</span>
         </Link>
         <span className="material-symbols-rounded">keyboard_arrow_right</span>
-        <button className="more medium">...</button>
+        <button className="more medium" title={pathnameWithoutLast.join(" / ")}>
+          ...
+        </button>
         <span className="material-symbols-rounded">keyboard_arrow_right</span>
         <button className="medium">{lastPathname}</button>
-        <Tooltip
-          anchorSelect=".more"
-          content={pathnameWithoutLast.join(" / ")}
-        />
       </>
     ) : pathname.length >= 2 ? (
       <>

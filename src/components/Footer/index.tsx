@@ -2,9 +2,21 @@ import { Link } from "@tanstack/react-router";
 import { OptimizeImage } from "@/components/Images";
 import "./style.scss";
 import IconButton from "@/components/IconButton";
+import gsap from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+
+gsap.registerPlugin(ScrollToPlugin);
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+
+  const scrollToTop = () => {
+    gsap.to(window, {
+      duration: 0.5,
+      scrollTo: { y: 0 },
+      ease: "power3.out",
+    });
+  };
 
   return (
     <footer>
@@ -46,24 +58,30 @@ const Footer = () => {
             <h6>Socials</h6>
             <div className="socials-context">
               <h6>
-                <a href="/">IG</a>
+                {" "}
+                <a href="/">IG</a>{" "}
               </h6>
               <h6>
-                <a href="/">DR</a>
+                {" "}
+                <a href="/">DR</a>{" "}
               </h6>
               <h6>
-                <a href="/">FB</a>
+                {" "}
+                <a href="/">FB</a>{" "}
               </h6>
               <h6>
-                <a href="/">X</a>
+                {" "}
+                <a href="/">X</a>{" "}
               </h6>
             </div>
           </div>
-          <p>
-            <a href="/">Privacy Policy</a>
-          </p>
+          <a href="/">Privacy Policy</a>
         </div>
-        <IconButton icon="arrow_upward" />
+        <IconButton
+          icon="arrow_upward"
+          specialIcon="arrow_upward"
+          onClick={scrollToTop}
+        />
       </div>
     </footer>
   );
