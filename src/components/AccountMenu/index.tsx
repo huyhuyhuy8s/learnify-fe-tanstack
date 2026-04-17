@@ -1,18 +1,18 @@
 import TextButton from "@/components/TextButton";
 import AccountMenuItem from "./components/AccountMenuItem";
 import "./style.scss";
-import { TSubscription } from "@/types/global";
+import type { TSubscription } from "@/types/global";
 import { Link } from "@tanstack/react-router";
 
-interface IAccountMenuProps {
+type TAccountMenuProps = {
   username: string;
   uid: string;
   id: string;
   subscription: TSubscription;
   className?: string;
-}
+};
 
-const AccountMenu = (props: IAccountMenuProps) => {
+const AccountMenu = (props: TAccountMenuProps) => {
   const { username, uid, subscription, className, id } = props;
 
   const userProfileLink = `/learner/user/${id}`;

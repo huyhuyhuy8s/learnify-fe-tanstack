@@ -3,14 +3,19 @@ import { Image } from "@unpic/react";
 import { cn } from "@/utils";
 import "./style.scss";
 
-type OptimizeImageProps = {
+type TOptimizeImageProps = {
   src: string;
   alt: string;
   folder?: string;
   className?: string;
 };
 
-const OptimizeImage = ({ src, alt, folder, className }: OptimizeImageProps) => {
+const OptimizeImage = ({
+  src,
+  alt,
+  folder,
+  className,
+}: TOptimizeImageProps) => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [currentSrc, setCurrentSrc] = useState<string>(src);
   const imgRef = useRef<HTMLImageElement>(null);

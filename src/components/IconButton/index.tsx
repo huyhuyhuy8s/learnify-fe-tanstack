@@ -2,9 +2,9 @@ import "./style.scss";
 import classNames from "classnames";
 import { useState, useMemo } from "react";
 
-interface IconButtonProp {
+type TconButtonProp = {
   icon: string;
-  onClick: () => void;
+  onClick?: () => void;
   type?: "primary" | "special" | "secondary" | "outlined" | "custom";
   state?: "default" | "hover" | "clicked" | "clickedHover";
   shape?: "square" | "circle";
@@ -13,12 +13,14 @@ interface IconButtonProp {
   color?: string;
   backgroundColor?: string;
   fill?: boolean;
-}
+  tooltip?: string;
+  className?: string;
+};
 
-const IconButton = (props: IconButtonProp) => {
+const IconButton = (props: TconButtonProp) => {
   const {
     icon,
-    onClick,
+    onClick = () => {},
     type = "primary",
     state = "default",
     shape = "square",
@@ -27,10 +29,19 @@ const IconButton = (props: IconButtonProp) => {
     color = "#fff",
     backgroundColor = "none",
     fill = false,
+    tooltip,
+    className,
   } = props;
 
   const [clicked, setClicked] = useState(false);
-  const buttonClassName = classNames("icon-button", type, state, shape, size);
+  const buttonClassName = classNames(
+    "icon-button",
+    type,
+    state,
+    shape,
+    size,
+    className
+  );
   const iconClassName = classNames("material-symbols-rounded", {
     filled: fill,
   });
@@ -52,6 +63,7 @@ const IconButton = (props: IconButtonProp) => {
         color,
       }}
       onClick={handleClick}
+      title={tooltip}
     >
       <span className={iconClassName}>{iconVal}</span>
     </button>

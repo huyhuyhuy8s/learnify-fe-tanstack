@@ -3,6 +3,7 @@ import TopNav from "@/components/TopNav";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import Footer from "@/components/Footer";
 import "./style.scss";
+import Loader from "@/components/Loader";
 
 export const Route = createFileRoute("/learner")({
   head: () => ({
@@ -19,6 +20,7 @@ export const Route = createFileRoute("/learner")({
 function RouteComponent() {
   return (
     <>
+      <Loader disabled />
       <LeftNav />
       <article className="body">
         <TopNav />

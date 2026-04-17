@@ -1,0 +1,126 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+
+.decoration-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  &-content {
+    position: relative;
+    padding: toRem(30);
+    border-radius: $br-xl;
+    border-bottom-right-radius: $br-none;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    overflow: hidden;
+    gap: toRem(10);
+  }
+
+  &-context {
+    display: flex;
+    justify-content: space-between;
+
+    .information {
+      display: flex;
+      flex-direction: column;
+      gap: toRem(15);
+
+      .badge {
+        display: flex;
+        gap: toRem(10);
+      }
+
+      h4 {
+        font-size: toRem(32);
+        color: $neutral-900;
+        text-align: left;
+      }
+
+      .list-feature {
+        flex-wrap: wrap;
+        display: flex;
+        gap: toRem(10);
+
+        .feature-name {
+          background-color: $navy-600;
+          color: $white;
+          padding: toRem(5) toRem(15);
+          border-radius: $br-sm;
+        }
+      }
+    }
+  }
+
+  .status {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: toRem(30);
+
+    .progress {
+      width: 100%;
+      border-radius: $br-rounded;
+      height: toRem(7);
+      display: flex;
+      overflow: hidden;
+
+      .tracker {
+        border-radius: $br-rounded;
+        background-color: $mode-navy;
+        position: relative;
+        height: 100%;
+      }
+    }
+  }
+
+  .modifier {
+    height: toRem(40);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    &-item {
+      height: 50%;
+      width: 100%;
+    }
+
+    &-left {
+      .modifier-item {
+        &:nth-child(1) {
+          background-color: $green-100;
+          border-top-right-radius: $br-xl;
+        }
+
+        &:nth-child(2) {
+          background-color: $green-100;
+        }
+      }
+    }
+
+    &-right {
+      background-color: $green-100;
+
+      .modifier-item {
+        &:nth-child(2) {
+          border-bottom-left-radius: $br-xl;
+          border-bottom-right-radius: $br-xl;
+        }
+      }
+    }
+  }
+}
+
+@include break(md) {
+  .decoration-card {
+    &-content {
+      border-radius: $br-xl;
+    }
+
+    .modifier {
+      visibility: hidden;
+    }
+  }
+}

@@ -1,13 +1,13 @@
 import classnames from "classnames";
 import "./style.scss";
 
-interface ControllerProps {
+type TControllerProps = {
   className?: string;
   active: boolean;
   onClick: () => void;
-}
+};
 
-const Controller = (props: ControllerProps) => {
+const Controller = (props: TControllerProps) => {
   const { className, active, onClick } = props;
 
   return (

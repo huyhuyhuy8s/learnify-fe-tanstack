@@ -1,7 +1,7 @@
-@use '@styles/mixins' as *;
+@use "@styles/mixins" as *;
 @use "@styles/functions" as *;
 @use "@styles/colors" as *;
-@use 'sass:math';
+@use "sass:math";
 
 body {
   display: flex;
@@ -18,6 +18,7 @@ body {
     background-color: $green-100;
     padding: toRem(100);
     padding-bottom: toRem(50);
+    gap: 10dvh;
   }
 
   .content {

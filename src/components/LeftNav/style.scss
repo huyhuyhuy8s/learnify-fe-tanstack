@@ -1,7 +1,7 @@
-@use '@styles/variables' as *;
-@use '@styles/colors' as *;
-@use '@styles/functions' as *;
-@use '@styles/mixins' as *;
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/functions" as *;
+@use "@styles/mixins" as *;
 
 .left-nav {
   position: sticky;
@@ -15,6 +15,7 @@
   @include transition;
   transition-property: background-color, border-color, margin-left;
   border-right: toRem(1) solid $navy-pastel-200;
+  z-index: 1;
 
   &.active {
     margin-left: 0;

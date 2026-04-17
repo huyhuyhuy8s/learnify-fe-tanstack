@@ -4,15 +4,14 @@ import Controller from "./components/Controller";
 import classnames from "classnames";
 import { useState, useEffect } from "react";
 import { useRouterState } from "@tanstack/react-router";
-import usePathname from "./hooks/usePathname";
 import { useScrollTop } from "@/hooks/useScrollTop";
 import "./style.scss";
 
-interface LeftNavProps {
+type TLeftNavProps = {
   className?: string;
-}
+};
 
-const LeftNav = (props: LeftNavProps) => {
+const LeftNav = (props: TLeftNavProps) => {
   const { className } = props;
   const [active, setActive] = useState(true);
   const pathnames = useRouterState({

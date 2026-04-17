@@ -1,51 +1,14 @@
-export type TSpecial =
-  | "lesson"
-  | "lab"
-  | "check"
-  | "roadmap"
-  | "course"
-  | "certificate"
-  | "private"
-  | "public"
-  | TSubscription;
-export type TType = "primary" | "secondary" | "outlined" | "special";
-export type TRoundedCorner =
-  | "rounded"
-  | "roundedSquare"
-  | "exceptUpperLeft"
-  | "exceptLowerLeft"
-  | "exceptUpperRight"
-  | "exceptLowerRight"
-  | "exceptLeft"
-  | "exceptRight"
-  | "exceptUpper"
-  | "exceptLower"
-  | "onlyUpperLeft"
-  | "onlyLowerLeft"
-  | "onlyUpperRight"
-  | "onlyLowerRight";
-export type TSize = "large" | "medium" | "small" | "tiny";
-export type TTypeSecondary =
-  | "default"
-  | "neutral"
-  | "yellow"
-  | "orange"
-  | "salmon"
-  | "darkGreen"
-  | "navy"
-  | "brown"
-  | "green"
-  | "pastelNeutral"
-  | "pastelYellow"
-  | "pastelOrange"
-  | "pastelSalmon"
-  | "pastelDarkGreen"
-  | "pastelNavy"
-  | "pastelBrown"
-  | "pastelGreen";
+import type {
+  TType,
+  TRoundedCorner,
+  TSize,
+  TTypeSecondary,
+  TSpecial,
+} from "@/types/global";
 
-export interface ITextButtonProps {
+export type TTextButtonProps = {
   icon?: string;
+  onClick: () => void;
   leftIcon?: boolean;
   rightIcon?: boolean;
   text: string;
@@ -55,13 +18,17 @@ export interface ITextButtonProps {
   typeSecondary?: TTypeSecondary;
   shape?: "circular";
   typeSpecial?: TSpecial;
+  backgroundColor?: string;
+  color?: string;
   tooltip?: string;
   style?: React.CSSProperties;
-}
+  disabled?: boolean;
+};
 
-export interface IIcon {
+export type TIconProps = {
   visible: boolean;
   type: TType;
   typeSpecial?: TSpecial;
   icon?: string;
-}
+  color?: string;
+};

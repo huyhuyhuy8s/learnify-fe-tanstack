@@ -1,13 +1,13 @@
-import {
+import type {
   TRoundedCorner,
   TSize,
   TSpecial,
   TType,
   TTypeSecondary,
-} from "../type";
+} from "@/types/global";
 import classNames from "classnames";
 
-export interface IUseButtonProps {
+export type TUseButtonProps = {
   type: TType;
   roundedCorner: TRoundedCorner;
   size: TSize;
@@ -16,9 +16,11 @@ export interface IUseButtonProps {
   typeSpecial: TSpecial;
   text: string;
   tooltip: string;
-}
+  disabled: boolean;
+  onClick: () => void;
+};
 
-export const useButton = (props: IUseButtonProps) => {
+export const useButton = (props: TUseButtonProps) => {
   const {
     type,
     roundedCorner,
@@ -28,7 +30,14 @@ export const useButton = (props: IUseButtonProps) => {
     typeSpecial,
     text,
     tooltip,
+    disabled,
+    onClick,
   } = props;
+
+  const onClickHandler = () => {
+    if (disabled) return;
+    onClick();
+  };
 
   const buttonClassNames = classNames(
     "text-button",
@@ -37,7 +46,8 @@ export const useButton = (props: IUseButtonProps) => {
     size,
     { [`typeSecondary-${typeSecondary}`]: type === "secondary" },
     shape,
-    { [`typeSpecial-${typeSpecial}`]: type === "special" }
+    { [`typeSpecial-${typeSpecial}`]: type === "special" },
+    { disabled: disabled }
   );
 
   const iconLabel = type === "special" ? typeSpecial : text;
@@ -69,6 +79,7 @@ export const useButton = (props: IUseButtonProps) => {
     type === "special" ? specialContent[typeSpecial] : tooltip;
 
   return {
+    onClickHandler,
     buttonClassNames,
     iconLabel,
     toolTipContent,
