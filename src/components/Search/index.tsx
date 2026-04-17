@@ -29,13 +29,7 @@ const Search = (props: TSearchProps) => {
       style={style}
       onSubmit={handleSubmit}
     >
-      <input
-        type="text"
-        placeholder={placeholder}
-        id="search"
-        name="q"
-        autoComplete="off"
-      />
+      <input type="text" placeholder={placeholder} id="search" name="q" />
       <button type="submit">
         <span className="material-symbols-rounded">search</span>
       </button>
