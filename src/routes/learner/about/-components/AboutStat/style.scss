@@ -2,44 +2,107 @@
 @use "@styles/mixins" as *;
 @use "@styles/functions" as *;
 @use "@styles/colors" as *;
-.container-stat {
+
+.about-stat {
   position: relative;
-  width: toRem(300);
-  height: toRem(300);
-  padding: toRem(130) toRem(30) toRem(30) toRem(30);
+  width: 100%;
+  max-width: toRem(300);
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: toRem(30);
+
   background-color: $accent-minty;
-  border-radius: 15%;
+  border-radius: $br-md;
+  transition: transform 0.3s ease;
 
   &:hover {
-    scale: calc(1.1);
-    transition: all 1.5s;
+    transform: scale(1.05);
   }
 
-  .type {
-    order: 2;
-    font-size: toRem(20);
-    font-weight: 500;
-    color: #446452;
-    margin: 0;
-    font-family: sans-serif;
-  }
-
-  .total {
-    order: 1;
+  &-total {
     font-size: toRem(60);
     font-weight: 800;
     color: $neutral-900;
-    margin: 0 0 toRem(12) 0;
-    line-height: 1;
+    margin: 0 0 toRem(8) 0;
+    line-height: 1.1;
     letter-spacing: toRem(-2);
+    font-family: sans-serif;
+  }
+
+  &-type {
+    font-size: toRem(20);
+    line-height: 1.2;
+    font-weight: 500;
+    color: $green-500;
+    margin: 0;
     font-family: sans-serif;
   }
 }
 
-@media (max-width: 768px) {
-  .container {
-    .total {
-      font-size: toRem(50);
+@include break(lg) {
+  .about-stat {
+    max-width: toRem(260);
+    padding: toRem(24);
+
+    &-total {
+      font-size: toRem(52);
+    }
+    &-type {
+      font-size: toRem(18);
+    }
+  }
+}
+
+@include break(md) {
+  .about-stat {
+    max-width: toRem(220);
+    padding: toRem(20);
+
+    &-total {
+      font-size: toRem(44);
+    }
+    &-type {
+      font-size: toRem(16);
+    }
+  }
+}
+
+@include break(s) {
+  .about-stat {
+    max-width: toRem(180);
+    padding: toRem(16);
+
+    &:hover {
+      transform: none;
+    }
+
+    &-total {
+      font-size: toRem(36);
+      letter-spacing: toRem(-1);
+    }
+    &-type {
+      font-size: toRem(14);
+    }
+  }
+}
+
+@include break(xs) {
+  .about-stat {
+    max-width: 100%;
+    aspect-ratio: auto;
+    padding: toRem(24);
+
+    align-items: center;
+    text-align: center;
+
+    &-total {
+      font-size: toRem(40);
+      margin: 0 0 toRem(4) 0;
+    }
+    &-type {
+      font-size: toRem(16);
     }
   }
 }

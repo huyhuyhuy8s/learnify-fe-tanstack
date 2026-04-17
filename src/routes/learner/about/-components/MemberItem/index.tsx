@@ -1,5 +1,6 @@
 import type { TMemberProps } from "@/routes/learner/about/-types/about";
 import { OptimizeImage } from "@/components/Images";
+import "./style.scss";
 
 const MemberItem = (props: TMemberProps) => {
   const { name, jobTitle, image } = props;
@@ -8,17 +9,17 @@ const MemberItem = (props: TMemberProps) => {
 
   return (
     <div className="member-item">
-      <div className="avatar-wrapper">
+      <div className="member-item-avatar-wrapper">
         <OptimizeImage
           src={imageSrc}
           alt={name || "Team member"}
           folder={imageFolder}
-          className="avatar-img"
+          className="member-item-avatar-wrapper-img"
         />
       </div>
-      <div className="info">
-        <h3 className="name">{name}</h3>
-        <p className="job-title">{jobTitle}</p>
+      <div className="member-item-info">
+        <h3 className="member-item-info-name">{name}</h3>
+        <p className="member-item-info-job-title">{jobTitle}</p>
       </div>
     </div>
   );

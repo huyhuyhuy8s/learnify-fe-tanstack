@@ -3,14 +3,37 @@
 @use "@styles/mixins" as *;
 @use "@styles/functions" as *;
 @use "@styles/colors" as *;
-.team-container {
+.team-list {
   width: 100%;
+  &-grid-unified {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: toRem(48);
+  }
 }
 
-.team-grid-unified {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  gap: toRem(48);
+@include break(lg) {
+  .team-list-grid-unified {
+    gap: toRem(48);
+  }
+}
+
+@include break(md) {
+  .team-list-grid-unified {
+    gap: toRem(32);
+  }
+}
+
+@include break(s) {
+  .team-list-grid-unified {
+    gap: toRem(24);
+  }
+}
+
+@include break(xs) {
+  .team-list-grid-unified {
+    gap: toRem(16);
+  }
 }

@@ -4,8 +4,8 @@ import MemberItem from "@/routes/learner/about/-components/MemberItem";
 
 const TeamList = () => {
   return (
-    <div className="team-container">
-      <div className="team-grid-unified">
+    <div className="team-list">
+      <div className="team-list-grid-unified">
         {teamMembers.map((member, index) => (
           <MemberItem key={`team-${index}`} {...member} />
         ))}

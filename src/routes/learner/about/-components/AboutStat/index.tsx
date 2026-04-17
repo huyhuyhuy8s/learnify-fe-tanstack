@@ -5,9 +5,11 @@ const AboutStat = (props: TAboutStatProps) => {
   const { label, value } = props;
 
   return (
-    <div className="container-stat">
-      <p className="total">{value}</p>
-      <h3 className="type">{label}</h3>
+    <div className="about-stat">
+      <h1 className="about-stat-total">
+        <b>{value}</b>
+      </h1>
+      <h3 className="about-stat-type">{label}</h3>
     </div>
   );
 };
