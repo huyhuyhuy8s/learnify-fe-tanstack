@@ -21,6 +21,7 @@ import { Route as LearnerRoadmapsRouteRouteImport } from "./routes/learner/roadm
 import { Route as LearnerFriendsRouteRouteImport } from "./routes/learner/friends/route";
 import { Route as LearnerCoursesRouteRouteImport } from "./routes/learner/courses/route";
 import { Route as LearnerAboutRouteRouteImport } from "./routes/learner/about/route";
+import { Route as LearnerSearchIndexRouteImport } from "./routes/learner/search/index";
 import { Route as LearnerRoadmapsIndexRouteImport } from "./routes/learner/roadmaps/index";
 import { Route as LearnerFriendsIndexRouteImport } from "./routes/learner/friends/index";
 import { Route as LearnerCoursesIndexRouteImport } from "./routes/learner/courses/index";
@@ -89,6 +90,11 @@ const LearnerAboutRouteRoute = LearnerAboutRouteRouteImport.update({
   path: "/about",
   getParentRoute: () => LearnerRouteRoute,
 } as any);
+const LearnerSearchIndexRoute = LearnerSearchIndexRouteImport.update({
+  id: "/search/",
+  path: "/search/",
+  getParentRoute: () => LearnerRouteRoute,
+} as any);
 const LearnerRoadmapsIndexRoute = LearnerRoadmapsIndexRouteImport.update({
   id: "/",
   path: "/",
@@ -145,6 +151,7 @@ export interface FileRoutesByFullPath {
   "/learner/courses/": typeof LearnerCoursesIndexRoute;
   "/learner/friends/": typeof LearnerFriendsIndexRoute;
   "/learner/roadmaps/": typeof LearnerRoadmapsIndexRoute;
+  "/learner/search/": typeof LearnerSearchIndexRoute;
 }
 export interface FileRoutesByTo {
   "/": typeof IndexRoute;
@@ -161,6 +168,7 @@ export interface FileRoutesByTo {
   "/learner/courses": typeof LearnerCoursesIndexRoute;
   "/learner/friends": typeof LearnerFriendsIndexRoute;
   "/learner/roadmaps": typeof LearnerRoadmapsIndexRoute;
+  "/learner/search": typeof LearnerSearchIndexRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
@@ -183,6 +191,7 @@ export interface FileRoutesById {
   "/learner/courses/": typeof LearnerCoursesIndexRoute;
   "/learner/friends/": typeof LearnerFriendsIndexRoute;
   "/learner/roadmaps/": typeof LearnerRoadmapsIndexRoute;
+  "/learner/search/": typeof LearnerSearchIndexRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
@@ -205,7 +214,8 @@ export interface FileRouteTypes {
     | "/learner/about/"
     | "/learner/courses/"
     | "/learner/friends/"
-    | "/learner/roadmaps/";
+    | "/learner/roadmaps/"
+    | "/learner/search/";
   fileRoutesByTo: FileRoutesByTo;
   to:
     | "/"
@@ -221,7 +231,8 @@ export interface FileRouteTypes {
     | "/learner/about"
     | "/learner/courses"
     | "/learner/friends"
-    | "/learner/roadmaps";
+    | "/learner/roadmaps"
+    | "/learner/search";
   id:
     | "__root__"
     | "/"
@@ -242,7 +253,8 @@ export interface FileRouteTypes {
     | "/learner/about/"
     | "/learner/courses/"
     | "/learner/friends/"
-    | "/learner/roadmaps/";
+    | "/learner/roadmaps/"
+    | "/learner/search/";
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
@@ -337,6 +349,13 @@ declare module "@tanstack/react-router" {
       path: "/about";
       fullPath: "/learner/about";
       preLoaderRoute: typeof LearnerAboutRouteRouteImport;
+      parentRoute: typeof LearnerRouteRoute;
+    };
+    "/learner/search/": {
+      id: "/learner/search/";
+      path: "/search";
+      fullPath: "/learner/search/";
+      preLoaderRoute: typeof LearnerSearchIndexRouteImport;
       parentRoute: typeof LearnerRouteRoute;
     };
     "/learner/roadmaps/": {
@@ -456,6 +475,7 @@ interface LearnerRouteRouteChildren {
   LearnerUserRouteRoute: typeof LearnerUserRouteRouteWithChildren;
   LearnerDashboardRoute: typeof LearnerDashboardRoute;
   LearnerIndexRoute: typeof LearnerIndexRoute;
+  LearnerSearchIndexRoute: typeof LearnerSearchIndexRoute;
 }
 
 const LearnerRouteRouteChildren: LearnerRouteRouteChildren = {
@@ -466,6 +486,7 @@ const LearnerRouteRouteChildren: LearnerRouteRouteChildren = {
   LearnerUserRouteRoute: LearnerUserRouteRouteWithChildren,
   LearnerDashboardRoute: LearnerDashboardRoute,
   LearnerIndexRoute: LearnerIndexRoute,
+  LearnerSearchIndexRoute: LearnerSearchIndexRoute,
 };
 
 const LearnerRouteRouteWithChildren = LearnerRouteRoute._addFileChildren(

@@ -15,6 +15,15 @@
     color: $black;
     width: 100%;
 
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+      -webkit-text-fill-color: $black;
+      box-shadow: 0 0 0 toRem(1000) white inset;
+      transition: background-color 5000s ease-in-out 0s;
+    }
+
     &:focus {
       outline: none;
     }
