@@ -9,9 +9,27 @@
   width: 100%;
   max-width: toRem(1200);
   margin: 0 auto;
-  padding: toRem(60) toRem(24);
+  padding: 0 toRem(24);
   font-family: "Inter", sans-serif;
   gap: toRem(100);
+
+  &-head {
+    gap: toRem(10);
+    &-title {
+      font-size: toRem(120);
+      font-weight: 800;
+      color: $mode-green;
+      line-height: toRem(150);
+      letter-spacing: toRem(-2);
+    }
+
+    &-subtitle {
+      font-size: toRem(40);
+      line-height: toRem(49);
+      font-weight: 400;
+      color: $neutral-900;
+    }
+  }
 
   &-hero {
     display: flex;
@@ -23,23 +41,6 @@
     &-content {
       flex: 1;
       max-width: 65ch;
-    }
-
-    &-title {
-      font-size: toRem(120);
-      font-weight: 800;
-      color: $mode-green;
-      line-height: toRem(150);
-      margin: 0 0 toRem(16) 0;
-      letter-spacing: toRem(-2);
-    }
-
-    &-subtitle {
-      font-size: toRem(40);
-      line-height: toRem(49);
-      font-weight: 400;
-      color: $neutral-900;
-      margin: 0 0 toRem(40) 0;
     }
 
     &-desc {
@@ -123,7 +124,7 @@
 @include break(md) {
   .about-page {
     gap: toRem(60);
-    padding: toRem(40) toRem(16);
+    padding: 0 toRem(16);
 
     &-hero {
       flex-direction: column;

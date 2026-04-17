@@ -13,12 +13,14 @@ export const Route = createFileRoute("/learner/about/")({
 function AboutPage() {
   return (
     <div className="about-page">
+      <section className="about-page-head">
+        <h1 className="about-page-head-title">Learnify</h1>
+        <h3 className="about-page-head-subtitle">
+          Smart learning. Real skills. Ready careers.
+        </h3>
+      </section>
       <section className="about-page-hero">
         <div className="about-page-hero-content">
-          <h1 className="about-page-hero-title">Learnify</h1>
-          <h3 className="about-page-hero-subtitle">
-            Smart learning. Real skills. Ready careers.
-          </h3>
           <div className="about-page-hero-desc">
             <h6>
               Learnify is an educational platform that highlights the future and
