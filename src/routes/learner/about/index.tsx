@@ -46,7 +46,7 @@ function AboutPage() {
         </div>
 
         <div className="about-page-hero-visual">
-          {/* <div className="about-page-hero-visual-decorator"></div> */}
+          <div className="about-page-hero-visual-decorator"></div>
           <OptimizeImage
             className="about-page-hero-visual-img footer-banner"
             src="/footer.webp"
