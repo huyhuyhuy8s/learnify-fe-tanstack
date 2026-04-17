@@ -19,6 +19,7 @@ function AboutPage() {
           Smart learning. Real skills. Ready careers.
         </h3>
       </section>
+
       <section className="about-page-hero">
         <div className="about-page-hero-content">
           <div className="about-page-hero-desc">
@@ -57,8 +58,25 @@ function AboutPage() {
         </div>
       </section>
 
+      <hr className="about-page-divider" />
+
       <section className="about-page-stats-section">
-        <h2 className="about-page-stats-section-title">Our Achievement</h2>
+        <div className="about-page-stats-section-text">
+          <div className="about-page-stats-section-text-left">
+            <p className="about-page-with-bullet text-dark">
+              Inspiring with human-centric design.
+            </p>
+            <p className="subtitle">Empowering through technology</p>
+          </div>
+          <div className="about-page-stats-section-text-right">
+            <p>
+              Learnify was born from a simple belief: learning should be
+              personal, engaging, and accessible to everyone. We combine
+              expert-curated content with AI-driven guidance to create an
+              experience that adapts to your unique pace and goals.
+            </p>
+          </div>
+        </div>
         <div className="about-page-stats-section-stat-list">
           {ABOUT_STATS.map((stat, index) => (
             <AboutStat
@@ -70,15 +88,31 @@ function AboutPage() {
         </div>
       </section>
 
+      <hr className="about-page-divider" />
+
+      <section className="about-page-vision-section">
+        <div className="about-page-vision-section-left">
+          <p className="about-page-with-bullet text-gray">Our Visions</p>
+        </div>
+        <div className="about-page-vision-section-right">
+          <p>
+            From interactive mind-maps to motivational streaks, every feature is
+            designed to help you build lasting knowledge—not just pass the next
+            exam.
+          </p>
+        </div>
+      </section>
+
+      <hr className="about-page-divider" />
+
       <section className="about-page-team-section">
         <div className="about-page-team-section-header">
-          <h2 className="about-page-team-section-title">
-            <b>Our Team</b>
-          </h2>
-          <p className="about-page-team-section-subtitle">
-            A team of engineers passionate about building intelligent learning
-            systems
-          </p>
+          <div className="about-page-team-section-header-left">
+            <p className="about-page-with-bullet text-gray">Our Crews</p>
+          </div>
+          <div className="about-page-team-section-header-right">
+            <p>People</p>
+          </div>
         </div>
         <TeamList />
       </section>

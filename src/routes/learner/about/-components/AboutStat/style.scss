@@ -12,8 +12,6 @@
   flex-direction: column;
   justify-content: flex-end;
   padding: toRem(30);
-
-  background-color: $accent-minty;
   border-radius: $br-md;
   transition: transform 0.3s ease;
 
@@ -39,6 +37,18 @@
     margin: 0;
     font-family: sans-serif;
   }
+}
+.about-green {
+  background-color: $accent-minty;
+}
+.about-blue {
+  background-color: $accent-blue-celeste;
+}
+.about-red {
+  background-color: $accent-classic-pink;
+}
+.about-yellow {
+  background-color: $accent-smoothing-lime;
 }
 
 @include break(lg) {

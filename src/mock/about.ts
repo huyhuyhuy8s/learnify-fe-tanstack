@@ -34,5 +34,6 @@ export const ABOUT_VALUES = [
 export const ABOUT_STATS: TAboutStatProps[] = [
   { value: "10K+", label: "Trusted Learners" },
   { value: "200+", label: "Courses" },
-  { value: "98%", label: "Satisfaction" },
+  { value: "3", label: "Members" },
+  { value: "200", label: "Trusted Partners" },
 ];

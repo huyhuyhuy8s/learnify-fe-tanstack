@@ -1,4 +1,8 @@
-export type TLabel = "Trusted Learners" | "Courses" | "Satisfaction";
+export type TLabel =
+  | "Trusted Learners"
+  | "Courses"
+  | "Members"
+  | "Trusted Partners";
 export type TAboutStatProps = {
   label: TLabel;
   value: string;
