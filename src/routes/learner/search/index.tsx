@@ -15,5 +15,5 @@ function RouteComponent() {
 
   console.log("Search query:", q);
 
-  return <div>Hello "/learner/search/"!</div>;
+  return <div>Showing results for: {q}</div>;
 }

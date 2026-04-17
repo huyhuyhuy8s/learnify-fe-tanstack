@@ -8,7 +8,6 @@ import {
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import * as React from "react";
-import type { QueryClient } from "@tanstack/react-query";
 import DefaultCatchBoundary from "@/components/DefaultCatchBoundary";
 import NotFound from "@/components/NotFound";
 import appCss from "@/styles/app.css?url";
@@ -17,14 +16,13 @@ import "@styles/_global.scss";
 import gsap from "gsap";
 import CustomEase from "gsap/CustomEase";
 import { SplitText } from "gsap/SplitText";
+import type { RouterContext } from "@/router";
 
 gsap.registerPlugin(SplitText, CustomEase);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
 CustomEase.create("glide", "0.8, 0, 0.2, 1");
 
-export const Route = createRootRouteWithContext<{
-  queryClient: QueryClient;
-}>()({
+export const Route = createRootRouteWithContext<RouterContext>()({
   head: () => ({
     meta: [
       {
