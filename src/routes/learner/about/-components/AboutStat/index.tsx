@@ -1,7 +1,7 @@
-import { IAboutStatProps } from "@/routes/learner/about/-types/about";
+import type { TAboutStatProps } from "@/routes/learner/about/-types/about";
 import "./style.scss";
 
-const AboutStat = (props: IAboutStatProps) => {
+const AboutStat = (props: TAboutStatProps) => {
   const { label, value } = props;
 
   return (
