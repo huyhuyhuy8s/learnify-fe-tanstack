@@ -1,0 +1,11 @@
+/* member-item.scss */
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+
+.team-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(toRem(240), 1fr));
+  gap: 10dvw;
+}

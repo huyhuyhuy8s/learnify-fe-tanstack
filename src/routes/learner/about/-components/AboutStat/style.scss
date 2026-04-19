@@ -1,0 +1,27 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+
+.about-stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 30dvh;
+  padding: toRem(30);
+  border-radius: $br-xl;
+
+  h5 {
+    color: $grey;
+  }
+
+  &-context {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(10);
+
+    h6 {
+      color: $grey;
+    }
+  }
+}
