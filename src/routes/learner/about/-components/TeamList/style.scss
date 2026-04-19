@@ -3,35 +3,9 @@
 @use "@styles/mixins" as *;
 @use "@styles/functions" as *;
 @use "@styles/colors" as *;
+
 .team-list {
-  width: 100%;
-  &-grid-unified {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-}
-
-@include break(lg) {
-  .team-list-grid-unified {
-    gap: toRem(48);
-  }
-}
-
-@include break(md) {
-  .team-list-grid-unified {
-    gap: toRem(32);
-  }
-}
-
-@include break(s) {
-  .team-list-grid-unified {
-    gap: toRem(24);
-  }
-}
-
-@include break(xs) {
-  .team-list-grid-unified {
-    gap: toRem(16);
-  }
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(toRem(240), 1fr));
+  gap: 10dvw;
 }

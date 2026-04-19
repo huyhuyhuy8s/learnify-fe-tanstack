@@ -18,8 +18,8 @@ const MemberItem = (props: TMemberProps) => {
         />
       </div>
       <div className="member-item-info">
-        <h3 className="member-item-info-name">{name}</h3>
-        <p className="member-item-info-job-title">{jobTitle}</p>
+        <h3 className="member-item-info-name semibold">{name}</h3>
+        <h4 className="member-item-info-job-title regular">{jobTitle}</h4>
       </div>
     </div>
   );

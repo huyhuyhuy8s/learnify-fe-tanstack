@@ -1,4 +1,5 @@
 import type { TAboutStatProps } from "@/routes/learner/about/-types/about";
+import { COLORS } from "@/styles/colors";
 
 export const ABOUT_VALUES = [
   {
@@ -31,9 +32,13 @@ export const ABOUT_VALUES = [
   },
 ];
 
-export const ABOUT_STATS: TAboutStatProps[] = [
-  { value: "10K+", label: "Trusted Learners" },
-  { value: "200+", label: "Courses" },
-  { value: "3", label: "Members" },
-  { value: "200", label: "Trusted Partners" },
+export const ABOUT_STATS: Omit<TAboutStatProps, "index">[] = [
+  { value: "10K+", color: COLORS.accentMinty, label: "Trusted Learners" },
+  { value: "200+", color: COLORS.accentIndicolite, label: "Courses" },
+  { value: "3", color: COLORS.accentClassicPink, label: "Members" },
+  {
+    value: "200",
+    color: COLORS.accentSmoothingLime,
+    label: "Trusted Partners",
+  },
 ];

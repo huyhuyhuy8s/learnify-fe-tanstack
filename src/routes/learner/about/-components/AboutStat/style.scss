@@ -4,115 +4,24 @@
 @use "@styles/colors" as *;
 
 .about-stat {
-  position: relative;
-  width: 100%;
-  max-width: toRem(300);
-  aspect-ratio: 1 / 1;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-between;
+  min-height: 30dvh;
   padding: toRem(30);
-  border-radius: $br-md;
-  transition: transform 0.3s ease;
+  border-radius: $br-xl;
 
-  &:hover {
-    transform: scale(1.05);
+  h5 {
+    color: $grey;
   }
 
-  &-total {
-    font-size: toRem(60);
-    font-weight: 800;
-    color: $neutral-900;
-    margin: 0 0 toRem(8) 0;
-    line-height: 1.1;
-    letter-spacing: toRem(-2);
-    font-family: sans-serif;
-  }
+  &-context {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(10);
 
-  &-type {
-    font-size: toRem(20);
-    line-height: 1.2;
-    font-weight: 500;
-    color: $green-500;
-    margin: 0;
-    font-family: sans-serif;
-  }
-}
-.about-green {
-  background-color: $accent-minty;
-}
-.about-blue {
-  background-color: $accent-blue-celeste;
-}
-.about-red {
-  background-color: $accent-classic-pink;
-}
-.about-yellow {
-  background-color: $accent-smoothing-lime;
-}
-
-@include break(lg) {
-  .about-stat {
-    max-width: toRem(260);
-    padding: toRem(24);
-
-    &-total {
-      font-size: toRem(52);
-    }
-    &-type {
-      font-size: toRem(18);
-    }
-  }
-}
-
-@include break(md) {
-  .about-stat {
-    max-width: toRem(220);
-    padding: toRem(20);
-
-    &-total {
-      font-size: toRem(44);
-    }
-    &-type {
-      font-size: toRem(16);
-    }
-  }
-}
-
-@include break(s) {
-  .about-stat {
-    max-width: toRem(180);
-    padding: toRem(16);
-
-    &:hover {
-      transform: none;
-    }
-
-    &-total {
-      font-size: toRem(36);
-      letter-spacing: toRem(-1);
-    }
-    &-type {
-      font-size: toRem(14);
-    }
-  }
-}
-
-@include break(xs) {
-  .about-stat {
-    max-width: 100%;
-    aspect-ratio: auto;
-    padding: toRem(24);
-
-    align-items: center;
-    text-align: center;
-
-    &-total {
-      font-size: toRem(40);
-      margin: 0 0 toRem(4) 0;
-    }
-    &-type {
-      font-size: toRem(16);
+    h6 {
+      color: $grey;
     }
   }
 }

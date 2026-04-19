@@ -4,6 +4,8 @@ export type TLabel =
   | "Members"
   | "Trusted Partners";
 export type TAboutStatProps = {
+  index: number;
+  color: string;
   label: TLabel;
   value: string;
 };
