@@ -1,0 +1,101 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+
+.friend-detail {
+  font-family: "Inter", system-ui, sans-serif;
+  max-width: toRem(680);
+  margin: 0 auto;
+  color: $neutral-900;
+
+  &-header {
+    position: relative;
+    margin-bottom: toRem(30);
+  }
+
+  &-bg {
+    width: 100%;
+    height: toRem(280);
+    object-fit: cover;
+    border-radius: toRem(16);
+
+    &--empty {
+      background-color: $green-150;
+    }
+  }
+
+  &-avatar-wrapper {
+    position: absolute;
+    bottom: toRem(-40);
+    right: toRem(32);
+  }
+
+  &-avatar {
+    width: toRem(120);
+    height: 10%;
+    border-radius: $br-xl;
+    border: toRem(4) solid $neutral-100;
+    object-fit: cover;
+    background-color: $neutral-100;
+    box-shadow: 0 toRem(4) toRem(10) rgba(0, 0, 0, 0.08);
+  }
+
+  &-body {
+    padding: 0 toRem(8);
+  }
+
+  &-name {
+    font-size: toRem(36);
+    font-weight: 800;
+    color: $neutral-900;
+    margin: 0 0 toRem(8) 0;
+    line-height: 1.2;
+  }
+
+  &-meta {
+    font-size: toRem(16);
+    color: $neutral-500;
+    margin: 0 0 toRem(24) 0;
+  }
+
+  &-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: toRem(1) solid $neutral-250;
+    border-radius: $br-xl;
+    padding: toRem(20) toRem(32);
+    margin-bottom: toRem(32);
+  }
+
+  &-stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  &-stat-value {
+    font-size: toRem(20);
+    font-weight: 700;
+    color: $neutral-800;
+    margin-bottom: toRem(6);
+  }
+
+  &-stat-label {
+    font-size: toRem(14);
+    color: $neutral-500;
+  }
+
+  &-achievements {
+    margin-top: toRem(40);
+  }
+
+  &-achievements-title {
+    font-size: toRem(24);
+    font-weight: 700;
+    color: $neutral-800;
+    margin: 0 0 toRem(20) 0;
+  }
+}

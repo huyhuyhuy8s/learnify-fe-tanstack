@@ -3,11 +3,22 @@ import "./style.scss";
 import type { TFriendItem } from "./type";
 import FriendItemFooter from "./components/FriendFooter";
 
-const FriendItem = (props: TFriendItem) => {
-  const { name, onClick, imgUrl, typeFriendItem, streaks, index } = props;
+type Props = TFriendItem & {
+  isActive?: boolean;
+};
+
+const FriendItem = (props: Props) => {
+  const { name, onClick, imgUrl, typeFriendItem, streaks, index, isActive } =
+    props;
 
   return (
-    <button className="friend-item" onClick={onClick} tabIndex={0}>
+    <button
+      className={classNames("friend-item", {
+        "friend-item--active": isActive,
+      })}
+      onClick={onClick}
+      tabIndex={0}
+    >
       <div className="friend-item-index">
         {index ? (
           <span>{index}</span>
