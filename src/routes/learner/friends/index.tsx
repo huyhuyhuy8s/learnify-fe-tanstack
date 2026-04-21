@@ -1,46 +1,80 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import classNames from "classnames";
+import { MOCK_FRIEND } from "@/mock/friend";
+import FriendItem from "./-components/FriendItem";
+import type { TTypeFriendItem } from "./-components/FriendItem/type";
+import "./style.scss";
 
 export const Route = createFileRoute("/learner/friends/")({
   component: FriendsPage,
 });
 
 function FriendsPage() {
+  const [typeFriend, setTypeFriend] = useState<TTypeFriendItem>("leaderboard");
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  const tabs: { value: TTypeFriendItem; label: string; icon?: string }[] = [
+    { value: "leaderboard", label: "Leaderboard" },
+    { value: "friends", label: "Friends" },
+    { value: "request", label: "Requests" },
+  ];
+
+  const filteredFriends = MOCK_FRIEND.filter(
+    (friend) => friend.typeFriendItem === typeFriend
+  );
+
   return (
-    <div className="bg-gradient-to-b from-slate-50 to-white p-6">
-      <div className="">
-        <header className="flex items-center justify-between gap-4 mb-6">
-          <div className="flex items-center gap-4">
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-semibold text-slate-900">
-                Mind Map
-              </h1>
-              <p className="text-sm text-slate-500 mt-1">Mind map storage</p>
+    <div className="friend-page">
+      <div className="friend-page-header">
+        {tabs.map((tab) => (
+          <button
+            key={tab.value}
+            onClick={() => {
+              setTypeFriend(tab.value);
+              setSelectedIndex(null);
+            }}
+            className={classNames("friend-page-header-tab", {
+              "friend-page-header-tab--active": typeFriend === tab.value,
+            })}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="friend-page-body">
+        <div className="friend-page-body-left">
+          {filteredFriends.map((friend, index) => (
+            <FriendItem
+              key={index}
+              name={friend.name}
+              imgUrl={friend.imgUrl}
+              typeFriendItem={friend.typeFriendItem}
+              streaks={friend.streaks}
+              index={index + 1}
+              onClick={() => {
+                friend.onClick();
+                setSelectedIndex(index);
+              }}
+            />
+          ))}
+          {filteredFriends.length === 0 && (
+            <p className="friend-page-body-left-empty">No items found.</p>
+          )}
+        </div>
+
+        <div className="friend-page-body-right">
+          {selectedIndex !== null ? (
+            <div className="placeholder-profile">
+              Đang hiển thị hồ sơ của: <strong>....</strong>
             </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-white shadow-sm hover:shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-sky-300"
-              title="Tải mindmap"
-            >
-              <span className="text-sm hidden sm:inline">Export</span>
-            </button>
-
-            <button
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-white shadow-sm hover:shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-sky-300"
-              title="Làm mới"
-              onClick={() => window.location.reload()}
-            >
-              <span className="text-sm hidden sm:inline">Reload</span>
-            </button>
-          </div>
-        </header>
-
-        <main className="flex flex-col items-center justify-center min-h-[400px] border-2 border-dashed border-slate-300 rounded-lg bg-white/50 p-10">
-          <h1 className="text-center text-3xl mt-20">
-            In Progress, Wait for releasing
-          </h1>
-        </main>
+          ) : (
+            <div className="placeholder-profile">
+              Chọn một người để xem thông tin chi tiết
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

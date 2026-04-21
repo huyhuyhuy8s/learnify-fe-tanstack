@@ -1,0 +1,45 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+.friend-item-footer {
+  display: flex;
+  align-items: center;
+  gap: toRem(8);
+
+  &-streaks {
+    background-color: #6edb9a;
+    color: #1f643f;
+    padding: toRem(6) toRem(12);
+    border-radius: $br-xl;
+    font-size: toRem(12);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  &-btn {
+    padding: toRem(6) toRem(16);
+    border-radius: $br-xl;
+    font-size: toRem(13);
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    white-space: nowrap;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &--accept {
+      background-color: #2a4c3b;
+      color: #ffffff;
+      border: toRem(1) solid #2a4c3b;
+    }
+
+    &--decline {
+      background-color: #ffffff;
+      color: #1a1a1a;
+      border: toRem(1) solid #a0a0a0;
+    }
+  }
+}

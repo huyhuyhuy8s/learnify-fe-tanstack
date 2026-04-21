@@ -1,0 +1,61 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+.friend-item {
+  display: flex;
+  align-items: center;
+  padding: toRem(12) toRem(16);
+  border: toRem(1) solid #e0e0e0;
+  border-radius: $br-md;
+  background-color: #ffffff;
+  gap: toRem(16);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  width: 100%;
+
+  &--active {
+    background-color: #dcdcdc;
+    border-color: transparent;
+  }
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+
+  &-index {
+    width: toRem(24);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: toRem(14);
+    font-weight: 500;
+    color: #333;
+
+    &-star {
+      font-size: toRem(16);
+      color: #555;
+    }
+  }
+
+  &-info {
+    display: flex;
+    align-items: center;
+    gap: toRem(12);
+    flex: 1;
+
+    &-img {
+      width: toRem(40);
+      height: toRem(40);
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    &-name {
+      font-size: toRem(14);
+      font-weight: 600;
+      color: #1a1a1a;
+      margin: 0;
+    }
+  }
+}
