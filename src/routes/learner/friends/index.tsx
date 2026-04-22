@@ -1,10 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import classNames from "classnames";
-import { MOCK_FRIEND } from "@/mock/friend";
+import { MOCK_FRIEND, mockFriends } from "@/mock/friend";
 import FriendItem from "./-components/FriendItem";
+import FriendDetail from "./-components/FriendDetail";
 import type { TTypeFriendItem } from "./-components/FriendItem/type";
 import "./style.scss";
+import type { TFriendDetail } from "./-components/FriendDetail/type";
 
 export const Route = createFileRoute("/learner/friends/")({
   component: FriendsPage,
@@ -24,6 +26,22 @@ function FriendsPage() {
     (friend) => friend.typeFriendItem === typeFriend
   );
 
+  const selectedFriend =
+    selectedIndex !== null
+      ? filteredFriends.find((friend) => friend.id === selectedIndex)
+      : null;
+
+  const baseDetail = selectedFriend
+    ? mockFriends.find((f) => f.name === selectedFriend.name) || mockFriends[0]
+    : null;
+
+  const friendDetailData: TFriendDetail | null =
+    selectedFriend && baseDetail
+      ? {
+          ...baseDetail,
+        }
+      : null;
+
   return (
     <div className="friend-page">
       <div className="friend-page-header">
@@ -32,7 +50,7 @@ function FriendsPage() {
             key={tab.value}
             onClick={() => {
               setTypeFriend(tab.value);
-              setSelectedIndex(null);
+              setSelectedIndex(null); // Reset detail khi chuyển tab
             }}
             className={classNames("friend-page-header-tab", {
               "friend-page-header-tab--active": typeFriend === tab.value,
@@ -45,17 +63,19 @@ function FriendsPage() {
 
       <div className="friend-page-body">
         <div className="friend-page-body-left">
-          {filteredFriends.map((friend, index) => (
+          {filteredFriends.map((friend, idx) => (
             <FriendItem
-              key={index}
+              id={friend.id}
+              key={friend.id}
               name={friend.name}
               imgUrl={friend.imgUrl}
               typeFriendItem={friend.typeFriendItem}
               streaks={friend.streaks}
-              index={index + 1}
+              index={idx + 1}
+              isActive={selectedIndex === friend.id}
               onClick={() => {
-                friend.onClick();
-                setSelectedIndex(index);
+                friend.onClick?.();
+                setSelectedIndex(friend.id);
               }}
             />
           ))}
@@ -65,13 +85,12 @@ function FriendsPage() {
         </div>
 
         <div className="friend-page-body-right">
-          {selectedIndex !== null ? (
-            <div className="placeholder-profile">
-              Đang hiển thị hồ sơ của: <strong>....</strong>
-            </div>
+          {friendDetailData ? (
+            <FriendDetail {...friendDetailData} />
           ) : (
             <div className="placeholder-profile">
-              Chọn một người để xem thông tin chi tiết
+              <h5>It's empty here</h5>
+              <p>Click on any user to have a quick peak profile</p>
             </div>
           )}
         </div>

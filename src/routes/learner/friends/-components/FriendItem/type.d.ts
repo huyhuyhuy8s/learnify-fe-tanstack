@@ -3,6 +3,7 @@ import type React from "react"; // Đừng quên import React
 export type TTypeFriendItem = "leaderboard" | "friends" | "request";
 
 export type TFriendItem = {
+  id: number;
   name: string;
   onClick: () => void;
   imgUrl: string;

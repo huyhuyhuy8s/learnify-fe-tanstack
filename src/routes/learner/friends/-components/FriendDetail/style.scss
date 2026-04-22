@@ -7,7 +7,6 @@
   font-family: "Inter", system-ui, sans-serif;
   max-width: toRem(680);
   margin: 0 auto;
-  color: $neutral-900;
 
   &-header {
     position: relative;
@@ -46,15 +45,16 @@
   }
 
   &-name {
-    font-size: toRem(36);
+    font-size: toRem(39);
     font-weight: 800;
-    color: $neutral-900;
+    color: $neutral-800;
     margin: 0 0 toRem(8) 0;
-    line-height: 1.2;
+    line-height: toRem(49);
   }
 
   &-meta {
     font-size: toRem(16);
+    line-height: toRem(20);
     color: $neutral-500;
     margin: 0 0 toRem(24) 0;
   }
@@ -78,14 +78,16 @@
 
   &-stat-value {
     font-size: toRem(20);
+    line-height: toRem(25);
     font-weight: 700;
-    color: $neutral-800;
+    color: $mode-neutral;
     margin-bottom: toRem(6);
   }
 
   &-stat-label {
-    font-size: toRem(14);
-    color: $neutral-500;
+    font-size: toRem(16);
+    line-height: toRem(20);
+    color: $mode-neutral;
   }
 
   &-achievements {
@@ -93,9 +95,10 @@
   }
 
   &-achievements-title {
-    font-size: toRem(24);
+    font-size: toRem(25);
+    line-height: toRem(31);
     font-weight: 700;
-    color: $neutral-800;
+    color: $mode-neutral;
     margin: 0 0 toRem(20) 0;
   }
 }

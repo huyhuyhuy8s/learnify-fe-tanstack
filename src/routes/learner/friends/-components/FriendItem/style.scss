@@ -5,22 +5,22 @@
 .friend-item {
   display: flex;
   align-items: center;
-  padding: toRem(12) toRem(16);
-  border: toRem(1) solid #e0e0e0;
+  padding: toRem(20) toRem(25);
+  border: toRem(1) solid $neutral-300;
   border-radius: $br-md;
-  background-color: #ffffff;
+  background-color: $green-100;
   gap: toRem(16);
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   width: 100%;
 
   &--active {
-    background-color: #dcdcdc;
+    background-color: $neutral-200;
     border-color: transparent;
   }
 
   &:hover {
-    background-color: #f0f0f0;
+    background-color: $neutral-150;
   }
 
   &-index {
@@ -30,11 +30,11 @@
     align-items: center;
     font-size: toRem(14);
     font-weight: 500;
-    color: #333;
+    color: $mode-neutral;
 
     &-star {
       font-size: toRem(16);
-      color: #555;
+      color: $mode-neutral;
     }
   }
 
@@ -54,7 +54,7 @@
     &-name {
       font-size: toRem(14);
       font-weight: 600;
-      color: #1a1a1a;
+      color: $mode-neutral;
       margin: 0;
     }
   }
