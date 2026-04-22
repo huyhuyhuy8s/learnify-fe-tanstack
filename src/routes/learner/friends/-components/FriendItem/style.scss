@@ -59,3 +59,15 @@
     }
   }
 }
+
+@include break(s) {
+  .friend-item {
+    padding: toRem(12) toRem(16);
+    gap: toRem(12);
+  }
+
+  .friend-item-info-img {
+    width: toRem(32);
+    height: toRem(32);
+  }
+}

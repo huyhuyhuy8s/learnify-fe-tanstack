@@ -50,7 +50,7 @@ function FriendsPage() {
             key={tab.value}
             onClick={() => {
               setTypeFriend(tab.value);
-              setSelectedIndex(null); // Reset detail khi chuyển tab
+              setSelectedIndex(null);
             }}
             className={classNames("friend-page-header-tab", {
               "friend-page-header-tab--active": typeFriend === tab.value,

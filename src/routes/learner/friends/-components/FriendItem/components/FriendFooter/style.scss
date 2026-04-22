@@ -17,6 +17,10 @@
     white-space: nowrap;
   }
 
+  &-lower-streaks {
+    background-color: $mode-orange;
+  }
+
   &-btn {
     padding: toRem(5) toRem(15);
     border-radius: $br-xl;
@@ -40,6 +44,15 @@
       background-color: $neutral-100;
       color: $neutral-900;
       border: toRem(2) solid $neutral-900;
+    }
+  }
+}
+@include break(s) {
+  .friend-item-footer {
+    display: block;
+
+    &-btn {
+      padding: toRem(2) toRem(8);
     }
   }
 }

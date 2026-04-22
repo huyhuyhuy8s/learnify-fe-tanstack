@@ -31,7 +31,14 @@ const FriendItemFooter = (props: TFriendItemFooter) => {
 
   return (
     <div className={friendItemFooterClassName}>
-      <div className="friend-item-footer-streaks">{streaks} streaks</div>
+      {streaks !== undefined &&
+        (streaks >= 20 ? (
+          <div className="friend-item-footer-streaks">{streaks} streaks</div>
+        ) : (
+          <div className="friend-item-footer-streaks friend-item-footer-lower-streaks">
+            {streaks} streaks
+          </div>
+        ))}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import type React from "react"; // Đừng quên import React
+import type React from "react";
 
 export type TTypeFriendItem = "leaderboard" | "friends" | "request";
 

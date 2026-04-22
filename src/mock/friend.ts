@@ -87,7 +87,7 @@ export const mockFriends: TFriendDetail[] = [
     imgUrl: "https://i.pravatar.cc/150?img=14",
     name: "Lê Văn C",
     email: "levanc@example.com",
-    streak: 0, // Fallback về 0 vì ở list Lê Văn C không có trường streaks
+    streak: 0,
     badges: 45,
     follower: 12500,
     course: 24,

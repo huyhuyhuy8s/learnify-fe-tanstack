@@ -102,3 +102,39 @@
     margin: 0 0 toRem(20) 0;
   }
 }
+
+@include break(s) {
+  .friend-detail-bg {
+    height: toRem(180);
+  }
+
+  .friend-detail-avatar-wrapper {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .friend-detail-avatar {
+    width: toRem(90);
+    height: toRem(90);
+  }
+
+  .friend-detail-name {
+    font-size: toRem(28);
+    line-height: toRem(34);
+    text-align: center;
+    margin-top: toRem(40);
+  }
+
+  .friend-detail-meta {
+    text-align: center;
+    font-size: toRem(14);
+  }
+
+  .friend-detail-stats {
+    flex-wrap: wrap;
+    gap: toRem(16);
+    justify-content: center;
+    padding: toRem(16);
+  }
+}
