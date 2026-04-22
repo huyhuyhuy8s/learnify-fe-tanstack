@@ -1,5 +1,5 @@
 import type { TFriendDetail } from "@/routes/learner/friends/-components/FriendDetail/type";
-import type { TFriendItem } from "@/routes/learner/friends/-components/FriendItem/type"; // Nhớ import type của bạn
+import type { TFriendItem } from "@/routes/learner/friends/-components/FriendItem/type";
 
 export const MOCK_FRIEND: TFriendItem[] = [
   {
