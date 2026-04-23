@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 
 type TTopNavLeftProps = {
   pathname: string[];
-  lastPathname: string;
+  lastPathname?: string;
   pathnameWithoutLast: string[];
 };
 

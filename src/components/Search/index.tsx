@@ -1,5 +1,6 @@
 import "./style.scss";
 import { useNavigate } from "@tanstack/react-router";
+import _ from "lodash";
 
 type TSearchProps = {
   style?: React.CSSProperties;
@@ -15,7 +16,7 @@ const Search = (props: TSearchProps) => {
     React.SyntheticEvent<HTMLFormElement>
   > = (e) => {
     e.preventDefault();
-    const query = (new FormData(e.currentTarget).get("q") as string).trim();
+    const query = _.trim(new FormData(e.currentTarget).get("q") as string);
     if (!query) return;
 
     if (onSearch) onSearch(query);

@@ -3,17 +3,50 @@ import IconButton from "@/components/IconButton";
 import classNames from "classnames";
 import { useMemo, useState, useRef } from "react";
 import useOnClickOutside from "@/hooks/useOnClickOutside";
+import { useAuthStore } from "@/store";
+import TextButton from "@/components/TextButton";
+import { COLORS } from "@/styles/colors";
+import { useNavigate } from "@tanstack/react-router";
 
 const TopNavRight = () => {
   const [accountMenuVisible, setAccountMenuVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   const accountMenuClassName = useMemo(() => {
     return classNames({ invisible: !accountMenuVisible });
   }, [accountMenuVisible]);
+  const navigate = useNavigate();
 
-  const containerRef = useRef<HTMLDivElement>(null);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   useOnClickOutside(containerRef, () => {
     if (accountMenuVisible) setAccountMenuVisible(false);
   });
+
+  if (!isAuthenticated) {
+    return (
+      <div className="top-nav-right new" ref={containerRef}>
+        <TextButton
+          text="Sign up"
+          icon="person_add"
+          type="secondary"
+          size="small"
+          onClick={() => {
+            navigate({ to: "/learner/sign-up" });
+          }}
+        />
+        <TextButton
+          text="Log in"
+          icon="login"
+          type="secondary"
+          backgroundColor={COLORS.modeGreen}
+          size="small"
+          color={COLORS.white}
+          onClick={() => {
+            navigate({ to: "/learner/sign-up" });
+          }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="top-nav-right" ref={containerRef}>

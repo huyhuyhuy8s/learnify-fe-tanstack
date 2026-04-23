@@ -16,6 +16,10 @@
   border-bottom: toRem(1) solid $navy-pastel-200;
   z-index: 1;
 
+  & > .new {
+    gap: toRem(10);
+  }
+
   &-left,
   &-right {
     display: flex;
