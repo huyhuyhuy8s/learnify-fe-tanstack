@@ -1,0 +1,73 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+.friend-item {
+  display: flex;
+  align-items: center;
+  padding: toRem(20) toRem(25);
+  border: toRem(1) solid $neutral-300;
+  border-radius: $br-md;
+  background-color: $green-100;
+  gap: toRem(16);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  width: 100%;
+
+  &--active {
+    background-color: $neutral-200;
+    border-color: transparent;
+  }
+
+  &:hover {
+    background-color: $neutral-150;
+  }
+
+  &-index {
+    width: toRem(24);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: toRem(14);
+    font-weight: 500;
+    color: $mode-neutral;
+
+    &-star {
+      font-size: toRem(16);
+      color: $mode-neutral;
+    }
+  }
+
+  &-info {
+    display: flex;
+    align-items: center;
+    gap: toRem(12);
+    flex: 1;
+
+    &-img {
+      width: toRem(40);
+      height: toRem(40);
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    &-name {
+      font-size: toRem(14);
+      font-weight: 600;
+      color: $mode-neutral;
+      margin: 0;
+    }
+  }
+}
+
+@include break(s) {
+  .friend-item {
+    padding: toRem(12) toRem(16);
+    gap: toRem(12);
+  }
+
+  .friend-item-info-img {
+    width: toRem(32);
+    height: toRem(32);
+  }
+}

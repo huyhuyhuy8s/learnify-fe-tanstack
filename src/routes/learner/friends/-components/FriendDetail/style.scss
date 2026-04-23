@@ -1,0 +1,140 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+
+.friend-detail {
+  font-family: "Inter", system-ui, sans-serif;
+  max-width: toRem(680);
+  margin: 0 auto;
+
+  &-header {
+    position: relative;
+    margin-bottom: toRem(30);
+  }
+
+  &-bg {
+    width: 100%;
+    height: toRem(280);
+    object-fit: cover;
+    border-radius: toRem(16);
+
+    &--empty {
+      background-color: $green-150;
+    }
+  }
+
+  &-avatar-wrapper {
+    position: absolute;
+    bottom: toRem(-40);
+    right: toRem(32);
+  }
+
+  &-avatar {
+    width: toRem(120);
+    height: 10%;
+    border-radius: $br-xl;
+    border: toRem(4) solid $neutral-100;
+    object-fit: cover;
+    background-color: $neutral-100;
+    box-shadow: 0 toRem(4) toRem(10) rgba(0, 0, 0, 0.08);
+  }
+
+  &-body {
+    padding: 0 toRem(8);
+  }
+
+  &-name {
+    font-size: toRem(39);
+    font-weight: 800;
+    color: $neutral-800;
+    margin: 0 0 toRem(8) 0;
+    line-height: toRem(49);
+  }
+
+  &-meta {
+    font-size: toRem(16);
+    line-height: toRem(20);
+    color: $neutral-500;
+    margin: 0 0 toRem(24) 0;
+  }
+
+  &-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: toRem(1) solid $neutral-250;
+    border-radius: $br-xl;
+    padding: toRem(20) toRem(32);
+    margin-bottom: toRem(32);
+  }
+
+  &-stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  &-stat-value {
+    font-size: toRem(20);
+    line-height: toRem(25);
+    font-weight: 700;
+    color: $mode-neutral;
+    margin-bottom: toRem(6);
+  }
+
+  &-stat-label {
+    font-size: toRem(16);
+    line-height: toRem(20);
+    color: $mode-neutral;
+  }
+
+  &-achievements {
+    margin-top: toRem(40);
+  }
+
+  &-achievements-title {
+    font-size: toRem(25);
+    line-height: toRem(31);
+    font-weight: 700;
+    color: $mode-neutral;
+    margin: 0 0 toRem(20) 0;
+  }
+}
+
+@include break(s) {
+  .friend-detail-bg {
+    height: toRem(180);
+  }
+
+  .friend-detail-avatar-wrapper {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .friend-detail-avatar {
+    width: toRem(90);
+    height: toRem(90);
+  }
+
+  .friend-detail-name {
+    font-size: toRem(28);
+    line-height: toRem(34);
+    text-align: center;
+    margin-top: toRem(40);
+  }
+
+  .friend-detail-meta {
+    text-align: center;
+    font-size: toRem(14);
+  }
+
+  .friend-detail-stats {
+    flex-wrap: wrap;
+    gap: toRem(16);
+    justify-content: center;
+    padding: toRem(16);
+  }
+}
