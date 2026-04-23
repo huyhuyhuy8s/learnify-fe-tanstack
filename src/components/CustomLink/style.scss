@@ -1,0 +1,30 @@
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+@use "@styles/variables" as *;
+
+.custom-button {
+  @include transition;
+  transition-property: background-color, color, border-color;
+  background-color: transparent;
+  color: $green-600;
+  font-weight: $fw-medium;
+  padding: toRem(0.5);
+  border-bottom: toRem(1);
+  border-style: solid;
+  border-color: transparent;
+
+  & > * {
+    color: $green-600;
+  }
+
+  &:hover {
+    background-color: $accent-indicolite;
+    color: $black;
+    border-color: $black;
+
+    & > * {
+      color: $black;
+    }
+  }
+}
