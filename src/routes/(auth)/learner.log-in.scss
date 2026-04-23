@@ -1,0 +1,184 @@
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+@use "@styles/variables" as *;
+
+.log-in {
+  display: flex;
+  place-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  width: 100%;
+  padding: toRem(30);
+  background-color: $green-100;
+
+  &-button {
+    display: flex;
+    place-items: center;
+    justify-content: center;
+    padding: toRem(20);
+    @include transition;
+    transition-property: border-radius, background-color;
+    border-radius: $br-rounded;
+
+    h6 {
+      color: $white;
+    }
+
+    &:hover {
+      border-radius: $br-sm;
+    }
+  }
+
+  &-logo {
+    display: flex;
+    place-items: center;
+    gap: toRem(10);
+    position: absolute;
+    top: toRem(30);
+    left: toRem(30);
+
+    span,
+    h4 {
+      font-weight: $fw-semibold;
+      color: inherit;
+    }
+
+    span {
+      font-size: $fs-heading5;
+    }
+  }
+
+  &-card {
+    background-image: url("@/assets/images/log-in-shape.svg");
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center right;
+    background-position-x: 32.5dvw;
+    display: grid;
+    grid-template-columns: 30dvw toRem(1) 30dvw;
+    align-items: center;
+    justify-content: center;
+    gap: toRem(40);
+    padding: toRem(50);
+    background-color: transparent;
+    border-radius: $br-rounded;
+    overflow: hidden;
+    min-height: 60dvh;
+  }
+
+  &-left {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(40);
+  }
+
+  &-title {
+    color: $black;
+    text-align: center;
+  }
+
+  &-google {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: toRem(15);
+    padding: toRem(20);
+    background-color: $neutral-600;
+    border-radius: $br-rounded;
+
+    &:hover {
+      background-color: $neutral-700;
+    }
+
+    &:active {
+      background-color: $neutral-800;
+    }
+
+    img {
+      aspect-ratio: 1/1;
+      height: toRem(20);
+    }
+
+    h6 {
+      color: $neutral-100;
+    }
+  }
+
+  &-divider {
+    display: flex;
+    align-items: center;
+    gap: toRem(10);
+
+    p {
+      color: $neutral-400;
+      text-transform: uppercase;
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background-color: $neutral-400;
+    }
+  }
+
+  &-signup-link {
+    text-align: center;
+  }
+
+  &-separator {
+    width: toRem(1);
+    align-self: stretch;
+    background-color: $neutral-300;
+    flex-shrink: 0;
+  }
+
+  &-right {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    place-items: center;
+
+    span {
+      font-size: 5dvw;
+      font-weight: $fw-bold;
+      color: $mode-green;
+    }
+  }
+
+  @include break(md) {
+    &-card {
+      flex-direction: column;
+      padding: toRem(40);
+      max-width: toRem(600);
+    }
+
+    &-separator {
+      width: 100%;
+      height: 1px;
+      align-self: auto;
+    }
+
+    &-right {
+      display: none;
+    }
+  }
+
+  @include break(s) {
+    padding: toRem(20) toRem(15);
+
+    &-card {
+      padding: toRem(30) toRem(20);
+    }
+
+    &-logo {
+      position: relative;
+      top: auto;
+      left: auto;
+      justify-content: center;
+      margin-bottom: toRem(10);
+    }
+  }
+}
