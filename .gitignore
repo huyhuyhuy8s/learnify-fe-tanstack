@@ -63,6 +63,7 @@ test.json
 
 # AI
 .claude
+/docs/architecture.md
 /tools
 /src/api
 /src/persistence
