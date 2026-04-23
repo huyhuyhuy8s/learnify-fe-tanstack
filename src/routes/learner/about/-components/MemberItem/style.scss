@@ -1,0 +1,28 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+
+.member-item {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 5dvh;
+
+  &-info {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(10);
+
+    h4 {
+      color: $neutral-400;
+    }
+  }
+
+  &-avatar-wrapper {
+    &-img {
+      border-radius: $br-xl;
+      aspect-ratio: 3 / 4;
+    }
+  }
+}
