@@ -60,3 +60,16 @@ test.json
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# AI
+.claude
+/tools
+/src/api
+/src/persistence
+/docs/decisions
+/docs/runbooks
+CLAUDE.md
+AGENTS.md
+
+# GEMINI
+.agents

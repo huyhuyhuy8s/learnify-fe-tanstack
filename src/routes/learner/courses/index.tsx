@@ -27,7 +27,11 @@ function PostsIndexComponent() {
         </p>
       </div>
       <div className="course-content">
-        <Search />
+        <Search
+          onSearch={(query) =>
+            navigate({ to: "/learner/courses", search: { q: query } })
+          }
+        />
         <div className="controls">
           <div className="filter">
             <TextButton
@@ -51,7 +55,7 @@ function PostsIndexComponent() {
               onClick={() => navigate({ to: "/learner/courses" })}
             />
           </div>
-          <p className="result">1200 results</p>
+          <p className="result">{MOCK_COURSES.length ?? 0} results</p>
         </div>
         <div className="course-list">
           {MOCK_COURSES.map((course) => (

@@ -29,6 +29,9 @@ import { Route as LearnerAboutIndexRouteImport } from "./routes/learner/about/in
 import { Route as LearnerUserUserIdRouteImport } from "./routes/learner/user/$userId";
 import { Route as LearnerCoursesPostIdRouteImport } from "./routes/learner/courses/$postId";
 import { Route as ApiUsersIdRouteImport } from "./routes/api/users.$id";
+import { Route as authLearnerSignUpRouteImport } from "./routes/(auth)/learner.sign-up";
+import { Route as authLearnerLogInRouteImport } from "./routes/(auth)/learner.log-in";
+import { Route as authLearnerForgotPasswordRouteImport } from "./routes/(auth)/learner.forgot-password";
 
 const RedirectRoute = RedirectRouteImport.update({
   id: "/redirect",
@@ -130,6 +133,22 @@ const ApiUsersIdRoute = ApiUsersIdRouteImport.update({
   path: "/$id",
   getParentRoute: () => ApiUsersRoute,
 } as any);
+const authLearnerSignUpRoute = authLearnerSignUpRouteImport.update({
+  id: "/(auth)/learner/sign-up",
+  path: "/learner/sign-up",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const authLearnerLogInRoute = authLearnerLogInRouteImport.update({
+  id: "/(auth)/learner/log-in",
+  path: "/learner/log-in",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const authLearnerForgotPasswordRoute =
+  authLearnerForgotPasswordRouteImport.update({
+    id: "/(auth)/learner/forgot-password",
+    path: "/learner/forgot-password",
+    getParentRoute: () => rootRouteImport,
+  } as any);
 
 export interface FileRoutesByFullPath {
   "/": typeof IndexRoute;
@@ -144,6 +163,9 @@ export interface FileRoutesByFullPath {
   "/api/users": typeof ApiUsersRouteWithChildren;
   "/learner/dashboard": typeof LearnerDashboardRoute;
   "/learner/": typeof LearnerIndexRoute;
+  "/learner/forgot-password": typeof authLearnerForgotPasswordRoute;
+  "/learner/log-in": typeof authLearnerLogInRoute;
+  "/learner/sign-up": typeof authLearnerSignUpRoute;
   "/api/users/$id": typeof ApiUsersIdRoute;
   "/learner/courses/$postId": typeof LearnerCoursesPostIdRoute;
   "/learner/user/$userId": typeof LearnerUserUserIdRoute;
@@ -161,6 +183,9 @@ export interface FileRoutesByTo {
   "/api/users": typeof ApiUsersRouteWithChildren;
   "/learner/dashboard": typeof LearnerDashboardRoute;
   "/learner": typeof LearnerIndexRoute;
+  "/learner/forgot-password": typeof authLearnerForgotPasswordRoute;
+  "/learner/log-in": typeof authLearnerLogInRoute;
+  "/learner/sign-up": typeof authLearnerSignUpRoute;
   "/api/users/$id": typeof ApiUsersIdRoute;
   "/learner/courses/$postId": typeof LearnerCoursesPostIdRoute;
   "/learner/user/$userId": typeof LearnerUserUserIdRoute;
@@ -184,6 +209,9 @@ export interface FileRoutesById {
   "/api/users": typeof ApiUsersRouteWithChildren;
   "/learner/dashboard": typeof LearnerDashboardRoute;
   "/learner/": typeof LearnerIndexRoute;
+  "/(auth)/learner/forgot-password": typeof authLearnerForgotPasswordRoute;
+  "/(auth)/learner/log-in": typeof authLearnerLogInRoute;
+  "/(auth)/learner/sign-up": typeof authLearnerSignUpRoute;
   "/api/users/$id": typeof ApiUsersIdRoute;
   "/learner/courses/$postId": typeof LearnerCoursesPostIdRoute;
   "/learner/user/$userId": typeof LearnerUserUserIdRoute;
@@ -208,6 +236,9 @@ export interface FileRouteTypes {
     | "/api/users"
     | "/learner/dashboard"
     | "/learner/"
+    | "/learner/forgot-password"
+    | "/learner/log-in"
+    | "/learner/sign-up"
     | "/api/users/$id"
     | "/learner/courses/$postId"
     | "/learner/user/$userId"
@@ -225,6 +256,9 @@ export interface FileRouteTypes {
     | "/api/users"
     | "/learner/dashboard"
     | "/learner"
+    | "/learner/forgot-password"
+    | "/learner/log-in"
+    | "/learner/sign-up"
     | "/api/users/$id"
     | "/learner/courses/$postId"
     | "/learner/user/$userId"
@@ -247,6 +281,9 @@ export interface FileRouteTypes {
     | "/api/users"
     | "/learner/dashboard"
     | "/learner/"
+    | "/(auth)/learner/forgot-password"
+    | "/(auth)/learner/log-in"
+    | "/(auth)/learner/sign-up"
     | "/api/users/$id"
     | "/learner/courses/$postId"
     | "/learner/user/$userId"
@@ -263,6 +300,9 @@ export interface RootRouteChildren {
   DeferredRoute: typeof DeferredRoute;
   RedirectRoute: typeof RedirectRoute;
   ApiUsersRoute: typeof ApiUsersRouteWithChildren;
+  authLearnerForgotPasswordRoute: typeof authLearnerForgotPasswordRoute;
+  authLearnerLogInRoute: typeof authLearnerLogInRoute;
+  authLearnerSignUpRoute: typeof authLearnerSignUpRoute;
 }
 
 declare module "@tanstack/react-router" {
@@ -407,6 +447,27 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof ApiUsersIdRouteImport;
       parentRoute: typeof ApiUsersRoute;
     };
+    "/(auth)/learner/sign-up": {
+      id: "/(auth)/learner/sign-up";
+      path: "/learner/sign-up";
+      fullPath: "/learner/sign-up";
+      preLoaderRoute: typeof authLearnerSignUpRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/(auth)/learner/log-in": {
+      id: "/(auth)/learner/log-in";
+      path: "/learner/log-in";
+      fullPath: "/learner/log-in";
+      preLoaderRoute: typeof authLearnerLogInRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/(auth)/learner/forgot-password": {
+      id: "/(auth)/learner/forgot-password";
+      path: "/learner/forgot-password";
+      fullPath: "/learner/forgot-password";
+      preLoaderRoute: typeof authLearnerForgotPasswordRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
   }
 }
 
@@ -511,6 +572,9 @@ const rootRouteChildren: RootRouteChildren = {
   DeferredRoute: DeferredRoute,
   RedirectRoute: RedirectRoute,
   ApiUsersRoute: ApiUsersRouteWithChildren,
+  authLearnerForgotPasswordRoute: authLearnerForgotPasswordRoute,
+  authLearnerLogInRoute: authLearnerLogInRoute,
+  authLearnerSignUpRoute: authLearnerSignUpRoute,
 };
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
