@@ -1,6 +1,9 @@
 import IconButton from "@/components/IconButton";
+import { useTheme } from "@/hooks/useTheme";
 
 const LeftNavBot = () => {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <div className="left-nav-bot">
       <IconButton
@@ -11,11 +14,12 @@ const LeftNavBot = () => {
         size="small"
       />
       <IconButton
-        icon="dark_mode"
-        specialIcon="light_mode"
+        icon={theme === "light" ? "dark_mode" : "light_mode"}
+        specialIcon={theme === "light" ? "light_mode" : "dark_mode"}
         shape="circle"
         type="outlined"
         size="small"
+        onClick={toggleTheme}
       />
     </div>
   );

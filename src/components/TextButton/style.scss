@@ -6,6 +6,7 @@
 .text-button {
   display: flex;
   place-items: center;
+  justify-content: center;
   @include transition;
   transition-property:
     color, background-color, border-color, border-radius,

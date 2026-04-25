@@ -17,11 +17,13 @@ const TopNavRight = () => {
   const navigate = useNavigate();
 
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const user = useAuthStore((state) => state.user);
+  const onLogout = useAuthStore((state) => state.logout);
   useOnClickOutside(containerRef, () => {
     if (accountMenuVisible) setAccountMenuVisible(false);
   });
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated || !user) {
     return (
       <div className="top-nav-right new" ref={containerRef}>
         <TextButton
@@ -41,7 +43,7 @@ const TopNavRight = () => {
           size="small"
           color={COLORS.white}
           onClick={() => {
-            navigate({ to: "/learner/sign-up" });
+            navigate({ to: "/learner/log-in" });
           }}
         />
       </div>
@@ -75,11 +77,12 @@ const TopNavRight = () => {
         onClick={() => setAccountMenuVisible(!accountMenuVisible)}
       />
       <AccountMenu
-        username="huybua"
-        uid="@huybua"
-        id="123"
-        subscription="starter"
+        username={user.username || "User"}
+        uid={user.email || ""}
+        id={user.id || ""}
+        subscription={"starter"}
         className={accountMenuClassName}
+        onLogout={() => onLogout()}
       />
     </div>
   );
