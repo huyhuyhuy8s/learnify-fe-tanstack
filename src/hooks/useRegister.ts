@@ -41,7 +41,7 @@ export function useRegister() {
     mutationFn: registerRequest,
     onSuccess: (data) => {
       if (data.register.success && data.user) {
-        setAuth(null, null, data.user);
+        setAuth("", null, data.user);
       }
     },
   });

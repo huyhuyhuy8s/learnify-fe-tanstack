@@ -4,13 +4,12 @@
 @use "@styles/variables" as *;
 
 .home {
-  padding-top: 20dvh;
-  display: flex;
-  flex-direction: column;
-  gap: toRem(50);
+  margin-top: 20dvh;
+  display: grid;
+  gap: toRem(20);
   place-items: center;
 
-  & > div {
+  > .title {
     display: flex;
     place-items: center;
     flex-direction: column;
@@ -22,12 +21,50 @@
     }
   }
 
-  > .search-container {
-    width: fit-content;
+  > .search {
+    width: 60dvw;
+    margin-top: toRem(30);
+  }
+
+  > .search-suggestions {
+    gap: toRem(20);
+    display: flex;
+    place-items: center;
+    justify-content: center;
+  }
+}
+
+@include break(s) {
+  .home {
+    margin-top: -5dvh;
+    height: 85dvh;
+    justify-content: space-between;
+    place-items: start;
+
+    > .title {
+      h1,
+      h5 {
+        text-align: left;
+      }
+    }
+
+    > .search {
+      width: 100%;
+      align-self: end;
+    }
 
     > .search-suggestions {
-      gap: toRem(20);
-      display: flex;
+      grid-area: 2 / 1 / 2 / 1;
+      flex-direction: column;
+      place-items: start;
+    }
+  }
+}
+
+@include break(xs) {
+  .home {
+    > .search-suggestions {
+      display: none;
     }
   }
 }

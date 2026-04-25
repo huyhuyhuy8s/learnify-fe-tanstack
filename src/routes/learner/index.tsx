@@ -14,6 +14,7 @@ function RouteComponent() {
 
   return (
     <div className="home">
+      <DecorationShapes />
       <div className="title">
         <h1 className="semibold">
           Unlock your <span className="beauty">Potential</span> for tomorrow,
@@ -24,25 +25,22 @@ function RouteComponent() {
           interactive 3D AI Teachers
         </h5>
       </div>
-      <div className="search-container">
-        <Search />
-        <div className="search-suggestions">
-          {SEARCH_SUGGESTIONS.map((item) => (
-            <TextButton
-              key={item}
-              text={item}
-              type="outlined"
-              icon="subdirectory_arrow_right"
-              roundedCorner="exceptUpperRight"
-              size="medium"
-              onClick={() => {
-                navigate({ to: "/learner/search", search: { q: item } });
-              }}
-            />
-          ))}
-        </div>
+      <Search />
+      <div className="search-suggestions">
+        {SEARCH_SUGGESTIONS.map((item) => (
+          <TextButton
+            key={item}
+            text={item}
+            type="outlined"
+            icon="subdirectory_arrow_right"
+            roundedCorner="exceptUpperRight"
+            size="medium"
+            onClick={() => {
+              navigate({ to: "/learner/search", search: { q: item } });
+            }}
+          />
+        ))}
       </div>
-      <DecorationShapes />
     </div>
   );
 }

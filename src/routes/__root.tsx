@@ -16,6 +16,7 @@ import "@styles/_global.scss";
 import gsap from "gsap";
 import CustomEase from "gsap/CustomEase";
 import { SplitText } from "gsap/SplitText";
+import { useTheme } from "@/hooks/useTheme";
 import type { RouterContext } from "@/router";
 
 gsap.registerPlugin(SplitText, CustomEase);
@@ -72,6 +73,8 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 });
 
 function RootComponent() {
+  useTheme();
+
   return (
     <RootDocument>
       <Outlet />

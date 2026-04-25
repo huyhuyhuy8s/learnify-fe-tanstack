@@ -1,16 +1,11 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
 import CustomLink from "@/components/CustomLink";
 import googleIcon from "@/assets/images/google-icon.png";
-import { useRegister } from "@/hooks/useRegister";
 import { useSignUpForm } from "./-components/hooks/useSignUpForm";
 import SignUpStep1 from "./-components/SignUpStep1";
 import SignUpStep2 from "./-components/SignUpStep2";
 import SignUpRight from "./-components/SignUpRight";
-import type { TFormErrors } from "./-components/hooks/useSignUpForm";
 import "./learner.sign-up.scss";
-import type { TSignUpStep1 } from "./-components/SignUpStep1/type";
-import type { TSignUpStep2 } from "./-components/SignUpStep2/type";
 
 export const Route = createFileRoute("/(auth)/learner/sign-up")({
   head: () => ({
@@ -25,86 +20,18 @@ export const Route = createFileRoute("/(auth)/learner/sign-up")({
 });
 
 function SignUpPage() {
-  const navigate = useNavigate();
-  const [step, setStep] = useState(1);
-  const register = useRegister();
-  const { validateStep1, validateStep2 } = useSignUpForm();
-
-  const [step1Data, setStep1Data] = useState<TSignUpStep1>({
-    firstName: "",
-    lastName: "",
-    email: "",
-  });
-
-  const [step2Data, setStep2Data] = useState<TSignUpStep2>({
-    password: "",
-    confirmPassword: "",
-  });
-
-  const [errors, setErrors] = useState<TFormErrors>({});
-
-  const handleStep1Change = (field: keyof TSignUpStep1, value: string) => {
-    setStep1Data((prev) => ({ ...prev, [field]: value }));
-    if (errors[field]) {
-      setErrors((prev) => {
-        const newErrors = { ...prev };
-        delete newErrors[field];
-        return newErrors;
-      });
-    }
-  };
-
-  const handleStep1Submit = () => {
-    const validationErrors = validateStep1(step1Data);
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-    setErrors({});
-    setStep(2);
-  };
-
-  const handleStep2Change = (field: keyof TSignUpStep2, value: string) => {
-    setStep2Data((prev) => ({ ...prev, [field]: value }));
-    if (errors[field]) {
-      setErrors((prev) => {
-        const newErrors = { ...prev };
-        delete newErrors[field];
-        return newErrors;
-      });
-    }
-  };
-
-  const handleStep2Submit = async () => {
-    const validationErrors = validateStep2(step2Data);
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
-    const fullName = `${step1Data.firstName} ${step1Data.lastName}`;
-    try {
-      const result = await register.mutateAsync({
-        data: {
-          username: fullName,
-          email: step1Data.email,
-          password: step2Data.password,
-          phoneNumber: "",
-        },
-      });
-
-      if (result.register.success) {
-        navigate({ to: "/learner" });
-      }
-    } catch {
-      setErrors({ api: "Registration failed. Please try again." });
-    }
-  };
-
-  const handleGoBack = () => {
-    setErrors({});
-    setStep(1);
-  };
+  const {
+    step,
+    step1Data,
+    step2Data,
+    errors,
+    isPending,
+    onStep1Change,
+    onStep1Submit,
+    onStep2Change,
+    onStep2Submit,
+    onGoBack,
+  } = useSignUpForm();
 
   return (
     <div className="sign-up" id="sign-up-page">
@@ -134,17 +61,17 @@ function SignUpPage() {
             <SignUpStep1
               data={step1Data}
               errors={errors}
-              onChange={handleStep1Change}
-              onSubmit={handleStep1Submit}
+              onChange={onStep1Change}
+              onSubmit={onStep1Submit}
             />
           ) : (
             <SignUpStep2
               data={step2Data}
               errors={errors}
-              isPending={register.isPending}
-              onChange={handleStep2Change}
-              onSubmit={handleStep2Submit}
-              onBack={handleGoBack}
+              isPending={isPending}
+              onChange={onStep2Change}
+              onSubmit={onStep2Submit}
+              onBack={onGoBack}
             />
           )}
 

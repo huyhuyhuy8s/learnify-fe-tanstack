@@ -104,3 +104,20 @@ section.decoration-shapes {
     }
   }
 }
+
+@include break(md) {
+  section.decoration-shapes {
+    .flower,
+    .clover,
+    .school,
+    .semicircle {
+      display: none;
+    }
+  }
+}
+
+@include break(s) {
+  section.decoration-shapes {
+    display: none;
+  }
+}

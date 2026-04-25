@@ -1,12 +1,8 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
 import CustomLink from "@/components/CustomLink";
 import googleIcon from "@/assets/images/google-icon.png";
-import { useLogin } from "@/hooks/useLogin";
 import { useLogInForm } from "./-components/hooks/useLogInForm";
 import LogInForm from "./-components/LogInForm";
-import type { TLogInForm } from "./-components/LogInForm/type";
-import type { TFormErrors } from "./-components/hooks/useLogInForm";
 import "./learner.log-in.scss";
 
 export const Route = createFileRoute("/(auth)/learner/log-in")({
@@ -22,51 +18,7 @@ export const Route = createFileRoute("/(auth)/learner/log-in")({
 });
 
 function LogInPage() {
-  const navigate = useNavigate();
-  const login = useLogin();
-  const { validate } = useLogInForm();
-
-  const [formData, setFormData] = useState<TLogInForm>({
-    email: "",
-    password: "",
-    rememberMe: false,
-  });
-
-  const [errors, setErrors] = useState<TFormErrors>({});
-
-  const handleChange = (field: keyof TLogInForm, value: string | boolean) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-    if (errors[field]) {
-      setErrors((prev) => {
-        const newErrors = { ...prev };
-        delete newErrors[field];
-        return newErrors;
-      });
-    }
-  };
-
-  const handleSubmit = async () => {
-    const validationErrors = validate(formData);
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
-    try {
-      const result = await login.mutateAsync({
-        data: {
-          email: formData.email,
-          password: formData.password,
-        },
-      });
-
-      if (result.login.success) {
-        navigate({ to: "/learner" });
-      }
-    } catch {
-      setErrors({ api: "Login failed. Please check your credentials." });
-    }
-  };
+  const { data, errors, isPending, onChange, onSubmit } = useLogInForm();
 
   return (
     <div className="log-in" id="log-in-page">
@@ -93,11 +45,11 @@ function LogInPage() {
           </div>
 
           <LogInForm
-            data={formData}
+            data={data}
             errors={errors}
-            isPending={login.isPending}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
+            isPending={isPending}
+            onChange={onChange}
+            onSubmit={onSubmit}
           />
 
           <p className="log-in-signup-link regular">

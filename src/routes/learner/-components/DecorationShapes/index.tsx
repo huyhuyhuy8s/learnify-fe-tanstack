@@ -15,11 +15,11 @@ const DecorationShapes = () => {
     <section className="decoration-shapes">
       <div className="gem">
         <span className="material-symbols-rounded">psychology</span>
-        <Gem size="320px" color={COLORS.modeOrange} />
+        <Gem size="20rem" color={COLORS.modeOrange} />
       </div>
       <div className="pill">
         <Pill
-          size="170px"
+          size="10.625rem"
           color={COLORS.modeNavy}
           stroke={COLORS.modeYellow}
           strokeWidth={50}

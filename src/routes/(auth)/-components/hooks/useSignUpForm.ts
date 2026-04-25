@@ -1,4 +1,7 @@
+import { useState } from "react";
 import { z } from "zod";
+import { useNavigate } from "@tanstack/react-router";
+import { useRegister } from "@/hooks/useRegister";
 import type { TSignUpStep1 } from "../SignUpStep1/type";
 import type { TSignUpStep2 } from "../SignUpStep2/type";
 
@@ -21,6 +24,24 @@ export const signUpStep2Schema = z
 export type TFormErrors = Record<string, string>;
 
 export const useSignUpForm = () => {
+  const navigate = useNavigate();
+  const register = useRegister();
+
+  const [step, setStep] = useState(1);
+
+  const [step1Data, setStep1Data] = useState<TSignUpStep1>({
+    firstName: "",
+    lastName: "",
+    email: "",
+  });
+
+  const [step2Data, setStep2Data] = useState<TSignUpStep2>({
+    password: "",
+    confirmPassword: "",
+  });
+
+  const [errors, setErrors] = useState<TFormErrors>({});
+
   const validateStep1 = (data: TSignUpStep1): TFormErrors => {
     const result = signUpStep1Schema.safeParse(data);
     if (!result.success) {
@@ -49,5 +70,79 @@ export const useSignUpForm = () => {
     return {};
   };
 
-  return { validateStep1, validateStep2 };
+  const handleStep1Change = (field: keyof TSignUpStep1, value: string) => {
+    setStep1Data((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
+    }
+  };
+
+  const handleStep1Submit = () => {
+    const validationErrors = validateStep1(step1Data);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    setErrors({});
+    setStep(2);
+  };
+
+  const handleStep2Change = (field: keyof TSignUpStep2, value: string) => {
+    setStep2Data((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
+    }
+  };
+
+  const handleStep2Submit = async () => {
+    const validationErrors = validateStep2(step2Data);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    const fullName = `${step1Data.firstName} ${step1Data.lastName}`;
+    try {
+      const result = await register.mutateAsync({
+        data: {
+          username: fullName,
+          email: step1Data.email,
+          password: step2Data.password,
+          phoneNumber: "",
+        },
+      });
+
+      if (result.register.success) {
+        navigate({ to: "/learner" });
+      }
+    } catch {
+      setErrors({ api: "Registration failed. Please try again." });
+    }
+  };
+
+  const handleGoBack = () => {
+    setErrors({});
+    setStep(1);
+  };
+
+  return {
+    step,
+    step1Data,
+    step2Data,
+    errors,
+    isPending: register.isPending,
+    onStep1Change: handleStep1Change,
+    onStep1Submit: handleStep1Submit,
+    onStep2Change: handleStep2Change,
+    onStep2Submit: handleStep2Submit,
+    onGoBack: handleGoBack,
+  };
 };

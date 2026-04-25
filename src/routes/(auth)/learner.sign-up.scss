@@ -330,3 +330,13 @@
     }
   }
 }
+
+@include break(md) {
+  .sign-up {
+    &-card {
+      max-width: 90dvw;
+      background-size: 50%;
+      background-position-x: -32.5dvw;
+    }
+  }
+}
