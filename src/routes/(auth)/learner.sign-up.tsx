@@ -77,7 +77,7 @@ function SignUpPage() {
 
           <p className="sign-up-signin-link regular">
             Already using Learnify?{" "}
-            <CustomLink to="/learner/log-in">Sign in</CustomLink>
+            <CustomLink to="/learner/log-in">Log in</CustomLink>
           </p>
         </div>
 

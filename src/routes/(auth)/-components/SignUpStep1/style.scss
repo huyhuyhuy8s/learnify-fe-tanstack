@@ -5,7 +5,8 @@
 
 .sign-up {
   &-name-row {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: toRem(20);
   }
 

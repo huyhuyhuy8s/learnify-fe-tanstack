@@ -59,7 +59,7 @@
     border-radius: $br-xl;
     position: relative;
     overflow: hidden;
-    max-width: toRem(1400);
+    width: clamp(80dvw, toRem(900), 90dvw);
     min-height: 60dvh;
   }
 
@@ -131,11 +131,6 @@
   &-form {
     display: flex;
     flex-direction: column;
-    gap: toRem(20);
-  }
-
-  &-name-row {
-    display: flex;
     gap: toRem(20);
   }
 
@@ -296,7 +291,7 @@
     &-card {
       flex-direction: column;
       padding: toRem(40);
-      max-width: toRem(600);
+      background-position-x: 37.5dvw;
     }
 
     &-separator {
@@ -311,14 +306,9 @@
   }
 
   @include break(s) {
-    padding: toRem(20) toRem(15);
-
     &-card {
-      padding: toRem(30) toRem(20);
-    }
-
-    &-name-row {
-      flex-direction: column;
+      background-image: none;
+      display: flex;
     }
 
     &-logo {
@@ -327,16 +317,13 @@
       left: auto;
       justify-content: center;
       margin-bottom: toRem(10);
+      position: absolute;
+      top: toRem(30);
+      left: toRem(30);
     }
-  }
-}
 
-@include break(md) {
-  .sign-up {
-    &-card {
-      max-width: 90dvw;
-      background-size: 50%;
-      background-position-x: -32.5dvw;
+    &-right {
+      display: none !important;
     }
   }
 }

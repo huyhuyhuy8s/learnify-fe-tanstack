@@ -18,6 +18,8 @@ import CustomEase from "gsap/CustomEase";
 import { SplitText } from "gsap/SplitText";
 import { useTheme } from "@/hooks/useTheme";
 import type { RouterContext } from "@/router";
+import Loader from "@/components/Loader";
+import "./root.scss";
 
 gsap.registerPlugin(SplitText, CustomEase);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
@@ -89,6 +91,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        <Loader />
         {children}
         <div style={{ position: "absolute" }}>
           <TanStackRouterDevtools position="bottom-right" />
