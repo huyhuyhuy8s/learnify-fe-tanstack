@@ -1,6 +1,6 @@
 import type { TProgress, TSpecial, TStatusCard } from "@/types/global";
 
-type MockCourse = {
+export type MockCourse = {
   id: number;
   typeSpecial: TSpecial;
   title: string;

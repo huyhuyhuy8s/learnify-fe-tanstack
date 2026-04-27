@@ -4,14 +4,23 @@ import Search from "@/components/Search";
 import TextButton from "@/components/TextButton";
 import { SEARCH_SUGGESTIONS } from "@/mock/home";
 import DecorationShapes from "./-components/DecorationShapes";
+import { useAuthStore } from "@/store";
+import DashboardAfterLogin from "./-components/DashboardAfterLogin";
 
 export const Route = createFileRoute("/learner/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const navigate = useNavigate();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  if (isAuthenticated) {
+    return <DashboardAfterLogin />;
+  }
+  return <Unauthorized />;
+}
 
+function Unauthorized() {
+  const navigate = useNavigate();
   return (
     <div className="home">
       <DecorationShapes />

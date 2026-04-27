@@ -89,10 +89,10 @@ function HomePage() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-[0.95rem] font-bold text-gray-800 leading-snug mb-1.5 line-clamp-2">
-                        {course.courseName}
+                        {course.title}
                       </h3>
                       <p className="text-xs text-gray-500 line-clamp-3 leading-relaxed">
-                        {course.abstract}
+                        {course.description}
                       </p>
                     </div>
                     <div className="flex justify-end mt-1">

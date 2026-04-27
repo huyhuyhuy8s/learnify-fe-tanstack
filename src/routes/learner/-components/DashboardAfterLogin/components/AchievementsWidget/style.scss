@@ -1,0 +1,96 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+
+.achievements-widget {
+  display: flex;
+  flex-direction: column;
+  padding: toRem(20);
+  gap: toRem(30);
+  background-color: $white;
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h3 {
+      font-size: toRem(20);
+      line-height: toRem(25);
+      font-weight: 500;
+      margin: 0;
+      color: $neutral-900;
+    }
+
+    .count {
+      font-size: toRem(16);
+      line-height: toRem(20);
+      color: $neutral-900;
+    }
+  }
+
+  &-badges {
+    display: flex;
+    gap: toRem(20);
+    justify-content: center;
+
+    .badge-mock {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: toRem(10);
+
+      .inner-shape {
+        width: toRem(60);
+        height: toRem(60);
+        border-radius: toRem(16);
+      }
+
+      &.yellow .inner-shape {
+        background-color: $mode-yellow;
+      }
+      &.red .inner-shape {
+        background-color: $mode-orange;
+        border-radius: $br-xl;
+      }
+
+      .label {
+        font-size: toRem(12);
+        font-weight: 600;
+        border: toRem(2) solid;
+        padding: toRem(4) toRem(10);
+        border-radius: $br-xl;
+      }
+
+      &.yellow .label {
+        border-color: $mode-yellow;
+        color: $grey;
+      }
+      &.red .label {
+        border-color: $mode-orange;
+        color: $grey;
+      }
+    }
+  }
+
+  &-action {
+    display: flex;
+    justify-content: flex-end;
+
+    .btn-more {
+      border: toRem(2) solid $black;
+      padding: toRem(10) toRem(25);
+      border-radius: $br-xl;
+      color: $neutral-900;
+      cursor: pointer;
+      font-weight: 500;
+      @include transition;
+
+      &:hover {
+        background-color: $black;
+        color: $white;
+      }
+    }
+  }
+}
