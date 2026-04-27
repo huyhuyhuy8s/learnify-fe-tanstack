@@ -27,7 +27,7 @@ export const useSignUpForm = () => {
   const navigate = useNavigate();
   const register = useRegister();
 
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState<1 | 2 | 3>(1);
 
   const [step1Data, setStep1Data] = useState<TSignUpStep1>({
     firstName: "",
@@ -121,7 +121,7 @@ export const useSignUpForm = () => {
       });
 
       if (result.register.success) {
-        navigate({ to: "/learner" });
+        setStep(3);
       }
     } catch {
       setErrors({ api: "Registration failed. Please try again." });
@@ -130,7 +130,11 @@ export const useSignUpForm = () => {
 
   const handleGoBack = () => {
     setErrors({});
-    setStep(1);
+    if (step === 2) {
+      setStep(1);
+    } else if (step === 3) {
+      setStep(2);
+    }
   };
 
   return {

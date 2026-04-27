@@ -72,6 +72,7 @@ test.json
 CLAUDE.md
 AGENTS.md
 claude.sh
+session.json
 
 # GEMINI
 .agents

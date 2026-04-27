@@ -27,6 +27,43 @@ export const LOGOUT_MUTATION = `
   }
 `;
 
+export const SEND_RESET_CODE_MUTATION = `
+  mutation SendResetCode($email: String!) {
+    sendResetCode(email: $email) {
+      success
+      message
+    }
+  }
+`;
+
+export const VERIFY_RESET_CODE_MUTATION = `
+  mutation VerifyResetCode($email: String!, $code: String!) {
+    verifyResetCode(email: $email, code: $code) {
+      success
+      message
+      token
+    }
+  }
+`;
+
+export const VERIFY_EMAIL_MUTATION = `
+  mutation VerifyEmail($email: String!, $code: String!) {
+    verifyEmail(email: $email, code: $code) {
+      success
+      message
+    }
+  }
+`;
+
+export const RESEND_VERIFICATION_MUTATION = `
+  mutation ResendVerification($email: String!) {
+    resendVerification(email: $email) {
+      success
+      message
+    }
+  }
+`;
+
 export const CURRENT_USER_QUERY = `
   query CurrentUser {
     currentUser {

@@ -50,6 +50,7 @@
   }
 
   &-card {
+    background-color: $white;
     background-image: url("@/assets/images/log-in-shape.svg");
     background-size: 60%;
     background-repeat: no-repeat;
@@ -61,7 +62,6 @@
     justify-content: center;
     gap: toRem(40);
     padding: toRem(50);
-    background-color: transparent;
     border-radius: $br-rounded;
     overflow: hidden;
     min-height: 60dvh;
@@ -126,6 +126,11 @@
 
   &-signup-link {
     text-align: center;
+  }
+
+  &-forgot-link {
+    text-align: center;
+    margin-top: toRem(-20);
   }
 
   &-separator {

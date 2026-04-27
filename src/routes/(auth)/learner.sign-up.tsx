@@ -4,6 +4,8 @@ import googleIcon from "@/assets/images/google-icon.png";
 import { useSignUpForm } from "./-components/hooks/useSignUpForm";
 import SignUpStep1 from "./-components/SignUpStep1";
 import SignUpStep2 from "./-components/SignUpStep2";
+import SignUpVerification from "./-components/SignUpVerification";
+import { useSignUpVerification } from "./-components/hooks/useSignUpVerification";
 import SignUpRight from "./-components/SignUpRight";
 import "./learner.sign-up.scss";
 
@@ -33,6 +35,8 @@ function SignUpPage() {
     onGoBack,
   } = useSignUpForm();
 
+  const verificationHook = useSignUpVerification(step1Data.email);
+
   return (
     <div className="sign-up" id="sign-up-page">
       <CustomLink className="sign-up-logo" to="/learner">
@@ -57,14 +61,16 @@ function SignUpPage() {
             <p className="regular">or sign up with</p>
           </div>
 
-          {step === 1 ? (
+          {step === 1 && (
             <SignUpStep1
               data={step1Data}
               errors={errors}
               onChange={onStep1Change}
               onSubmit={onStep1Submit}
             />
-          ) : (
+          )}
+
+          {step === 2 && (
             <SignUpStep2
               data={step2Data}
               errors={errors}
@@ -72,6 +78,18 @@ function SignUpPage() {
               onChange={onStep2Change}
               onSubmit={onStep2Submit}
               onBack={onGoBack}
+            />
+          )}
+
+          {step === 3 && (
+            <SignUpVerification
+              data={verificationHook.data}
+              errors={verificationHook.errors}
+              isPending={verificationHook.isPending}
+              isResending={verificationHook.isResending}
+              onChange={verificationHook.onChange}
+              onSubmit={verificationHook.onSubmit}
+              onResend={verificationHook.onResend}
             />
           )}
 

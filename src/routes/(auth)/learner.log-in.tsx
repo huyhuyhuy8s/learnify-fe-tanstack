@@ -52,6 +52,12 @@ function LogInPage() {
             onSubmit={onSubmit}
           />
 
+          <p className="log-in-forgot-link regular">
+            <CustomLink to="/learner/forgot-password">
+              Forgot password?
+            </CustomLink>
+          </p>
+
           <p className="log-in-signup-link regular">
             New to Learnify?{" "}
             <CustomLink to="/learner/sign-up">Sign up</CustomLink>
