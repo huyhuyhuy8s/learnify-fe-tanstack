@@ -72,7 +72,10 @@ test.json
 CLAUDE.md
 AGENTS.md
 claude.sh
-session.json
+sessions.json
+
+# GraphQL
+/src/graphql/
 
 # GEMINI
 .agents
