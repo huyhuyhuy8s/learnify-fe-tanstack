@@ -7,13 +7,16 @@
   display: flex;
   padding: toRem(20);
   flex-direction: column;
-  gap: toRem(30);
+  gap: toRem(20);
+  overflow: hidden;
+
   &-header {
     h3 {
       font-size: toRem(20);
       line-height: toRem(25);
       font-weight: 500;
       color: $neutral-900;
+      margin: 0;
     }
   }
 
@@ -28,6 +31,7 @@
       padding: toRem(5);
       font-size: toRem(12);
       font-weight: 500;
+      border-radius: $br-xl;
 
       .dot {
         width: toRem(8);
@@ -36,11 +40,16 @@
         background-color: $mode-navy;
         margin-right: toRem(8);
       }
-
       .num {
         margin-left: auto;
         color: $black;
       }
     }
+  }
+}
+
+@include break(s) {
+  .progress-widget-grid {
+    grid-template-columns: 1fr;
   }
 }

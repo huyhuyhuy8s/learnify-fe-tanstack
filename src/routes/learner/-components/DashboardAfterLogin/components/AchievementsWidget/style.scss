@@ -9,6 +9,7 @@
   padding: toRem(20);
   gap: toRem(30);
   background-color: $white;
+  overflow: hidden;
 
   &-header {
     display: flex;
@@ -32,7 +33,8 @@
 
   &-badges {
     display: flex;
-    gap: toRem(20);
+    flex-wrap: wrap;
+    gap: toRem(15);
     justify-content: center;
 
     .badge-mock {
@@ -42,8 +44,8 @@
       gap: toRem(10);
 
       .inner-shape {
-        width: toRem(60);
-        height: toRem(60);
+        width: toRem(50);
+        height: toRem(50);
         border-radius: toRem(16);
       }
 
@@ -61,6 +63,7 @@
         border: toRem(2) solid;
         padding: toRem(4) toRem(10);
         border-radius: $br-xl;
+        text-align: center;
       }
 
       &.yellow .label {
@@ -80,9 +83,10 @@
 
     .btn-more {
       border: toRem(2) solid $black;
-      padding: toRem(10) toRem(25);
+      padding: toRem(8) toRem(20);
       border-radius: $br-xl;
       color: $neutral-900;
+      background: transparent;
       cursor: pointer;
       font-weight: 500;
       @include transition;

@@ -23,6 +23,7 @@
     display: flex;
     flex-direction: column;
     gap: toRem(15);
+    min-width: 0;
 
     h5 {
       text-align: left;
@@ -52,6 +53,7 @@
     place-items: end;
     justify-content: space-between;
     gap: toRem(10);
+    flex-wrap: wrap;
 
     .progress {
       border-radius: $br-rounded;

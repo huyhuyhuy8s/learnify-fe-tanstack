@@ -5,11 +5,13 @@
 
 .dashboard-banner {
   display: flex;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
   gap: toRem(20);
   background-color: $white;
-  padding: toRem(30) toRem(30);
+  padding: toRem(30);
   border-radius: $br-xl;
+  overflow: hidden;
 
   &-icon {
     flex-shrink: 0;
@@ -33,6 +35,7 @@
     flex-direction: column;
     gap: toRem(8);
     justify-content: center;
+    min-width: 0;
 
     &-title {
       margin: 0;
@@ -40,6 +43,7 @@
       line-height: toRem(35);
       font-weight: 600;
       color: $black;
+      word-wrap: break-word;
     }
 
     &-description {
@@ -66,10 +70,14 @@
   }
 }
 
-@include break(md) {
+@include break(s) {
   .dashboard-banner {
-    flex-direction: row;
-    align-items: center;
-    gap: toRem(24);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: toRem(20);
+
+    &-action {
+      align-self: flex-start;
+    }
   }
 }
