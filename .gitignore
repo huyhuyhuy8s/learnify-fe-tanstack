@@ -41,7 +41,6 @@ yarn-error.*
 # generated native folders
 /ios
 /android
-
 test.json
 
 # Webstorm
@@ -75,7 +74,7 @@ claude.sh
 sessions.json
 
 # GraphQL
-/src/gql
+src/gql
 
 # GEMINI
 .agents

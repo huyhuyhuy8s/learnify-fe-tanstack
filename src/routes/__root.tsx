@@ -91,7 +91,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <Loader />
+        <Loader disabled />
         {children}
         <div style={{ position: "absolute" }}>
           <TanStackRouterDevtools position="bottom-right" />
