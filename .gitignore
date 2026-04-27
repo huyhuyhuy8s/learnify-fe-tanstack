@@ -75,7 +75,7 @@ claude.sh
 sessions.json
 
 # GraphQL
-/src/graphql/
+/src/gql
 
 # GEMINI
 .agents
