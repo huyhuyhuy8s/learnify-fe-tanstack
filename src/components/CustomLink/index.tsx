@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import "./style.scss";
 import classNames from "classnames";
+import { memo } from "react";
 
 type TCustomLinkProps = {
   to?: string;
@@ -10,7 +11,7 @@ type TCustomLinkProps = {
   children: React.ReactNode | string;
 };
 
-const CustomLink = (props: TCustomLinkProps) => {
+const CustomLink = memo((props: TCustomLinkProps) => {
   const { to, href, className, style, children } = props;
 
   const customlinkClassName = classNames("custom-button", className);
@@ -19,6 +20,6 @@ const CustomLink = (props: TCustomLinkProps) => {
       {children}
     </Link>
   );
-};
+});
 
 export default CustomLink;

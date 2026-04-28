@@ -1,15 +1,16 @@
 import classnames from "classnames";
+import { memo } from "react";
 import CustomLink from "@/components/CustomLink";
 import type { TLogInFormProps } from "./type.d";
 import "./style.scss";
 
-const LogInForm = ({
+const LogInForm = memo(function LogInForm({
   data,
   errors,
   isPending,
   onChange,
   onSubmit,
-}: TLogInFormProps) => {
+}: TLogInFormProps) {
   return (
     <form
       className="log-in-form"
@@ -77,6 +78,6 @@ const LogInForm = ({
       </button>
     </form>
   );
-};
+});
 
 export default LogInForm;

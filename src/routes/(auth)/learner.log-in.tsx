@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import CustomLink from "@/components/CustomLink";
 import googleIcon from "@/assets/images/google-icon.png";
-import { useLogInForm } from "./-components/hooks/useLogInForm";
+import { useLogInForm } from "./-hooks/useLogInForm";
 import LogInForm from "./-components/LogInForm";
 import "./learner.log-in.scss";
 
@@ -51,12 +51,6 @@ function LogInPage() {
             onChange={onChange}
             onSubmit={onSubmit}
           />
-
-          <p className="log-in-forgot-link regular">
-            <CustomLink to="/learner/forgot-password">
-              Forgot password?
-            </CustomLink>
-          </p>
 
           <p className="log-in-signup-link regular">
             New to Learnify?{" "}

@@ -1,6 +1,5 @@
 import classnames from "classnames";
 import { useRef } from "react";
-import CustomLink from "@/components/CustomLink";
 import type { TForgotPasswordStep2Props } from "./type.d";
 import "./style.scss";
 

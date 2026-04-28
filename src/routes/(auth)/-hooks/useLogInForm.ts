@@ -1,14 +1,12 @@
-import { useState } from "react";
-import { z } from "zod";
+import { useState, useCallback } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useLogin } from "@/hooks/useLogin";
-import type { TLogInForm } from "../LogInForm/type";
 
-export const logInSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(1, "Password is required"),
-  rememberMe: z.boolean(),
-});
+export type TLogInForm = {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+};
 
 export type TFormErrors = Record<string, string>;
 
@@ -24,38 +22,20 @@ export const useLogInForm = () => {
 
   const [errors, setErrors] = useState<TFormErrors>({});
 
-  const validate = (data: TLogInForm): TFormErrors => {
-    const result = logInSchema.safeParse(data);
-    if (!result.success) {
-      const errors: TFormErrors = {};
-      result.error.issues.forEach((issue) => {
-        if (issue.path[0]) {
-          errors[issue.path[0] as string] = issue.message;
-        }
-      });
-      return errors;
-    }
-    return {};
-  };
-
-  const handleChange = (field: keyof TLogInForm, value: string | boolean) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-    if (errors[field]) {
+  const handleChange = useCallback(
+    (field: keyof TLogInForm, value: string | boolean) => {
+      setFormData((prev) => ({ ...prev, [field]: value }));
       setErrors((prev) => {
+        if (!prev[field]) return prev;
         const newErrors = { ...prev };
         delete newErrors[field];
         return newErrors;
       });
-    }
-  };
+    },
+    []
+  );
 
-  const handleSubmit = async () => {
-    const validationErrors = validate(formData);
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
+  const handleSubmit = useCallback(async () => {
     try {
       const result = await login.mutateAsync({
         data: {
@@ -70,7 +50,7 @@ export const useLogInForm = () => {
     } catch {
       setErrors({ api: "Login failed. Please check your credentials." });
     }
-  };
+  }, [formData, login, navigate]);
 
   return {
     data: formData,

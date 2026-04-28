@@ -1,15 +1,16 @@
 import classnames from "classnames";
+import { memo } from "react";
 import type { TSignUpStep2Props } from "./type.d";
 import "./style.scss";
 
-const SignUpStep2 = ({
+const SignUpStep2 = memo(function SignUpStep2({
   data,
   errors,
   isPending,
   onChange,
   onSubmit,
   onBack,
-}: TSignUpStep2Props) => {
+}: TSignUpStep2Props) {
   return (
     <form
       className="sign-up-form"
@@ -67,6 +68,6 @@ const SignUpStep2 = ({
       </button>
     </form>
   );
-};
+});
 
 export default SignUpStep2;

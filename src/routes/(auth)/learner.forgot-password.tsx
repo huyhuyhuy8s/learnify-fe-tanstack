@@ -1,9 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
 import ForgotPasswordStep1 from "./-components/ForgotPasswordStep1";
 import ForgotPasswordStep2 from "./-components/ForgotPasswordStep2";
-import { useForgotPasswordStep1 } from "./-components/hooks/useForgotPasswordStep1";
-import { useForgotPasswordStep2 } from "./-components/hooks/useForgotPasswordStep2";
+import { useForgotPasswordForm } from "./-hooks/useForgotPasswordForm";
 import "./learner.forgot-password.scss";
 
 export const Route = createFileRoute("/(auth)/learner/forgot-password")({
@@ -19,48 +17,43 @@ export const Route = createFileRoute("/(auth)/learner/forgot-password")({
 });
 
 function ForgotPasswordPage() {
-  const [step, setStep] = useState<1 | 2>(1);
-  const [email, setEmail] = useState("");
-
-  const step1Hook = useForgotPasswordStep1();
-  const step2Hook = useForgotPasswordStep2(email);
-
-  const handleStep1Submit = async () => {
-    const success = await step1Hook.onSubmit();
-    if (success) {
-      setEmail(step1Hook.data.email);
-      setStep(2);
-    }
-  };
-
-  const handleStep2Submit = async () => {
-    const success = await step2Hook.onSubmit();
-    if (success) {
-      alert("Code verified successfully! Password reset coming soon.");
-    }
-  };
+  const {
+    step,
+    step1Data,
+    step1Errors,
+    step2Data,
+    step2Errors,
+    isPending,
+    isResending,
+    onStep1Change,
+    onStep1Submit,
+    onStep2Change,
+    onStep2Submit,
+    onResend,
+    onGoBack,
+  } = useForgotPasswordForm();
 
   return (
     <div className="forgot-password" id="forgot-password-page">
       {step === 1 && (
         <ForgotPasswordStep1
-          data={step1Hook.data}
-          errors={step1Hook.errors}
-          isPending={step1Hook.isPending}
-          onChange={step1Hook.onChange}
-          onSubmit={handleStep1Submit}
+          data={step1Data}
+          errors={step1Errors}
+          isPending={isPending}
+          onChange={onStep1Change}
+          onSubmit={onStep1Submit}
         />
       )}
       {step === 2 && (
         <ForgotPasswordStep2
-          data={step2Hook.data}
-          errors={step2Hook.errors}
-          isPending={step2Hook.isPending}
-          isResending={step2Hook.isResending}
-          onChange={step2Hook.onChange}
-          onSubmit={handleStep2Submit}
-          onResend={step2Hook.onResend}
-          onBack={() => setStep(1)}
+          data={step2Data}
+          errors={step2Errors}
+          isPending={isPending}
+          isResending={isResending}
+          onChange={onStep2Change}
+          onSubmit={onStep2Submit}
+          onResend={onResend}
+          onBack={onGoBack}
         />
       )}
     </div>

@@ -1,10 +1,10 @@
 import classnames from "classnames";
-import { useRef } from "react";
+import { useRef, useCallback, memo } from "react";
 import CustomLink from "@/components/CustomLink";
 import type { TSignUpVerificationProps } from "./type.d";
 import "./style.scss";
 
-const SignUpVerification = ({
+const SignUpVerification = memo(function SignUpVerification({
   data,
   errors,
   isPending,
@@ -12,23 +12,29 @@ const SignUpVerification = ({
   onChange,
   onSubmit,
   onResend,
-}: TSignUpVerificationProps) => {
+}: TSignUpVerificationProps) {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  const handleInputChange = (index: number, value: string) => {
-    const numericValue = value.replace(/[^0-9]/g, "");
-    onChange(index, numericValue);
+  const handleInputChange = useCallback(
+    (index: number, value: string) => {
+      const numericValue = value.replace(/[^0-9]/g, "");
+      onChange(index, numericValue);
 
-    if (numericValue && index < 5) {
-      inputRefs.current[index + 1]?.focus();
-    }
-  };
+      if (numericValue && index < 5) {
+        inputRefs.current[index + 1]?.focus();
+      }
+    },
+    [onChange]
+  );
 
-  const handleKeyDown = (index: number, e: React.KeyboardEvent) => {
-    if (e.key === "Backspace" && !data.code[index] && index > 0) {
-      inputRefs.current[index - 1]?.focus();
-    }
-  };
+  const handleKeyDown = useCallback(
+    (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Backspace" && !e.currentTarget.value && index > 0) {
+        inputRefs.current[index - 1]?.focus();
+      }
+    },
+    []
+  );
 
   return (
     <div className="sign-up-verification">
@@ -69,7 +75,10 @@ const SignUpVerification = ({
             className="sign-up-verification-continue-btn"
             type="button"
             disabled={isPending}
-            onClick={onSubmit}
+            onClick={(e) => {
+              e.preventDefault();
+              onSubmit();
+            }}
           >
             <h6 className="semibold">Continue</h6>
           </button>
@@ -115,6 +124,6 @@ const SignUpVerification = ({
       </div>
     </div>
   );
-};
+});
 
 export default SignUpVerification;

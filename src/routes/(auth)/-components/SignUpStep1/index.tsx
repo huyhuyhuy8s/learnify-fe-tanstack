@@ -1,13 +1,14 @@
 import classnames from "classnames";
+import { memo } from "react";
 import type { TSignUpStep1Props } from "./type.d";
 import "./style.scss";
 
-const SignUpStep1 = ({
+const SignUpStep1 = memo(function SignUpStep1({
   data,
   errors,
   onChange,
   onSubmit,
-}: TSignUpStep1Props) => {
+}: TSignUpStep1Props) {
   return (
     <form
       className="sign-up-form"
@@ -72,6 +73,6 @@ const SignUpStep1 = ({
       </button>
     </form>
   );
-};
+});
 
 export default SignUpStep1;

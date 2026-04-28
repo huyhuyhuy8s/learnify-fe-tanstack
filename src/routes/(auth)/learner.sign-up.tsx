@@ -1,11 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import CustomLink from "@/components/CustomLink";
 import googleIcon from "@/assets/images/google-icon.png";
-import { useSignUpForm } from "./-components/hooks/useSignUpForm";
+import { useSignUpForm } from "./-hooks/useSignUpForm";
 import SignUpStep1 from "./-components/SignUpStep1";
 import SignUpStep2 from "./-components/SignUpStep2";
 import SignUpVerification from "./-components/SignUpVerification";
-import { useSignUpVerification } from "./-components/hooks/useSignUpVerification";
 import SignUpRight from "./-components/SignUpRight";
 import "./learner.sign-up.scss";
 
@@ -25,17 +24,21 @@ function SignUpPage() {
   const {
     step,
     step1Data,
+    step1Errors,
     step2Data,
-    errors,
+    step2Errors,
+    verificationData,
+    verificationErrors,
     isPending,
     onStep1Change,
     onStep1Submit,
     onStep2Change,
     onStep2Submit,
+    onVerificationChange,
+    onVerificationSubmit,
+    onResend,
     onGoBack,
   } = useSignUpForm();
-
-  const verificationHook = useSignUpVerification(step1Data.email);
 
   return (
     <div className="sign-up" id="sign-up-page">
@@ -64,7 +67,7 @@ function SignUpPage() {
           {step === 1 && (
             <SignUpStep1
               data={step1Data}
-              errors={errors}
+              errors={step1Errors}
               onChange={onStep1Change}
               onSubmit={onStep1Submit}
             />
@@ -73,7 +76,7 @@ function SignUpPage() {
           {step === 2 && (
             <SignUpStep2
               data={step2Data}
-              errors={errors}
+              errors={step2Errors}
               isPending={isPending}
               onChange={onStep2Change}
               onSubmit={onStep2Submit}
@@ -83,13 +86,13 @@ function SignUpPage() {
 
           {step === 3 && (
             <SignUpVerification
-              data={verificationHook.data}
-              errors={verificationHook.errors}
-              isPending={verificationHook.isPending}
-              isResending={verificationHook.isResending}
-              onChange={verificationHook.onChange}
-              onSubmit={verificationHook.onSubmit}
-              onResend={verificationHook.onResend}
+              data={verificationData}
+              errors={verificationErrors}
+              isPending={false}
+              isResending={false}
+              onChange={onVerificationChange}
+              onSubmit={onVerificationSubmit}
+              onResend={onResend}
             />
           )}
 
