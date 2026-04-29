@@ -1,6 +1,6 @@
 import type { TProgress, TSpecial, TStatusCard } from "@/types/global";
 
-export type MockCourse = {
+export type MockRoadmapDetail = {
   id: number;
   typeSpecial: TSpecial;
   title: string;
@@ -11,7 +11,7 @@ export type MockCourse = {
   percentage?: TProgress;
 };
 
-export const MOCK_COURSES: MockCourse[] = [
+export const MOCK_ROADMAP_DETAILS: MockRoadmapDetail[] = [
   {
     id: 1,
     typeSpecial: "course",

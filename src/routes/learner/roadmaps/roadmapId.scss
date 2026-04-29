@@ -1,0 +1,164 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+
+.roadmapDetail-container {
+  padding: 0 toRem(10);
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  gap: toRem(20);
+
+  .roadmapDetail-itemList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: toRem(50);
+    flex: 1;
+
+    > .title {
+      display: flex;
+      flex-direction: column;
+      gap: toRem(20);
+
+      h3,
+      p {
+        text-align: center;
+      }
+
+      p {
+        color: $mode-neutral;
+      }
+    }
+
+    .roadmapDetail-content {
+      display: flex;
+      flex-direction: column;
+      gap: toRem(25);
+      width: 100%;
+
+      &-controls {
+        width: 100%;
+
+        > button {
+          padding: toRem(10) toRem(25);
+          border: toRem(2) solid $neutral-900;
+          border-radius: $br-md;
+          color: $neutral-900;
+          background-color: $white;
+
+          &:hover {
+            background-color: $neutral-900;
+            color: $white;
+            transition: all 0.3s ease;
+          }
+        }
+      }
+    }
+
+    .roadmapDetail-list {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(toRem(300), 1fr));
+      gap: toRem(20);
+      align-items: stretch;
+    }
+  }
+
+  .roadmapDetail-comment {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(16);
+    width: 100%;
+    max-width: toRem(350);
+    flex-shrink: 0;
+
+    .roadmapDetail-commentItem {
+      background-color: $neutral-150;
+      padding: toRem(16) toRem(20);
+      border-radius: toRem(16);
+      display: flex;
+      flex-direction: column;
+      gap: toRem(12);
+
+      &-head {
+        display: flex;
+        align-items: center;
+        gap: toRem(12);
+
+        .comment-avatar {
+          width: toRem(32);
+          height: toRem(32);
+          background-color: $accent-dark-yellow;
+          border-radius: 50%;
+          flex-shrink: 0;
+        }
+
+        .comment-headInfor {
+          display: flex;
+          flex-direction: column;
+          flex-grow: 1;
+
+          span {
+            font-size: toRem(14);
+            font-weight: 600;
+            color: $neutral-900;
+          }
+
+          p {
+            font-size: toRem(12);
+            color: $black;
+            margin: 0;
+            margin-top: toRem(2);
+          }
+        }
+
+        .comment-3dot {
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: $black;
+
+          .icon {
+            font-size: toRem(20);
+          }
+        }
+      }
+
+      &-body {
+        font-size: toRem(14);
+        color: $neutral-900;
+        line-height: 1.5;
+      }
+    }
+  }
+}
+
+@include break(md) {
+  .courseDetail-container {
+    padding: 0;
+    flex-direction: column;
+    align-items: center;
+
+    .courseDetail-list {
+      width: 100%;
+    }
+
+    .courseDetail-comment {
+      max-width: 100%;
+      margin-top: toRem(20);
+    }
+
+    .courseDetail-content {
+      > .search {
+        padding: toRem(10) toRem(20);
+
+        > button > span {
+          font-size: toRem(24);
+        }
+      }
+    }
+  }
+}
