@@ -40,8 +40,11 @@ function LogInPage() {
                   return;
                 }
                 const idToken = credentialResponse.credential;
-                googleLoginMutation.mutate(idToken);
-                navigate({ to: "/learner" });
+                googleLoginMutation.mutate(idToken, {
+                  onSuccess: () => {
+                    navigate({ to: "/learner" });
+                  },
+                });
               }}
               onError={() => {
                 console.error("Google login failed");

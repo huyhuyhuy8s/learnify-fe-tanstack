@@ -61,8 +61,11 @@ function SignUpPage() {
                   return;
                 }
                 const idToken = credentialResponse.credential;
-                googleLoginMutation.mutate(idToken);
-                navigate({ to: "/learner" });
+                googleLoginMutation.mutate(idToken, {
+                  onSuccess: () => {
+                    navigate({ to: "/learner" });
+                  },
+                });
               }}
               onError={() => {
                 console.error("Google login failed");
@@ -71,7 +74,6 @@ function SignUpPage() {
               theme="outline"
               text="continue_with"
               shape="circle"
-              width="100%"
             />
           </div>
 
