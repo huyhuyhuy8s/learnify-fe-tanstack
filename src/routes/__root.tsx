@@ -11,7 +11,6 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import * as React from "react";
 import DefaultCatchBoundary from "@/components/DefaultCatchBoundary";
 import NotFound from "@/components/NotFound";
-import appCss from "@/styles/app.css?url";
 import { seo } from "@/utils/seo";
 import "@styles/_global.scss";
 import gsap from "gsap";
@@ -21,6 +20,7 @@ import { useTheme } from "@/hooks/useTheme";
 import type { RouterContext } from "@/router";
 import Loader from "@/components/Loader";
 import "./root.scss";
+import "@styles/_global.scss";
 
 gsap.registerPlugin(SplitText, CustomEase);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
@@ -43,7 +43,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       }),
     ],
     links: [
-      { rel: "stylesheet", href: appCss },
+      { rel: "stylesheet" },
       {
         rel: "apple-touch-icon",
         sizes: "180x180",

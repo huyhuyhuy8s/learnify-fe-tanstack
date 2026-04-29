@@ -75,4 +75,15 @@ select {
 
 button {
   cursor: pointer;
+  border: none;
+  border-width: 0;
+}
+
+input {
+  border: none;
+}
+
+a {
+  text-decoration-line: none;
+  border-width: 0;
 }

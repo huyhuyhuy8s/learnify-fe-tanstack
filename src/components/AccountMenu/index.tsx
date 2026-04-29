@@ -24,8 +24,10 @@ const AccountMenu = (props: TAccountMenuProps) => {
           <div className="avatar"></div>
         </Link>
         <div className="context">
-          <h6 className="bold">{username}</h6>
-          <p>{uid}</p>
+          <p className="bold" title={username}>
+            {username}
+          </p>
+          <small title={uid}>{uid}</small>
           <TextButton
             type="special"
             size="tiny"
