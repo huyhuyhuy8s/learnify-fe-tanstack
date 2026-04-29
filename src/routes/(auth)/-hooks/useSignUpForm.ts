@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { z } from "zod";
 import { useRegister } from "@/hooks/useRegister";
+import { useNavigate } from "@tanstack/react-router";
 
 export type TSignUpStep1 = {
   firstName: string;
@@ -22,7 +23,10 @@ export type TFormErrors = Record<string, string>;
 export const signUpStep1Schema = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters"),
   lastName: z.string().min(2, "Last name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email address"),
+  email: z.email({
+    pattern:
+      /^(?!\.)(?!.*\.\.)([a-z0-9_'+\-.]*)[a-z0-9_+-]@([a-z0-9][a-z0-9-]*\.)+[a-z]{2,}$/i,
+  }),
 });
 
 export const signUpStep2Schema = z
@@ -44,6 +48,7 @@ export const verificationSchema = z.object({
 
 export const useSignUpForm = () => {
   const register = useRegister();
+  const navigate = useNavigate();
 
   const [step, setStep] = useState<1 | 2 | 3>(1);
 
@@ -62,7 +67,9 @@ export const useSignUpForm = () => {
 
   const [step2Errors, setStep2Errors] = useState<TFormErrors>({});
 
-  const [code, setCode] = useState<string[]>(["", "", "", "", "", ""]);
+  const [verificationData, setVerificationData] = useState<{ email: string }>({
+    email: "",
+  });
   const [verificationErrors, setVerificationErrors] = useState<TFormErrors>({});
 
   const handleStep1Change = useCallback(
@@ -133,7 +140,14 @@ export const useSignUpForm = () => {
       });
 
       if (result.register.success) {
-        setStep(3);
+        setVerificationData({ email: step1Data.email });
+        navigate({
+          to: "/learner/verify-email",
+          search: {
+            token: result.register.message || "",
+            email: step1Data.email,
+          },
+        });
         return true;
       }
       return false;
@@ -141,19 +155,15 @@ export const useSignUpForm = () => {
       setStep2Errors({ api: "Registration failed. Please try again." });
       return false;
     }
-  }, [step1Data, step2Data, register]);
+  }, [step1Data, step2Data, register, navigate]);
 
   const handleVerificationChange = useCallback(
     (index: number, value: string) => {
-      setCode((prev) => {
-        const newCode = [...prev];
-        newCode[index] = value;
-        return newCode;
-      });
+      setVerificationData((prev) => ({ ...prev, email: value }));
       setVerificationErrors((prev) => {
-        if (!prev.code) return prev;
+        if (!prev.email) return prev;
         const newErrors = { ...prev };
-        delete newErrors.code;
+        delete newErrors.email;
         return newErrors;
       });
     },
@@ -161,25 +171,12 @@ export const useSignUpForm = () => {
   );
 
   const handleVerificationSubmit = useCallback(async () => {
-    const codeString = code.join("");
-    const result = verificationSchema.safeParse({ code: codeString });
-    if (!result.success) {
-      const validationErrors: TFormErrors = {};
-      result.error.issues.forEach((issue) => {
-        if (issue.path[0]) {
-          validationErrors[issue.path[0] as string] = issue.message;
-        }
-      });
-      setVerificationErrors(validationErrors);
-      return false;
-    }
-
     try {
       const { graphqlClient } = await import("@/lib/graphql");
       const { VERIFY_EMAIL_MUTATION } = await import("@/graphql/mutations");
       await graphqlClient.request(VERIFY_EMAIL_MUTATION, {
-        email: step1Data.email,
-        code: codeString,
+        email: verificationData.email,
+        code: "",
       });
       window.location.href = "/learner";
       return true;
@@ -187,7 +184,7 @@ export const useSignUpForm = () => {
       setVerificationErrors({ api: "Verification failed. Please try again." });
       return false;
     }
-  }, [code, step1Data.email]);
+  }, [verificationData.email]);
 
   const handleResend = useCallback(async () => {
     try {
@@ -195,12 +192,12 @@ export const useSignUpForm = () => {
       const { RESEND_VERIFICATION_MUTATION } =
         await import("@/graphql/mutations");
       await graphqlClient.request(RESEND_VERIFICATION_MUTATION, {
-        email: step1Data.email,
+        email: verificationData.email,
       });
     } catch {
       console.error("Failed to resend code");
     }
-  }, [step1Data.email]);
+  }, [verificationData.email]);
 
   const handleGoBack = useCallback(() => {
     if (step === 2) {
@@ -216,7 +213,7 @@ export const useSignUpForm = () => {
     step1Errors,
     step2Data,
     step2Errors,
-    verificationData: { code },
+    verificationData,
     verificationErrors,
     isPending: register.isPending,
     onStep1Change: handleStep1Change,

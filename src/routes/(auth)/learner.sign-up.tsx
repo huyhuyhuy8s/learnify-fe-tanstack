@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import CustomLink from "@/components/CustomLink";
-import googleIcon from "@/assets/images/google-icon.png";
+import { GoogleLogin } from "@react-oauth/google";
 import { useSignUpForm } from "./-hooks/useSignUpForm";
+import { useGoogleLogin } from "@/hooks/useGoogleLogin";
 import SignUpStep1 from "./-components/SignUpStep1";
 import SignUpStep2 from "./-components/SignUpStep2";
 import SignUpVerification from "./-components/SignUpVerification";
@@ -27,7 +28,6 @@ function SignUpPage() {
     step1Errors,
     step2Data,
     step2Errors,
-    verificationData,
     verificationErrors,
     isPending,
     onStep1Change,
@@ -39,6 +39,7 @@ function SignUpPage() {
     onResend,
     onGoBack,
   } = useSignUpForm();
+  const googleLoginMutation = useGoogleLogin();
 
   return (
     <div className="sign-up" id="sign-up-page">
@@ -51,14 +52,26 @@ function SignUpPage() {
         <div className="sign-up-left">
           <h3 className="semibold">Sign up to Learnify</h3>
 
-          <button
-            className="sign-up-google sign-up-button"
-            type="button"
-            id="sign-up-google-btn"
-          >
-            <img src={googleIcon} alt="Google" />
-            <h6 className="semibold">Continue with Google</h6>
-          </button>
+          <div className="sign-up-google-container">
+            <GoogleLogin
+              onSuccess={(credentialResponse) => {
+                if (!credentialResponse?.credential) {
+                  console.error("Google login failed: no credential returned");
+                  return;
+                }
+                const idToken = credentialResponse.credential;
+                googleLoginMutation.mutate(idToken);
+              }}
+              onError={() => {
+                console.error("Google login failed");
+              }}
+              useOneTap
+              theme="outline"
+              text="continue_with"
+              shape="circle"
+              width="100%"
+            />
+          </div>
 
           <div className="sign-up-divider">
             <p className="regular">or sign up with</p>
@@ -86,7 +99,7 @@ function SignUpPage() {
 
           {step === 3 && (
             <SignUpVerification
-              data={verificationData}
+              data={{ email: step1Data.email }}
               errors={verificationErrors}
               isPending={false}
               isResending={false}

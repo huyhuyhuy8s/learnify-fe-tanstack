@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-router";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import * as React from "react";
 import DefaultCatchBoundary from "@/components/DefaultCatchBoundary";
 import NotFound from "@/components/NotFound";
@@ -85,19 +86,23 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
+
   return (
     <html>
       <head>
         <HeadContent />
       </head>
       <body>
-        <Loader disabled />
-        {children}
-        <div style={{ position: "absolute" }}>
-          <TanStackRouterDevtools position="bottom-right" />
-          <ReactQueryDevtools buttonPosition="bottom-left" />
-          <Scripts />
-        </div>
+        <GoogleOAuthProvider clientId={googleClientId}>
+          <Loader disabled />
+          {children}
+          <div style={{ position: "absolute" }}>
+            <TanStackRouterDevtools position="bottom-right" />
+            <ReactQueryDevtools buttonPosition="bottom-left" />
+            <Scripts />
+          </div>
+        </GoogleOAuthProvider>
       </body>
     </html>
   );

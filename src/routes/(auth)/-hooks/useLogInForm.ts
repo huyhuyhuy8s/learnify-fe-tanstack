@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useLogin } from "@/hooks/useLogin";
+import z from "zod";
 
 export type TLogInForm = {
   email: string;
@@ -9,6 +10,14 @@ export type TLogInForm = {
 };
 
 export type TFormErrors = Record<string, string>;
+
+export const logInFormSchema = z.object({
+  email: z.email({
+    pattern:
+      /^(?!\.)(?!.*\.\.)([a-z0-9_'+\-.]*)[a-z0-9_+-]@([a-z0-9][a-z0-9-]*\.)+[a-z]{2,}$/i,
+  }),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+});
 
 export const useLogInForm = () => {
   const navigate = useNavigate();
@@ -37,6 +46,17 @@ export const useLogInForm = () => {
 
   const handleSubmit = useCallback(async () => {
     try {
+      const parseResult = logInFormSchema.safeParse(formData);
+      if (!parseResult.success) {
+        const validationErrors: TFormErrors = {};
+        parseResult.error.issues.forEach((issue) => {
+          if (issue.path[0]) {
+            validationErrors[issue.path[0] as string] = issue.message;
+          }
+        });
+        setErrors(validationErrors);
+        return false;
+      }
       const result = await login.mutateAsync({
         data: {
           email: formData.email,

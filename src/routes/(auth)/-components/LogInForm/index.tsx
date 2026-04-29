@@ -1,16 +1,11 @@
 import classnames from "classnames";
 import { memo } from "react";
 import CustomLink from "@/components/CustomLink";
-import type { TLogInFormProps } from "./type.d";
 import "./style.scss";
+import { useLogInForm } from "../../-hooks/useLogInForm";
 
-const LogInForm = memo(function LogInForm({
-  data,
-  errors,
-  isPending,
-  onChange,
-  onSubmit,
-}: TLogInFormProps) {
+const LogInForm = memo(function LogInForm() {
+  const { data, errors, isPending, onChange, onSubmit } = useLogInForm();
   return (
     <form
       className="log-in-form"
@@ -45,23 +40,6 @@ const LogInForm = memo(function LogInForm({
           onChange={(e) => onChange("password", e.target.value)}
         />
         {errors.password && <p className="log-in-error">{errors.password}</p>}
-      </div>
-
-      <div className="log-in-form-utils">
-        <label className="log-in-form-check">
-          <input
-            type="checkbox"
-            checked={data.rememberMe}
-            onChange={(e) => onChange("rememberMe", e.target.checked)}
-          />
-          <p className="regular">Remember me</p>
-        </label>
-        <CustomLink
-          className="log-in-form-forgot"
-          to="/learner/forgot-password"
-        >
-          Forgot password?
-        </CustomLink>
       </div>
 
       {errors.api && (

@@ -68,6 +68,11 @@
     border: none;
     cursor: pointer;
     @include transition;
+    transition-property: background-color, border-radius;
+
+    h6 {
+      color: $white;
+    }
 
     &:focus {
       border-radius: $br-sm;
@@ -76,6 +81,7 @@
 
     &:hover {
       background-color: $green-500;
+      border-radius: $br-sm;
     }
 
     &:disabled {

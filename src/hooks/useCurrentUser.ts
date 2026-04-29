@@ -9,7 +9,7 @@ async function fetchCurrentUser(): Promise<UserResponse | null> {
   );
 
   if (response.currentUser.isSuccess && response.currentUser.users.length > 0) {
-    return response.currentUser.users[0];
+    return response.currentUser.users[0] || null;
   }
   return null;
 }

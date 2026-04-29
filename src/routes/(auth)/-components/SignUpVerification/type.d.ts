@@ -1,5 +1,5 @@
 export type TSignUpVerificationData = {
-  code: string[];
+  email: string;
 };
 
 export type TSignUpVerificationProps = {

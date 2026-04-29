@@ -79,3 +79,14 @@ export const CURRENT_USER_QUERY = `
     }
   }
 `;
+
+export const GOOGLE_LOGIN_MUTATION = `
+  mutation GoogleLogin($idToken: String!) {
+    googleLogin(idToken: $idToken) {
+      success
+      message
+      accessToken
+      refreshToken
+    }
+  }
+`;

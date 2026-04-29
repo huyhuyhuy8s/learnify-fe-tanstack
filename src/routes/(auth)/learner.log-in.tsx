@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import CustomLink from "@/components/CustomLink";
-import googleIcon from "@/assets/images/google-icon.png";
-import { useLogInForm } from "./-hooks/useLogInForm";
+import { GoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@/hooks/useGoogleLogin";
 import LogInForm from "./-components/LogInForm";
 import "./learner.log-in.scss";
 
@@ -18,7 +18,7 @@ export const Route = createFileRoute("/(auth)/learner/log-in")({
 });
 
 function LogInPage() {
-  const { data, errors, isPending, onChange, onSubmit } = useLogInForm();
+  const googleLoginMutation = useGoogleLogin();
 
   return (
     <div className="log-in" id="log-in-page">
@@ -31,30 +31,39 @@ function LogInPage() {
         <div className="log-in-left">
           <h3 className="log-in-title semibold">Welcome back to Learnify</h3>
 
-          <button
-            className="log-in-google log-in-button"
-            type="button"
-            id="log-in-google-btn"
-          >
-            <img src={googleIcon} alt="Google" />
-            <h6 className="semibold">Continue with Google</h6>
-          </button>
+          <div className="log-in-google-container">
+            <GoogleLogin
+              onSuccess={(credentialResponse) => {
+                if (!credentialResponse?.credential) {
+                  console.error("Google login failed: no credential returned");
+                  return;
+                }
+                const idToken = credentialResponse.credential;
+                googleLoginMutation.mutate(idToken);
+              }}
+              onError={() => {
+                console.error("Google login failed");
+              }}
+              useOneTap
+              theme="outline"
+              text="continue_with"
+              shape="circle"
+            />
+          </div>
 
           <div className="log-in-divider">
             <p className="regular">or</p>
           </div>
 
-          <LogInForm
-            data={data}
-            errors={errors}
-            isPending={isPending}
-            onChange={onChange}
-            onSubmit={onSubmit}
-          />
+          <LogInForm />
 
           <p className="log-in-signup-link regular">
             New to Learnify?{" "}
             <CustomLink to="/learner/sign-up">Sign up</CustomLink>
+          </p>
+          <p className="log-in-signup-link regular">
+            Forget your password?{" "}
+            <CustomLink to="/learner/forgot-password">Recovery here</CustomLink>
           </p>
         </div>
 

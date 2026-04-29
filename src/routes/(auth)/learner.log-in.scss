@@ -78,6 +78,44 @@
     text-align: center;
   }
 
+  &-google-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    > div {
+      width: 100%;
+
+      > div > div > div {
+        height: 4rem;
+        background-color: $neutral-600;
+        border: none;
+        border-radius: $br-rounded !important;
+        @include transition;
+        transition-property: background-color, border-radius;
+
+        &:hover {
+          background-color: $neutral-700;
+          border-radius: $br-sm !important;
+        }
+
+        .nsm7Bb-HzV7m-LgbsSe-bN97Pc-sM5MNb {
+          justify-content: center;
+          gap: toRem(15);
+
+          .nsm7Bb-HzV7m-LgbsSe-BPrWId {
+            width: fit-content;
+            font-family: "Google Sans Flex", sans-serif;
+            font-size: $fs-heading6;
+            font-weight: $fw-semibold;
+            color: $white;
+            flex-grow: 0;
+          }
+        }
+      }
+    }
+  }
+
   &-google {
     display: flex;
     align-items: center;
