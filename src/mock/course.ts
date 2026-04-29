@@ -14,14 +14,13 @@ export type MockCourse = {
 export const MOCK_COURSES: MockCourse[] = [
   {
     id: 1,
-    typeSpecial: "roadmap",
-    title: "Gemini for Data Scientists and Analysts",
+    typeSpecial: "course",
+    title: "Generative AI",
     description:
-      "In this course, you learn how Gemini, a generative AI-powered collaborator from Google Cloud, helps analyze customer data, predict trends, and optimize workflows.",
-    duration: "2 hours",
-    status: "inProgress",
+      "Learn the fundamentals of Generative AI, how it differs from traditional machine learning, and explore the core technologies behind large language models.",
+    duration: "45 mins",
+    status: "default",
     listFeature: ["Data Analysis", "Trend Prediction", "Workflow Optimization"],
-    percentage: 14,
   },
   {
     id: 2,

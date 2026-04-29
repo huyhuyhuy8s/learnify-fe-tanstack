@@ -2,6 +2,7 @@ import { GraphQLClient } from "graphql-request";
 import { useAuthStore } from "@/store/authStore";
 
 const GRAPHQL_ENDPOINT = "https://learnify-be.onrender.com/graphql";
+// const GRAPHQL_ENDPOINT = "https://localhost:10000/graphql";
 
 export const graphqlClient = new GraphQLClient(GRAPHQL_ENDPOINT, {
   headers: () => {
