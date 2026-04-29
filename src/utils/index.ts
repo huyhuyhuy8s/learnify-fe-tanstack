@@ -1,9 +1,8 @@
 import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
 import isNaN from "lodash/isNaN";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+  return clsx(inputs);
 }
 
 export const formatDate = (dateString: string) => {

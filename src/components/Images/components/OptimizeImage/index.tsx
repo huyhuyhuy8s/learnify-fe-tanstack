@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Image } from "@unpic/react";
-import { cn } from "@/utils";
+import classnames from "classnames";
 import "./style.scss";
 
 type TOptimizeImageProps = {
@@ -58,7 +58,7 @@ const OptimizeImage = ({
           loading="lazy"
           decoding="async"
           onLoad={() => setIsLoaded(true)}
-          className={cn(
+          className={classnames(
             "optimize-image-element",
             isLoaded ? "optimize-image-loaded" : "optimize-image-loading",
             className
