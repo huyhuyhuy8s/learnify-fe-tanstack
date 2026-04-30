@@ -2,10 +2,14 @@ import { createFileRoute } from "@tanstack/react-router";
 import { postQueryOptions } from "@/utils/posts";
 import NotFound from "@/components/NotFound";
 import PostErrorComponent from "@/components/PostErrorComponent";
-import { MOCK_COURSES } from "@/mock/course";
 import DecorationCard from "@/components/DecorationCard";
 import TextButton from "@/components/TextButton";
 import { COLORS } from "@/styles/colors";
+import Card from "@/components/Card";
+import CommentItem from "./-components/CommentItem";
+import "./postId.scss";
+import { MOCK_COMMENT, MOCK_COURSE_DETAILS, MOCK_COURSES } from "@/mock";
+import { useMemo } from "react";
 
 export const Route = createFileRoute("/learner/courses/$postId")({
   loader: async ({ params: { postId }, context }) => {
@@ -29,17 +33,20 @@ export const Route = createFileRoute("/learner/courses/$postId")({
 
 function PostComponent() {
   const { postId } = Route.useParams();
-  const course = MOCK_COURSES.find((course) => course.id === Number(postId));
+  const course = useMemo(
+    () => MOCK_COURSES.find((course) => course.id === Number(postId)),
+    [postId]
+  );
 
   if (!course) {
     return <NotFound />;
   }
 
   return (
-    <div className="course-container">
-      <DecorationCard
-        listBadge={
-          <>
+    <div className="course-detail-container">
+      <div className="course-detail-item-list">
+        <DecorationCard
+          listBadge={
             <TextButton
               text="text"
               size="tiny"
@@ -49,25 +56,46 @@ function PostComponent() {
               color={COLORS.neutral100}
               onClick={() => {}}
             />
-            <TextButton
-              text="text"
-              size="tiny"
-              type="special"
-              typeSpecial="course"
-              backgroundColor={COLORS.navy300}
-              color={COLORS.neutral100}
-              onClick={() => {}}
+          }
+          typeSpecial="course"
+          title={course.title}
+          status={course.status}
+          listFeature={course.listFeature}
+          percentage={course.percentage ?? 0}
+        />
+        <TextButton
+          text="Send feedback"
+          size="small"
+          icon="feedback"
+          type="outlined"
+          typeSpecial="course"
+          onClick={() => {}}
+        />
+        <div className="course-detail-list">
+          {MOCK_COURSE_DETAILS.map((courseDetail) => (
+            <Card
+              key={courseDetail.id}
+              typeSpecial={courseDetail.typeSpecial}
+              title={courseDetail.title}
+              description={courseDetail.description}
+              duration={courseDetail.duration}
+              status={courseDetail.status}
+              percentage={courseDetail.percentage}
+              onClick={() => alert("hello")}
             />
-          </>
-        }
-        title={course.title ?? ""}
-        status={course.status ?? "default"}
-        listFeature={course.listFeature}
-        percentage={course.percentage ?? 0}
-      />
-      <div className="content">
-        <div className="description">{course?.description}</div>
-        <div className="duration">Duration: {course?.duration}</div>
+          ))}
+        </div>
+      </div>
+      <div className="course-detail-comment">
+        {MOCK_COMMENT.map((comment) => (
+          <CommentItem
+            key={comment.id}
+            id={comment.id}
+            userName={comment.userName}
+            time={comment.time}
+            content={comment.content}
+          />
+        ))}
       </div>
     </div>
   );

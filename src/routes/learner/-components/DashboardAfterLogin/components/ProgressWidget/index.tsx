@@ -1,7 +1,6 @@
-import React from "react";
 import "./style.scss";
 import TextButton from "@/components/TextButton";
-import { MOCK_PROGRESS } from "@/mock/dashboard";
+import { MOCK_PROGRESS } from "@/mock";
 
 const ProgressWidget = () => {
   return (

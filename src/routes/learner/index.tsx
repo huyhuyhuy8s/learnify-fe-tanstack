@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import "./home.scss";
 import Search from "@/components/Search";
 import TextButton from "@/components/TextButton";
-import { SEARCH_SUGGESTIONS } from "@/mock/home";
+import { SEARCH_SUGGESTIONS } from "@/mock";
 import DecorationShapes from "./-components/DecorationShapes";
 import { useAuthStore } from "@/store";
 import DashboardAfterLogin from "./-components/DashboardAfterLogin";

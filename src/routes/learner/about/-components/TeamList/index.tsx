@@ -1,4 +1,4 @@
-import { teamMembers } from "@/mock/team-member";
+import { teamMembers } from "@/mock";
 import "./style.scss";
 import MemberItem from "@/routes/learner/about/-components/MemberItem";
 

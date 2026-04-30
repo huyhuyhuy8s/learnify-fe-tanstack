@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ABOUT_STATS } from "@/mock/about";
+import { ABOUT_STATS } from "@/mock";
 import AboutStat from "@/routes/learner/about/-components/AboutStat/index";
 import TeamList from "@/routes/learner/about/-components/TeamList";
 import { OptimizeImage } from "@/components/Images";

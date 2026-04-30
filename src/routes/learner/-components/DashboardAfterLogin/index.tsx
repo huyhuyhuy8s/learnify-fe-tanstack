@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.scss";
 import Card from "@/components/Card";
-import { MOCK_COURSES } from "@/mock/dashboard";
+import { MOCK_COURSES } from "@/mock";
 import { useNavigate } from "@tanstack/react-router";
 import DashboardBanner from "./components/DashboardBanner";
 import StreakWidget from "./components/StreakWidget";

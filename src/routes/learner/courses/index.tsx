@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { MOCK_COURSES } from "@/mock/course";
+import { MOCK_COURSES } from "@/mock";
 import "./style.scss";
 import Card from "@/components/Card";
 import { useNavigate } from "@tanstack/react-router";
