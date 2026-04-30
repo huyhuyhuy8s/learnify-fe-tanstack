@@ -3,6 +3,7 @@ import { useAuthStore } from "@/store/authStore";
 import { REFRESH_TOKEN_MUTATION } from "@/graphql/mutations";
 
 const GRAPHQL_ENDPOINT = "https://learnify-be.onrender.com/graphql";
+// const GRAPHQL_ENDPOINT = "https://localhost:10000/graphql";
 
 let refreshPromise: Promise<unknown> | null = null;
 
