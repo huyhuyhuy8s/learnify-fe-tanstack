@@ -1,0 +1,25 @@
+.deferred {
+  padding: 0.5rem;
+}
+
+.deferred__count {
+  margin: 0.5rem 0;
+}
+
+.deferred__button {
+  margin-top: 0.5rem;
+}
+
+.deferred-query {
+  margin-top: 1rem;
+}
+
+.deferred-query h1 {
+  margin-bottom: 0.5rem;
+}
+
+.deferred-query__status,
+.deferred-query__message,
+.deferred-query__time {
+  margin: 0.25rem 0;
+}

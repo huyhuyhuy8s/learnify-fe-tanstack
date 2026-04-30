@@ -3,7 +3,7 @@ import Search from "@/components/Search";
 import TextButton from "@/components/TextButton";
 import { MOCK_ROADMAP } from "@/mock/roadmap";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import "./style.scss";
+import "./roadmaps.scss";
 
 export const Route = createFileRoute("/learner/roadmaps/")({
   component: RoadmapsPage,

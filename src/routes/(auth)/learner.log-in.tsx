@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import CustomLink from "@/components/CustomLink";
 import { GoogleLogin } from "@react-oauth/google";
 import { useGoogleLogin } from "@/hooks/useGoogleLogin";
@@ -19,6 +19,7 @@ export const Route = createFileRoute("/(auth)/learner/log-in")({
 
 function LogInPage() {
   const googleLoginMutation = useGoogleLogin();
+  const navigate = useNavigate();
 
   return (
     <div className="log-in" id="log-in-page">
@@ -39,7 +40,11 @@ function LogInPage() {
                   return;
                 }
                 const idToken = credentialResponse.credential;
-                googleLoginMutation.mutate(idToken);
+                googleLoginMutation.mutate(idToken, {
+                  onSuccess: () => {
+                    navigate({ to: "/learner" });
+                  },
+                });
               }}
               onError={() => {
                 console.error("Google login failed");

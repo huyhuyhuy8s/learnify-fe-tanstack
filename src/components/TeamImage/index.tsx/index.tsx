@@ -1,5 +1,6 @@
 import { OptimizeImage } from "@/components/Images";
 import { teamMembers } from "@/mock/team-member";
+import "./style.scss";
 
 interface TeamMemberProps {
   name: string;
@@ -24,18 +25,18 @@ const frontendMembers = teamMembers.filter((member) =>
 
 function TeamMember({ name, jobTitle, image }: TeamMemberProps) {
   return (
-    <div className="flex flex-col items-center">
-      <div className="lg:size-[300px] rounded-full shrink-0 grow-0 shadow-xl overflow-hidden">
+    <div className="team-member">
+      <div className="team-member__image-container">
         <OptimizeImage
           src={image.name}
           alt={name}
           folder={image.folder}
-          className="size-full"
+          className="team-member__image"
         />
       </div>
-      <div>
-        <h1 className="text-[2rem] font-semibold mt-2">{name}</h1>
-        <p className="text-[1.5rem] font-normal">{jobTitle}</p>
+      <div className="team-member__info">
+        <h1 className="team-member__name">{name}</h1>
+        <p className="team-member__title">{jobTitle}</p>
       </div>
     </div>
   );
@@ -43,16 +44,16 @@ function TeamMember({ name, jobTitle, image }: TeamMemberProps) {
 
 export default function TeamImage() {
   return (
-    <div className="w-full grid grid-cols-3 gap-4">
+    <div className="team-image">
       {AIMembers.map((member, index) => (
         <TeamMember key={index} {...member} />
       ))}
-      <div className="flex justify-center gap-10">
+      <div className="team-image__fullstack">
         {fullstackMembers.map((member, index) => (
           <TeamMember key={index} {...member} />
         ))}
       </div>
-      <div className="flex justify-end gap-10">
+      <div className="team-image__frontend">
         {frontendMembers.map((member, index) => (
           <TeamMember key={index} {...member} />
         ))}

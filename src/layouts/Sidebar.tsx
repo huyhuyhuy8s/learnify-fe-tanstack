@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import "./Sidebar.scss";
 
 const MindmapIcon = ({ className }: { className?: string }) => (
   <svg
@@ -31,44 +32,40 @@ const menuItems = [
 
 export const Sidebar = () => {
   return (
-    <aside className="flex flex-col h-screen w-16 bg-[#F4F6F4] p-2 items-center justify-between border-r border-[#3F4F42]/10">
-      <div className="flex flex-col gap-8 w-full items-center mt-4">
+    <aside className="sidebar">
+      <div className="sidebar__menu">
         {menuItems.map((item, index) => (
           <Link
             key={index}
             to={item.href}
-            className="flex flex-col items-center gap-1 group w-full text-center text-[#3F4F42]"
+            className="sidebar__link"
             activeProps={{
-              className: "bg-[#2D3E33] text-white p-3 rounded-2xl",
+              className: "sidebar__link--active",
             }}
           >
             <div
-              className={`flex flex-col items-center gap-1 p-3 w-full rounded-2xl group-hover:bg-[#2D3E33]/10 ${
-                item.href === "/search" ? "text-white" : ""
+              className={`sidebar__item ${
+                item.href === "/search" ? "sidebar__item--search" : ""
               }`}
             >
-              <span className="material-symbols-rounded text-[24px]">
+              <span className="material-symbols-rounded sidebar__icon">
                 {item.icon}
               </span>
-              <span className="text-[11px] font-medium block w-full truncate">
-                {item.label}
-              </span>
+              <span className="sidebar__label">{item.label}</span>
             </div>
           </Link>
         ))}
       </div>
-      <div className="flex flex-col gap-4 mt-auto mb-6">
-        <button
-          title="Change language"
-          className="flex items-center justify-center size-11 rounded-full border border-[#3F4F42]/20 text-[#3F4F42] hover:bg-[#3F4F42]/5 transition-colors"
-        >
-          <span className="material-symbols-rounded text-[24px]">language</span>
+      <div className="sidebar__actions">
+        <button title="Change language" className="sidebar__action-btn">
+          <span className="material-symbols-rounded sidebar__action-icon">
+            language
+          </span>
         </button>
-        <button
-          title="Toggle dark mode"
-          className="flex items-center justify-center size-11 rounded-full border border-[#3F4F42]/20 text-[#3F4F42] hover:bg-[#3F4F42]/5 transition-colors"
-        >
-          <span className="material-symbols-rounded text-[24px]">dark_mode</span>
+        <button title="Toggle dark mode" className="sidebar__action-btn">
+          <span className="material-symbols-rounded sidebar__action-icon">
+            dark_mode
+          </span>
         </button>
       </div>
     </aside>

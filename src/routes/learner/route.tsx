@@ -4,6 +4,9 @@ import { createFileRoute, Outlet } from "@tanstack/react-router";
 import Footer from "@/components/Footer";
 import "./style.scss";
 import Loader from "@/components/Loader";
+import { useLayoutEffect } from "react";
+import { useAuthStore } from "@/store";
+import { isTokenExpired } from "@/store/authStore";
 
 export const Route = createFileRoute("/learner")({
   head: () => ({
@@ -18,8 +21,15 @@ export const Route = createFileRoute("/learner")({
 });
 
 function RouteComponent() {
+  useLayoutEffect(() => {
+    const { token, logout } = useAuthStore.getState();
+    if (isTokenExpired(token)) {
+      logout();
+    }
+  }, []);
   return (
     <>
+      <Loader disabled />
       <LeftNav />
       <article className="body">
         <TopNav />
