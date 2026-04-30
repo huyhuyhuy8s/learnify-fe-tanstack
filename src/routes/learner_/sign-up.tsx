@@ -7,9 +7,9 @@ import SignUpStep1 from "./-components/SignUpStep1";
 import SignUpStep2 from "./-components/SignUpStep2";
 import SignUpVerification from "./-components/SignUpVerification";
 import SignUpRight from "./-components/SignUpRight";
-import "./learner.sign-up.scss";
+import "./sign-up.scss";
 
-export const Route = createFileRoute("/(auth)/learner/sign-up")({
+export const Route = createFileRoute("/learner_/sign-up")({
   head: () => ({
     meta: [
       {

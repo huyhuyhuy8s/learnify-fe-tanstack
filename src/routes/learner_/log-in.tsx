@@ -3,9 +3,9 @@ import CustomLink from "@/components/CustomLink";
 import { GoogleLogin } from "@react-oauth/google";
 import { useGoogleLogin } from "@/hooks/useGoogleLogin";
 import LogInForm from "./-components/LogInForm";
-import "./learner.log-in.scss";
+import "./log-in.scss";
 
-export const Route = createFileRoute("/(auth)/learner/log-in")({
+export const Route = createFileRoute("/learner_/log-in")({
   head: () => ({
     meta: [
       {

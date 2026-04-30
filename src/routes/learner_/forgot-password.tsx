@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import ForgotPasswordStep1 from "./-components/ForgotPasswordStep1";
 import ForgotPasswordStep2 from "./-components/ForgotPasswordStep2";
 import { useForgotPasswordForm } from "./-hooks/useForgotPasswordForm";
-import "./learner.forgot-password.scss";
+import "./forgot-password.scss";
 
-export const Route = createFileRoute("/(auth)/learner/forgot-password")({
+export const Route = createFileRoute("/learner_/forgot-password")({
   head: () => ({
     meta: [
       {
