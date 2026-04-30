@@ -5,12 +5,31 @@ import Card from "@/components/Card";
 import { useNavigate } from "@tanstack/react-router";
 import TextButton from "@/components/TextButton";
 import Search from "@/components/Search";
+import { useGetAllCourses, type TBackendCourse } from "@/hooks/useCourses";
 export const Route = createFileRoute("/learner/courses/")({
   component: PostsIndexComponent,
 });
 
 function PostsIndexComponent() {
   const navigate = useNavigate();
+  const { data, isLoading, isError } = useGetAllCourses(0);
+
+  const getDisplayCourses = () => {
+    if (!isLoading && !isError && data?.isSuccess && data.courses.length > 0) {
+      return data.courses.map((course: TBackendCourse) => ({
+        id: course.id,
+        typeSpecial: "course" as const,
+        title: course.courseName,
+        description: course.abstract,
+        duration: "45 mins",
+        status: "default" as const,
+        percentage: 0,
+      }));
+    }
+    return MOCK_COURSES;
+  };
+
+  const displayCourses = getDisplayCourses();
 
   return (
     <div className="course-container">
@@ -58,7 +77,7 @@ function PostsIndexComponent() {
           <p className="result">{MOCK_COURSES.length ?? 0} results</p>
         </div>
         <div className="course-list">
-          {MOCK_COURSES.map((course) => (
+          {displayCourses.map((course) => (
             <Card
               key={course.id}
               typeSpecial={course.typeSpecial}

@@ -10,19 +10,13 @@ import CommentItem from "./-components/CommentItem";
 import "./postId.scss";
 import { MOCK_COMMENT, MOCK_COURSE_DETAILS, MOCK_COURSES } from "@/mock";
 import { useMemo } from "react";
+import { useCourseDetail } from "@/hooks/useCourseDetail";
+import Loader from "@/components/Loader";
+import type { TProgress } from "@/types/global";
 
 export const Route = createFileRoute("/learner/courses/$postId")({
-  loader: async ({ params: { postId }, context }) => {
-    const data = await context.queryClient.ensureQueryData(
-      postQueryOptions(postId)
-    );
-
-    return {
-      title: data.title,
-    };
-  },
-  head: ({ loaderData }) => ({
-    meta: loaderData ? [{ title: loaderData.title }] : undefined,
+  head: () => ({
+    meta: [{ title: "Course Details | Learnify" }],
   }),
   errorComponent: PostErrorComponent,
   notFoundComponent: () => {
@@ -33,12 +27,45 @@ export const Route = createFileRoute("/learner/courses/$postId")({
 
 function PostComponent() {
   const { postId } = Route.useParams();
-  const course = useMemo(
-    () => MOCK_COURSES.find((course) => course.id === Number(postId)),
+  const { data, isLoading, isError } = useCourseDetail(postId);
+  const mockCourse = useMemo(
+    () => MOCK_COURSES.find((course) => course.id === Number(1)),
     [postId]
   );
 
-  if (!course) {
+  const courseDisplay = useMemo(() => {
+    // Ưu tiên dùng Data Backend
+    if (!isLoading && !isError && data?.getCourseById) {
+      return {
+        title: data.getCourseById.courseName,
+        status: data.getCourseById.status || "default",
+        listFeature: data.getCourseById.keyLearnings || [],
+        percentage: 0 as TProgress,
+      };
+    }
+    return mockCourse || null;
+  }, [data, isLoading, isError, mockCourse]);
+
+  const lessonsDisplay = useMemo(() => {
+    if (!isLoading && !isError && data?.getLessonsByCourseId?.isSuccess) {
+      return data.getLessonsByCourseId.lessons.map((lesson) => ({
+        id: lesson.id,
+        typeSpecial: "lesson" as const,
+        title: lesson.lessonName,
+        description: lesson.abstract,
+        duration: "45 mins",
+        status: "default" as const,
+        percentage: 0,
+      }));
+    }
+    return MOCK_COURSE_DETAILS;
+  }, [data, isLoading, isError]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (!courseDisplay) {
     return <NotFound />;
   }
 
@@ -58,10 +85,10 @@ function PostComponent() {
             />
           }
           typeSpecial="course"
-          title={course.title}
-          status={course.status}
-          listFeature={course.listFeature}
-          percentage={course.percentage ?? 0}
+          title={courseDisplay.title}
+          status={courseDisplay.status as any}
+          listFeature={courseDisplay.listFeature}
+          percentage={courseDisplay.percentage ?? 0}
         />
         <TextButton
           text="Send feedback"
@@ -72,15 +99,15 @@ function PostComponent() {
           onClick={() => {}}
         />
         <div className="course-detail-list">
-          {MOCK_COURSE_DETAILS.map((courseDetail) => (
+          {lessonsDisplay.map((lesson) => (
             <Card
-              key={courseDetail.id}
-              typeSpecial={courseDetail.typeSpecial}
-              title={courseDetail.title}
-              description={courseDetail.description}
-              duration={courseDetail.duration}
-              status={courseDetail.status}
-              percentage={courseDetail.percentage}
+              key={lesson.id}
+              typeSpecial={lesson.typeSpecial}
+              title={lesson.title}
+              description={lesson.description}
+              duration={lesson.duration}
+              status={lesson.status}
+              percentage={lesson.percentage}
               onClick={() => alert("hello")}
             />
           ))}
