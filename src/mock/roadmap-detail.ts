@@ -1,6 +1,6 @@
 import type { TProgress, TSpecial, TStatusCard } from "@/types/global";
 
-export type MockCourse = {
+export type MockRoadmapDetail = {
   id: number;
   typeSpecial: TSpecial;
   title: string;
@@ -11,13 +11,13 @@ export type MockCourse = {
   percentage?: TProgress;
 };
 
-export const MOCK_COURSES: MockCourse[] = [
+export const MOCK_ROADMAP_DETAILS: MockRoadmapDetail[] = [
   {
     id: 1,
     typeSpecial: "course",
-    title: "Làm chủ ReactJS & TanStack",
+    title: "Generative AI",
     description:
-      "Khóa học từ cơ bản đến nâng cao về hệ sinh thái TanStack, bao gồm Router, Query và Start.",
+      "Learn the fundamentals of Generative AI, how it differs from traditional machine learning, and explore the core technologies behind large language models.",
     duration: "45 mins",
     status: "default",
     listFeature: ["Data Analysis", "Trend Prediction", "Workflow Optimization"],
@@ -25,9 +25,9 @@ export const MOCK_COURSES: MockCourse[] = [
   {
     id: 2,
     typeSpecial: "course",
-    title: "UI/UX Thực chiến cho Developer",
+    title: "Generative AI",
     description:
-      "Học cách thiết kế giao diện đẹp mắt và tối ưu trải nghiệm người dùng với TailwindCSS.",
+      "Learn the fundamentals of Generative AI, how it differs from traditional machine learning, and explore the core technologies behind large language models.",
     duration: "45 mins",
     status: "default",
     listFeature: ["Data Analysis", "Trend Prediction", "Workflow Optimization"],
@@ -35,9 +35,9 @@ export const MOCK_COURSES: MockCourse[] = [
   {
     id: 3,
     typeSpecial: "course",
-    title: "NestJS Backend API",
+    title: "Generative AI",
     description:
-      "Xây dựng hệ thống API mạnh mẽ, mở rộng tốt với NestJS và TypeScript.",
+      "Learn the fundamentals of Generative AI, how it differs from traditional machine learning, and explore the core technologies behind large language models.",
     duration: "45 mins",
     status: "default",
     listFeature: ["Data Analysis", "Trend Prediction", "Workflow Optimization"],
@@ -45,18 +45,9 @@ export const MOCK_COURSES: MockCourse[] = [
   {
     id: 4,
     typeSpecial: "course",
-    title: "Basic database",
-    description: "Xây dựng hệ thống Database mạnh mẽ, tối ưu.",
-    duration: "45 mins",
-    status: "default",
-    listFeature: ["Data Analysis", "Trend Prediction", "Workflow Optimization"],
-  },
-  {
-    id: 5,
-    typeSpecial: "course",
-    title: "NestJS Backend API",
+    title: "Generative AI",
     description:
-      "Xây dựng hệ thống API mạnh mẽ, mở rộng tốt với NestJS và TypeScript.",
+      "Learn the fundamentals of Generative AI, how it differs from traditional machine learning, and explore the core technologies behind large language models.",
     duration: "45 mins",
     status: "default",
     listFeature: ["Data Analysis", "Trend Prediction", "Workflow Optimization"],
