@@ -3,7 +3,7 @@ import Search from "@/components/Search";
 import { MOCK_ROADMAP } from "@/mock";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import CategoryItem from "./-components/CategoryItem";
-import { CATEGORIES } from "./constants";
+import { CATEGORIES } from "./-constants";
 import "./style.scss";
 
 export const Route = createFileRoute("/learner/roadmaps/")({
