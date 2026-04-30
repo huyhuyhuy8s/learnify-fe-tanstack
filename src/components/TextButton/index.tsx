@@ -22,6 +22,7 @@ const TextButton = (props: TTextButtonProps) => {
     tooltip = "",
     disabled = false,
     style,
+    className,
   } = props;
 
   const { onClickHandler, buttonClassNames, iconLabel, toolTipContent } =
@@ -36,6 +37,7 @@ const TextButton = (props: TTextButtonProps) => {
       tooltip,
       disabled,
       onClick,
+      className,
     });
 
   return (

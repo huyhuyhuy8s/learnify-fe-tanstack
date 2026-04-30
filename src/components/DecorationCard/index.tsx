@@ -1,6 +1,6 @@
 import "./style.scss";
 import { COLORS } from "@/styles/colors";
-import type { TProgress, TStatusCard } from "@/types/global";
+import type { TProgress, TSpecial, TStatusCard } from "@/types/global";
 import DecorationCardContext from "./components/DecorationCardContext";
 import DecorationCardStatus from "./components/DecorationCardStatus";
 import { Arrow } from "@/components/Shapes";
@@ -8,6 +8,7 @@ import { Arrow } from "@/components/Shapes";
 export type TDecorationCardProps = {
   className?: string;
   title: string;
+  typeSpecial: TSpecial;
   listFeature?: string[];
   listBadge: React.ReactNode;
   backgroundColor?: string;
@@ -20,6 +21,7 @@ export type TDecorationCardProps = {
 const DecorationCard = (props: TDecorationCardProps) => {
   const {
     title,
+    typeSpecial,
     listBadge,
     backgroundColor = COLORS.navyPastel100,
     listFeature = [],
@@ -34,6 +36,7 @@ const DecorationCard = (props: TDecorationCardProps) => {
       <div className="decoration-card-content" style={{ backgroundColor }}>
         <DecorationCardContext
           listBadge={listBadge}
+          typeSpecial={typeSpecial}
           listFeature={listFeature}
           shape={shape}
           title={title}
