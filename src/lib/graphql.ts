@@ -1,6 +1,7 @@
 import { GraphQLClient } from "graphql-request";
 import { useAuthStore } from "@/store/authStore";
 import { REFRESH_TOKEN_MUTATION } from "@/graphql/mutations";
+import { toast } from "sonner";
 
 const GRAPHQL_ENDPOINT = "https://learnify-be.onrender.com/graphql";
 // const GRAPHQL_ENDPOINT = "http://localhost:10000/graphql";
@@ -15,7 +16,9 @@ async function isGraphqlUnauthorized(res: Response) {
       body?.errors?.some(
         (e: any) =>
           e?.extensions?.code === "UNAUTHENTICATED" ||
-          e?.message?.includes("Unauthorized")
+          e?.extensions?.code === "UnauthorizedException" ||
+          e?.message?.includes("Unauthorized") ||
+          e?.message?.includes("No token provided")
       )
     ) {
       return true;
@@ -60,14 +63,17 @@ const customFetch = async (
         }
       })();
     }
-
     const refreshSuccess = await refreshPromise;
-
     if (refreshSuccess) {
       response = await fetch(input, fetchInit);
     } else {
       useAuthStore.getState().logout();
+      localStorage.removeItem("auth-storage");
       window.location.href = "/login";
+      toast.error("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
+      return Promise.reject(
+        new Error("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.")
+      );
     }
   }
 
