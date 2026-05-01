@@ -2,8 +2,9 @@ import { createContext, useContext, useState } from "react";
 import type { PropsWithChildren } from "react";
 
 export type TLayoutConfig = {
-  compactLeftNav?: boolean;
-  showFooter?: boolean;
+  compactLeftNav: boolean;
+  showFooter: boolean;
+  fullInner: boolean;
 };
 
 export type TLayoutContextValue = TLayoutConfig & {
@@ -16,6 +17,7 @@ export const LayoutProvider = ({ children }: PropsWithChildren) => {
   const [layoutConfig, setLayoutConfigState] = useState<TLayoutConfig>({
     compactLeftNav: false,
     showFooter: true,
+    fullInner: false,
   });
 
   const value = {

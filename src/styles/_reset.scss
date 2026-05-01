@@ -74,6 +74,7 @@ select {
 }
 
 button {
+  background-color: transparent;
   cursor: pointer;
   border: none;
   border-width: 0;
@@ -81,6 +82,7 @@ button {
 
 input {
   border: none;
+  background-color: transparent;
 }
 
 a {
