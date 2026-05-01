@@ -1,4 +1,3 @@
-import React from "react";
 import "./style.scss";
 import { Flower } from "@/components/Shapes/Flower";
 import { COLORS } from "@/styles/colors";

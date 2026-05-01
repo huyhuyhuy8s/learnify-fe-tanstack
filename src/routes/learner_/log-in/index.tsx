@@ -2,10 +2,10 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import CustomLink from "@/components/CustomLink";
 import { GoogleLogin } from "@react-oauth/google";
 import { useGoogleLogin } from "@/hooks/useGoogleLogin";
-import LogInForm from "./-components/LogInForm";
-import "./log-in.scss";
+import LogInForm from "../-components/LogInForm";
+import "./style.scss";
 
-export const Route = createFileRoute("/learner_/log-in")({
+export const Route = createFileRoute("/learner_/log-in/")({
   head: () => ({
     meta: [
       {

@@ -1,0 +1,16 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/functions" as *;
+@use "@styles/mixins" as *;
+@use "sass:math";
+
+.lesson-page {
+  width: 100dvw;
+  display: grid;
+  grid-template-columns: toRem(60) 1fr;
+  background-color: $white;
+
+  .top-nav {
+    grid-column: 1 / 3;
+  }
+}

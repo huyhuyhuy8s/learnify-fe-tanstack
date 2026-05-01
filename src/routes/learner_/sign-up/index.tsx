@@ -1,15 +1,15 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import CustomLink from "@/components/CustomLink";
 import { GoogleLogin } from "@react-oauth/google";
-import { useSignUpForm } from "./-hooks/useSignUpForm";
+import { useSignUpForm } from "../-hooks/useSignUpForm";
 import { useGoogleLogin } from "@/hooks/useGoogleLogin";
-import SignUpStep1 from "./-components/SignUpStep1";
-import SignUpStep2 from "./-components/SignUpStep2";
-import SignUpVerification from "./-components/SignUpVerification";
-import SignUpRight from "./-components/SignUpRight";
-import "./sign-up.scss";
+import SignUpStep1 from "../-components/SignUpStep1";
+import SignUpStep2 from "../-components/SignUpStep2";
+import SignUpVerification from "../-components/SignUpVerification";
+import SignUpRight from "../-components/SignUpRight";
+import "./style.scss";
 
-export const Route = createFileRoute("/learner_/sign-up")({
+export const Route = createFileRoute("/learner_/sign-up/")({
   head: () => ({
     meta: [
       {

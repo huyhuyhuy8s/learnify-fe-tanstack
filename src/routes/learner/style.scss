@@ -21,6 +21,10 @@ body {
     gap: 10dvh;
   }
 
+  .full {
+    padding: toRem(10);
+  }
+
   .content {
     min-height: calc(100dvh - toRem(65));
   }

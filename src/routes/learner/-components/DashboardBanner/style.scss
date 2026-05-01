@@ -12,6 +12,7 @@
   padding: toRem(30);
   border-radius: $br-xl;
   overflow: hidden;
+  @include box-shadow(0, 4, 6, -1);
 
   &-icon {
     flex-shrink: 0;

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import "./style.scss";
 
-export const Route = createFileRoute("/learner/lessons/")({
+export const Route = createFileRoute("/learner_/lessons/")({
   head: () => ({
     meta: [
       {

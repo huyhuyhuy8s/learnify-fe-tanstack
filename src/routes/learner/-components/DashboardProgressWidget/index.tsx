@@ -2,7 +2,7 @@ import "./style.scss";
 import TextButton from "@/components/TextButton";
 import { MOCK_PROGRESS } from "@/mock";
 
-const ProgressWidget = () => {
+const DashboardProgressWidget = () => {
   return (
     <div className="progress-widget">
       <div className="progress-widget-header">
@@ -26,4 +26,4 @@ const ProgressWidget = () => {
   );
 };
 
-export default ProgressWidget;
+export default DashboardProgressWidget;

@@ -1,0 +1,49 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/functions" as *;
+@use "@styles/mixins" as *;
+
+.chat-header {
+  display: flex;
+  padding: toRem(10);
+  min-width: 10dvw;
+  width: fit-content;
+  justify-content: space-between;
+  width: 100%;
+  gap: toRem(20);
+
+  &-context {
+    display: flex;
+    gap: toRem(30);
+    min-width: 10dvw;
+    width: 100%;
+    place-items: center;
+
+    input {
+      font-size: $fs-heading5;
+      color: $black;
+    }
+
+    > span {
+      font-size: $fs-heading5;
+    }
+
+    &-dropdown.icon-button {
+      span {
+        font-size: $fs-heading4;
+      }
+    }
+  }
+
+  &-actions {
+    display: flex;
+    gap: toRem(10);
+    place-items: center;
+
+    .icon-button {
+      > span {
+        font-size: toRem(25);
+      }
+    }
+  }
+}

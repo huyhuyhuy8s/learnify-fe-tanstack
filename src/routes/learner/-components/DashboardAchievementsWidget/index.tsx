@@ -1,7 +1,6 @@
-import React from "react";
 import "./style.scss";
 
-const AchievementsWidget = () => {
+const DashboardAchievementsWidget = () => {
   return (
     <div className="achievements-widget">
       <div className="achievements-widget-header">
@@ -25,4 +24,4 @@ const AchievementsWidget = () => {
   );
 };
 
-export default AchievementsWidget;
+export default DashboardAchievementsWidget;

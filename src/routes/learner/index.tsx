@@ -5,7 +5,6 @@ import TextButton from "@/components/TextButton";
 import { SEARCH_SUGGESTIONS } from "@/mock";
 import DecorationShapes from "./-components/DecorationShapes";
 import { useAuthStore } from "@/store";
-import DashboardAfterLogin from "./-components/DashboardAfterLogin";
 
 export const Route = createFileRoute("/learner/")({
   component: RouteComponent,
@@ -13,8 +12,10 @@ export const Route = createFileRoute("/learner/")({
 
 function RouteComponent() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const navigate = useNavigate();
+
   if (isAuthenticated) {
-    return <DashboardAfterLogin />;
+    navigate({ to: "/learner/dashboard" });
   }
   return <Unauthorized />;
 }

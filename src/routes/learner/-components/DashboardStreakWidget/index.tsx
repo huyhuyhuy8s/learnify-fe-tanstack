@@ -1,7 +1,6 @@
-import React from "react";
 import "./style.scss";
 
-const StreakWidget = () => {
+const DashboardStreakWidget = () => {
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
   return (
@@ -30,4 +29,4 @@ const StreakWidget = () => {
   );
 };
 
-export default StreakWidget;
+export default DashboardStreakWidget;

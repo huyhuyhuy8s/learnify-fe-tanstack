@@ -1,0 +1,13 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/functions" as *;
+@use "@styles/mixins" as *;
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  background-color: $green-100;
+  padding: toRem(30);
+  border-radius: $br-xl;
+  @include box-shadow(0, 4, 6, -1);
+}

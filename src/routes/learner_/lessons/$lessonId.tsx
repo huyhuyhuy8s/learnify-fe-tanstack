@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import "./style.scss";
+import ChatContainer from "./-components/ChatContainer";
+import "./lessonId.scss";
 
-export const Route = createFileRoute("/learner/lessons/$lessonId")({
+export const Route = createFileRoute("/learner_/lessons/$lessonId")({
   head: () => ({
     meta: [
       {
@@ -16,8 +17,7 @@ export const Route = createFileRoute("/learner/lessons/$lessonId")({
 function LessonDetail() {
   return (
     <div className="lesson-detail-page">
-      <h1>Lesson Detail</h1>
-      <p>Individual lesson page - coming soon</p>
+      <ChatContainer />
     </div>
   );
 }

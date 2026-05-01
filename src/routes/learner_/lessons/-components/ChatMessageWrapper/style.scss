@@ -1,0 +1,7 @@
+@use "@styles/functions" as *;
+
+.chat-message-wrapper {
+  display: grid;
+  grid-template-rows: 1fr toRem(90);
+  height: 100%;
+}

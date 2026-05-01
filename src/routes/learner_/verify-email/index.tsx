@@ -2,14 +2,14 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { graphqlClient } from "@/lib/graphql";
 import { VERIFY_EMAIL_MUTATION } from "@/graphql/mutations";
-import "./verify-email.scss";
+import "./style.scss";
 
 type VerifyEmailSearch = {
   token?: string;
   email?: string;
 };
 
-export const Route = createFileRoute("/learner_/verify-email")({
+export const Route = createFileRoute("/learner_/verify-email/")({
   validateSearch: (search: Record<string, unknown>): VerifyEmailSearch => {
     return {
       token: typeof search.token === "string" ? search.token : undefined,
