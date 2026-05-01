@@ -1,4 +1,4 @@
-import { GET_COURSE_AND_LESSONS_QUERY } from "@/graphql/course";
+import { GET_COURSE_LESSONS_COMMENT_QUERY } from "@/graphql/course";
 import { useQuery } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql";
 
@@ -20,6 +20,21 @@ export type TBackendLesson = {
   lessonName: string;
   updatedAt: string;
 };
+type TBackendReview = {
+  id: string;
+  content: string;
+  rating: number;
+  createdAt: string;
+  user: TBackendUserReview;
+};
+type TBackendUserReview = {
+  id: string;
+  email: string;
+  diamond: number;
+  currentSteak: number;
+  role: string;
+  username: string;
+};
 
 type CourseDetailResponse = {
   getCourseById: TBackendCourseDetail | null;
@@ -29,6 +44,11 @@ type CourseDetailResponse = {
     message: string;
     lessons: TBackendLesson[];
   };
+  getReviewsByCourse: {
+    isSuccess: boolean;
+    message: string;
+    reviews: TBackendReview[];
+  };
 };
 
 export function useCourseDetail(courseId: string) {
@@ -36,7 +56,7 @@ export function useCourseDetail(courseId: string) {
     queryKey: ["course-detail", courseId],
     queryFn: async () => {
       const response = await graphqlClient.request<CourseDetailResponse>(
-        GET_COURSE_AND_LESSONS_QUERY,
+        GET_COURSE_LESSONS_COMMENT_QUERY,
         {
           courseId: courseId,
           lessonCourseId: courseId,

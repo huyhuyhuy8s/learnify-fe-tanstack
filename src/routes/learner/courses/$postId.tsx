@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { postQueryOptions } from "@/utils/posts";
 import NotFound from "@/components/NotFound";
 import PostErrorComponent from "@/components/PostErrorComponent";
 import DecorationCard from "@/components/DecorationCard";
@@ -13,6 +12,7 @@ import { useMemo } from "react";
 import { useCourseDetail } from "@/hooks/useCourseDetail";
 import Loader from "@/components/Loader";
 import type { TProgress } from "@/types/global";
+import { formatDate } from "@/utils";
 
 export const Route = createFileRoute("/learner/courses/$postId")({
   head: () => ({
@@ -34,7 +34,6 @@ function PostComponent() {
   );
 
   const courseDisplay = useMemo(() => {
-    // Ưu tiên dùng Data Backend
     if (!isLoading && !isError && data?.getCourseById) {
       return {
         title: data.getCourseById.courseName,
@@ -59,6 +58,19 @@ function PostComponent() {
       }));
     }
     return MOCK_COURSE_DETAILS;
+  }, [data, isLoading, isError]);
+
+  const commentDisplay = useMemo(() => {
+    if (!isLoading && !isError && data?.getReviewsByCourse?.isSuccess) {
+      return data.getReviewsByCourse.reviews.map((review) => ({
+        id: review.id,
+        userName: review.user.username,
+        time: formatDate(review.createdAt),
+        rating: review.rating,
+        content: review.content,
+      }));
+    }
+    return MOCK_COMMENT;
   }, [data, isLoading, isError]);
 
   if (isLoading) {
@@ -114,12 +126,12 @@ function PostComponent() {
         </div>
       </div>
       <div className="course-detail-comment">
-        {MOCK_COMMENT.map((comment) => (
+        {commentDisplay.map((comment) => (
           <CommentItem
             key={comment.id}
-            id={comment.id}
             userName={comment.userName}
             time={comment.time}
+            rating={comment.rating}
             content={comment.content}
           />
         ))}
