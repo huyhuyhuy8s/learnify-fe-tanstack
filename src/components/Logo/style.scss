@@ -1,0 +1,42 @@
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: $dark-green-700;
+  text-decoration: none;
+
+  &__text {
+    font-family: "Google Sans Flex", sans-serif;
+    font-weight: $fw-semibold;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  &--medium {
+    .material-symbols-rounded {
+      font-size: 30px;
+    }
+
+    .logo__text {
+      font-size: $fs-heading4;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &--small {
+    .material-symbols-rounded {
+      font-size: 20px;
+    }
+
+    .logo__text {
+      font-size: $fs-heading5;
+    }
+  }
+}

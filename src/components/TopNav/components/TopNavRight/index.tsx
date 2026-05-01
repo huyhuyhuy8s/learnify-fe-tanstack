@@ -7,6 +7,7 @@ import { useAuthStore } from "@/store";
 import TextButton from "@/components/TextButton";
 import { COLORS } from "@/styles/colors";
 import { useNavigate } from "@tanstack/react-router";
+import "./style.scss";
 
 const TopNavRight = () => {
   const [accountMenuVisible, setAccountMenuVisible] = useState(false);

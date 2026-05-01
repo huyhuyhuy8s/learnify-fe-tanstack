@@ -1,0 +1,29 @@
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+
+.top-nav-left {
+  gap: toRem(25);
+
+  &-context {
+    gap: toRem(10);
+    display: flex;
+  }
+
+  span,
+  button,
+  a {
+    font-variation-settings: "FILL" 1;
+    color: $black;
+  }
+
+  a::first-letter,
+  button::first-letter {
+    text-transform: uppercase;
+  }
+
+  .divider {
+    height: toRem(25);
+    width: toRem(1);
+    background-color: $navy-pastel-200;
+  }
+}

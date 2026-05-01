@@ -30,6 +30,12 @@
     z-index: 100;
   }
 
+  &.compact {
+    width: toRem(60);
+    padding: toRem(20);
+    height: calc(100dvh - toRem(77));
+  }
+
   &,
   &-top,
   &-bot,

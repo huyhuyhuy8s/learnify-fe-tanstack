@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import Spinner from "./Spinner";
 
-const Logo = () => {
+const LoaderLogo = () => {
   const logoDivRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -41,4 +41,4 @@ const Logo = () => {
   );
 };
 
-export default Logo;
+export default LoaderLogo;

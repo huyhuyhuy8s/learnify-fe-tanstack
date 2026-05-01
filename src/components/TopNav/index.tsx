@@ -6,7 +6,13 @@ import { useScrollTop } from "@/hooks/useScrollTop";
 import classnames from "classnames";
 import "./style.scss";
 
-const TopNav = () => {
+export type TTopNavProps = {
+  className?: string;
+  fullWidth?: boolean;
+};
+
+const TopNav = (props: TTopNavProps) => {
+  const { className, fullWidth = false } = props;
   const pathnames = useRouterState({
     select: (state) => state.location.pathname,
   });
@@ -15,11 +21,17 @@ const TopNav = () => {
   });
   const isTop = useScrollTop();
 
-  const navClassNames = classnames("top-nav", { top: isTop });
+  const navClassNames = classnames(
+    "top-nav",
+    { top: isTop && !fullWidth },
+    fullWidth ? "full-width" : "",
+    className
+  );
 
   return (
     <nav className={navClassNames}>
       <TopNavLeft
+        fullWidth={fullWidth}
         pathname={pathname}
         lastPathname={lastPathname}
         pathnameWithoutLast={pathnameWithoutLast}

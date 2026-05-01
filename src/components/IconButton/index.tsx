@@ -15,6 +15,7 @@ type TconButtonProp = {
   fill?: boolean;
   tooltip?: string;
   className?: string;
+  style?: React.CSSProperties;
 };
 
 const IconButton = (props: TconButtonProp) => {
@@ -31,6 +32,7 @@ const IconButton = (props: TconButtonProp) => {
     fill = false,
     tooltip,
     className,
+    style,
   } = props;
 
   const [clicked, setClicked] = useState(false);
@@ -46,8 +48,8 @@ const IconButton = (props: TconButtonProp) => {
     filled: fill,
   });
   const iconVal = useMemo(
-    () => (clicked ? specialIcon : icon),
-    [clicked, specialIcon, icon]
+    () => (type === "special" ? (clicked ? specialIcon : icon) : icon),
+    [clicked, specialIcon, icon, type]
   );
 
   const handleClick = () => {
@@ -59,6 +61,7 @@ const IconButton = (props: TconButtonProp) => {
     <button
       className={buttonClassName}
       style={{
+        ...style,
         backgroundColor,
         color,
       }}

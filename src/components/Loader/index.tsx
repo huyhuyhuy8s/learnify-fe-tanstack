@@ -1,4 +1,4 @@
-import Logo from "./components/Logo";
+import LoaderLogo from "./components/LoaderLogo";
 import ScreenLoader from "./components/ScreenLoader";
 import "./style.scss";
 
@@ -14,7 +14,7 @@ const Loader = (props: TLoaderProps) => {
   return (
     <section className="loader-container">
       <ScreenLoader />
-      <Logo />
+      <LoaderLogo />
     </section>
   );
 };

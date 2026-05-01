@@ -9,15 +9,22 @@ import "./style.scss";
 
 type TLeftNavProps = {
   className?: string;
+  compact?: boolean;
 };
 
 const LeftNav = (props: TLeftNavProps) => {
-  const { className } = props;
+  const { className, compact = false } = props;
   const [active, setActive] = useState(true);
   const pathnames = useRouterState({
     select: (state) => state.location.pathname,
   });
   const isTop = useScrollTop();
+
+  const navClassNames = classnames(
+    "left-nav",
+    { active: active, top: isTop && !compact, compact: compact },
+    className
+  );
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 768px)");
@@ -39,11 +46,15 @@ const LeftNav = (props: TLeftNavProps) => {
       mediaQuery.removeEventListener("change", handleMediaQueryChange);
   }, []);
 
-  const navClassNames = classnames(
-    "left-nav",
-    { active: active, top: isTop },
-    className
-  );
+  if (compact) {
+    return (
+      <nav className={navClassNames}>
+        <button>
+          <span className="material-symbols-rounded">menu</span>
+        </button>
+      </nav>
+    );
+  }
 
   return (
     <nav className={navClassNames}>
