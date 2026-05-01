@@ -17,8 +17,8 @@ export const GET_ALL_COURSES_QUERY = `
   }
 `;
 
-export const GET_COURSE_AND_LESSONS_QUERY = `
-  query GetCourseAndLessons($courseId: String!, $lessonCourseId: String!) {
+export const GET_COURSE_LESSONS_COMMENT_QUERY = `
+  query GetCourseLessonsComment($courseId: String!, $lessonCourseId: String!) {
     getCourseById(id: $courseId) {
       id
       courseName
@@ -41,5 +41,23 @@ export const GET_COURSE_AND_LESSONS_QUERY = `
         updatedAt
       }
     }
+    getReviewsByCourse(courseId: $courseId) {
+    isSuccess
+    message
+    reviews {
+      id
+      content
+      rating
+      createdAt
+      user {
+        id
+        email
+        diamond
+        currentSteak
+        role
+        username
+      }
+    }
+  }
   }
 `;

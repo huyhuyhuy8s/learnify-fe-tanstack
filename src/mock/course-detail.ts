@@ -1,7 +1,7 @@
 import type { TProgress, TSpecial, TStatusCard } from "@/types/global";
 
 export type MockCourseDetail = {
-  id: number;
+  id: string;
   typeSpecial: TSpecial;
   title: string;
   description?: string;
@@ -13,7 +13,7 @@ export type MockCourseDetail = {
 
 export const MOCK_COURSE_DETAILS: MockCourseDetail[] = [
   {
-    id: 1,
+    id: "1",
     typeSpecial: "lesson",
     title:
       "Advanced React with TanStack Advanced React with TanStack Hello World From Learnify",
@@ -24,7 +24,7 @@ export const MOCK_COURSE_DETAILS: MockCourseDetail[] = [
     listFeature: ["Data Analysis", "Trend Prediction", "Workflow Optimization"],
   },
   {
-    id: 2,
+    id: "2",
     typeSpecial: "lab",
     title: "Advanced React with TanStack Hello World From Learnify",
     description:
@@ -34,7 +34,7 @@ export const MOCK_COURSE_DETAILS: MockCourseDetail[] = [
     listFeature: ["Data Analysis", "Trend Prediction", "Workflow Optimization"],
   },
   {
-    id: 3,
+    id: "3",
     typeSpecial: "lesson",
     title: "Course Survey",
     status: "locked",
