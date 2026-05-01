@@ -2,6 +2,8 @@ import { GET_COURSE_LESSONS_COMMENT_QUERY } from "@/graphql/course";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql";
 import { CREATE_COMMENT_MUTATION } from "@/graphql/comment";
+import { ClientError } from "graphql-request";
+import { toast } from "sonner";
 
 export type TBackendCourseDetail = {
   id: string;
@@ -80,16 +82,28 @@ export function useCreateReview() {
 
   return useMutation({
     mutationFn: async (data: CreateReviewInput) => {
-      const response = await graphqlClient.request<{ createReview: any }>(
-        CREATE_COMMENT_MUTATION,
-        { data }
-      );
-      if (!response.createReview?.isSuccess) {
-        throw new Error(
-          response.createReview?.message || "Đăng đánh giá thất bại"
+      try {
+        const response = await graphqlClient.request<{ createReview: any }>(
+          CREATE_COMMENT_MUTATION,
+          { data }
         );
+        if (response.createReview && !response.createReview.isSuccess) {
+          toast.error("Đăng đánh giá thất bại:");
+          return;
+        }
+
+        return response.createReview;
+      } catch (error: any) {
+        if (error instanceof ClientError) {
+          const gqlError = error.response?.errors?.[0];
+          if (gqlError) {
+            toast.error(`Đăng đánh giá thất bại: ${gqlError.message}`);
+            return;
+          }
+        }
+        toast.error(`Đăng đánh giá thất bại: ${error.message}`);
+        return;
       }
-      return response.createReview;
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({

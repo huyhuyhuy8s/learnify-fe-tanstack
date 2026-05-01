@@ -4,6 +4,7 @@ import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import Footer from "@/components/Footer";
 import "./style.scss";
 import Loader from "@/components/Loader";
+import { Toaster } from "sonner";
 
 export const Route = createFileRoute("/learner")({
   head: () => ({
@@ -27,6 +28,7 @@ function RouteComponent() {
         <div className="inner">
           <div className="content">
             <Outlet />
+            <Toaster position="bottom-right" richColors />
           </div>
           <Footer />
         </div>

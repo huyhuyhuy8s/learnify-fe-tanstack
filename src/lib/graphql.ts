@@ -69,7 +69,7 @@ const customFetch = async (
     } else {
       useAuthStore.getState().logout();
       localStorage.removeItem("auth-storage");
-      window.location.href = "/login";
+      window.location.href = "/learner/log-in";
       toast.error("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
       return Promise.reject(
         new Error("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.")
