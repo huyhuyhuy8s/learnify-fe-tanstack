@@ -20,3 +20,26 @@ query Query($courseId: String!) {
   }
 }
 `;
+
+export const CREATE_COMMENT_MUTATION = `
+mutation Mutation($data: CreateReviewInput!) {
+  createReview(data: $data) {
+    isSuccess
+    message
+    reviews {
+      id
+      rating
+      content
+      createdAt
+      user {
+        id
+        email
+        diamond
+        currentSteak
+        role
+        username
+      }
+    }
+  }
+}
+`;

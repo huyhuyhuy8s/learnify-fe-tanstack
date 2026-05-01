@@ -1,6 +1,7 @@
 import { GET_COURSE_LESSONS_COMMENT_QUERY } from "@/graphql/course";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql";
+import { CREATE_COMMENT_MUTATION } from "@/graphql/comment";
 
 export type TBackendCourseDetail = {
   id: string;
@@ -51,6 +52,12 @@ type CourseDetailResponse = {
   };
 };
 
+export type CreateReviewInput = {
+  courseId: string;
+  rating: number;
+  content: string;
+};
+
 export function useCourseDetail(courseId: string) {
   return useQuery({
     queryKey: ["course-detail", courseId],
@@ -65,5 +72,29 @@ export function useCourseDetail(courseId: string) {
       return response;
     },
     enabled: !!courseId,
+  });
+}
+
+export function useCreateReview() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (data: CreateReviewInput) => {
+      const response = await graphqlClient.request<{ createReview: any }>(
+        CREATE_COMMENT_MUTATION,
+        { data }
+      );
+      if (!response.createReview?.isSuccess) {
+        throw new Error(
+          response.createReview?.message || "Đăng đánh giá thất bại"
+        );
+      }
+      return response.createReview;
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["course-detail", variables.courseId],
+      });
+    },
   });
 }

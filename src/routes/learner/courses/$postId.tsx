@@ -8,11 +8,12 @@ import Card from "@/components/Card";
 import CommentItem from "./-components/CommentItem";
 import "./postId.scss";
 import { MOCK_COMMENT, MOCK_COURSE_DETAILS, MOCK_COURSES } from "@/mock";
-import { useMemo } from "react";
-import { useCourseDetail } from "@/hooks/useCourseDetail";
+import { useMemo, useState } from "react";
+import { useCourseDetail, useCreateReview } from "@/hooks/useCourseDetail";
 import Loader from "@/components/Loader";
 import type { TProgress } from "@/types/global";
 import { formatDate } from "@/utils";
+import CommentForm from "./-components/CommentForm";
 
 export const Route = createFileRoute("/learner/courses/$postId")({
   head: () => ({
@@ -28,6 +29,8 @@ export const Route = createFileRoute("/learner/courses/$postId")({
 function PostComponent() {
   const { postId } = Route.useParams();
   const { data, isLoading, isError } = useCourseDetail(postId);
+  const { mutate: createReview, isPending: isSubmitting } = useCreateReview();
+  const [isReviewing, setIsReviewing] = useState(false);
   const mockCourse = useMemo(
     () => MOCK_COURSES.find((course) => course.id === Number(1)),
     [postId]
@@ -81,6 +84,20 @@ function PostComponent() {
     return <NotFound />;
   }
 
+  const handleReviewSubmit = (rating: number, content: string) => {
+    createReview(
+      { courseId: postId, rating, content },
+      {
+        onSuccess: () => {
+          setIsReviewing(false);
+        },
+        onError: (err: any) => {
+          alert(`Lỗi: ${err.message}`);
+        },
+      }
+    );
+  };
+
   return (
     <div className="course-detail-container">
       <div className="course-detail-item-list">
@@ -103,13 +120,21 @@ function PostComponent() {
           percentage={courseDisplay.percentage ?? 0}
         />
         <TextButton
-          text="Send feedback"
+          text={isReviewing ? "Đóng form" : "Send feedback"}
           size="small"
-          icon="feedback"
+          icon={isReviewing ? "close" : "feedback"}
           type="outlined"
           typeSpecial="course"
-          onClick={() => {}}
+          onClick={() => setIsReviewing(!isReviewing)}
         />
+
+        {isReviewing && (
+          <CommentForm
+            onSubmit={handleReviewSubmit}
+            onCancel={() => setIsReviewing(false)}
+            isLoading={isSubmitting}
+          />
+        )}
         <div className="course-detail-list">
           {lessonsDisplay.map((lesson) => (
             <Card
