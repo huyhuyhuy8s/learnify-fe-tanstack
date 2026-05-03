@@ -1,30 +1,32 @@
-import type { AuthResponse, UserResponse } from "@/gql/graphql";
+import { useMutation } from "@tanstack/react-query";
+import { graphqlClient } from "@/lib/graphql";
 import {
   CURRENT_USER_QUERY,
   REFRESH_TOKEN_MUTATION,
 } from "@/graphql/mutations";
-import { graphqlClient } from "@/lib/graphql";
-import { useAuthStore } from "@/store";
-import { useMutation } from "@tanstack/react-query";
+import { useAuthStore } from "@/store/authStore";
+import type { GenericResponse, UserReturn } from "@/gql/graphql";
 
-async function refreshTokenRequest(refreshToken: string): Promise<{
-  refreshToken: AuthResponse;
-  user: UserResponse | null;
-}> {
-  const response = await graphqlClient.request<{ refreshToken: AuthResponse }>(
-    REFRESH_TOKEN_MUTATION,
-    { refreshToken }
+async function refreshTokenRequest() {
+  const response = await graphqlClient.request<{ refresh: GenericResponse }>(
+    REFRESH_TOKEN_MUTATION
   );
 
-  if (!response.refreshToken.success || !response.refreshToken.accessToken) {
-    return { refreshToken: response.refreshToken, user: null };
+  if (!response.refresh?.success) {
+    throw new Error(response.refresh?.message || "Refresh token failed");
   }
 
-  const userResponse = await graphqlClient.request(CURRENT_USER_QUERY);
+  const userResponse = await graphqlClient.request<{ currentUser: UserReturn }>(
+    CURRENT_USER_QUERY
+  );
 
   const user = userResponse.currentUser.users?.[0] || null;
 
-  return { refreshToken: response.refreshToken, user };
+  if (!user) {
+    throw new Error("Không thể lấy thông tin người dùng sau khi refresh");
+  }
+
+  return { refresh: response.refresh, user };
 }
 
 export function useRefreshToken() {
@@ -34,14 +36,7 @@ export function useRefreshToken() {
   return useMutation({
     mutationFn: refreshTokenRequest,
     onSuccess: (data) => {
-      if (
-        data.refreshToken.success &&
-        data.refreshToken.accessToken &&
-        data.user
-      ) {
-        const newRefreshToken = data.refreshToken.refreshToken ?? null;
-        setAuth(data.refreshToken.accessToken, newRefreshToken, data.user);
-      }
+      setAuth(data.user);
     },
     onError: () => {
       logout();

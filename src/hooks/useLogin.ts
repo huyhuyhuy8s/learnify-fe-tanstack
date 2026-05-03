@@ -1,37 +1,35 @@
 import { useMutation } from "@tanstack/react-query";
-import { graphqlClient, getAuthenticatedClient } from "@/lib/graphql";
+import { graphqlClient } from "@/lib/graphql";
 import { useAuthStore } from "@/store/authStore";
+import isNil from "lodash/isNil";
 import { LOGIN_MUTATION, CURRENT_USER_QUERY } from "@/graphql/mutations";
-import type {
-  AuthResponse,
-  LoginInput,
-  UserResponse,
-  UserReturn,
-} from "@/gql/graphql";
+import type { AuthResponse, LoginInput, UserReturn } from "@/gql/graphql";
 
-async function loginRequest(variables: {
-  data: LoginInput;
-}): Promise<{ login: AuthResponse; user: UserResponse | null }> {
+async function loginRequest(variables: { data: LoginInput }) {
   const response = await graphqlClient.request<{ login: AuthResponse }>(
     LOGIN_MUTATION,
     variables
   );
 
-  if (!response.login.success || !response.login.accessToken) {
-    return { login: response.login, user: null };
+  if (!response.login.success) {
+    throw new Error(response.login.message || "Login failed");
   }
 
-  const userResponse = await getAuthenticatedClient(
-    response.login.accessToken
-  ).request<{ currentUser: UserReturn }>(CURRENT_USER_QUERY);
+  const userResponse = await graphqlClient.request<{ currentUser: UserReturn }>(
+    CURRENT_USER_QUERY
+  );
 
-  const user =
-    userResponse.currentUser.isSuccess &&
-    userResponse.currentUser.users.length > 0
-      ? userResponse.currentUser.users[0]
-      : null;
+  const currentUser = userResponse.currentUser;
 
-  return { login: response.login, user };
+  if (
+    !currentUser.isSuccess ||
+    currentUser.users.length <= 0 ||
+    isNil(currentUser.users[0])
+  ) {
+    throw new Error("Failed to fetch user data after login");
+  }
+
+  return { login: response.login, user: currentUser.users[0] };
 }
 
 export function useLogin() {
@@ -40,10 +38,7 @@ export function useLogin() {
   return useMutation({
     mutationFn: loginRequest,
     onSuccess: (data) => {
-      if (data.login.success && data.login.accessToken) {
-        const refreshToken = data.login.refreshToken ?? null;
-        setAuth(data.login.accessToken, refreshToken, data.user);
-      }
+      setAuth(data.user);
     },
   });
 }

@@ -1,33 +1,35 @@
 import { useMutation } from "@tanstack/react-query";
-import { graphqlClient, getAuthenticatedClient } from "@/lib/graphql";
+import { graphqlClient } from "@/lib/graphql"; // Không cần getAuthenticatedClient nữa
 import { GOOGLE_LOGIN_MUTATION, CURRENT_USER_QUERY } from "@/graphql/mutations";
 import { useAuthStore } from "@/store/authStore";
-import type { AuthResponse, UserResponse, UserReturn } from "@/gql/graphql";
+import type { AuthResponse, UserReturn } from "@/gql/graphql";
+import isNil from "lodash/isNil";
 
-async function googleLoginRequest(idToken: string): Promise<{
-  googleLogin: AuthResponse;
-  user: UserResponse | null;
-}> {
+async function googleLoginRequest(idToken: string) {
   const response = await graphqlClient.request<{ googleLogin: AuthResponse }>(
     GOOGLE_LOGIN_MUTATION,
     { idToken }
   );
 
-  if (!response.googleLogin.success || !response.googleLogin.accessToken) {
-    return { googleLogin: response.googleLogin, user: null };
+  if (!response.googleLogin.success) {
+    throw new Error(response.googleLogin.message || "Google Login failed");
   }
 
-  const userResponse = await getAuthenticatedClient(
-    response.googleLogin.accessToken
-  ).request<{ currentUser: UserReturn }>(CURRENT_USER_QUERY);
+  const userResponse = await graphqlClient.request<{ currentUser: UserReturn }>(
+    CURRENT_USER_QUERY
+  );
 
-  const user =
-    userResponse.currentUser.isSuccess &&
-    userResponse.currentUser.users.length > 0
-      ? userResponse.currentUser.users[0] || null
-      : null;
+  const currentUser = userResponse.currentUser;
 
-  return { googleLogin: response.googleLogin, user };
+  if (
+    !currentUser.isSuccess ||
+    currentUser.users.length <= 0 ||
+    isNil(currentUser.users[0])
+  ) {
+    throw new Error("Failed to fetch user data after login");
+  }
+
+  return { login: response.googleLogin, user: currentUser.users[0] };
 }
 
 export function useGoogleLogin() {
@@ -36,14 +38,7 @@ export function useGoogleLogin() {
   return useMutation({
     mutationFn: googleLoginRequest,
     onSuccess: (data) => {
-      if (
-        data.googleLogin.success &&
-        data.googleLogin.accessToken &&
-        data.user
-      ) {
-        const refreshToken = data.googleLogin.refreshToken ?? null;
-        setAuth(data.googleLogin.accessToken, refreshToken, data.user, true);
-      }
+      setAuth(data.user);
     },
   });
 }
