@@ -8,25 +8,22 @@ const GRAPHQL_ENDPOINT = "https://learnify-be.onrender.com/graphql";
 
 let refreshPromise: Promise<boolean> | null = null;
 
-type TGraphQLError = {
-  extensions?: { code?: string };
-  message?: string;
-};
-
-async function isGraphqlUnauthorized(res: Response): Promise<boolean> {
+async function isGraphqlUnauthorized(res: Response) {
   try {
     const clone = res.clone();
     const body = await clone.json();
-    const errors = body?.errors as TGraphQLError[] | undefined;
-    return (
-      errors?.some(
-        (e) =>
+    if (
+      body?.errors?.some(
+        (e: any) =>
           e?.extensions?.code === "UNAUTHENTICATED" ||
           e?.extensions?.code === "UnauthorizedException" ||
           e?.message?.includes("Unauthorized") ||
           e?.message?.includes("No token provided")
-      ) ?? false
-    );
+      )
+    ) {
+      return true;
+    }
+    return false;
   } catch {
     return false;
   }
@@ -44,8 +41,9 @@ const customFetch = async (
     response.status === 401 || (await isGraphqlUnauthorized(response));
 
   if (isUnauthorized) {
-    if (!refreshPromise) {
-      refreshPromise = (async () => {
+    let currentRefreshPromise = refreshPromise;
+    if (!currentRefreshPromise) {
+      currentRefreshPromise = (async () => {
         try {
           const refreshRes = await fetch(GRAPHQL_ENDPOINT, {
             method: "POST",
@@ -59,21 +57,23 @@ const customFetch = async (
             return true;
           }
           return false;
-        } catch {
+        } catch (e) {
           return false;
         } finally {
           refreshPromise = null;
         }
       })();
+      refreshPromise = currentRefreshPromise;
     }
-    const refreshSuccess = await refreshPromise;
+    const refreshSuccess = await currentRefreshPromise;
     if (refreshSuccess) {
       response = await fetch(input, fetchInit);
     } else {
       useAuthStore.getState().logout();
-      window.location.href = "/login";
-      toast.error("Session expired. Please login again.");
-      return Promise.reject(new Error("Session expired. Please login again."));
+      localStorage.removeItem("auth-storage");
+      window.location.href = "/learner/log-in";
+      toast.error("Session expired. Please log in again.");
+      return Promise.reject(new Error("Session expired. Please log in again."));
     }
   }
 
