@@ -8,22 +8,25 @@ const GRAPHQL_ENDPOINT = "https://learnify-be.onrender.com/graphql";
 
 let refreshPromise: Promise<boolean> | null = null;
 
-async function isGraphqlUnauthorized(res: Response) {
+type TGraphQLError = {
+  extensions?: { code?: string };
+  message?: string;
+};
+
+async function isGraphqlUnauthorized(res: Response): Promise<boolean> {
   try {
     const clone = res.clone();
     const body = await clone.json();
-    if (
-      body?.errors?.some(
-        (e: any) =>
+    const errors = body?.errors as TGraphQLError[] | undefined;
+    return (
+      errors?.some(
+        (e) =>
           e?.extensions?.code === "UNAUTHENTICATED" ||
           e?.extensions?.code === "UnauthorizedException" ||
           e?.message?.includes("Unauthorized") ||
           e?.message?.includes("No token provided")
-      )
-    ) {
-      return true;
-    }
-    return false;
+      ) ?? false
+    );
   } catch {
     return false;
   }
@@ -56,7 +59,7 @@ const customFetch = async (
             return true;
           }
           return false;
-        } catch (e) {
+        } catch {
           return false;
         } finally {
           refreshPromise = null;
@@ -69,10 +72,8 @@ const customFetch = async (
     } else {
       useAuthStore.getState().logout();
       window.location.href = "/login";
-      toast.error("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
-      return Promise.reject(
-        new Error("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.")
-      );
+      toast.error("Session expired. Please login again.");
+      return Promise.reject(new Error("Session expired. Please login again."));
     }
   }
 
