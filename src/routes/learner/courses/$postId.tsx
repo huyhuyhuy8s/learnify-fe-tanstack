@@ -11,7 +11,7 @@ import { MOCK_COMMENT, MOCK_COURSE_DETAILS, MOCK_COURSES } from "@/mock";
 import { useMemo, useState } from "react";
 import { useCourseDetail, useCreateReview } from "@/hooks/useCourseDetail";
 import Loader from "@/components/Loader";
-import type { TProgress } from "@/types/global";
+import type { TProgress, TStatusCard } from "@/types/global";
 import { formatDate } from "@/utils";
 import CommentForm from "./-components/CommentForm";
 
@@ -32,20 +32,30 @@ function PostComponent() {
   const { mutate: createReview, isPending: isSubmitting } = useCreateReview();
   const [isReviewing, setIsReviewing] = useState(false);
   const mockCourse = useMemo(
-    () => MOCK_COURSES.find((course) => course.id === Number(1)),
+    () => MOCK_COURSES.find((course) => course.id === Number(postId)),
     [postId]
   );
 
-  const courseDisplay = useMemo(() => {
+  const courseDisplay = useMemo((): {
+    title: string;
+    status: TStatusCard | undefined;
+    listFeature: string[];
+    percentage: TProgress;
+  } => {
     if (!isLoading && !isError && data?.getCourseById) {
       return {
         title: data.getCourseById.courseName,
-        status: data.getCourseById.status || "default",
+        status: (data.getCourseById.status as TStatusCard) || "default",
         listFeature: data.getCourseById.keyLearnings || [],
         percentage: 0 as TProgress,
       };
     }
-    return mockCourse || null;
+    return {
+      title: mockCourse?.title || "",
+      status: mockCourse?.status,
+      listFeature: mockCourse?.listFeature || [],
+      percentage: mockCourse?.percentage ?? 0,
+    };
   }, [data, isLoading, isError, mockCourse]);
 
   const lessonsDisplay = useMemo(() => {
@@ -80,7 +90,7 @@ function PostComponent() {
     return <Loader />;
   }
 
-  if (!courseDisplay) {
+  if (!courseDisplay.title) {
     return <NotFound />;
   }
 
@@ -115,7 +125,7 @@ function PostComponent() {
           }
           typeSpecial="course"
           title={courseDisplay.title}
-          status={courseDisplay.status as any}
+          status={courseDisplay.status}
           listFeature={courseDisplay.listFeature}
           percentage={courseDisplay.percentage ?? 0}
         />

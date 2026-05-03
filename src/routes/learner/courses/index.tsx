@@ -1,8 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useMemo } from "react";
 import { MOCK_COURSES } from "@/mock";
 import "./style.scss";
 import Card from "@/components/Card";
-import { useNavigate } from "@tanstack/react-router";
 import TextButton from "@/components/TextButton";
 import Search from "@/components/Search";
 import { useGetAllCourses, type TBackendCourse } from "@/hooks/useCourses";
@@ -14,7 +14,7 @@ function PostsIndexComponent() {
   const navigate = useNavigate();
   const { data, isLoading, isError } = useGetAllCourses(0);
 
-  const getDisplayCourses = () => {
+  const displayCourses = useMemo(() => {
     if (!isLoading && !isError && data?.isSuccess && data.courses.length > 0) {
       return data.courses.map((course: TBackendCourse) => ({
         id: course.id,
@@ -27,9 +27,7 @@ function PostsIndexComponent() {
       }));
     }
     return MOCK_COURSES;
-  };
-
-  const displayCourses = getDisplayCourses();
+  }, [data, isLoading, isError]);
 
   return (
     <div className="course-container">

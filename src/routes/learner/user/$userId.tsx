@@ -7,7 +7,7 @@ export const Route = createFileRoute("/learner/user/$userId")({
 
     if (!isAuthenticated) {
       throw redirect({
-        to: "/learner/sign-up",
+        to: "/learner/log-in",
         search: {
           redirect: "/learner/user/$userId",
         },

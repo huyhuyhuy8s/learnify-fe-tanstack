@@ -42,22 +42,22 @@ export const GET_COURSE_LESSONS_COMMENT_QUERY = `
       }
     }
     getReviewsByCourse(courseId: $courseId) {
-    isSuccess
-    message
-    reviews {
-      id
-      content
-      rating
-      createdAt
-      user {
+      isSuccess
+      message
+      reviews {
         id
-        email
-        diamond
-        currentSteak
-        role
-        username
+        content
+        rating
+        createdAt
+        user {
+          id
+          email
+          diamond
+          currentSteak
+          role
+          username
+        }
       }
     }
-  }
   }
 `;
