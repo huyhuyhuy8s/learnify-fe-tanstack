@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import "./home.scss";
 import Search from "@/components/Search";
 import TextButton from "@/components/TextButton";
@@ -8,15 +8,16 @@ import { useAuthStore } from "@/store";
 
 export const Route = createFileRoute("/learner/")({
   component: RouteComponent,
+  beforeLoad: () => {
+    const { isAuthenticated, isHydrated } = useAuthStore.getState();
+
+    if (isHydrated && isAuthenticated) {
+      redirect({ to: "/learner/dashboard" });
+    }
+  },
 });
 
 function RouteComponent() {
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const navigate = useNavigate();
-
-  if (isAuthenticated) {
-    navigate({ to: "/learner/dashboard" });
-  }
   return <Unauthorized />;
 }
 

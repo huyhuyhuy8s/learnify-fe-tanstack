@@ -1,4 +1,3 @@
-/// <reference types="vite/client" />
 import {
   HeadContent,
   Outlet,
@@ -44,11 +43,6 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     ],
     links: [
       { rel: "stylesheet" },
-      {
-        rel: "apple-touch-icon",
-        sizes: "180x180",
-        href: "/apple-touch-icon.png",
-      },
       {
         rel: "icon",
         type: "image/png",

@@ -1,15 +1,26 @@
 import React from "react";
 import Card from "@/components/Card";
 import { MOCK_COURSES } from "@/mock";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, redirect } from "@tanstack/react-router";
 import { createFileRoute } from "@tanstack/react-router";
 import DashboardBanner from "./-components/DashboardBanner";
 import DashboardStreakWidget from "./-components/DashboardStreakWidget";
 import DashboardAchievementsWidget from "./-components/DashboardAchievementsWidget";
 import DashboardProgressWidget from "./-components/DashboardProgressWidget";
 import "./dashboard.scss";
+import { useAuthStore } from "@/store";
+import { createLearnerHead } from "@/utils";
 
 export const Route = createFileRoute("/learner/dashboard")({
+  beforeLoad: () => {
+    const { isAuthenticated, isHydrated } = useAuthStore.getState();
+    if (isHydrated && !isAuthenticated) {
+      throw redirect({ to: "/learner" });
+    }
+  },
+  head: () => ({
+    ...createLearnerHead("Dashboard"),
+  }),
   component: Dashboard,
 });
 
