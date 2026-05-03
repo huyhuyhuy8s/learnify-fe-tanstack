@@ -25,3 +25,8 @@
   color: transparent;
   display: inline-block;
 }
+
+.disabled,
+.disable {
+  cursor: not-allowed;
+}
