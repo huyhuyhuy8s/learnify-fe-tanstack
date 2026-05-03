@@ -8,6 +8,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import * as React from "react";
+import { useEffect } from "react";
 import DefaultCatchBoundary from "@/components/DefaultCatchBoundary";
 import NotFound from "@/components/NotFound";
 import { seo } from "@/utils/seo";
@@ -18,12 +19,15 @@ import { SplitText } from "gsap/SplitText";
 import { useTheme } from "@/hooks/useTheme";
 import type { RouterContext } from "@/router";
 import Loader from "@/components/Loader";
+import { useAuthStore } from "@/store/authStore";
 import "./root.scss";
 import "@styles/_global.scss";
 
 gsap.registerPlugin(SplitText, CustomEase);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
 CustomEase.create("glide", "0.8, 0, 0.2, 1");
+
+const STORAGE_KEY = "auth-storage";
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   head: () => ({
@@ -58,6 +62,11 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       { rel: "icon", href: "/favicon.ico" },
     ],
   }),
+  pendingComponent: () => (
+    <RootDocument>
+      <Loader />
+    </RootDocument>
+  ),
   errorComponent: (props) => {
     return (
       <RootDocument>
@@ -71,6 +80,24 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
 function RootComponent() {
   useTheme();
+  const setAuth = useAuthStore((state) => state.setAuth);
+  const setHydrated = useAuthStore((state) => state.setHydrated);
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed.user) {
+          setAuth(parsed.user);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to hydrate auth:", error);
+    } finally {
+      setHydrated(true);
+    }
+  }, [setAuth, setHydrated]);
 
   return (
     <RootDocument>
@@ -89,7 +116,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <GoogleOAuthProvider clientId={googleClientId}>
-          <Loader disabled />
           {children}
           <div style={{ position: "absolute" }}>
             <TanStackRouterDevtools position="bottom-right" />

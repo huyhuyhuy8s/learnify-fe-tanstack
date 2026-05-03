@@ -10,9 +10,10 @@ export const Route = createFileRoute("/learner/")({
   component: RouteComponent,
   beforeLoad: () => {
     const { isAuthenticated, isHydrated } = useAuthStore.getState();
-
     if (isHydrated && isAuthenticated) {
-      redirect({ to: "/learner/dashboard" });
+      throw redirect({
+        to: "/learner/dashboard",
+      });
     }
   },
 });

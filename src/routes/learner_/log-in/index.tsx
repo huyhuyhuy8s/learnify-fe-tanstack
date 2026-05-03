@@ -32,14 +32,14 @@ export const Route = createFileRoute("/learner_/log-in/")({
 
 function LogInPage() {
   const googleLoginMutation = useGoogleLogin();
-  const navigate = useNavigate({ from: "/learner/log-in/" });
+  const navigate = useNavigate();
   const { redirect } = Route.useSearch();
 
   const handleLoginSuccess = () => {
     if (redirect) {
       navigate({ to: redirect });
     } else {
-      navigate({ to: "/learner" });
+      navigate({ to: "/learner/dashboard" });
     }
   };
 
