@@ -5,13 +5,14 @@ import { routeTree } from "./routeTree.gen";
 import DefaultCatchBoundary from "./components/DefaultCatchBoundary";
 import NotFound from "./components/NotFound";
 import "material-symbols/rounded.scss";
+import type { UserResponse } from "@/gql/graphql";
 
 export function getRouter() {
   const queryClient = new QueryClient();
 
   const router = createRouter({
     routeTree,
-    context: { queryClient },
+    context: { queryClient, auth: null },
     defaultPreload: "intent",
     defaultErrorComponent: DefaultCatchBoundary,
     defaultNotFoundComponent: () => <NotFound />,
@@ -32,4 +33,8 @@ declare module "@tanstack/react-router" {
 
 export interface RouterContext {
   queryClient: QueryClient;
+  auth: {
+    user: UserResponse | null;
+    isAuthenticated: boolean;
+  } | null;
 }

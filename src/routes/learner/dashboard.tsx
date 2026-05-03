@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import Card from "@/components/Card";
 import { MOCK_COURSES } from "@/mock";
-import { useNavigate, redirect } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { createFileRoute } from "@tanstack/react-router";
 import DashboardBanner from "./-components/DashboardBanner";
 import DashboardStreakWidget from "./-components/DashboardStreakWidget";
@@ -12,14 +12,6 @@ import { useAuthStore } from "@/store";
 import { createLearnerHead } from "@/utils";
 
 export const Route = createFileRoute("/learner/dashboard")({
-  beforeLoad: () => {
-    const { isAuthenticated, isHydrated } = useAuthStore.getState();
-    if (isHydrated && !isAuthenticated) {
-      throw redirect({
-        to: "/learner",
-      });
-    }
-  },
   head: () => ({
     ...createLearnerHead("Dashboard"),
   }),
@@ -27,7 +19,14 @@ export const Route = createFileRoute("/learner/dashboard")({
 });
 
 function Dashboard() {
+  const { isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
+
+  useLayoutEffect(() => {
+    if (!isAuthenticated) {
+      navigate({ to: "/learner", replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <div className="dashboard">

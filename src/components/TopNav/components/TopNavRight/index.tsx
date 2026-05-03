@@ -13,18 +13,17 @@ import "./style.scss";
 const TopNavRight = () => {
   const [accountMenuVisible, setAccountMenuVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const accountMenuClassName = useMemo(() => {
-    return classNames({ invisible: !accountMenuVisible });
-  }, [accountMenuVisible]);
   const navigate = useNavigate();
 
-  const { isAuthenticated, user, onLogout } = useAuthStore(
+  const { isAuthenticated, isHydrated, user, onLogout } = useAuthStore(
     useShallow((state) => ({
       isAuthenticated: state.isAuthenticated,
+      isHydrated: state.isHydrated,
       user: state.user,
       onLogout: state.logout,
     }))
   );
+
   useOnClickOutside(containerRef, () => {
     if (accountMenuVisible) setAccountMenuVisible(false);
   });
@@ -34,67 +33,82 @@ const TopNavRight = () => {
     navigate({ to: "/learner/log-in" });
   }, [onLogout, navigate]);
 
-  if (!isAuthenticated || !user) {
+  const accountMenuClassName = useMemo(() => {
+    return classNames({ invisible: !accountMenuVisible });
+  }, [accountMenuVisible]);
+
+  const renderContent = () => {
+    if (!isAuthenticated || !user) {
+      return (
+        <>
+          <TextButton
+            text="Sign up"
+            icon="person_add"
+            type="secondary"
+            size="small"
+            onClick={() => {
+              navigate({ to: "/learner/sign-up" });
+            }}
+          />
+          <TextButton
+            text="Log in"
+            icon="login"
+            type="secondary"
+            backgroundColor={COLORS.modeGreen}
+            size="small"
+            color={COLORS.white}
+            onClick={() => {
+              navigate({ to: "/learner/log-in" });
+            }}
+          />
+        </>
+      );
+    }
+
     return (
-      <div className="top-nav-right new" ref={containerRef}>
-        <TextButton
-          text="Sign up"
-          icon="person_add"
-          type="secondary"
-          size="small"
-          onClick={() => {
-            navigate({ to: "/learner/sign-up" });
-          }}
+      <>
+        <div className="crystal">
+          <span className="material-symbols-rounded">diamond</span>
+          <p>0</p>
+        </div>
+        <div className="streak">
+          <span className="material-symbols-rounded">mode_heat</span>
+          <p>0</p>
+        </div>
+        <IconButton
+          icon="notifications_active"
+          specialIcon="notifications"
+          type="outlined"
+          size="tiny"
+          shape="circle"
+          onClick={() => {}}
         />
-        <TextButton
-          text="Log in"
-          icon="login"
-          type="secondary"
-          backgroundColor={COLORS.modeGreen}
-          size="small"
-          color={COLORS.white}
-          onClick={() => {
-            navigate({ to: "/learner/log-in" });
-          }}
+        <IconButton
+          icon="person"
+          specialIcon="person"
+          type="outlined"
+          size="tiny"
+          shape="circle"
+          onClick={() => setAccountMenuVisible(!accountMenuVisible)}
         />
-      </div>
+        <AccountMenu
+          username={user.username || "User"}
+          uid={user.email || ""}
+          id={user.id || ""}
+          subscription={"starter"}
+          className={accountMenuClassName}
+          onLogout={handleLogout}
+        />
+      </>
     );
-  }
+  };
 
   return (
-    <div className="top-nav-right" ref={containerRef}>
-      <div className="crystal">
-        <span className="material-symbols-rounded">diamond</span>
-        <p>0</p>
-      </div>
-      <div className="streak">
-        <span className="material-symbols-rounded">mode_heat</span>
-        <p>0</p>
-      </div>
-      <IconButton
-        icon="notifications_active"
-        specialIcon="notifications"
-        type="outlined"
-        size="tiny"
-        shape="circle"
-        onClick={() => {}}
-      />
-      <IconButton
-        icon="person"
-        specialIcon="person"
-        type="outlined"
-        size="tiny"
-        shape="circle"
-        onClick={() => setAccountMenuVisible(!accountMenuVisible)}
-      />
-      <AccountMenu
-        username={user.username || "User"}
-        uid={user.email || ""}
-        id={user.id || ""}
-        subscription={"starter"}
-        className={accountMenuClassName}
-        onLogout={handleLogout}
-      />
+    <div
+      className={classNames("top-nav-right", { loading: !isHydrated })}
+      ref={containerRef}
+    >
+      {isHydrated && renderContent()}
     </div>
   );
 };

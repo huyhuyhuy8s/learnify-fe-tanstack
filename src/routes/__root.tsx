@@ -30,6 +30,34 @@ CustomEase.create("glide", "0.8, 0, 0.2, 1");
 const STORAGE_KEY = "auth-storage";
 
 export const Route = createRootRouteWithContext<RouterContext>()({
+  loader: ({ context }) => {
+    const cookies =
+      (context as { request?: Request }).request?.headers?.get("cookie") || "";
+    const authCookie = cookies
+      .split(";")
+      .find((c: string) => c.trim().startsWith(`${STORAGE_KEY}=`));
+
+    if (authCookie) {
+      try {
+        const cookieValue = authCookie.split("=")[1];
+        if (cookieValue) {
+          const value = decodeURIComponent(cookieValue);
+          const parsed = JSON.parse(value);
+          if (parsed.user) {
+            return {
+              auth: {
+                user: parsed.user,
+                isAuthenticated: true,
+              },
+            };
+          }
+        }
+      } catch {
+        throw new Error("Invalid cookie");
+      }
+    }
+    return { auth: null };
+  },
   head: () => ({
     meta: [
       {
@@ -80,24 +108,11 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
 function RootComponent() {
   useTheme();
-  const setAuth = useAuthStore((state) => state.setAuth);
   const setHydrated = useAuthStore((state) => state.setHydrated);
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        if (parsed.user) {
-          setAuth(parsed.user);
-        }
-      }
-    } catch (error) {
-      console.error("Failed to hydrate auth:", error);
-    } finally {
-      setHydrated(true);
-    }
-  }, [setAuth, setHydrated]);
+    setHydrated(true);
+  }, [setHydrated]);
 
   return (
     <RootDocument>

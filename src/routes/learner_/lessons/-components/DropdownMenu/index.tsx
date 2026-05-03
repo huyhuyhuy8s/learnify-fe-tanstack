@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { Activity, useEffect, useState } from "react";
+import { Activity, useState } from "react";
 import "./style.scss";
 
 type TDropdownMenuOption = {
@@ -19,10 +19,6 @@ export type TDropdownMenuProps = {
 const DropdownMenu = (props: TDropdownMenuProps) => {
   const { icon, title, options, iconOption, className, style } = props;
   const [isVisible, setIsVisible] = useState(false);
-  useEffect(() => {
-    console.log("isVisible", isVisible);
-  }, [isVisible]);
-
   const dropdownMenuCls = classNames(
     "dropdown-menu",
     { visible: isVisible },
