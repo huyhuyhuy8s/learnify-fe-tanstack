@@ -4,26 +4,13 @@ import type { TLogoProps } from "./type";
 import { Link } from "@tanstack/react-router";
 
 const Logo = (props: TLogoProps) => {
-  const { className, size = "Medium" } = props;
-  const logoClassNames = classnames(
-    "logo",
-    `logo--${size.toLowerCase()}`,
-    className
-  );
-
-  if (size === "small") {
-    return (
-      <Link to="/learner" className={logoClassNames}>
-        <span className="material-symbols-rounded">local_library</span>
-        <span className="logo__text">Learnify</span>
-      </Link>
-    );
-  }
+  const { className, size = "nedium" } = props;
+  const logoClassNames = classnames("logo", size.toLowerCase(), className);
 
   return (
-    <Link className={logoClassNames} to="/learner">
+    <Link to="/learner" className={logoClassNames}>
       <span className="material-symbols-rounded">local_library</span>
-      <span className="logo__text">Learnify</span>
+      <span className="logo-text">Learnify</span>
     </Link>
   );
 };

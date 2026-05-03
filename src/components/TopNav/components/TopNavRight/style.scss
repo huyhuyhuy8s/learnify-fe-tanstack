@@ -20,6 +20,12 @@
     }
   }
 
+  .icon-button.tiny {
+    > span {
+      font-size: toRem(18);
+    }
+  }
+
   .crystal {
     color: $accent-blue-celeste;
   }

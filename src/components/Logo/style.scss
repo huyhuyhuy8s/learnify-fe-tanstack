@@ -1,27 +1,31 @@
-@use "../../styles/variables" as *;
-@use "../../styles/colors" as *;
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
 
 .logo {
   display: flex;
-  align-items: center;
+  place-items: center;
   justify-content: center;
-  gap: 10px;
-  color: $dark-green-700;
+  gap: toRem(10);
+  color: $neutral-700;
   text-decoration: none;
 
-  &__text {
-    font-family: "Google Sans Flex", sans-serif;
+  .material-symbols-rounded {
+    font-variation-settings: "FILL" 0;
+  }
+
+  &-text {
     font-weight: $fw-semibold;
-    line-height: 1;
     white-space: nowrap;
   }
 
-  &--medium {
+  &.medium {
     .material-symbols-rounded {
       font-size: 30px;
     }
 
-    .logo__text {
+    .logo-text {
       font-size: $fs-heading4;
     }
 
@@ -30,12 +34,12 @@
     }
   }
 
-  &--small {
+  &.small {
     .material-symbols-rounded {
-      font-size: 20px;
+      font-size: $fs-heading5;
     }
 
-    .logo__text {
+    .logo-text {
       font-size: $fs-heading5;
     }
   }

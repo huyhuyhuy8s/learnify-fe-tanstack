@@ -23,6 +23,7 @@ const TextButton = (props: TTextButtonProps) => {
     disabled = false,
     style,
     className,
+    buttonType = "button",
   } = props;
 
   const { onClickHandler, buttonClassNames, iconLabel, toolTipContent } =
@@ -49,6 +50,7 @@ const TextButton = (props: TTextButtonProps) => {
       className={buttonClassNames}
       title={toolTipContent}
       onClick={onClickHandler}
+      type={buttonType}
     >
       <Icon
         visible={leftIcon}

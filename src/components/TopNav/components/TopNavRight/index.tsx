@@ -1,12 +1,13 @@
 import AccountMenu from "@/components/AccountMenu";
 import IconButton from "@/components/IconButton";
 import classNames from "classnames";
-import { useMemo, useState, useRef } from "react";
+import { useMemo, useState, useRef, useCallback } from "react";
 import useOnClickOutside from "@/hooks/useOnClickOutside";
 import { useAuthStore } from "@/store";
 import TextButton from "@/components/TextButton";
 import { COLORS } from "@/styles/colors";
 import { useNavigate } from "@tanstack/react-router";
+import { useShallow } from "zustand/react/shallow";
 import "./style.scss";
 
 const TopNavRight = () => {
@@ -17,12 +18,21 @@ const TopNavRight = () => {
   }, [accountMenuVisible]);
   const navigate = useNavigate();
 
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const user = useAuthStore((state) => state.user);
-  const onLogout = useAuthStore((state) => state.logout);
+  const { isAuthenticated, user, onLogout } = useAuthStore(
+    useShallow((state) => ({
+      isAuthenticated: state.isAuthenticated,
+      user: state.user,
+      onLogout: state.logout,
+    }))
+  );
   useOnClickOutside(containerRef, () => {
     if (accountMenuVisible) setAccountMenuVisible(false);
   });
+
+  const handleLogout = useCallback(() => {
+    onLogout();
+    navigate({ to: "/learner/log-in" });
+  }, [onLogout, navigate]);
 
   if (!isAuthenticated || !user) {
     return (
@@ -83,7 +93,7 @@ const TopNavRight = () => {
         id={user.id || ""}
         subscription={"starter"}
         className={accountMenuClassName}
-        onLogout={() => onLogout()}
+        onLogout={handleLogout}
       />
     </div>
   );

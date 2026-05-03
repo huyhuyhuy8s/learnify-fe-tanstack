@@ -1,6 +1,6 @@
 import "./style.scss";
 import classNames from "classnames";
-import { useState, useMemo } from "react";
+import { useState, useMemo, type ButtonHTMLAttributes } from "react";
 
 type TconButtonProp = {
   icon: string;
@@ -16,6 +16,8 @@ type TconButtonProp = {
   tooltip?: string;
   className?: string;
   style?: React.CSSProperties;
+  buttonType?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  disabled?: boolean;
 };
 
 const IconButton = (props: TconButtonProp) => {
@@ -27,12 +29,14 @@ const IconButton = (props: TconButtonProp) => {
     shape = "square",
     specialIcon = "search",
     size = "medium",
-    color = "#fff",
-    backgroundColor = "none",
+    color,
+    backgroundColor,
     fill = false,
     tooltip,
     className,
     style,
+    buttonType = "button",
+    disabled = false,
   } = props;
 
   const [clicked, setClicked] = useState(false);
@@ -67,6 +71,8 @@ const IconButton = (props: TconButtonProp) => {
       }}
       onClick={handleClick}
       title={tooltip}
+      type={buttonType}
+      disabled={disabled}
     >
       <span className={iconClassName}>{iconVal}</span>
     </button>
