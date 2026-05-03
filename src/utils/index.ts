@@ -1,9 +1,5 @@
-import { clsx, type ClassValue } from "clsx";
+export * from "./title";
 import isNaN from "lodash/isNaN";
-
-export function cn(...inputs: ClassValue[]) {
-  return clsx(inputs);
-}
 
 export const formatDate = (dateString: string) => {
   const date = new Date(dateString);
