@@ -41,8 +41,9 @@ const customFetch = async (
     response.status === 401 || (await isGraphqlUnauthorized(response));
 
   if (isUnauthorized) {
-    if (!refreshPromise) {
-      refreshPromise = (async () => {
+    let currentRefreshPromise = refreshPromise;
+    if (!currentRefreshPromise) {
+      currentRefreshPromise = (async () => {
         try {
           const refreshRes = await fetch(GRAPHQL_ENDPOINT, {
             method: "POST",
@@ -62,18 +63,17 @@ const customFetch = async (
           refreshPromise = null;
         }
       })();
+      refreshPromise = currentRefreshPromise;
     }
-    const refreshSuccess = await refreshPromise;
+    const refreshSuccess = await currentRefreshPromise;
     if (refreshSuccess) {
       response = await fetch(input, fetchInit);
     } else {
       useAuthStore.getState().logout();
       localStorage.removeItem("auth-storage");
       window.location.href = "/learner/log-in";
-      toast.error("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
-      return Promise.reject(
-        new Error("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.")
-      );
+      toast.error("Session expired. Please log in again.");
+      return Promise.reject(new Error("Session expired. Please log in again."));
     }
   }
 

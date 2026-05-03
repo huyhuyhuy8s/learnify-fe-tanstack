@@ -1,5 +1,6 @@
 import { useState } from "react";
 import TextButton from "@/components/TextButton";
+import { toast } from "sonner";
 import "./style.scss";
 
 type CommentFormProps = {
@@ -14,11 +15,11 @@ const CommentForm = ({ onSubmit, onCancel, isLoading }: CommentFormProps) => {
 
   const handleSubmit = () => {
     if (rating === 0) {
-      alert("Vui lòng chọn số sao đánh giá!");
+      toast.error("Please select a rating!");
       return;
     }
     if (!content.trim()) {
-      alert("Vui lòng nhập nội dung đánh giá!");
+      toast.error("Please enter your review!");
       return;
     }
     onSubmit(rating, content);
@@ -27,7 +28,7 @@ const CommentForm = ({ onSubmit, onCancel, isLoading }: CommentFormProps) => {
   return (
     <div className="comment-container">
       <div className="comment-container-head">
-        <h4>Đánh giá khóa học</h4>
+        <h4>Rate this course</h4>
         <div className="stars">
           {[1, 2, 3, 4, 5].map((star) => (
             <span
@@ -47,7 +48,7 @@ const CommentForm = ({ onSubmit, onCancel, isLoading }: CommentFormProps) => {
       </div>
       <div className="comment-container-body">
         <textarea
-          placeholder="Chia sẻ cảm nghĩ của bạn về khóa học..."
+          placeholder="Share your thoughts about this course..."
           value={content}
           onChange={(e) => setContent(e.target.value)}
           rows={3}
@@ -56,13 +57,13 @@ const CommentForm = ({ onSubmit, onCancel, isLoading }: CommentFormProps) => {
       </div>
       <div className="comment-container-footer">
         <TextButton
-          text="Hủy"
+          text="Cancel"
           type="outlined"
           onClick={onCancel}
           disabled={isLoading}
         />
         <TextButton
-          text={isLoading ? "Đang gửi..." : "Gửi đánh giá"}
+          text={isLoading ? "Submitting..." : "Submit Review"}
           type="primary"
           onClick={handleSubmit}
           disabled={isLoading}
