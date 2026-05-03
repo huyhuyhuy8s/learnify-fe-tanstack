@@ -5,15 +5,11 @@
 
 .lesson-detail-page {
   display: grid;
-  grid-template-columns: 1fr 20dvw;
-  grid-template-rows: 1fr 20dvh;
-  padding: toRem(10);
+  grid-template-columns: 1fr 25dvw;
+  grid-template-rows: 1fr auto;
+  padding: toRem(20);
   height: 100%;
-  gap: toRem(30);
-
-  > div {
-    border: toRem(2) solid $neutral-100;
-  }
+  gap: toRem(20);
 
   .chat-container {
     grid-row: 1 / 3;

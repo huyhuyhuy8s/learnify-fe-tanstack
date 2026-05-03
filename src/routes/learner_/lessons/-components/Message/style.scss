@@ -3,7 +3,7 @@
 @use "@styles/functions" as *;
 @use "@styles/mixins" as *;
 
-.chat-message {
+.message {
   display: flex;
   margin-bottom: toRem(16px);
   max-width: 80%;

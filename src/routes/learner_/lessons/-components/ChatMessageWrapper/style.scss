@@ -1,7 +1,26 @@
 @use "@styles/functions" as *;
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
 
-.chat-message-wrapper {
+.chat-messages {
   display: grid;
-  grid-template-rows: 1fr toRem(90);
+  grid-template-rows: 1fr auto;
   height: 100%;
+
+  &-container {
+    display: flex;
+    place-items: center;
+
+    &-empty {
+      display: flex;
+      place-items: center;
+      justify-content: center;
+      width: 100%;
+
+      &-text {
+        text-align: center;
+        color: $neutral-300;
+      }
+    }
+  }
 }

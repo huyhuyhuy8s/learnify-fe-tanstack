@@ -1,30 +1,27 @@
-import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import "./route.scss";
 import TopNav from "@/components/TopNav";
 import LeftNav from "@/components/LeftNav";
 import { useAuthStore } from "@/store";
+import { createLearnerHead } from "@/utils";
 
 export const Route = createFileRoute("/learner_/lessons")({
-  head: () => ({
-    meta: [
-      {
-        charSet: "utf-8",
-        title: "Lessons - Learnify",
-      },
-    ],
-  }),
+  beforeLoad: ({ location }) => {
+    const { isAuthenticated, isHydrated } = useAuthStore.getState();
+    if (isHydrated && !isAuthenticated) {
+      throw redirect({
+        to: "/learner/log-in",
+        search: { redirect: location.pathname },
+      });
+    }
+  },
   component: RouteComponent,
+  head: () => ({
+    ...createLearnerHead("Lessons"),
+  }),
 });
 
 function RouteComponent() {
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const isRefreshing = useAuthStore((state) => state.isRefreshing);
-  const navigate = useNavigate();
-
-  if (!isAuthenticated && !isRefreshing) {
-    navigate({ to: "/learner/log-in" });
-  }
-
   return (
     <section className="lesson-page">
       <TopNav fullWidth />

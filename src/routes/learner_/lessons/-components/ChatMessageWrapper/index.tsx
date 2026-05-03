@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import ChatMessage from "../ChatMessage";
-import type { TMessage } from "../ChatMessage/type";
+import ChatMessage from "../Message";
+import type { TMessage } from "../Message/type";
 import ChatInput from "../ChatInput";
 import "./style.scss";
 
@@ -29,11 +29,11 @@ const ChatMessageWrapper = () => {
   };
 
   return (
-    <div className="chat-message-wrapper">
-      <div className="chat-container-messages">
+    <div className="chat-messages">
+      <div className="chat-messages-container">
         {messages.length === 0 ? (
-          <div className="chat-container-empty">
-            <p className="chat-container-empty-text">
+          <div className="chat-messages-container-empty">
+            <p className="chat-messages-container-empty-text">
               Start a conversation with your AI tutor
             </p>
           </div>

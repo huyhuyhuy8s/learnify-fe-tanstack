@@ -1,9 +1,9 @@
 @use "@styles/variables" as *;
-@use "@styles/colors" as *;
-@use "@styles/functions" as *;
 @use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
 
-.chat-container {
+.tutor-container {
   display: flex;
   flex-direction: column;
   background-color: $green-100;
@@ -12,4 +12,5 @@
   padding-top: toRem(10);
   border-radius: $br-xl;
   @include box-shadow(0, 4, 6, -1);
+  aspect-ratio: 4 / 3;
 }

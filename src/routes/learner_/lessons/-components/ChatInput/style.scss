@@ -4,112 +4,35 @@
 @use "@styles/mixins" as *;
 
 .chat-input {
-  padding: toRem(16px) toRem(24px);
-  border-top: 1px solid $neutral-200;
-  background-color: $grey;
+  background-color: $neutral-150;
+  padding: toRem(20);
+  border-radius: $br-xl;
+  display: flex;
+  align-items: flex-end;
+  gap: toRem(10);
 
-  &-wrapper {
-    display: flex;
-    align-items: flex-end;
-    gap: toRem(12px);
-    background-color: $neutral-100;
-    border-radius: toRem(24px);
-    padding: toRem(8px) toRem(16px);
-  }
-
-  &-action {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: toRem(36px);
-    height: toRem(36px);
+  textarea {
+    background-color: transparent;
     border: none;
-    background: transparent;
-    border-radius: 50%;
-    cursor: pointer;
-    color: $neutral-600;
-    transition: background-color 0.2s ease;
-    flex-shrink: 0;
-
-    &:hover:not(:disabled) {
-      background-color: $neutral-200;
-    }
-
-    &:active:not(:disabled) {
-      background-color: $neutral-300;
-    }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    .material-symbols-rounded {
-      font-size: toRem(20px);
-    }
-  }
-
-  &-field {
-    flex: 1;
-    border: none;
-    background: transparent;
-    font-size: $fs-paragraph;
-    font-weight: $fw-regular;
+    outline: none;
+    font-size: toRem(16);
     color: $neutral-900;
     resize: none;
-    min-height: toRem(36px);
-    max-height: toRem(120px);
+    overflow: hidden;
+    min-height: toRem(20);
+    max-height: toRem(200);
     line-height: 1.5;
     font-family: inherit;
+    padding: 0;
+    width: 100%;
+    align-self: center;
 
-    &::placeholder {
-      color: $neutral-600;
-    }
-
-    &:focus {
+    &:focus-visible {
       outline: none;
     }
 
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-  }
-
-  &-send {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: toRem(36px);
-    height: toRem(36px);
-    border: none;
-    background-color: $mode-green;
-    border-radius: 50%;
-    cursor: pointer;
-    color: $white;
-    transition: opacity 0.2s ease;
-    flex-shrink: 0;
-
-    &:hover:not(:disabled) {
-      opacity: 0.9;
-    }
-
-    &:active:not(:disabled) {
-      opacity: 0.8;
-    }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    &-disabled {
-      background-color: $neutral-300;
-      cursor: not-allowed;
-    }
-
-    .material-symbols-rounded {
-      font-size: toRem(20px);
+    &::placeholder {
+      color: $neutral-300;
     }
   }
 }

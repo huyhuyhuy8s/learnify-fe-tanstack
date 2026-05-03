@@ -6,7 +6,7 @@ export type TMessage = {
   type?: "text" | "attachment" | "system";
 };
 
-export type TChatMessageProps = {
+export type TMessageProps = {
   message: TMessage;
   className?: string;
 };
