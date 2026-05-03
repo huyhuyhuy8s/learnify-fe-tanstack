@@ -19,7 +19,8 @@ export const logInFormSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-export const useLogInForm = () => {
+export const useLogInForm = (props: { redirect?: string }) => {
+  const { redirect } = props;
   const navigate = useNavigate();
   const login = useLogin();
 
@@ -44,7 +45,7 @@ export const useLogInForm = () => {
     []
   );
 
-  const handleSubmit = useCallback(async () => {
+  const handleSubmit = async () => {
     try {
       const parseResult = logInFormSchema.safeParse(formData);
       if (!parseResult.success) {
@@ -65,12 +66,16 @@ export const useLogInForm = () => {
       });
 
       if (result.login.success) {
-        navigate({ to: "/learner" });
+        if (redirect) {
+          navigate({ to: redirect });
+        } else {
+          navigate({ to: "/learner" });
+        }
       }
     } catch {
       setErrors({ api: "Login failed. Please check your credentials." });
     }
-  }, [formData, login, navigate]);
+  };
 
   return {
     data: formData,

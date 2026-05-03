@@ -1,11 +1,17 @@
 import classnames from "classnames";
 import { memo } from "react";
-import CustomLink from "@/components/CustomLink";
 import "./style.scss";
 import { useLogInForm } from "../../-hooks/useLogInForm";
 
-const LogInForm = memo(function LogInForm() {
-  const { data, errors, isPending, onChange, onSubmit } = useLogInForm();
+type TLogInFormProps = {
+  redirect?: string;
+};
+
+const LogInForm = memo(function LogInForm(props: TLogInFormProps) {
+  const { redirect } = props;
+  const { data, errors, isPending, onChange, onSubmit } = useLogInForm({
+    redirect,
+  });
   return (
     <form
       className="log-in-form"

@@ -1,25 +1,47 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import CustomLink from "@/components/CustomLink";
 import { GoogleLogin } from "@react-oauth/google";
 import { useGoogleLogin } from "@/hooks/useGoogleLogin";
+import { useAuthStore } from "@/store";
 import LogInForm from "../-components/LogInForm";
 import "./style.scss";
+import { createLearnerHead } from "@/utils";
+import z from "zod";
+
+const productSearchSchema = z.object({
+  redirect: z.string().optional(),
+});
 
 export const Route = createFileRoute("/learner_/log-in/")({
-  head: () => ({
-    meta: [
-      {
-        charSet: "utf-8",
-        title: "Log In - Learnify",
-      },
-    ],
-  }),
+  validateSearch: productSearchSchema,
   component: LogInPage,
+  beforeLoad: () => {
+    const { isHydrated, isAuthenticated } = useAuthStore.getState();
+    console.log("Checking authentication status:", {
+      isHydrated,
+      isAuthenticated,
+    });
+    if (isHydrated && isAuthenticated) {
+      throw redirect({ to: "/learner" });
+    }
+  },
+  head: () => ({
+    ...createLearnerHead("Log in"),
+  }),
 });
 
 function LogInPage() {
   const googleLoginMutation = useGoogleLogin();
-  const navigate = useNavigate();
+  const navigate = useNavigate({ from: "/learner/log-in/" });
+  const { redirect } = Route.useSearch();
+
+  const handleLoginSuccess = () => {
+    if (redirect) {
+      navigate({ to: redirect });
+    } else {
+      navigate({ to: "/learner" });
+    }
+  };
 
   return (
     <div className="log-in" id="log-in-page">
@@ -41,9 +63,7 @@ function LogInPage() {
                 }
                 const idToken = credentialResponse.credential;
                 googleLoginMutation.mutate(idToken, {
-                  onSuccess: () => {
-                    navigate({ to: "/learner" });
-                  },
+                  onSuccess: handleLoginSuccess,
                 });
               }}
               onError={() => {
@@ -60,7 +80,7 @@ function LogInPage() {
             <p className="regular">or</p>
           </div>
 
-          <LogInForm />
+          <LogInForm redirect={redirect} />
 
           <p className="log-in-signup-link regular">
             New to Learnify?{" "}
