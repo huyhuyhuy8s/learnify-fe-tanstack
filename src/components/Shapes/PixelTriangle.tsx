@@ -3,9 +3,11 @@ type TIProps = {
   color?: string;
   size?: string;
   style?: React.CSSProperties;
+  stroke?: string;
+  strokeWidth?: number;
 };
-const PixelTriangle = (props: TIProps) => {
-  const { color, size = "15px", style } = props;
+export const PixelTriangle = (props: TIProps) => {
+  const { color, size = "15px", style, stroke, strokeWidth } = props;
 
   return (
     <svg
@@ -21,6 +23,8 @@ const PixelTriangle = (props: TIProps) => {
         justifyContent: "center",
         ...style,
       }}
+      stroke={stroke}
+      strokeWidth={strokeWidth}
     >
       <path
         d="M121.641 30H66V350H121.641V322.174H164.564V295.739H209.077V265.13H245.641V240.086H282.205V209.478H314V170.522H282.205V139.912H245.641V114.869H209.077V84.2609H164.564V57.8262H121.641V30Z"
@@ -29,4 +33,3 @@ const PixelTriangle = (props: TIProps) => {
     </svg>
   );
 };
-export default PixelTriangle;

@@ -17,6 +17,7 @@ export default tseslint.config(
       "node_modules",
       ".vinxi",
       "src/routeTree.gen.ts",
+      "src/gql/**",
       "lambda",
       "scripts",
       "config",

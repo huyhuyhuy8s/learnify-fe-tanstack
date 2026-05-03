@@ -8,7 +8,7 @@ type Props = TFriendItem & {
 };
 
 const FriendItem = (props: Props) => {
-  const { name, onClick, imgUrl, typeFriendItem, streaks, id, isActive } =
+  const { index, name, onClick, imgUrl, typeFriendItem, streaks, isActive } =
     props;
 
   return (
@@ -19,17 +19,11 @@ const FriendItem = (props: Props) => {
       onClick={onClick}
       tabIndex={0}
     >
-      <div className="friend-item-index">
-        {id ? (
-          <span>{id}</span>
-        ) : (
-          <span className="friend-item-index-star">⭐</span>
-        )}
-      </div>
+      <div className="friend-item-index">{index}</div>
 
       <div className="friend-item-info">
         <img className="friend-item-info-img" src={imgUrl} alt={name} />
-        <p className="friend-item-info-name">{name}</p>
+        <p className="friend-item-info-name semibold">{name}</p>
       </div>
       <FriendItemFooter
         typeItem={typeFriendItem}

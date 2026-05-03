@@ -1,0 +1,77 @@
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+@use "@styles/variables" as *;
+
+.sign-up {
+  &-right {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: toRem(25);
+  }
+
+  &-quote {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    position: relative;
+
+    &-icon {
+      position: absolute;
+      top: toRem(-30);
+      left: toRem(-25);
+      width: toRem(50);
+      aspect-ratio: 1;
+      opacity: 0.25;
+    }
+
+    &-text {
+      color: $black;
+      line-height: 1.5;
+    }
+  }
+
+  &-person {
+    display: flex;
+    place-items: center;
+    align-self: stretch;
+    gap: toRem(20);
+
+    &-context {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    &-name {
+      color: $black;
+    }
+
+    &-title {
+      color: $black;
+    }
+  }
+
+  &-avatar {
+    width: toRem(80);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: $neutral-250;
+    flex-shrink: 0;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &-slide {
+    display: flex;
+    gap: toRem(10);
+  }
+}

@@ -23,6 +23,7 @@ export type TTextButtonProps = {
   tooltip?: string;
   style?: React.CSSProperties;
   disabled?: boolean;
+  className?: string;
 };
 
 export type TIconProps = {

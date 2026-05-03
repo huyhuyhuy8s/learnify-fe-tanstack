@@ -3,9 +3,11 @@ type TIProps = {
   color?: string;
   size?: string;
   style?: React.CSSProperties;
+  stroke?: string;
+  strokeWidth?: number;
 };
-const Pill = (props: TIProps) => {
-  const { color, size = "15px", style } = props;
+export const Pill = (props: TIProps) => {
+  const { color, size = "15px", style, stroke, strokeWidth } = props;
 
   return (
     <svg
@@ -21,6 +23,8 @@ const Pill = (props: TIProps) => {
         justifyContent: "center",
         ...style,
       }}
+      stroke={stroke}
+      strokeWidth={strokeWidth}
     >
       <path
         d="M116.116 71.7851C169.162 18.7383 255.168 18.7383 308.215 71.7851C361.262 124.832 361.262 210.838 308.215 263.884L263.884 308.215C210.838 361.262 124.832 361.262 71.7851 308.215C18.7383 255.168 18.7383 169.162 71.7851 116.116L116.116 71.7851Z"
@@ -29,4 +33,3 @@ const Pill = (props: TIProps) => {
     </svg>
   );
 };
-export default Pill;

@@ -3,9 +3,11 @@ type TIProps = {
   color?: string;
   size?: string;
   style?: React.CSSProperties;
+  stroke?: string;
+  strokeWidth?: number;
 };
-const Oval = (props: TIProps) => {
-  const { color, size = "15px", style } = props;
+export const Oval = (props: TIProps) => {
+  const { color, size = "15px", style, stroke, strokeWidth } = props;
 
   return (
     <svg
@@ -21,6 +23,8 @@ const Oval = (props: TIProps) => {
         justifyContent: "center",
         ...style,
       }}
+      stroke={stroke}
+      strokeWidth={strokeWidth}
     >
       <path
         d="M271.309 271.309C201.705 340.913 108.877 360.935 63.9707 316.029C19.0648 271.123 39.0867 178.295 108.691 108.691C178.295 39.0867 271.123 19.0648 316.029 63.9707C360.935 108.877 340.913 201.705 271.309 271.309Z"
@@ -29,4 +33,3 @@ const Oval = (props: TIProps) => {
     </svg>
   );
 };
-export default Oval;

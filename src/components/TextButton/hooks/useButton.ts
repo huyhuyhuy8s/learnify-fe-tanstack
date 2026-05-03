@@ -18,6 +18,7 @@ export type TUseButtonProps = {
   tooltip: string;
   disabled: boolean;
   onClick: () => void;
+  className?: string;
 };
 
 export const useButton = (props: TUseButtonProps) => {
@@ -32,6 +33,7 @@ export const useButton = (props: TUseButtonProps) => {
     tooltip,
     disabled,
     onClick,
+    className,
   } = props;
 
   const onClickHandler = () => {
@@ -41,6 +43,7 @@ export const useButton = (props: TUseButtonProps) => {
 
   const buttonClassNames = classNames(
     "text-button",
+    className,
     type,
     [`corner-${roundedCorner}`],
     size,

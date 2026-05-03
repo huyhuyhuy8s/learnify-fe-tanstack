@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ABOUT_STATS } from "@/mock/about";
+import { ABOUT_STATS } from "@/mock";
 import AboutStat from "@/routes/learner/about/-components/AboutStat/index";
 import TeamList from "@/routes/learner/about/-components/TeamList";
 import { OptimizeImage } from "@/components/Images";
 import "./style.scss";
-import Slanted from "@/components/Shapes/Slanted";
 import { COLORS } from "@/styles/colors";
+import { Slanted } from "@/components/Shapes";
 
 export const Route = createFileRoute("/learner/about/")({
   component: AboutPage,

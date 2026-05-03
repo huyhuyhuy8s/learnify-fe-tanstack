@@ -3,9 +3,11 @@ type TIProps = {
   color?: string;
   size?: string;
   style?: React.CSSProperties;
+  stroke?: string;
+  strokeWidth?: number;
 };
-const Pentagon = (props: TIProps) => {
-  const { color, size = "15px", style } = props;
+export const Pentagon = (props: TIProps) => {
+  const { color, size = "15px", style, stroke, strokeWidth } = props;
 
   return (
     <svg
@@ -21,6 +23,8 @@ const Pentagon = (props: TIProps) => {
         justifyContent: "center",
         ...style,
       }}
+      stroke={stroke}
+      strokeWidth={strokeWidth}
     >
       <path
         d="M155.064 49.459C176.093 34.1803 204.569 34.1803 225.598 49.459L322.926 120.171C343.955 135.45 352.754 162.532 344.722 187.253L307.546 301.668C299.514 326.39 276.476 343.127 250.483 343.127H130.18C104.186 343.127 81.1489 326.39 73.1164 301.668L35.9407 187.253C27.9082 162.532 36.7077 135.45 57.737 120.171L155.064 49.459Z"
@@ -29,4 +33,3 @@ const Pentagon = (props: TIProps) => {
     </svg>
   );
 };
-export default Pentagon;

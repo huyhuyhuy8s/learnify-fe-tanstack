@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import classNames from "classnames";
-import { MOCK_FRIEND, mockFriends } from "@/mock/friend";
+import { MOCK_FRIEND, mockFriends } from "@/mock";
 import FriendItem from "./-components/FriendItem";
 import FriendDetail from "./-components/FriendDetail";
 import type { TTypeFriendItem } from "./-components/FriendItem/type";
@@ -56,7 +56,7 @@ function FriendsPage() {
               "friend-page-header-tab--active": typeFriend === tab.value,
             })}
           >
-            {tab.label}
+            <p className="regular">{tab.label}</p>
           </button>
         ))}
       </div>

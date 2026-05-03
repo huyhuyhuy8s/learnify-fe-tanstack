@@ -3,7 +3,6 @@
  * @link https://github.com/hankchizljaw/modern-css-reset
 */
 @use "colors" as *;
-@import url("https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap");
 
 /* Box sizing rules */
 *,
@@ -76,4 +75,15 @@ select {
 
 button {
   cursor: pointer;
+  border: none;
+  border-width: 0;
+}
+
+input {
+  border: none;
+}
+
+a {
+  text-decoration-line: none;
+  border-width: 0;
 }

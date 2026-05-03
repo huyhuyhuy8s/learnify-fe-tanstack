@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   gap: toRem(20);
-  width: toRem(300);
+  width: clamp (toRem(400), calc(12.5dvw + 1rem), 15dvw);
   padding: toRem(20);
   border-radius: $br-xl;
   border: toRem(2) solid $neutral-200;
@@ -17,14 +17,14 @@
   right: toRem(10);
 
   .information {
-    display: flex;
-    place-items: center;
+    display: grid;
+    grid-template-columns: toRem(50) 1fr;
     gap: toRem(10);
 
     .avatar {
       background-color: $neutral-400;
       aspect-ratio: 1;
-      width: toRem(75);
+      width: toRem(50);
       border-radius: 50%;
     }
 
@@ -32,16 +32,16 @@
       display: flex;
       flex-direction: column;
       gap: toRem(5);
+      min-width: 0;
 
-      h6 {
+      p,
+      small {
         color: $neutral-800;
-        line-height: toRem(25);
-      }
-
-      p::first-letter {
-        text-transform: none;
-        color: $mode-neutral;
-        line-height: toRem(20);
+        margin: 0;
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }

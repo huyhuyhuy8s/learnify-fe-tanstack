@@ -7,24 +7,26 @@ import {
 } from "@tanstack/react-router";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import * as React from "react";
-import type { QueryClient } from "@tanstack/react-query";
 import DefaultCatchBoundary from "@/components/DefaultCatchBoundary";
 import NotFound from "@/components/NotFound";
-import appCss from "@/styles/app.css?url";
 import { seo } from "@/utils/seo";
 import "@styles/_global.scss";
 import gsap from "gsap";
 import CustomEase from "gsap/CustomEase";
 import { SplitText } from "gsap/SplitText";
+import { useTheme } from "@/hooks/useTheme";
+import type { RouterContext } from "@/router";
+import Loader from "@/components/Loader";
+import "./root.scss";
+import "@styles/_global.scss";
 
 gsap.registerPlugin(SplitText, CustomEase);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
 CustomEase.create("glide", "0.8, 0, 0.2, 1");
 
-export const Route = createRootRouteWithContext<{
-  queryClient: QueryClient;
-}>()({
+export const Route = createRootRouteWithContext<RouterContext>()({
   head: () => ({
     meta: [
       {
@@ -41,7 +43,7 @@ export const Route = createRootRouteWithContext<{
       }),
     ],
     links: [
-      { rel: "stylesheet", href: appCss },
+      { rel: "stylesheet" },
       {
         rel: "apple-touch-icon",
         sizes: "180x180",
@@ -59,7 +61,6 @@ export const Route = createRootRouteWithContext<{
         sizes: "16x16",
         href: "/favicon-16x16.svg",
       },
-      { rel: "manifest", href: "/site.webmanifest", color: "#fffff" },
       { rel: "icon", href: "/favicon.ico" },
     ],
   }),
@@ -75,6 +76,8 @@ export const Route = createRootRouteWithContext<{
 });
 
 function RootComponent() {
+  useTheme();
+
   return (
     <RootDocument>
       <Outlet />
@@ -83,18 +86,23 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
+
   return (
     <html>
       <head>
         <HeadContent />
       </head>
       <body>
-        {children}
-        <div style={{ position: "absolute" }}>
-          <TanStackRouterDevtools position="bottom-right" />
-          <ReactQueryDevtools buttonPosition="bottom-left" />
-          <Scripts />
-        </div>
+        <GoogleOAuthProvider clientId={googleClientId}>
+          <Loader disabled />
+          {children}
+          <div style={{ position: "absolute" }}>
+            <TanStackRouterDevtools position="bottom-right" />
+            <ReactQueryDevtools buttonPosition="bottom-left" />
+            <Scripts />
+          </div>
+        </GoogleOAuthProvider>
       </body>
     </html>
   );

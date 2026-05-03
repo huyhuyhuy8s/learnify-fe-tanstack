@@ -10,11 +10,11 @@ type TAccountMenuProps = {
   id: string;
   subscription: TSubscription;
   className?: string;
+  onLogout?: () => void;
 };
 
 const AccountMenu = (props: TAccountMenuProps) => {
-  const { username, uid, subscription, className, id } = props;
-
+  const { username, uid, subscription, className, id, onLogout } = props;
   const userProfileLink = `/learner/user/${id}`;
 
   return (
@@ -24,13 +24,16 @@ const AccountMenu = (props: TAccountMenuProps) => {
           <div className="avatar"></div>
         </Link>
         <div className="context">
-          <h6 className="bold">{username}</h6>
-          <p>{uid}</p>
+          <p className="bold" title={username}>
+            {username}
+          </p>
+          <small title={uid}>{uid}</small>
           <TextButton
             type="special"
             size="tiny"
             text={subscription}
             typeSpecial={subscription}
+            onClick={() => {}}
           />
         </div>
       </div>
@@ -47,7 +50,7 @@ const AccountMenu = (props: TAccountMenuProps) => {
           text="Settings"
           to="/learner/settings"
         />
-        <AccountMenuItem icon="logout" text="Logout" to="/learner/logout" />
+        <AccountMenuItem icon="logout" text="Logout" onClick={onLogout} />
       </div>
     </div>
   );

@@ -17,9 +17,10 @@ const Card = (props: TCourseCardProps) => {
   } = props;
 
   return (
-    <button
+    <div
       className={classnames("card", className)}
       onClick={onClick}
+      role="button"
       tabIndex={0}
     >
       <div className="card-content">
@@ -42,7 +43,7 @@ const Card = (props: TCourseCardProps) => {
         )}
       </div>
       <CardFooter status={status} percentage={percentage} duration={duration} />
-    </button>
+    </div>
   );
 };
 export default Card;

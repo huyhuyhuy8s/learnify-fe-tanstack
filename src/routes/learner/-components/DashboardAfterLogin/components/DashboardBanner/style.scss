@@ -1,0 +1,83 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@use "@styles/colors" as *;
+
+.dashboard-banner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: toRem(20);
+  background-color: $white;
+  padding: toRem(30);
+  border-radius: $br-xl;
+  overflow: hidden;
+
+  &-icon {
+    flex-shrink: 0;
+    width: toRem(80);
+    height: toRem(80);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg,
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: toRem(8);
+    justify-content: center;
+    min-width: 0;
+
+    &-title {
+      margin: 0;
+      font-size: toRem(25);
+      line-height: toRem(35);
+      font-weight: 600;
+      color: $black;
+      word-wrap: break-word;
+    }
+
+    &-description {
+      margin: 0;
+      font-size: toRem(16);
+      line-height: toRem(20);
+      color: $black;
+      line-height: 1.5;
+    }
+  }
+
+  &-action {
+    flex-shrink: 0;
+    align-self: flex-end;
+
+    button {
+      background-color: $mode-green;
+      color: $neutral-100;
+      border-radius: toRem(100);
+      padding: toRem(10) toRem(25);
+      font-weight: 500;
+      border: none;
+    }
+  }
+}
+
+@include break(s) {
+  .dashboard-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: toRem(20);
+
+    &-action {
+      align-self: flex-start;
+    }
+  }
+}

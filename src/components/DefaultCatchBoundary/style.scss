@@ -1,0 +1,46 @@
+.default-catch-boundary {
+  min-width: 0;
+  flex: 1;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.default-catch-boundary__actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.default-catch-boundary__btn {
+  padding: 0.5rem 0.75rem;
+  background-color: #4b5563;
+  border-radius: 0.125rem;
+  color: white;
+  text-transform: uppercase;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+}
+
+.default-catch-boundary__btn--dark {
+  background-color: #374151;
+}
+
+.default-catch-boundary__link {
+  padding: 0.5rem 0.75rem;
+  background-color: #4b5563;
+  border-radius: 0.125rem;
+  color: white;
+  text-transform: uppercase;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.default-catch-boundary__link--dark {
+  background-color: #374151;
+}

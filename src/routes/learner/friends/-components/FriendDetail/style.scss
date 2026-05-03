@@ -4,7 +4,7 @@
 @use "@styles/colors" as *;
 
 .friend-detail {
-  font-family: "Inter", system-ui, sans-serif;
+  font-family: "Google Sans Flex", sans-serif;
   max-width: toRem(680);
   margin: 0 auto;
 
@@ -37,7 +37,6 @@
     border: toRem(4) solid $neutral-100;
     object-fit: cover;
     background-color: $neutral-100;
-    box-shadow: 0 toRem(4) toRem(10) rgba(0, 0, 0, 0.08);
   }
 
   &-body {
@@ -45,11 +44,7 @@
   }
 
   &-name {
-    font-size: toRem(39);
-    font-weight: 800;
     color: $neutral-800;
-    margin: 0 0 toRem(8) 0;
-    line-height: toRem(49);
   }
 
   &-meta {

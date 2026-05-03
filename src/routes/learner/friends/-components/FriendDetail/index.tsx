@@ -1,15 +1,12 @@
-import React from "react";
 import type { TFriendDetail } from "./type";
 import "./style.scss";
 
 const FriendDetail = (props: TFriendDetail) => {
   const {
-    id,
     imgBackground,
     imgUrl,
     name,
     email,
-    phoneNumber,
     streak,
     badges,
     follower,
@@ -34,10 +31,8 @@ const FriendDetail = (props: TFriendDetail) => {
       </div>
 
       <div className="friend-detail-body">
-        <h1 className="friend-detail-name">{name}</h1>
-        <p className="friend-detail-meta">
-          {email} {phoneNumber && `• ${phoneNumber}`}
-        </p>
+        <h3 className="friend-detail-name bold">{name}</h3>
+        <p className="friend-detail-meta">{email}</p>
 
         <div className="friend-detail-stats">
           <div className="friend-detail-stat-item">

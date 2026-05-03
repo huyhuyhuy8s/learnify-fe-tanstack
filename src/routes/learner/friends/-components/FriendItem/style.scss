@@ -2,6 +2,7 @@
 @use "@styles/mixins" as *;
 @use "@styles/functions" as *;
 @use "@styles/colors" as *;
+
 .friend-item {
   display: flex;
   align-items: center;
@@ -52,10 +53,7 @@
     }
 
     &-name {
-      font-size: toRem(14);
-      font-weight: 600;
       color: $mode-neutral;
-      margin: 0;
     }
   }
 }

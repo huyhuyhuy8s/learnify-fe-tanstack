@@ -1,6 +1,6 @@
 import type { TProgress, TSpecial, TStatusCard } from "@/types/global";
 
-type MockCourse = {
+export type MockCourse = {
   id: number;
   typeSpecial: TSpecial;
   title: string;
@@ -14,50 +14,51 @@ type MockCourse = {
 export const MOCK_COURSES: MockCourse[] = [
   {
     id: 1,
-    typeSpecial: "roadmap",
-    title: "Gemini for Data Scientists and Analysts",
+    typeSpecial: "course",
+    title: "Làm chủ ReactJS & TanStack",
     description:
-      "In this course, you learn how Gemini, a generative AI-powered collaborator from Google Cloud, helps analyze customer data, predict trends, and optimize workflows.",
-    duration: "2 hours",
-    status: "inProgress",
+      "Khóa học từ cơ bản đến nâng cao về hệ sinh thái TanStack, bao gồm Router, Query và Start.",
+    duration: "45 mins",
+    status: "default",
     listFeature: ["Data Analysis", "Trend Prediction", "Workflow Optimization"],
-    percentage: 14,
   },
   {
     id: 2,
     typeSpecial: "course",
-    title: "Generative AI",
+    title: "UI/UX Thực chiến cho Developer",
     description:
-      "Learn the fundamentals of Generative AI, how it differs from traditional machine learning, and explore the core technologies behind large language models.",
+      "Học cách thiết kế giao diện đẹp mắt và tối ưu trải nghiệm người dùng với TailwindCSS.",
     duration: "45 mins",
     status: "default",
     listFeature: ["Data Analysis", "Trend Prediction", "Workflow Optimization"],
   },
   {
     id: 3,
-    typeSpecial: "lab",
-    title: "Advanced React with TanStack Hello World From Learnify",
+    typeSpecial: "course",
+    title: "NestJS Backend API",
     description:
-      "Master routing, data fetching, and state management in modern React applications using the powerful TanStack ecosystem.",
-    duration: "3.5 hours",
-    status: "completed",
+      "Xây dựng hệ thống API mạnh mẽ, mở rộng tốt với NestJS và TypeScript.",
+    duration: "45 mins",
+    status: "default",
     listFeature: ["Data Analysis", "Trend Prediction", "Workflow Optimization"],
   },
   {
     id: 4,
-    typeSpecial: "lesson",
-    title:
-      "Advanced React with TanStack Advanced React with TanStack Hello World From Learnify",
-    description:
-      "Master routing, data fetching, and state management in modern React applications using the powerful TanStack ecosystem.",
-    duration: "3.5 hours",
-    status: "locked",
+    typeSpecial: "course",
+    title: "Basic database",
+    description: "Xây dựng hệ thống Database mạnh mẽ, tối ưu.",
+    duration: "45 mins",
+    status: "default",
     listFeature: ["Data Analysis", "Trend Prediction", "Workflow Optimization"],
   },
   {
     id: 5,
-    typeSpecial: "lesson",
-    title: "Course Survey",
+    typeSpecial: "course",
+    title: "NestJS Backend API",
+    description:
+      "Xây dựng hệ thống API mạnh mẽ, mở rộng tốt với NestJS và TypeScript.",
+    duration: "45 mins",
     status: "default",
+    listFeature: ["Data Analysis", "Trend Prediction", "Workflow Optimization"],
   },
 ];
