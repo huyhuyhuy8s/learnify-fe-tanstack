@@ -9,7 +9,6 @@ const SignUpVerification = memo(function SignUpVerification({
 }: TSignUpVerificationProps) {
   return (
     <div className="sign-up-verification">
-      {/* Thêm một icon to bản, mềm mại để tạo điểm nhấn */}
       <div className="sign-up-verification-icon">
         <span className="material-symbols-rounded">mark_email_unread</span>
       </div>
