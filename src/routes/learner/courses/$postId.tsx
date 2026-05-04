@@ -1,18 +1,19 @@
+import { useMemo, useState, Activity } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { COLORS } from "@/styles/colors";
 import NotFound from "@/components/NotFound";
 import PostErrorComponent from "@/components/PostErrorComponent";
 import DecorationCard from "@/components/DecorationCard";
 import TextButton from "@/components/TextButton";
-import { COLORS } from "@/styles/colors";
 import Card from "@/components/Card";
 import CommentItem from "./-components/CommentItem";
-import "./postId.scss";
-import { MOCK_COMMENT, MOCK_COURSE_DETAILS, MOCK_COURSES } from "@/mock";
-import { useMemo } from "react";
-import { useCourseDetail } from "@/hooks/useCourseDetail";
-import Loader from "@/components/Loader";
+import CommentForm from "./-components/CommentForm";
+import { useCourseDetail, useCreateReview } from "@/hooks/useCourseDetail";
 import type { TProgress } from "@/types/global";
 import { formatDate } from "@/utils";
+import { MOCK_COMMENT, MOCK_COURSE_DETAILS, MOCK_COURSES } from "@/mock";
+import "./postId.scss";
+import TetrisLoader from "@/components/TetrisLoader";
 
 export const Route = createFileRoute("/learner/courses/$postId")({
   head: () => ({
@@ -28,9 +29,11 @@ export const Route = createFileRoute("/learner/courses/$postId")({
 function PostComponent() {
   const { postId } = Route.useParams();
   const { data, isLoading, isError } = useCourseDetail(postId);
+  const createReview = useCreateReview();
+  const [showCommentForm, setShowCommentForm] = useState(false);
   const mockCourse = useMemo(
     () => MOCK_COURSES.find((course) => course.id === Number(1)),
-    [postId]
+    []
   );
 
   const courseDisplay = useMemo(() => {
@@ -74,7 +77,7 @@ function PostComponent() {
   }, [data, isLoading, isError]);
 
   if (isLoading) {
-    return <Loader />;
+    return <TetrisLoader />;
   }
 
   if (!courseDisplay) {
@@ -98,7 +101,7 @@ function PostComponent() {
           }
           typeSpecial="course"
           title={courseDisplay.title}
-          status={courseDisplay.status as any}
+          status={courseDisplay.status}
           listFeature={courseDisplay.listFeature}
           percentage={courseDisplay.percentage ?? 0}
         />
@@ -108,8 +111,22 @@ function PostComponent() {
           icon="feedback"
           type="outlined"
           typeSpecial="course"
-          onClick={() => {}}
+          onClick={() => setShowCommentForm(!showCommentForm)}
         />
+        <Activity mode={showCommentForm ? "visible" : "hidden"}>
+          <CommentForm
+            onSubmit={(rating, content) => {
+              createReview.mutate(
+                { courseId: postId, rating, content },
+                {
+                  onSuccess: () => setShowCommentForm(false),
+                }
+              );
+            }}
+            onCancel={() => setShowCommentForm(false)}
+            isLoading={createReview.isPending}
+          />
+        </Activity>
         <div className="course-detail-list">
           {lessonsDisplay.map((lesson) => (
             <Card
