@@ -47,8 +47,8 @@ export const VERIFY_RESET_CODE_MUTATION = `
 `;
 
 export const VERIFY_EMAIL_MUTATION = `
-  mutation VerifyEmail($email: String!, $code: String!) {
-    verifyEmail(email: $email, code: $code) {
+  mutation VerifyEmail($token: String!) {
+    verifyEmail(token: $token) {
       success
       message
     }
