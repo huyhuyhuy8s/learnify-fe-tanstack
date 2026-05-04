@@ -75,6 +75,8 @@ export const CURRENT_USER_QUERY = `
         phoneNumber
         avatar
         role
+        diamond
+        currentSteak
       }
     }
   }

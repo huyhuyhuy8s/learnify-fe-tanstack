@@ -10,6 +10,7 @@ import DashboardProgressWidget from "./-components/DashboardProgressWidget";
 import "./dashboard.scss";
 import { useAuthStore } from "@/store";
 import { createLearnerHead } from "@/utils";
+import { useGetAllCourses, type TBackendCourse } from "@/hooks/useCourses";
 
 export const Route = createFileRoute("/learner/dashboard")({
   head: () => ({
@@ -21,6 +22,23 @@ export const Route = createFileRoute("/learner/dashboard")({
 function Dashboard() {
   const { isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
+  const { data, isLoading, isError } = useGetAllCourses(0);
+
+  const getDisplayCourses = () => {
+    if (!isLoading && !isError && data?.isSuccess && data.courses.length > 0) {
+      return data.courses.map((course: TBackendCourse) => ({
+        id: course.id,
+        typeSpecial: "course" as const,
+        title: course.courseName,
+        description: course.abstract,
+        duration: "45 mins",
+        status: "default" as const,
+        percentage: 0,
+      }));
+    }
+    return MOCK_COURSES;
+  };
+  const displayCourse = getDisplayCourses();
 
   useLayoutEffect(() => {
     if (!isAuthenticated) {
@@ -34,7 +52,7 @@ function Dashboard() {
         <DashboardBanner />
 
         <div className="dashboard-main-courses">
-          {MOCK_COURSES.map((course, index) => (
+          {displayCourse.map((course, index) => (
             <React.Fragment key={course.id}>
               <Card
                 typeSpecial={course.typeSpecial}
