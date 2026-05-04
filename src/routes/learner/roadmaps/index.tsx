@@ -5,6 +5,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import CategoryItem from "./-components/CategoryItem";
 import { CATEGORIES } from "./-constants";
 import "./style.scss";
+import { memo } from "react";
 
 export const Route = createFileRoute("/learner/roadmaps/")({
   head: () => ({
@@ -15,7 +16,7 @@ export const Route = createFileRoute("/learner/roadmaps/")({
       },
     ],
   }),
-  component: RoadmapsPage,
+  component: memo(RoadmapsPage),
 });
 
 function RoadmapsPage() {

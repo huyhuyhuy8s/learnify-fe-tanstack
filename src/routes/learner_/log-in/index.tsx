@@ -2,10 +2,10 @@ import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import CustomLink from "@/components/CustomLink";
 import { GoogleLogin } from "@react-oauth/google";
 import { useGoogleLogin } from "@/hooks/useGoogleLogin";
-import { useAuthStore } from "@/store";
 import LogInForm from "../-components/LogInForm";
 import "./style.scss";
 import { createLearnerHead } from "@/utils";
+import type { RouterContext } from "@/router";
 import z from "zod";
 
 const productSearchSchema = z.object({
@@ -15,13 +15,9 @@ const productSearchSchema = z.object({
 export const Route = createFileRoute("/learner_/log-in/")({
   validateSearch: productSearchSchema,
   component: LogInPage,
-  beforeLoad: () => {
-    const { isHydrated, isAuthenticated } = useAuthStore.getState();
-    console.log("Checking authentication status:", {
-      isHydrated,
-      isAuthenticated,
-    });
-    if (isHydrated && isAuthenticated) {
+  beforeLoad: ({ context }) => {
+    const auth = (context as RouterContext).auth;
+    if (auth?.isAuthenticated) {
       throw redirect({ to: "/learner" });
     }
   },

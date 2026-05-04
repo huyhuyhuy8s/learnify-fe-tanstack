@@ -6,7 +6,9 @@
 .lesson-detail-page {
   display: grid;
   grid-template-columns: 1fr 25dvw;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: calc(
+      100dvh - toRem(77) - toRem(40) - 25dvw / 4 * 3 - toRem(20)
+    ) auto;
   padding: toRem(20);
   height: 100%;
   gap: toRem(20);

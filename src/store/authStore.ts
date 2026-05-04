@@ -37,8 +37,7 @@ export type TAuthState = {
 };
 
 export const useAuthStore = create<TAuthState>()((set) => {
-  const isServer = typeof window === "undefined";
-  const initialUser = isServer ? null : getPersistedUser();
+  const initialUser = getPersistedUser();
   return {
     user: initialUser,
     isAuthenticated: !!initialUser,
