@@ -52,7 +52,7 @@
           display: flex;
           align-items: center;
           gap: toRem(8);
-          padding: toRem(8) toRem(16);
+          padding: toRem(10) toRem(25);
           border: toRem(1) solid $black;
           border-radius: toRem(20);
           background: transparent;
@@ -76,11 +76,18 @@
 
         &-user {
           font-weight: 600;
-          color: $black;
+          color: $neutral-800;
         }
 
         &-dot {
           color: $mode-neutral;
+        }
+        &-item {
+          color: $neutral-600;
+          > strong {
+            font-weight: 600;
+            color: $neutral-800;
+          }
         }
       }
 
@@ -88,10 +95,10 @@
         display: flex;
         gap: toRem(8);
         font-size: toRem(13);
-        color: #777;
+        color: $neutral-600;
 
         &-dot {
-          color: #eee;
+          color: $mode-neutral;
         }
       }
     }
@@ -110,10 +117,10 @@
 
       &-card {
         padding: toRem(24);
-        border: toRem(1) solid #eee;
+        border: toRem(1) solid $neutral-300;
         border-radius: toRem(16);
         text-align: center;
-        background: #fff;
+        background: $white;
         @include box-shadow(0, 2, 8, 0);
 
         &-icon {
@@ -121,7 +128,7 @@
           height: toRem(70);
           margin: 0 auto toRem(16);
           border-radius: 50%;
-          border: toRem(2) solid #ff7a50;
+          border: toRem(2) solid $mode-yellow;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -129,7 +136,7 @@
           &-shape {
             width: toRem(30);
             height: toRem(30);
-            background: #7b61ff;
+            background: purple;
             transform: rotate(45deg);
             border-radius: toRem(8);
           }
@@ -142,7 +149,7 @@
 
         &-abstract {
           font-size: toRem(12);
-          color: #666;
+          color: $neutral-600;
           line-height: 1.5;
           margin-bottom: toRem(16);
         }
@@ -150,7 +157,7 @@
         &-status {
           font-size: toRem(11);
           font-weight: 700;
-          color: #888;
+          color: $neutral-600;
           text-transform: uppercase;
         }
       }
