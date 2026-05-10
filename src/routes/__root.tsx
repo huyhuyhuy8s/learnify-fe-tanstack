@@ -37,8 +37,6 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       .split(";")
       .find((c: string) => c.trim().startsWith(`${STORAGE_KEY}=`));
 
-    console.log("cookies", cookies);
-    console.log("authCookie", authCookie);
     if (authCookie) {
       try {
         const cookieValue = authCookie.split("=")[1];

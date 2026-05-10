@@ -2,11 +2,12 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 import ChatContainer from "./-components/ChatContainer";
 import "./lessonId.scss";
 import CourseContext from "./-components/CourseContext";
-import TutorContainer from "./-components/TutorContainer";
+import TutorContainer from "./-components/TeacherContainer";
 import { graphqlClient } from "@/lib/graphql";
 import { CURRENT_USER_QUERY } from "@/graphql/mutations";
 import type { UserReturn } from "@/gql/graphql";
 import type { RouterContext } from "@/router";
+import TeacherContainer from "./-components/TeacherContainer";
 
 export const Route = createFileRoute("/learner_/lessons/$lessonId")({
   // beforeLoad: async ({ context, params }) => {
@@ -56,7 +57,7 @@ function LessonDetail() {
     <div className="lesson-detail-page">
       <ChatContainer />
       <CourseContext />
-      <TutorContainer />
+      <TeacherContainer />
     </div>
   );
 }
