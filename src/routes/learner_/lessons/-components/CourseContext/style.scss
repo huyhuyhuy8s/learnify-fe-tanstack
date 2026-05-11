@@ -9,7 +9,9 @@
   background-color: $green-100;
   border: toRem(2) solid $green-200;
   padding: toRem(30);
-  padding-top: toRem(10);
+  gap: toRem(20);
   border-radius: $br-xl;
   @include box-shadow(0, 4, 6, -1);
+  overflow-y: scroll;
+  scroll-behavior: smooth;
 }

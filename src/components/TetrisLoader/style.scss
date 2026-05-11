@@ -1,65 +1,112 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
 .tetris-loader {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+
+  &-board-wrap {
+    margin-bottom: toRem(24);
+  }
+
+  &-board {
+    border: toRem(2) solid $neutral-800;
+    background-color: $white;
+    transition-property: background-color, border-color;
+    @include transition;
+
+    [data-theme="dark"] & {
+      border-color: $neutral-200;
+      background-color: $black;
+    }
+
+    &-sm {
+      padding: toRem(2);
+    }
+
+    &-md {
+      padding: toRem(4);
+    }
+
+    &-lg {
+      padding: toRem(6);
+    }
+  }
 
   &-row {
     display: flex;
-    gap: 3px;
   }
 
-  .block {
-    width: 8px;
-    height: 8px;
-    border-radius: 2px;
-    background-color: var(--color-green-500);
-  }
+  &-cell {
+    border: toRem(1) solid $neutral-300;
+    background-color: $white;
+    transform: scale(0.95);
+    transition-property: background-color, transform;
+    @include transition;
 
-  &.size-small {
-    .block {
-      width: 6px;
-      height: 6px;
+    [data-theme="dark"] & {
+      border-color: $neutral-600;
+      background-color: $black;
+    }
+
+    &-sm {
+      width: toRem(8);
+      height: toRem(8);
+    }
+
+    &-md {
+      width: toRem(12);
+      height: toRem(12);
+    }
+
+    &-lg {
+      width: toRem(16);
+      height: toRem(16);
+    }
+
+    &-filled {
+      background-color: $black;
+      transform: scale(1);
+
+      [data-theme="dark"] & {
+        background-color: $white;
+      }
+    }
+
+    &-clearing {
+      animation: tetrisPulse $transition-duration ease-in-out infinite;
+      opacity: 0.5;
+    }
+
+    &-top-clearing {
+      animation: tetrisPulse $transition-duration ease-in-out infinite;
     }
   }
 
-  &.size-large {
-    .block {
-      width: 12px;
-      height: 12px;
+  &-text {
+    text-align: center;
+    color: $black;
+    font-weight: $fw-medium;
+    font-size: $fs-paragraph;
+    transition-property: color;
+    @include transition;
+
+    [data-theme="dark"] & {
+      color: $white;
     }
-  }
-
-  .block-1 {
-    animation: tetris-drop 1s ease-in-out infinite;
-  }
-
-  .block-2 {
-    animation: tetris-drop 1s ease-in-out 0.15s infinite;
-  }
-
-  .block-3 {
-    animation: tetris-drop 1s ease-in-out 0.3s infinite;
-  }
-
-  .block-4 {
-    animation: tetris-drop 1s ease-in-out 0.45s infinite;
   }
 }
 
-@keyframes tetris-drop {
-  0% {
-    transform: translateY(-12px);
-    opacity: 0;
-  }
-  30% {
-    opacity: 1;
-  }
-  70% {
-    opacity: 1;
-  }
+@keyframes tetrisPulse {
+  0%,
   100% {
-    transform: translateY(12px);
-    opacity: 0;
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
   }
 }

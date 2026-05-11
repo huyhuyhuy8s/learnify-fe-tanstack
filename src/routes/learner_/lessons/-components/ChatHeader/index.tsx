@@ -24,7 +24,12 @@ const ChatHeader = (props: TChatHeaderProps) => {
   return (
     <form className={cls} onSubmit={handleSubmit}>
       <div className="chat-header-context" ref={wrapperRef}>
-        <span className="material-symbols-rounded">chat</span>
+        <span
+          className="material-symbols-rounded"
+          style={{ pointerEvents: "none" }}
+        >
+          chat
+        </span>
         <div>
           <input
             id="chat-header-input"

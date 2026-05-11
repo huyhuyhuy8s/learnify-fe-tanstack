@@ -9,6 +9,89 @@
 
   &-control-button {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 1fr auto;
+    padding: toRem(15) toRem(15);
+    padding-left: toRem(20);
+    border-radius: $br-md;
+    @include transition;
+    transition-property: border-radius filter;
+
+    &:hover {
+      filter: brightness(0.9);
+    }
+
+    &.visible {
+      border-radius: $br-md $br-md 0 0;
+    }
+
+    &-context {
+      display: flex;
+      align-items: center;
+      gap: toRem(10);
+
+      h6 {
+        font-size: calc($fs-heading6 - toRem(2.5));
+        color: inherit;
+      }
+    }
+
+    .arrow {
+      transform: rotate(0);
+      transition-property: transform;
+      @include transition;
+
+      &.visible {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &-options {
+    display: grid;
+    grid-template-rows: 0fr;
+    @include transition;
+
+    &.visible {
+      grid-template-rows: 1fr;
+    }
+
+    &-inner {
+      width: 100%;
+      overflow: hidden;
+      display: grid;
+    }
+
+    * {
+      overflow: hidden;
+    }
+  }
+
+  &-option {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    padding: toRem(15) toRem(20);
+    padding-left: toRem(25);
+    background-color: $neutral-150;
+    @include transition;
+    transition-property: background-color;
+
+    &:hover {
+      background-color: $neutral-200;
+    }
+
+    &-context {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      h6 {
+        font-size: calc($fs-heading6 - toRem(2.5));
+        color: inherit;
+      }
+    }
+
+    &:last-child {
+      border-radius: 0 0 $br-md $br-md;
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { Fragment, memo } from "react";
+import { Fragment } from "react";
 import { Link } from "@tanstack/react-router";
 import Logo from "@/components/Logo";
 import "./style.scss";
@@ -10,12 +10,12 @@ type TTopNavLeftProps = {
   pathnameWithoutLast: string[];
 };
 
-const LogoWrapper = memo(() => (
+const LogoWrapper = () => (
   <>
     <Logo size="small" />
     <div className="divider" />
   </>
-));
+);
 
 const TopNavLeft = (props: TTopNavLeftProps) => {
   const {

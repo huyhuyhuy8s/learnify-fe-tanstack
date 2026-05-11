@@ -5,7 +5,6 @@ import Footer from "@/components/Footer";
 import "./style.scss";
 import Loader from "@/components/Loader";
 import { createLearnerHead } from "@/utils";
-import type { RouterContext } from "@/router";
 
 export const Route = createFileRoute("/learner")({
   beforeLoad: ({ context }) => {

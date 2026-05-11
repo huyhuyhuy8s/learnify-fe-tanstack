@@ -1,15 +1,15 @@
-import { useAuthStore } from "@/store";
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import type { RouterContext } from "@/router";
 
 export const Route = createFileRoute("/learner/user/$userId")({
-  beforeLoad: () => {
-    const { isAuthenticated, isHydrated } = useAuthStore.getState();
+  beforeLoad: ({ context, params }) => {
+    const auth = (context as RouterContext).auth;
 
-    if (isHydrated && !isAuthenticated) {
+    if (!auth?.isAuthenticated) {
       throw redirect({
         to: "/learner/sign-up",
         search: {
-          redirect: "/learner/user/$userId",
+          redirect: `/learner/user/${params.userId}`,
         },
       });
     }
