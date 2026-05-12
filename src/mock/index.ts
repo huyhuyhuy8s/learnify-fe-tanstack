@@ -1,4 +1,5 @@
 export * from "./course";
+export * from "./course-context";
 export * from "./course-detail";
 export * from "./roadmap";
 export * from "./comment";

@@ -1,7 +1,21 @@
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { LoopRepeat, type Object3D } from "three";
-import { forwardRef, useEffect } from "react";
-import type { TActions, TTeacherAnimationProps } from "./type";
+import { forwardRef, useEffect, useMemo, useRef } from "react";
+import type {
+  TActions,
+  TTeacherAnimation,
+  TTeacherAnimationDeg,
+  TTeacherAnimationProps,
+} from "./type";
+
+const DEG_ANIMATIONS: TTeacherAnimationDeg[] = [
+  "metarig.001|mixamo.com|Layer0",
+  "metarig.001|mixamo.com|Layer0.001",
+  "Talking_4",
+  "Talking_4.001",
+  "Talking_5",
+  "Talking_7",
+];
 
 const TeacherAnimation = forwardRef<Object3D, TTeacherAnimationProps>(
   (props, ref) => {
@@ -10,12 +24,26 @@ const TeacherAnimation = forwardRef<Object3D, TTeacherAnimationProps>(
       position = [0, 0, 0],
       rotation = [0, 0, 0],
     } = props;
+
+    const computedRotation = useMemo(() => {
+      const isDegAnimation = DEG_ANIMATIONS.includes(
+        animation as TTeacherAnimationDeg
+      );
+      const extraRotation = isDegAnimation ? Math.PI : 0;
+      return [rotation[0], rotation[1] + extraRotation, rotation[2]] as [
+        number,
+        number,
+        number,
+      ];
+    }, [animation, rotation]);
     const { scene: animScene, animations: glTFAnimations } = useGLTF(
       "/models/teacher_animation.glb"
     );
     const teacher = useGLTF("/models/teacher.glb");
     const { actions } = useAnimations(glTFAnimations, teacher.scene);
     const typedActions = actions as TActions;
+
+    const prevAnimationRef = useRef<TTeacherAnimation | null>(null);
 
     useEffect(() => {
       if (ref) {
@@ -28,17 +56,32 @@ const TeacherAnimation = forwardRef<Object3D, TTeacherAnimationProps>(
     }, [ref, teacher.scene]);
 
     useEffect(() => {
-      const action = typedActions[animation];
-      if (action) {
-        action.reset().setLoop(LoopRepeat, Infinity).play();
+      const currentAction = typedActions[animation];
+      const prevAction = prevAnimationRef.current
+        ? typedActions[prevAnimationRef.current]
+        : null;
+
+      if (currentAction) {
+        if (prevAction && prevAction !== currentAction) {
+          prevAction.fadeOut(0.3);
+          currentAction
+            .reset()
+            .fadeIn(0.3)
+            .setLoop(LoopRepeat, Infinity)
+            .play();
+        } else {
+          currentAction.reset().setLoop(LoopRepeat, Infinity).play();
+        }
       }
+
+      prevAnimationRef.current = animation;
     }, [teacher.scene, animScene, glTFAnimations, typedActions, animation]);
 
     return (
       <primitive
         object={teacher.scene}
         position={position}
-        rotation={rotation}
+        rotation={computedRotation}
       />
     );
   }

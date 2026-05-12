@@ -6,8 +6,11 @@
 
 .lesson-page {
   width: 100dvw;
+  height: 100dvh;
+  overflow-x: scroll;
   display: grid;
-  grid-template-columns: toRem(60) 1fr;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: toRem(77) calc(100dvh - toRem(77));
   background-color: $white;
 
   .top-nav {
