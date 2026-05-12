@@ -7,7 +7,7 @@ import {
   forwardRef,
 } from "react";
 import classNames from "classnames";
-import { uuid } from "zod";
+
 import ChatMessage from "../ChatMessage";
 import type { TMessage } from "../ChatMessage/type";
 import ChatInput from "../ChatInput";
@@ -70,7 +70,7 @@ const ChatMessageWrapper = forwardRef<
   const handleSendMessage = useCallback(
     async (content: string) => {
       const newMessage: TMessage = {
-        id: uuid().toString(),
+        id: crypto.randomUUID(),
         content,
         sender: "user",
         timestamp: new Date(),

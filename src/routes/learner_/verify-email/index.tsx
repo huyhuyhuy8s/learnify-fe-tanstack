@@ -38,8 +38,8 @@ function VerifyEmailPage() {
   );
   const [message, setMessage] = useState(
     token
-      ? "Đang xác thực tài khoản của bạn..."
-      : "Không tìm thấy mã xác thực hợp lệ trên đường dẫn."
+      ? "Verifying your account..."
+      : "No valid verification token found in the link."
   );
   const [countdown, setCountdown] = useState(3);
 
@@ -60,7 +60,7 @@ function VerifyEmailPage() {
         if (response.verifyEmail.success) {
           setStatus("success");
           setMessage(
-            response.verifyEmail.message || "Xác thực email thành công!"
+            response.verifyEmail.message || "Email verified successfully!"
           );
 
           try {
@@ -75,7 +75,7 @@ function VerifyEmailPage() {
               setAuth(userData);
             }
           } catch (err) {
-            console.error("Không thể lấy thông tin user ngay lúc này:", err);
+            console.error("Could not fetch user info at this time:", err);
           }
 
           const timer = setInterval(() => {
@@ -90,7 +90,7 @@ function VerifyEmailPage() {
           }, 1000);
         } else {
           setStatus("error");
-          setMessage(response.verifyEmail.message || "Xác thực thất bại.");
+          setMessage(response.verifyEmail.message || "Verification failed.");
         }
       } catch (error: unknown) {
         setStatus("error");
@@ -101,7 +101,7 @@ function VerifyEmailPage() {
 
         const errorMessage =
           maybeGraphQLError?.response?.errors?.[0]?.message ||
-          "Đã xảy ra lỗi hệ thống khi xác thực. Vui lòng thử lại.";
+          "Verification failed due to a system error. Please try again.";
         setMessage(errorMessage);
       }
     };
@@ -124,7 +124,7 @@ function VerifyEmailPage() {
             <span className="material-symbols-rounded">check_circle</span>
             <h3 className="semibold">{message}</h3>
             <p className="regular">
-              Đang chuyển hướng về trang chủ sau {countdown} giây...
+              Redirecting to home in {countdown} seconds...
             </p>
           </div>
         )}
@@ -132,14 +132,14 @@ function VerifyEmailPage() {
         {status === "error" && (
           <div className="verify-email-error">
             <span className="material-symbols-rounded">error</span>
-            <h3 className="semibold">Xác thực thất bại</h3>
+            <h3 className="semibold">Verification Failed</h3>
             <p className="regular">{message}</p>
             <button
               className="verify-email-retry-btn"
               type="button"
-              onClick={() => navigate({ to: "/learner/sign-up" })} // Hoặc đưa về trang login
+              onClick={() => navigate({ to: "/learner/sign-up" })}
             >
-              <h6 className="semibold">Quay lại trang Đăng ký</h6>
+              <h6 className="semibold">Back to Sign Up</h6>
             </button>
           </div>
         )}

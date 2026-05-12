@@ -7,14 +7,11 @@ import "./userId.scss";
 
 export const Route = createFileRoute("/learner/user")({
   beforeLoad: () => {
-    const { isAuthenticated, isHydrated } = useAuthStore.getState();
+    const { isAuthenticated } = useAuthStore.getState();
 
-    if (isHydrated && !isAuthenticated) {
+    if (!isAuthenticated) {
       throw redirect({
         to: "/learner/sign-up",
-        search: {
-          redirect: "/learner/user",
-        },
       });
     }
   },
@@ -22,9 +19,9 @@ export const Route = createFileRoute("/learner/user")({
 });
 
 function RouteComponent() {
-  const currentUserId = useAuthStore((state) => state.user?.id) || "mock-id";
+  const currentUserId = useAuthStore((state) => state.user?.id);
 
-  const { data, isLoading, isError } = useGetUserProfile(currentUserId);
+  const { data, isLoading, isError } = useGetUserProfile(currentUserId ?? "");
 
   const userDisplay = useMemo(() => {
     if (!isLoading && !isError && data?.currentUser?.users?.length) {

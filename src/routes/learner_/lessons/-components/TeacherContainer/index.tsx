@@ -51,8 +51,6 @@ const TeacherContainer = (props: TTeacherContainerProps) => {
             position={[1, 0.25, -2]}
             ref={teacherRef}
           />
-          <axesHelper args={[]} />
-          <gridHelper args={[10, 10]} />
           <CameraController target={[1, 1.425, 1]} />
           <Preload all />
         </Canvas>

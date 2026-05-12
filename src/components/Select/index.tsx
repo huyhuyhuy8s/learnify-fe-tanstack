@@ -22,7 +22,7 @@ const Select = (props: TSelectProps) => {
     <ReactSelect
       className={classNames("select", className)}
       onChange={setSelectedOption}
-      defaultValue={selectedOption}
+      value={selectedOption}
       options={options}
     />
   );

@@ -1,9 +1,14 @@
 import { create } from "zustand";
 import type { UserResponse } from "@/gql/graphql";
 
+type AuthUser = UserResponse & {
+  diamond?: number;
+  currentSteak?: number;
+};
+
 const STORAGE_KEY = "auth-storage";
 
-function getPersistedUser(): UserResponse | null {
+function getPersistedUser(): AuthUser | null {
   if (typeof window === "undefined") return null;
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -15,7 +20,7 @@ function getPersistedUser(): UserResponse | null {
   }
 }
 
-function persistUser(user: UserResponse | null) {
+function persistUser(user: AuthUser | null) {
   if (typeof window === "undefined") return;
   if (user) {
     localStorage.setItem(
@@ -28,10 +33,10 @@ function persistUser(user: UserResponse | null) {
 }
 
 export type TAuthState = {
-  user: UserResponse | null;
+  user: AuthUser | null;
   isAuthenticated: boolean;
   isHydrated: boolean;
-  setAuth: (user: UserResponse | null) => void;
+  setAuth: (user: AuthUser | null) => void;
   logout: () => void;
   setHydrated: (hydrated: boolean) => void;
 };
@@ -55,7 +60,7 @@ export const useAuthStore = create<TAuthState>()((set) => {
 });
 
 export const logout = () => useAuthStore.getState().logout();
-export const setAuth = (user: UserResponse | null) =>
+export const setAuth = (user: AuthUser | null) =>
   useAuthStore.getState().setAuth(user);
 export const setHydrated = (hydrated: boolean) =>
   useAuthStore.getState().setHydrated(hydrated);
