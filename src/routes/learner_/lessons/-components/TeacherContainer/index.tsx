@@ -1,7 +1,7 @@
 import { Environment, Preload, useGLTF } from "@react-three/drei";
 import "./style.scss";
 import { Suspense, useRef, type ReactNode } from "react";
-import { Canvas, useFrame, type ThreeElements } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import TeacherAnimation from "../TeacherAnimation";
 import { Vector3, type Group } from "three";
 import TetrisLoader from "@/components/TetrisLoader";

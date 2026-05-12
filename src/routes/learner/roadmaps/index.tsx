@@ -49,7 +49,7 @@ function RoadmapsPage() {
                 key={index}
                 icon={item.icon}
                 label={item.label}
-                onClick={() => console.log(`Maps to ${item.label}`)}
+                onClick={() => undefined}
               />
             ))}
           </div>

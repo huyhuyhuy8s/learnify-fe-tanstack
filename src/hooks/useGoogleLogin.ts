@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { graphqlClient } from "@/lib/graphql"; // Không cần getAuthenticatedClient nữa
+import { graphqlClient } from "@/lib/graphql"; // No longer need getAuthenticatedClient
 import { GOOGLE_LOGIN_MUTATION, CURRENT_USER_QUERY } from "@/graphql/mutations";
 import { useAuthStore } from "@/store/authStore";
 import type { AuthResponse, UserReturn } from "@/gql/graphql";

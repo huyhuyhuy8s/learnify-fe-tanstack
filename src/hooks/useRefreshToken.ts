@@ -23,7 +23,7 @@ async function refreshTokenRequest() {
   const user = userResponse.currentUser.users?.[0] || null;
 
   if (!user) {
-    throw new Error("Không thể lấy thông tin người dùng sau khi refresh");
+    throw new Error("Failed to fetch user info after refresh");
   }
 
   return { refresh: response.refresh, user };

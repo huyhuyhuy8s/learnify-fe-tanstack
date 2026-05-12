@@ -6,7 +6,7 @@
   display: grid;
   grid-template-rows: 1fr auto;
   height: 100%;
-  overflow: scroll;
+  overflow: auto;
   scroll-behavior: smooth;
 
   &-list {

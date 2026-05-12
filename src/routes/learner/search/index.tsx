@@ -13,7 +13,7 @@ export const Route = createFileRoute("/learner/search/")({
 function RouteComponent() {
   const { q } = Route.useSearch();
 
-  console.log("Search query:", q);
+  if (import.meta.env.DEV) console.debug("Search query:", q);
 
   return <div>Showing results for: {q}</div>;
 }

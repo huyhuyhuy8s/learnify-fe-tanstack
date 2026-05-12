@@ -4,7 +4,7 @@ import type { TLogoProps } from "./type";
 import { Link } from "@tanstack/react-router";
 
 const Logo = (props: TLogoProps) => {
-  const { className, size = "nedium" } = props;
+  const { className, size = "medium" } = props;
   const logoClassNames = classnames("logo", size.toLowerCase(), className);
 
   return (

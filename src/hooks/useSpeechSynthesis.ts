@@ -42,14 +42,21 @@ const useSpeechSynthesis = (): TSpeechSynthesisReturn => {
         import.meta.env.VITE_ELEVENLABS_MODEL_ID || "eleven_multilingual_v2";
 
       const useElevenLabs = !!apiKey;
-      console.log("[TTS] useElevenLabs:", useElevenLabs, "| voiceId:", voiceId);
+      if (import.meta.env.DEV)
+        console.debug(
+          "[TTS] useElevenLabs:",
+          useElevenLabs,
+          "| voiceId:",
+          voiceId
+        );
 
       if (useElevenLabs) {
         try {
-          console.log(
-            "[TTS] Calling ElevenLabs API with text:",
-            text.substring(0, 50) + "..."
-          );
+          if (import.meta.env.DEV)
+            console.debug(
+              "[TTS] Calling ElevenLabs API with text:",
+              text.substring(0, 50) + "..."
+            );
 
           const client = new ElevenLabsClient({ apiKey });
           elevenLabsClientRef.current = client;
