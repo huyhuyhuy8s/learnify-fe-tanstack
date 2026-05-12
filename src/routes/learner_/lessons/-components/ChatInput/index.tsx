@@ -1,9 +1,8 @@
+import { memo, useRef, useCallback, useEffect, useState } from "react";
 import classnames from "classnames";
-import { useState, useRef, useEffect } from "react";
 import type { TChatInputProps } from "./type";
-import "./style.scss";
 import IconButton from "@/components/IconButton";
-import debounce from "lodash/debounce";
+import "./style.scss";
 
 const MIN_HEIGHT = 20;
 const MAX_HEIGHT = 200;
@@ -19,6 +18,7 @@ const ChatInput = (props: TChatInputProps) => {
   } = props;
 
   const [message, setMessage] = useState("");
+  const valueRef = useRef("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -29,27 +29,28 @@ const ChatInput = (props: TChatInputProps) => {
     }
   }, [message]);
 
-  const handleInputChange = debounce((value: string) => {
-    setMessage(value);
-  }, 300);
-
-  const handleSend = () => {
-    if (message.trim() && !disabled) {
-      onSendMessage(message.trim());
+  const handleSend = useCallback(() => {
+    const value = valueRef.current;
+    if (value.trim() && !disabled) {
+      onSendMessage(value.trim());
+      valueRef.current = "";
       setMessage("");
       if (textareaRef.current) {
         textareaRef.current.value = "";
         textareaRef.current.style.height = "auto";
       }
     }
-  };
+  }, [disabled, onSendMessage]);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
-    }
-  };
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        handleSend();
+      }
+    },
+    [handleSend]
+  );
 
   const cls = classnames("chat-input", className);
 
@@ -70,7 +71,10 @@ const ChatInput = (props: TChatInputProps) => {
         className="chat-input-field"
         placeholder={placeholder}
         disabled={disabled}
-        onChange={(e) => handleInputChange(e.target.value)}
+        onChange={(e) => {
+          valueRef.current = e.target.value;
+          setMessage(e.target.value);
+        }}
         onKeyDown={handleKeyDown}
         aria-label="Message input"
         rows={1}
@@ -96,9 +100,10 @@ const ChatInput = (props: TChatInputProps) => {
         aria-label="Send message"
         icon="send"
         tooltip="Send Message"
+        buttonType="submit"
       />
     </div>
   );
 };
 
-export default ChatInput;
+export default memo(ChatInput);

@@ -3,6 +3,7 @@ import "./route.scss";
 import TopNav from "@/components/TopNav";
 import LeftNav from "@/components/LeftNav";
 import { createLearnerHead } from "@/utils";
+import CourseController from "./-components/CourseController";
 
 export const Route = createFileRoute("/learner_/lessons")({
   // beforeLoad: ({ context, location }) => {
@@ -24,7 +25,7 @@ function RouteComponent() {
   return (
     <section className="lesson-page">
       <TopNav fullWidth />
-      <LeftNav compact />
+      <CourseController />
       <Outlet />
     </section>
   );
