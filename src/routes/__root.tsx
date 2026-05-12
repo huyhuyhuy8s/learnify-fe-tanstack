@@ -22,41 +22,24 @@ import Loader from "@/components/Loader";
 import { useAuthStore } from "@/store/authStore";
 import "./root.scss";
 import "@styles/_global.scss";
+import { fetchCurrentUser } from "@/apis/auth";
 
 gsap.registerPlugin(SplitText, CustomEase);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
 CustomEase.create("glide", "0.8, 0, 0.2, 1");
 
-const STORAGE_KEY = "auth-storage";
-
 export const Route = createRootRouteWithContext<RouterContext>()({
-  loader: ({ context }) => {
-    const cookies =
-      (context as { request?: Request }).request?.headers?.get("cookie") || "";
-    const authCookie = cookies
-      .split(";")
-      .find((c: string) => c.trim().startsWith(`${STORAGE_KEY}=`));
+  loader: async ({ context }) => {
+    const request = (context as { request?: Request }).request;
+    const cookieHeader = request?.headers?.get("cookie") || undefined;
+    const user = await fetchCurrentUser(cookieHeader);
 
-    if (authCookie) {
-      try {
-        const cookieValue = authCookie.split("=")[1];
-        if (cookieValue) {
-          const value = decodeURIComponent(cookieValue);
-          const parsed = JSON.parse(value);
-          if (parsed.user) {
-            return {
-              auth: {
-                user: parsed.user,
-                isAuthenticated: true,
-              },
-            };
-          }
-        }
-      } catch {
-        throw new Error("Invalid cookie");
-      }
-    }
-    return { auth: null };
+    return {
+      auth: {
+        user: user,
+        isAuthenticated: !!user,
+      },
+    };
   },
   head: () => ({
     meta: [
@@ -108,11 +91,12 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
 function RootComponent() {
   useTheme();
-  const setHydrated = useAuthStore((state) => state.setHydrated);
+  const setAuth = useAuthStore((state) => state.setAuth);
+  const { auth } = Route.useLoaderData();
 
   useEffect(() => {
-    setHydrated(true);
-  }, [setHydrated]);
+    setAuth(auth?.user || null);
+  }, [setAuth, auth]);
 
   return (
     <RootDocument>

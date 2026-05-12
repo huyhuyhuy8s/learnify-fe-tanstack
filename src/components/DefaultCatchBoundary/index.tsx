@@ -22,8 +22,9 @@ function DefaultCatchBoundary({ error }: ErrorComponentProps) {
       <ErrorComponent error={error} />
       <div className="default-catch-boundary__actions">
         <button
-          onClick={() => {
-            router.invalidate();
+          onClick={async () => {
+            await router.invalidate();
+            await router.load();
           }}
           className="default-catch-boundary__btn"
         >
