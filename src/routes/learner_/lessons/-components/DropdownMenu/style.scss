@@ -95,6 +95,9 @@
       h6 {
         font-size: calc($fs-heading6 - toRem(2.5));
         text-align: left;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
 

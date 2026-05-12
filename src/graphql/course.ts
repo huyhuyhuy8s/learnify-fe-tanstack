@@ -1,3 +1,60 @@
+export const GET_LESSON_BY_ID = `
+  query GetLessonById($id: String!) {
+    getLessonById(id: $id) {
+      isSuccess
+      lessons {
+        id
+        lessonName
+        abstract
+        courseId
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
+export const GET_SECTIONS_BY_LESSON = `
+  query GetSectionsByLesson($lessonId: String!) {
+    getSectionByLesson(lessonId: $lessonId) {
+      id
+      urlPdf
+      content
+      order
+    }
+  }
+`;
+
+export const GET_COURSE_BY_ID = `
+  query GetCourseById($id: String!) {
+    getCourseById(id: $id) {
+      id
+      courseName
+      abstract
+      keyLearnings
+      status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const GET_LESSONS_BY_COURSE_ID_QUERY = `
+  query GetLessonsByCourseId($id: String!) {
+    getLessonsByCourseId(id: $id) {
+      isSuccess
+      lessons {
+        id
+        lessonName
+        abstract
+        courseId
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
 export const GET_ALL_COURSES_QUERY = `
   query GetAllCourses($skip: Float!) {
     getAllCourses(skip: $skip) {

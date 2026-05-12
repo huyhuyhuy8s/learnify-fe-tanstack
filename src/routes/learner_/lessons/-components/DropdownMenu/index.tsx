@@ -78,7 +78,9 @@ const DropdownMenu = (props: TDropdownMenuProps) => {
             <div className="dropdown-menu-option" key={option.label}>
               <button className="dropdown-menu-option-context">
                 <span className="material-symbols-rounded">{iconOption}</span>
-                <h6 className="medium">{option.label}</h6>
+                <h6 className="medium" title={option.label}>
+                  {option.label}
+                </h6>
               </button>
               <IconButton
                 icon="more_vert"

@@ -49,4 +49,64 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  &_lessons {
+    display: flex;
+    flex-direction: column;
+    padding: toRem(8);
+    gap: toRem(4);
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  &_lesson {
+    display: flex;
+    align-items: center;
+    gap: toRem(10);
+    padding: toRem(10) toRem(16);
+    border: none;
+    background: transparent;
+    border-radius: $br-md;
+    cursor: pointer;
+    text-align: left;
+    @include transition;
+    transition-property: background-color;
+
+    &:hover {
+      background-color: $neutral-150;
+    }
+
+    &.active {
+      background-color: $green-100;
+    }
+
+    &.active:hover {
+      background-color: $green-200;
+    }
+
+    &-icon {
+      font-size: toRem(20);
+      color: $neutral-500;
+      flex-shrink: 0;
+    }
+
+    &.active &-icon {
+      color: $green-600;
+    }
+
+    &-name {
+      font-size: $fs-paragraph;
+      color: $neutral-800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &_loading {
+    padding: toRem(20);
+    text-align: center;
+    color: $neutral-400;
+    font-size: $fs-paragraph;
+  }
 }

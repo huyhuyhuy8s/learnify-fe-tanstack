@@ -3,6 +3,7 @@ import TopNavRight from "./components/TopNavRight";
 import { useRouterState } from "@tanstack/react-router";
 import usePathname from "./hooks/usePathname";
 import { useScrollTop } from "@/hooks/useScrollTop";
+import { useLayout } from "@/contexts/LayoutContext";
 import classnames from "classnames";
 import "./style.scss";
 
@@ -20,6 +21,7 @@ const TopNav = (props: TTopNavProps) => {
     pathnames,
   });
   const isTop = useScrollTop();
+  const { customTitle } = useLayout();
 
   const navClassNames = classnames(
     "top-nav",
@@ -35,6 +37,7 @@ const TopNav = (props: TTopNavProps) => {
         pathname={pathname}
         lastPathname={lastPathname}
         pathnameWithoutLast={pathnameWithoutLast}
+        customTitle={customTitle}
       />
       <TopNavRight />
     </nav>

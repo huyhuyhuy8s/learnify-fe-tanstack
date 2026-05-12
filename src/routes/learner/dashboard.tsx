@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, Suspense } from "react";
 import Card from "@/components/Card";
 import { MOCK_COURSES } from "@/mock";
 import { useNavigate } from "@tanstack/react-router";
@@ -10,7 +10,11 @@ import DashboardProgressWidget from "./-components/DashboardProgressWidget";
 import "./dashboard.scss";
 import { useAuthStore } from "@/store";
 import { createLearnerHead } from "@/utils";
-import { useGetAllCourses, type TBackendCourse } from "@/hooks/useCourses";
+import {
+  useSuspenseGetAllCourses,
+  type TBackendCourse,
+} from "@/hooks/useCourses";
+import TetrisLoader from "@/components/TetrisLoader";
 
 export const Route = createFileRoute("/learner/dashboard")({
   head: () => ({
@@ -19,14 +23,13 @@ export const Route = createFileRoute("/learner/dashboard")({
   component: Dashboard,
 });
 
-function Dashboard() {
-  const { isAuthenticated } = useAuthStore();
+function DashboardInner() {
+  const { data } = useSuspenseGetAllCourses(0);
   const navigate = useNavigate();
-  const { data, isLoading, isError } = useGetAllCourses(0);
+  const isBackendSuccess = data?.isSuccess && data.courses.length > 0;
 
-  const getDisplayCourses = () => {
-    if (!isLoading && !isError && data?.isSuccess && data.courses.length > 0) {
-      return data.courses.map((course: TBackendCourse) => ({
+  const displayCourse = isBackendSuccess
+    ? data.courses.map((course: TBackendCourse) => ({
         id: course.id,
         typeSpecial: "course" as const,
         title: course.courseName,
@@ -34,23 +37,13 @@ function Dashboard() {
         duration: "45 mins",
         status: "default" as const,
         percentage: 0,
-      }));
-    }
-    return MOCK_COURSES;
-  };
-  const displayCourse = getDisplayCourses();
-
-  useLayoutEffect(() => {
-    if (!isAuthenticated) {
-      navigate({ to: "/learner", replace: true });
-    }
-  }, [isAuthenticated, navigate]);
+      }))
+    : MOCK_COURSES;
 
   return (
     <div className="dashboard">
       <div className="dashboard-main">
         <DashboardBanner />
-
         <div className="dashboard-main-courses">
           {displayCourse.map((course, index) => (
             <React.Fragment key={course.id}>
@@ -63,33 +56,47 @@ function Dashboard() {
                 percentage={course.percentage}
                 onClick={() =>
                   navigate({
-                    to: "/learner/courses/$postId",
-                    params: { postId: course.id.toString() },
+                    to: "/learner/courses/$courseId",
+                    params: { courseId: course.id.toString() },
                   })
                 }
               />
-              {(index + 1) % 3 === 0 && index !== MOCK_COURSES.length - 1 && (
+              {(index + 1) % 3 === 0 && index !== displayCourse.length - 1 && (
                 <hr className="course-row-divider" />
               )}
             </React.Fragment>
           ))}
         </div>
       </div>
-
       <div className="dashboard-sidebar">
         <div className="dashboard-sidebar-widget">
           <DashboardStreakWidget />
         </div>
-
         <div className="dashboard-sidebar-widget">
           <DashboardAchievementsWidget />
         </div>
-
         <div className="dashboard-sidebar-widget">
           <DashboardProgressWidget />
         </div>
       </div>
     </div>
+  );
+}
+
+function Dashboard() {
+  const { isAuthenticated } = useAuthStore();
+  const navigate = useNavigate();
+
+  useLayoutEffect(() => {
+    if (!isAuthenticated) {
+      navigate({ to: "/learner", replace: true });
+    }
+  }, [isAuthenticated, navigate]);
+
+  return (
+    <Suspense fallback={<TetrisLoader />}>
+      <DashboardInner />
+    </Suspense>
   );
 }
 
