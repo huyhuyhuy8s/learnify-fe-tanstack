@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useRouter } from "@tanstack/react-router";
 import { useLogin } from "@/hooks/useLogin";
 import z from "zod";
 
@@ -22,6 +22,7 @@ export const logInFormSchema = z.object({
 export const useLogInForm = (props: { redirect?: string }) => {
   const { redirect } = props;
   const navigate = useNavigate();
+  const router = useRouter();
   const login = useLogin();
 
   const [formData, setFormData] = useState<TLogInForm>({
@@ -58,6 +59,7 @@ export const useLogInForm = (props: { redirect?: string }) => {
         setErrors(validationErrors);
         return false;
       }
+
       const result = await login.mutateAsync({
         data: {
           email: formData.email,
@@ -65,15 +67,24 @@ export const useLogInForm = (props: { redirect?: string }) => {
         },
       });
 
-      if (result.login.success) {
+      if (result.success) {
+        await router.invalidate();
+        await router.load();
         if (redirect) {
           navigate({ to: redirect });
         } else {
           navigate({ to: "/learner" });
         }
+      } else {
+        setErrors({
+          api: result.message || "Login failed. Please check your credentials.",
+        });
       }
-    } catch {
-      setErrors({ api: "Login failed. Please check your credentials." });
+    } catch (error) {
+      console.error("Lỗi catch ở useLoginForm:", error);
+      setErrors({
+        api: "Đã xảy ra lỗi hệ thống hoặc sai thông tin đăng nhập.",
+      });
     }
   };
 

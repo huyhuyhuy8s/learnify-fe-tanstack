@@ -1,28 +1,18 @@
 import { useMemo } from "react";
-import { createFileRoute, redirect } from "@tanstack/react-router";
-import { useAuthStore } from "@/store";
+import { createFileRoute, Navigate, getRouteApi } from "@tanstack/react-router";
 import { MOCK_USER_PROFILE } from "@/mock/user";
 import { useGetUserProfile } from "@/hooks/useProfile";
 import "./userId.scss";
 
 export const Route = createFileRoute("/learner/user")({
-  beforeLoad: () => {
-    const { isAuthenticated, isHydrated } = useAuthStore.getState();
-
-    if (isHydrated && !isAuthenticated) {
-      throw redirect({
-        to: "/learner/sign-up",
-        search: {
-          redirect: "/learner/user",
-        },
-      });
-    }
-  },
   component: RouteComponent,
 });
+const rootRoute = getRouteApi("__root__");
 
 function RouteComponent() {
-  const currentUserId = useAuthStore((state) => state.user?.id) || "mock-id";
+  // 1. TẤT CẢ HOOKS PHẢI ĐƯỢC GỌI Ở TRÊN CÙNG (Tránh lỗi Rules of Hooks)
+  const { auth } = rootRoute.useLoaderData();
+  const currentUserId = auth?.user?.id || "mock-id";
 
   const { data, isLoading, isError } = useGetUserProfile(currentUserId);
 
@@ -55,6 +45,18 @@ function RouteComponent() {
     return MOCK_USER_PROFILE;
   }, [data, isLoading, isError]);
 
+  // 2. LỆNH ĐIỀU HƯỚNG (EARLY RETURN) PHẢI NẰM SAU CÁC HOOKS
+  if (!auth?.isAuthenticated) {
+    return (
+      <Navigate
+        to="/learner/log-in"
+        search={{ redirect: "/learner/user" }} // Có thể sửa lại redirect tuỳ ý
+        replace
+      />
+    );
+  }
+
+  // 3. RENDER GIAO DIỆN
   return (
     <div className="profile">
       <div className="profile-banner"></div>

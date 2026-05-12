@@ -1,9 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql";
-import { useAuthStore } from "@/store/authStore";
-import isNil from "lodash/isNil";
-import { LOGIN_MUTATION, CURRENT_USER_QUERY } from "@/graphql/mutations";
-import type { AuthResponse, LoginInput, UserReturn } from "@/gql/graphql";
+import { useRouter } from "@tanstack/react-router";
+import { LOGIN_MUTATION } from "@/graphql/mutations";
+import type { AuthResponse, LoginInput } from "@/gql/graphql";
 
 async function loginRequest(variables: { data: LoginInput }) {
   const response = await graphqlClient.request<{ login: AuthResponse }>(
@@ -15,30 +14,18 @@ async function loginRequest(variables: { data: LoginInput }) {
     throw new Error(response.login.message || "Login failed");
   }
 
-  const userResponse = await graphqlClient.request<{ currentUser: UserReturn }>(
-    CURRENT_USER_QUERY
-  );
-
-  const currentUser = userResponse.currentUser;
-
-  if (
-    !currentUser.isSuccess ||
-    currentUser.users.length <= 0 ||
-    isNil(currentUser.users[0])
-  ) {
-    throw new Error("Failed to fetch user data after login");
-  }
-
-  return { login: response.login, user: currentUser.users[0] };
+  return response.login;
 }
 
 export function useLogin() {
-  const setAuth = useAuthStore((state) => state.setAuth);
+  const router = useRouter();
 
   return useMutation({
     mutationFn: loginRequest,
-    onSuccess: (data) => {
-      setAuth(data.user);
+    onSuccess: async (data) => {
+      console.log("data", data);
+
+      await router.invalidate();
     },
   });
 }

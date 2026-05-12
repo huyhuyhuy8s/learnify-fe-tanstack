@@ -3,7 +3,7 @@ import IconButton from "@/components/IconButton";
 import classNames from "classnames";
 import { useMemo, useState, useRef, useCallback } from "react";
 import useOnClickOutside from "@/hooks/useOnClickOutside";
-import { useAuthStore } from "@/store";
+import { useAuthStore } from "@/store/authStore";
 import TextButton from "@/components/TextButton";
 import { COLORS } from "@/styles/colors";
 import { useNavigate } from "@tanstack/react-router";
@@ -15,10 +15,10 @@ const TopNavRight = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
-  const { isAuthenticated, isHydrated, user, onLogout } = useAuthStore(
+  // ĐÃ XÓA isHydrated
+  const { isAuthenticated, user, onLogout } = useAuthStore(
     useShallow((state) => ({
       isAuthenticated: state.isAuthenticated,
-      isHydrated: state.isHydrated,
       user: state.user,
       onLogout: state.logout,
     }))
@@ -46,9 +46,7 @@ const TopNavRight = () => {
             icon="person_add"
             type="secondary"
             size="small"
-            onClick={() => {
-              navigate({ to: "/learner/sign-up" });
-            }}
+            onClick={() => navigate({ to: "/learner/sign-up" })}
           />
           <TextButton
             text="Log in"
@@ -57,9 +55,7 @@ const TopNavRight = () => {
             backgroundColor={COLORS.modeGreen}
             size="small"
             color={COLORS.white}
-            onClick={() => {
-              navigate({ to: "/learner/log-in" });
-            }}
+            onClick={() => navigate({ to: "/learner/log-in" })}
           />
         </>
       );
@@ -104,11 +100,9 @@ const TopNavRight = () => {
   };
 
   return (
-    <div
-      className={classNames("top-nav-right", { loading: !isHydrated })}
-      ref={containerRef}
-    >
-      {isHydrated && renderContent()}
+    // ĐÃ XÓA class loading phụ thuộc isHydrated
+    <div className="top-nav-right" ref={containerRef}>
+      {renderContent()}
     </div>
   );
 };

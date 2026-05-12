@@ -1,9 +1,12 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  useNavigate,
+  useRouter,
+} from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { graphqlClient } from "@/lib/graphql";
-import { CURRENT_USER_QUERY, VERIFY_EMAIL_MUTATION } from "@/graphql/mutations";
+import { VERIFY_EMAIL_MUTATION } from "@/graphql/mutations";
 import "./style.scss";
-import { setAuth } from "@/store/authStore";
 
 type VerifyEmailSearch = {
   token?: string;
@@ -32,6 +35,7 @@ function VerifyEmailPage() {
   const navigate = useNavigate();
   const search = Route.useSearch() as VerifyEmailSearch;
   const token = search.token;
+  const router = useRouter();
 
   const [status, setStatus] = useState<"loading" | "success" | "error">(
     token ? "loading" : "error"
@@ -63,26 +67,14 @@ function VerifyEmailPage() {
             response.verifyEmail.message || "Xác thực email thành công!"
           );
 
-          try {
-            const userResponse =
-              await graphqlClient.request(CURRENT_USER_QUERY);
-
-            if (
-              userResponse.currentUser &&
-              userResponse.currentUser.isSuccess
-            ) {
-              const userData = userResponse.currentUser.users[0];
-              setAuth(userData);
-            }
-          } catch (err) {
-            console.error("Không thể lấy thông tin user ngay lúc này:", err);
-          }
+          await router.invalidate();
+          await router.load();
 
           const timer = setInterval(() => {
             setCountdown((prev) => {
               if (prev <= 1) {
                 clearInterval(timer);
-                navigate({ to: "/learner" });
+                navigate({ to: "/learner/dashboard" });
                 return 0;
               }
               return prev - 1;
@@ -107,7 +99,7 @@ function VerifyEmailPage() {
     };
 
     verifyEmail();
-  }, [token, navigate]);
+  }, [token, navigate, router]);
 
   return (
     <div className="verify-email" id="verify-email-page">
@@ -137,9 +129,9 @@ function VerifyEmailPage() {
             <button
               className="verify-email-retry-btn"
               type="button"
-              onClick={() => navigate({ to: "/learner/sign-up" })} // Hoặc đưa về trang login
+              onClick={() => navigate({ to: "/learner/log-in" })}
             >
-              <h6 className="semibold">Quay lại trang Đăng ký</h6>
+              <h6 className="semibold">Quay lại trang Đăng nhập</h6>
             </button>
           </div>
         )}

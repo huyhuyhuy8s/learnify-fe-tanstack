@@ -1,7 +1,7 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import Card from "@/components/Card";
 import { MOCK_COURSES } from "@/mock";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, Navigate } from "@tanstack/react-router";
 import { createFileRoute } from "@tanstack/react-router";
 import DashboardBanner from "./-components/DashboardBanner";
 import DashboardStreakWidget from "./-components/DashboardStreakWidget";
@@ -24,6 +24,10 @@ function Dashboard() {
   const navigate = useNavigate();
   const { data, isLoading, isError } = useGetAllCourses(0);
 
+  if (!isAuthenticated) {
+    return <Navigate to="/learner/log-in" replace />;
+  }
+
   const getDisplayCourses = () => {
     if (!isLoading && !isError && data?.isSuccess && data.courses.length > 0) {
       return data.courses.map((course: TBackendCourse) => ({
@@ -39,12 +43,6 @@ function Dashboard() {
     return MOCK_COURSES;
   };
   const displayCourse = getDisplayCourses();
-
-  useLayoutEffect(() => {
-    if (!isAuthenticated) {
-      navigate({ to: "/learner", replace: true });
-    }
-  }, [isAuthenticated, navigate]);
 
   return (
     <div className="dashboard">
