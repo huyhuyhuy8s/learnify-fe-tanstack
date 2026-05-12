@@ -6,6 +6,7 @@
 .tutor-container {
   display: flex;
   flex-direction: column;
+  position: relative;
   background-color: $green-100;
   border: toRem(2) solid $green-200;
   border-radius: $br-xl;

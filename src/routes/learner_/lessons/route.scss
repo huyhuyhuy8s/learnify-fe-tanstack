@@ -7,7 +7,7 @@
 .lesson-page {
   width: 100dvw;
   display: grid;
-  grid-template-columns: toRem(60) 1fr;
+  grid-template-columns: auto 1fr;
   background-color: $white;
 
   .top-nav {

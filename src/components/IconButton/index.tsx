@@ -46,6 +46,7 @@ const IconButton = (props: TconButtonProp) => {
     state,
     shape,
     size,
+    { disabled: disabled },
     className
   );
   const iconClassName = classNames("material-symbols-rounded", {
@@ -74,7 +75,9 @@ const IconButton = (props: TconButtonProp) => {
       type={buttonType}
       disabled={disabled}
     >
-      <span className={iconClassName}>{iconVal}</span>
+      <span className={iconClassName} style={{ color }}>
+        {iconVal}
+      </span>
     </button>
   );
 };

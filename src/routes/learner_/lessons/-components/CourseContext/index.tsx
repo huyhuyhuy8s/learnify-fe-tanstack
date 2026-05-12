@@ -1,5 +1,10 @@
 import { useState } from "react";
 import { COLORS } from "@/styles/colors";
+import {
+  MOCK_REFERENCES,
+  MOCK_DOCUMENTS,
+  MOCK_NOTES,
+} from "@/mock/course-context";
 import DropdownMenu from "../DropdownMenu";
 import "./style.scss";
 
@@ -19,10 +24,7 @@ const CourseContext = () => {
         buttonBackgroundColor={COLORS.greenPastel100}
         isOpen={openDropdown === "References"}
         onToggle={(isOpen) => handleToggle("References", isOpen)}
-        options={[
-          { value: "a", label: "Note 1" },
-          { value: "b", label: "Note 2" },
-        ]}
+        options={MOCK_REFERENCES}
       />
       <DropdownMenu
         icon="docs"
@@ -31,10 +33,7 @@ const CourseContext = () => {
         buttonBackgroundColor={COLORS.navyPastel100}
         isOpen={openDropdown === "Documents"}
         onToggle={(isOpen) => handleToggle("Documents", isOpen)}
-        options={[
-          { value: "a", label: "Note 1" },
-          { value: "b", label: "Note 2" },
-        ]}
+        options={MOCK_DOCUMENTS}
       />
       <DropdownMenu
         icon="note_stack"
@@ -43,10 +42,7 @@ const CourseContext = () => {
         buttonBackgroundColor={COLORS.yellow300}
         isOpen={openDropdown === "Notes"}
         onToggle={(isOpen) => handleToggle("Notes", isOpen)}
-        options={[
-          { value: "a", label: "Note 1" },
-          { value: "b", label: "Note 2" },
-        ]}
+        options={MOCK_NOTES}
       />
     </div>
   );
