@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { useState } from "react";
 import "./style.scss";
 import { COLORS } from "@/styles/colors";
+import IconButton from "@/components/IconButton";
 
 type TDropdownMenuOption = {
   value: string;
@@ -74,13 +75,18 @@ const DropdownMenu = (props: TDropdownMenuProps) => {
       >
         <div className="dropdown-menu-options-inner">
           {options.map((option) => (
-            <button key={option.value} className="dropdown-menu-option">
-              <div className="dropdown-menu-option-context">
+            <div className="dropdown-menu-option" key={option.label}>
+              <button className="dropdown-menu-option-context">
                 <span className="material-symbols-rounded">{iconOption}</span>
                 <h6 className="medium">{option.label}</h6>
-              </div>
-              <span className="material-symbols-rounded">more_vert</span>
-            </button>
+              </button>
+              <IconButton
+                icon="more_vert"
+                type="secondary"
+                size="tiny"
+                tooltip="more"
+              />
+            </div>
           ))}
         </div>
       </div>

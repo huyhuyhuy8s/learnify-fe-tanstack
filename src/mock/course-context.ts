@@ -17,7 +17,10 @@ export const MOCK_DOCUMENTS: TCourseContextOption[] = [
 ];
 
 export const MOCK_NOTES: TCourseContextOption[] = [
-  { value: "note-1", label: "My Personal Notes - Session 1" },
+  {
+    value: "note-1",
+    label: "My Personal Notes - Session 1 2 3 4 5 6 7 8 9 0 1010  012091a a a",
+  },
   { value: "note-2", label: "Key Concepts Summary" },
   { value: "note-3", label: "Questions for the Instructor" },
   { value: "note-4", label: "Study Group Notes - Week 2" },

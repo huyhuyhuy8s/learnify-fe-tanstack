@@ -69,6 +69,8 @@
   &-option {
     display: grid;
     grid-template-columns: 1fr auto;
+    gap: toRem(10);
+    align-items: center;
     padding: toRem(15) toRem(20);
     padding-left: toRem(25);
     background-color: $neutral-150;
@@ -80,13 +82,19 @@
     }
 
     &-context {
-      display: flex;
+      display: grid;
       align-items: center;
-      gap: 0.5rem;
+      grid-template-columns: auto 1fr;
+      gap: toRem(20);
+
+      span,
+      h6 {
+        color: $neutral-600;
+      }
 
       h6 {
         font-size: calc($fs-heading6 - toRem(2.5));
-        color: inherit;
+        text-align: left;
       }
     }
 
