@@ -1,5 +1,10 @@
 import { useAnimations, useGLTF } from "@react-three/drei";
-import { type Group, LoopRepeat, type Object3DEventMap } from "three";
+import {
+  type Group,
+  LoopRepeat,
+  type Object3DEventMap,
+  type AnimationClip,
+} from "three";
 import { forwardRef, useEffect, useMemo, useRef } from "react";
 import type {
   TActions,
@@ -38,10 +43,19 @@ const TeacherAnimation = forwardRef<
       number,
     ];
   }, [animation, rotation]);
-  const { scene: animScene, animations: glTFAnimations } = useGLTF(
+  const { scene: animScene, animations: rawAnimations } = useGLTF(
     "/models/teacher_animation.glb"
   );
   const teacher = useGLTF("/models/teacher.glb");
+  const glTFAnimations = useMemo(
+    () =>
+      rawAnimations?.map((clip: AnimationClip) => {
+        const c = clip.clone();
+        c.tracks = c.tracks.filter((t) => !t.name.includes("_end."));
+        return c;
+      }),
+    [rawAnimations]
+  );
   const { actions } = useAnimations(glTFAnimations, teacher.scene);
   const typedActions = actions as TActions;
 
