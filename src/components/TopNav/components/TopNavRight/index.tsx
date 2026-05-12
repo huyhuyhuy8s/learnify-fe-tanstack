@@ -69,11 +69,11 @@ const TopNavRight = () => {
       <>
         <div className="crystal">
           <span className="material-symbols-rounded">diamond</span>
-          <p>0</p>
+          <p>{user.diamond || 0}</p>
         </div>
         <div className="streak">
           <span className="material-symbols-rounded">mode_heat</span>
-          <p>0</p>
+          <p>{user.currentSteak || 0}</p>
         </div>
         <IconButton
           icon="notifications_active"

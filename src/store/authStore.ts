@@ -41,7 +41,7 @@ export const useAuthStore = create<TAuthState>()((set) => {
   return {
     user: initialUser,
     isAuthenticated: !!initialUser,
-    isHydrated: false, // wait for hydration to complete
+    isHydrated: false,
     setAuth: (user) => {
       persistUser(user);
       set({ user, isAuthenticated: !!user });
