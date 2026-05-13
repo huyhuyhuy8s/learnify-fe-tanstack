@@ -5,7 +5,13 @@ import { routeTree } from "./routeTree.gen";
 import DefaultCatchBoundary from "./components/DefaultCatchBoundary";
 import NotFound from "./components/NotFound";
 import "material-symbols/rounded.scss";
-import type { UserResponse } from "@/gql/graphql";
+export type TSessionUser = {
+  id: string;
+  email: string;
+  username?: string;
+  diamond?: number;
+  currentSteak?: number;
+};
 
 export function getRouter() {
   const queryClient = new QueryClient();
@@ -34,7 +40,7 @@ declare module "@tanstack/react-router" {
 export interface RouterContext {
   queryClient: QueryClient;
   auth: {
-    user: UserResponse | null;
+    user: TSessionUser | null;
     isAuthenticated: boolean;
   } | null;
 }

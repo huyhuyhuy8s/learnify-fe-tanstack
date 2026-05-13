@@ -1,5 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useLayoutEffect } from "react";
+import { createFileRoute, useNavigate, Navigate } from "@tanstack/react-router";
 import "./home.scss";
 import Search from "@/components/Search";
 import TextButton from "@/components/TextButton";
@@ -13,13 +12,9 @@ export const Route = createFileRoute("/learner/")({
 
 function RouteComponent() {
   const { isAuthenticated } = useAuthStore();
-  const navigate = useNavigate();
-
-  useLayoutEffect(() => {
-    if (isAuthenticated) {
-      navigate({ to: "/learner/dashboard", replace: true });
-    }
-  }, [isAuthenticated, navigate]);
+  if (isAuthenticated) {
+    return <Navigate to="/learner/dashboard" replace />;
+  }
 
   return <Unauthorized />;
 }

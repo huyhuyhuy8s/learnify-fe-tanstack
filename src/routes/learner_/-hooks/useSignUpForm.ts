@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { z } from "zod";
 import { useRegister } from "@/hooks/useRegister";
+import { logger } from "@/utils/logger";
 
 export type TSignUpStep1 = {
   firstName: string;
@@ -191,7 +192,7 @@ export const useSignUpForm = () => {
         email: verificationData.email,
       });
     } catch {
-      console.error("Failed to resend code");
+      logger.error("Failed to resend code");
     }
   }, [verificationData.email]);
 

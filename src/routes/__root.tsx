@@ -23,41 +23,16 @@ import { useAuthStore } from "@/store/authStore";
 import { LayoutProvider } from "@/contexts/LayoutContext";
 import "./root.scss";
 import "@styles/_global.scss";
+import { getCurrentUserFn } from "@/server/auth";
 
 gsap.registerPlugin(SplitText, CustomEase);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
 CustomEase.create("glide", "0.8, 0, 0.2, 1");
 
-const STORAGE_KEY = "auth-storage";
-
 export const Route = createRootRouteWithContext<RouterContext>()({
-  loader: ({ context }) => {
-    const cookies =
-      (context as { request?: Request }).request?.headers?.get("cookie") || "";
-    const authCookie = cookies
-      .split(";")
-      .find((c: string) => c.trim().startsWith(`${STORAGE_KEY}=`));
-
-    if (authCookie) {
-      try {
-        const cookieValue = authCookie.split("=")[1];
-        if (cookieValue) {
-          const value = decodeURIComponent(cookieValue);
-          const parsed = JSON.parse(value);
-          if (parsed.user) {
-            return {
-              auth: {
-                user: parsed.user,
-                isAuthenticated: true,
-              },
-            };
-          }
-        }
-      } catch {
-        throw new Error("Invalid cookie");
-      }
-    }
-    return { auth: null };
+  loader: async () => {
+    const user = await getCurrentUserFn();
+    return { auth: { user, isAuthenticated: !!user } };
   },
   head: () => ({
     meta: [
@@ -75,7 +50,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       }),
     ],
     links: [
-      { rel: "stylesheet" },
+      { rel: "image/x-icon", href: "/favicon.ico" },
       {
         rel: "icon",
         type: "image/png",
@@ -109,11 +84,12 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
 function RootComponent() {
   useTheme();
-  const setHydrated = useAuthStore((state) => state.setHydrated);
+  const setAuth = useAuthStore((state) => state.setAuth);
+  const { auth } = Route.useLoaderData();
 
   useEffect(() => {
-    setHydrated(true);
-  }, [setHydrated]);
+    setAuth(auth?.user || null);
+  }, [setAuth, auth]);
 
   return (
     <RootDocument>

@@ -1,5 +1,5 @@
 import { graphqlClient } from "@/lib/graphql";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { GET_PROFILE } from "@/graphql/user";
 
 export type TBackendUser = {
@@ -38,16 +38,41 @@ export type GetUserProfileResponse = {
   };
 };
 
+const emptyProfile: GetUserProfileResponse = {
+  currentUser: { count: 0, isSuccess: false, message: "", users: [] },
+  countSuccessEnrollments: { count: 0, data: [] },
+  countInProgressEnrollments: { count: 0, data: [], progress: 0 },
+};
+
 export function useGetUserProfile(userId?: string) {
   return useQuery({
     queryKey: ["user", "profile", userId],
     queryFn: async () => {
-      const response = await graphqlClient.request<GetUserProfileResponse>(
-        GET_PROFILE,
-        { userId }
-      );
-      return response;
+      try {
+        return await graphqlClient.request<GetUserProfileResponse>(
+          GET_PROFILE,
+          { userId }
+        );
+      } catch {
+        return emptyProfile;
+      }
     },
     enabled: !!userId,
+  });
+}
+
+export function useSuspenseGetUserProfile(userId?: string) {
+  return useSuspenseQuery({
+    queryKey: ["user", "profile", userId],
+    queryFn: async () => {
+      try {
+        return await graphqlClient.request<GetUserProfileResponse>(
+          GET_PROFILE,
+          { userId }
+        );
+      } catch {
+        return emptyProfile;
+      }
+    },
   });
 }

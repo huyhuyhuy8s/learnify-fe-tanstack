@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { z } from "zod";
+import { logger } from "@/utils/logger";
 
 export type TForgotPasswordStep1Data = {
   email: string;
@@ -137,7 +138,7 @@ export const useForgotPasswordForm = () => {
         email: step1Data.email,
       });
     } catch {
-      console.error("Failed to resend code");
+      logger.error("Failed to resend code");
     } finally {
       setIsResending(false);
     }

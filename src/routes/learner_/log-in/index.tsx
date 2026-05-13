@@ -1,12 +1,20 @@
-import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  redirect,
+  useNavigate,
+  useRouter,
+} from "@tanstack/react-router";
 import CustomLink from "@/components/CustomLink";
 import { GoogleLogin } from "@react-oauth/google";
 import { useGoogleLogin } from "@/hooks/useGoogleLogin";
+import { setSessionFn } from "@/server/auth";
+import { fetchCurrentUser } from "@/apis/auth";
 import LogInForm from "../-components/LogInForm";
 import "./style.scss";
 import { createLearnerHead } from "@/utils";
-import type { RouterContext } from "@/router";
+import { getCurrentUserFn } from "@/server/auth";
 import z from "zod";
+import { logger } from "@/utils/logger";
 
 const productSearchSchema = z.object({
   redirect: z.string().optional(),
@@ -15,11 +23,9 @@ const productSearchSchema = z.object({
 export const Route = createFileRoute("/learner_/log-in/")({
   validateSearch: productSearchSchema,
   component: LogInPage,
-  beforeLoad: ({ context }) => {
-    const auth = (context as RouterContext).auth;
-    if (auth?.isAuthenticated) {
-      throw redirect({ to: "/learner" });
-    }
+  beforeLoad: async () => {
+    const user = await getCurrentUserFn();
+    if (user) throw redirect({ to: "/learner" });
   },
   head: () => ({
     ...createLearnerHead("Log in"),
@@ -29,14 +35,22 @@ export const Route = createFileRoute("/learner_/log-in/")({
 function LogInPage() {
   const googleLoginMutation = useGoogleLogin();
   const navigate = useNavigate();
+  const router = useRouter();
   const { redirect } = Route.useSearch();
 
-  const handleLoginSuccess = () => {
-    if (redirect) {
-      navigate({ to: redirect });
-    } else {
-      navigate({ to: "/learner/dashboard" });
-    }
+  const handleLoginSuccess = async () => {
+    const userData = await fetchCurrentUser();
+    if (userData)
+      await setSessionFn({
+        data: {
+          id: userData.id,
+          email: userData.email,
+          username: userData.username,
+        },
+      });
+    await router.invalidate();
+    if (redirect) navigate({ to: redirect });
+    else navigate({ to: "/learner/dashboard" });
   };
 
   return (
@@ -54,7 +68,7 @@ function LogInPage() {
             <GoogleLogin
               onSuccess={(credentialResponse) => {
                 if (!credentialResponse?.credential) {
-                  console.error("Google login failed: no credential returned");
+                  logger.error("Google login failed: no credential returned");
                   return;
                 }
                 const idToken = credentialResponse.credential;
@@ -63,7 +77,7 @@ function LogInPage() {
                 });
               }}
               onError={() => {
-                console.error("Google login failed");
+                logger.error("Google login failed");
               }}
               useOneTap
               theme="outline"

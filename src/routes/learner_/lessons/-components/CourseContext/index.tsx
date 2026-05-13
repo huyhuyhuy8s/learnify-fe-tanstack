@@ -7,6 +7,7 @@ import {
 } from "@/mock/course-context";
 import DropdownMenu from "../DropdownMenu";
 import "./style.scss";
+import { logger } from "@/utils/logger";
 
 type TCourseContextSection = { value: string; label: string };
 
@@ -23,8 +24,7 @@ const CourseContext = (props: TCourseContextProps) => {
     notes = MOCK_NOTES,
   } = props;
 
-  if (import.meta.env.DEV)
-    console.info("[CourseContext] props:", { references, documents, notes });
+  logger.info("[CourseContext] props:", { references, documents, notes });
 
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 

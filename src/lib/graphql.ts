@@ -14,11 +14,12 @@ async function isGraphqlUnauthorized(res: Response) {
     const body = await clone.json();
     if (
       body?.errors?.some(
-        (e: any) =>
+        (e: { extensions?: { code?: string }; message?: string }) =>
           e?.extensions?.code === "UNAUTHENTICATED" ||
           e?.extensions?.code === "UnauthorizedException" ||
           e?.message?.includes("Unauthorized") ||
-          e?.message?.includes("No token provided")
+          e?.message?.includes("No token provided") ||
+          e?.message?.includes("Invalid token")
       )
     ) {
       return true;
@@ -57,7 +58,7 @@ const customFetch = async (
             return true;
           }
           return false;
-        } catch (e) {
+        } catch {
           return false;
         } finally {
           refreshPromise = null;
@@ -69,10 +70,11 @@ const customFetch = async (
     if (refreshSuccess) {
       response = await fetch(input, fetchInit);
     } else {
-      useAuthStore.getState().logout();
-      localStorage.removeItem("auth-storage");
-      window.location.href = "/learner/log-in";
-      toast.error("Session expired. Please log in again.");
+      if (typeof window !== "undefined") {
+        useAuthStore.getState().logout();
+        toast.error("Session expired. Please log in again.");
+        window.location.href = "/learner/log-in";
+      }
       return Promise.reject(new Error("Session expired. Please log in again."));
     }
   }

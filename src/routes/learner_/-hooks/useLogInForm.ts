@@ -1,7 +1,10 @@
 import { useState, useCallback } from "react";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useRouter } from "@tanstack/react-router";
 import { useLogin } from "@/hooks/useLogin";
+import { setSessionFn } from "@/server/auth";
+import { fetchCurrentUser } from "@/apis/auth";
 import z from "zod";
+import { logger } from "@/utils/logger";
 
 export type TLogInForm = {
   email: string;
@@ -22,6 +25,7 @@ export const logInFormSchema = z.object({
 export const useLogInForm = (props: { redirect?: string }) => {
   const { redirect } = props;
   const navigate = useNavigate();
+  const router = useRouter();
   const login = useLogin();
 
   const [formData, setFormData] = useState<TLogInForm>({
@@ -58,6 +62,7 @@ export const useLogInForm = (props: { redirect?: string }) => {
         setErrors(validationErrors);
         return false;
       }
+
       const result = await login.mutateAsync({
         data: {
           email: formData.email,
@@ -65,15 +70,33 @@ export const useLogInForm = (props: { redirect?: string }) => {
         },
       });
 
-      if (result.login.success) {
+      if (result.success) {
+        const userData = await fetchCurrentUser();
+        if (userData)
+          await setSessionFn({
+            data: {
+              id: userData.id,
+              email: userData.email,
+              username: userData.username,
+            },
+          });
+        await router.invalidate();
+        await router.load();
         if (redirect) {
           navigate({ to: redirect });
         } else {
           navigate({ to: "/learner" });
         }
+      } else {
+        setErrors({
+          api: result.message || "Login failed. Please check your credentials.",
+        });
       }
-    } catch {
-      setErrors({ api: "Login failed. Please check your credentials." });
+    } catch (error) {
+      logger.error("Login error:", error);
+      setErrors({
+        api: "An error occurred. Please check your credentials and try again.",
+      });
     }
   };
 

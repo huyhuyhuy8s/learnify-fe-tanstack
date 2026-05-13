@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-router";
 import type { ErrorComponentProps } from "@tanstack/react-router";
 import "./style.scss";
+import { logger } from "@/utils/logger";
 
 function DefaultCatchBoundary({ error }: ErrorComponentProps) {
   const router = useRouter();
@@ -15,15 +16,16 @@ function DefaultCatchBoundary({ error }: ErrorComponentProps) {
     select: (state) => state.id === rootRouteId,
   });
 
-  console.error(error);
+  logger.error(error);
 
   return (
     <div className="default-catch-boundary">
       <ErrorComponent error={error} />
       <div className="default-catch-boundary__actions">
         <button
-          onClick={() => {
-            router.invalidate();
+          onClick={async () => {
+            await router.invalidate();
+            await router.load();
           }}
           className="default-catch-boundary__btn"
         >

@@ -1,0 +1,43 @@
+import { CURRENT_USER_QUERY } from "@/graphql/mutations";
+import { logger } from "@/utils/logger";
+import type { User } from "@/utils/users";
+
+export const fetchCurrentUser = async (
+  serverCookieHeader?: string
+): Promise<User | null> => {
+  try {
+    const endpoint =
+      import.meta.env.VITE_GRAPHQL_ENDPOINT ||
+      "https://learnify-be.onrender.com/graphql";
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+    };
+    if (serverCookieHeader) headers["Cookie"] = serverCookieHeader;
+
+    logger.info("[auth] calling:", endpoint, "| cookie:", !!serverCookieHeader);
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers,
+      credentials: "include",
+      body: JSON.stringify({ query: CURRENT_USER_QUERY }),
+    });
+    logger.info("[auth] response status:", response.status);
+
+    const { data, errors } = await response.json();
+    if (errors || !data?.currentUser?.isSuccess) {
+      logger.info(
+        "[auth] fail - errors:",
+        !!errors,
+        "| isSuccess:",
+        data?.currentUser?.isSuccess
+      );
+      return null;
+    }
+    const user = data.currentUser.users[0];
+    logger.info("[auth] success - user:", user?.id);
+    return user;
+  } catch (error) {
+    logger.error("[auth] fetch error:", error);
+    return null;
+  }
+};

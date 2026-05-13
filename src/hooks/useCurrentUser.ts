@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql";
 import { CURRENT_USER_QUERY } from "@/graphql/mutations";
 import type { UserReturn, UserResponse } from "@/gql/graphql";
+import { logger } from "@/utils/logger";
 
 async function fetchCurrentUser(): Promise<UserResponse | null> {
   try {
@@ -17,7 +18,7 @@ async function fetchCurrentUser(): Promise<UserResponse | null> {
     }
     return null;
   } catch (error) {
-    console.error("Failed to fetch current user:", error);
+    logger.error("Failed to fetch current user:", error);
     return null;
   }
 }

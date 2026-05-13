@@ -53,7 +53,7 @@ export default tseslint.config(
       "@typescript-eslint/no-explicit-any": "warn",
       quotes: ["error", "double"],
       "@typescript-eslint/consistent-type-imports": "error",
-      "no-console": ["warn", { allow: ["warn", "error", "info", "debug"] }],
+      "no-console": ["warn", { allow: ["info", "warn", "error", "debug"] }],
     },
     settings: {
       react: {

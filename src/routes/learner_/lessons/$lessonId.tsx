@@ -17,45 +17,6 @@ import ChatMessageWrapper, {
 import "./lessonId.scss";
 
 export const Route = createFileRoute("/learner_/lessons/$lessonId")({
-  // beforeLoad: async ({ context, params }) => {
-  //   const auth = (context as RouterContext).auth;
-  //
-  //   if (!auth?.isAuthenticated) {
-  //     throw redirect({
-  //       to: "/learner/log-in",
-  //       search: (prev) => ({
-  //         ...prev,
-  //         redirect: `/learner/lessons/${params.lessonId}`,
-  //       }),
-  //     });
-  //   }
-  //
-  //   try {
-  //     const response = await graphqlClient.request<{
-  //       currentUser: UserReturn;
-  //     }>(CURRENT_USER_QUERY);
-  //     if (
-  //       !response.currentUser.isSuccess ||
-  //       response.currentUser.users.length === 0
-  //     ) {
-  //       throw redirect({
-  //         to: "/learner/log-in",
-  //         search: (prev) => ({
-  //           ...prev,
-  //           redirect: `/learner/lessons/${params.lessonId}`,
-  //         }),
-  //       });
-  //     }
-  //   } catch {
-  //     throw redirect({
-  //       to: "/learner/log-in",
-  //       search: (prev) => ({
-  //         ...prev,
-  //         redirect: `/learner/lessons/${params.lessonId}`,
-  //       }),
-  //     });
-  //   }
-  // },
   component: LessonDetail,
 });
 

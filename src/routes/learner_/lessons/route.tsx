@@ -1,20 +1,20 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import "./route.scss";
 import TopNav from "@/components/TopNav";
-import LeftNav from "@/components/LeftNav";
 import { createLearnerHead } from "@/utils";
 import CourseController from "./-components/CourseController";
+import { getCurrentUserFn } from "@/server/auth";
 
 export const Route = createFileRoute("/learner_/lessons")({
-  // beforeLoad: ({ context, location }) => {
-  //   const auth = context.auth;
-  //   if (!auth?.isAuthenticated) {
-  //     throw redirect({
-  //       to: "/learner/log-in",
-  //       search: { redirect: location.pathname },
-  //     });
-  //   }
-  // },
+  beforeLoad: async ({ location }) => {
+    const user = await getCurrentUserFn();
+    if (!user)
+      throw redirect({
+        to: "/learner/log-in",
+        search: { redirect: location.pathname },
+      });
+    return { user };
+  },
   component: RouteComponent,
   head: () => ({
     ...createLearnerHead("Lessons"),

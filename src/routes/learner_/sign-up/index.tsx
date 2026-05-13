@@ -8,6 +8,7 @@ import SignUpStep2 from "../-components/SignUpStep2";
 import SignUpVerification from "../-components/SignUpVerification";
 import SignUpRight from "../-components/SignUpRight";
 import "./style.scss";
+import { logger } from "@/utils/logger";
 
 export const Route = createFileRoute("/learner_/sign-up/")({
   head: () => ({
@@ -57,7 +58,7 @@ function SignUpPage() {
             <GoogleLogin
               onSuccess={(credentialResponse) => {
                 if (!credentialResponse?.credential) {
-                  console.error("Google login failed: no credential returned");
+                  logger.error("Google login failed: no credential returned");
                   return;
                 }
                 const idToken = credentialResponse.credential;
@@ -68,7 +69,7 @@ function SignUpPage() {
                 });
               }}
               onError={() => {
-                console.error("Google login failed");
+                logger.error("Google login failed");
               }}
               useOneTap
               theme="outline"

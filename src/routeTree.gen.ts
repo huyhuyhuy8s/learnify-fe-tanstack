@@ -27,6 +27,7 @@ import { Route as LearnerSignUpIndexRouteImport } from "./routes/learner_/sign-u
 import { Route as LearnerLogInIndexRouteImport } from "./routes/learner_/log-in/index";
 import { Route as LearnerLessonsIndexRouteImport } from "./routes/learner_/lessons/index";
 import { Route as LearnerForgotPasswordIndexRouteImport } from "./routes/learner_/forgot-password/index";
+import { Route as LearnerUserIndexRouteImport } from "./routes/learner/user/index";
 import { Route as LearnerSearchIndexRouteImport } from "./routes/learner/search/index";
 import { Route as LearnerRoadmapsIndexRouteImport } from "./routes/learner/roadmaps/index";
 import { Route as LearnerFriendsIndexRouteImport } from "./routes/learner/friends/index";
@@ -129,6 +130,11 @@ const LearnerForgotPasswordIndexRoute =
     path: "/learner/forgot-password/",
     getParentRoute: () => rootRouteImport,
   } as any);
+const LearnerUserIndexRoute = LearnerUserIndexRouteImport.update({
+  id: "/",
+  path: "/",
+  getParentRoute: () => LearnerUserRouteRoute,
+} as any);
 const LearnerSearchIndexRoute = LearnerSearchIndexRouteImport.update({
   id: "/search/",
   path: "/search/",
@@ -205,6 +211,7 @@ export interface FileRoutesByFullPath {
   "/learner/friends/": typeof LearnerFriendsIndexRoute;
   "/learner/roadmaps/": typeof LearnerRoadmapsIndexRoute;
   "/learner/search/": typeof LearnerSearchIndexRoute;
+  "/learner/user/": typeof LearnerUserIndexRoute;
   "/learner/forgot-password/": typeof LearnerForgotPasswordIndexRoute;
   "/learner/lessons/": typeof LearnerLessonsIndexRoute;
   "/learner/log-in/": typeof LearnerLogInIndexRoute;
@@ -215,7 +222,6 @@ export interface FileRoutesByTo {
   "/": typeof IndexRoute;
   "/deferred": typeof DeferredRoute;
   "/redirect": typeof RedirectRoute;
-  "/learner/user": typeof LearnerUserRouteRouteWithChildren;
   "/api/users": typeof ApiUsersRouteWithChildren;
   "/learner/dashboard": typeof LearnerDashboardRoute;
   "/learner": typeof LearnerIndexRoute;
@@ -229,6 +235,7 @@ export interface FileRoutesByTo {
   "/learner/friends": typeof LearnerFriendsIndexRoute;
   "/learner/roadmaps": typeof LearnerRoadmapsIndexRoute;
   "/learner/search": typeof LearnerSearchIndexRoute;
+  "/learner/user": typeof LearnerUserIndexRoute;
   "/learner/forgot-password": typeof LearnerForgotPasswordIndexRoute;
   "/learner/lessons": typeof LearnerLessonsIndexRoute;
   "/learner/log-in": typeof LearnerLogInIndexRoute;
@@ -260,6 +267,7 @@ export interface FileRoutesById {
   "/learner/friends/": typeof LearnerFriendsIndexRoute;
   "/learner/roadmaps/": typeof LearnerRoadmapsIndexRoute;
   "/learner/search/": typeof LearnerSearchIndexRoute;
+  "/learner/user/": typeof LearnerUserIndexRoute;
   "/learner_/forgot-password/": typeof LearnerForgotPasswordIndexRoute;
   "/learner_/lessons/": typeof LearnerLessonsIndexRoute;
   "/learner_/log-in/": typeof LearnerLogInIndexRoute;
@@ -292,6 +300,7 @@ export interface FileRouteTypes {
     | "/learner/friends/"
     | "/learner/roadmaps/"
     | "/learner/search/"
+    | "/learner/user/"
     | "/learner/forgot-password/"
     | "/learner/lessons/"
     | "/learner/log-in/"
@@ -302,7 +311,6 @@ export interface FileRouteTypes {
     | "/"
     | "/deferred"
     | "/redirect"
-    | "/learner/user"
     | "/api/users"
     | "/learner/dashboard"
     | "/learner"
@@ -316,6 +324,7 @@ export interface FileRouteTypes {
     | "/learner/friends"
     | "/learner/roadmaps"
     | "/learner/search"
+    | "/learner/user"
     | "/learner/forgot-password"
     | "/learner/lessons"
     | "/learner/log-in"
@@ -346,6 +355,7 @@ export interface FileRouteTypes {
     | "/learner/friends/"
     | "/learner/roadmaps/"
     | "/learner/search/"
+    | "/learner/user/"
     | "/learner_/forgot-password/"
     | "/learner_/lessons/"
     | "/learner_/log-in/"
@@ -494,6 +504,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof LearnerForgotPasswordIndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    "/learner/user/": {
+      id: "/learner/user/";
+      path: "/";
+      fullPath: "/learner/user/";
+      preLoaderRoute: typeof LearnerUserIndexRouteImport;
+      parentRoute: typeof LearnerUserRouteRoute;
+    };
     "/learner/search/": {
       id: "/learner/search/";
       path: "/search";
@@ -617,10 +634,12 @@ const LearnerRoadmapsRouteRouteWithChildren =
 
 interface LearnerUserRouteRouteChildren {
   LearnerUserUserIdRoute: typeof LearnerUserUserIdRoute;
+  LearnerUserIndexRoute: typeof LearnerUserIndexRoute;
 }
 
 const LearnerUserRouteRouteChildren: LearnerUserRouteRouteChildren = {
   LearnerUserUserIdRoute: LearnerUserUserIdRoute,
+  LearnerUserIndexRoute: LearnerUserIndexRoute,
 };
 
 const LearnerUserRouteRouteWithChildren =
@@ -694,10 +713,11 @@ export const routeTree = rootRouteImport
   ._addFileTypes<FileRouteTypes>();
 
 import type { getRouter } from "./router.tsx";
-import type { createStart } from "@tanstack/react-start";
+import type { startInstance } from "./start.ts";
 declare module "@tanstack/react-start" {
   interface Register {
     ssr: true;
     router: Awaited<ReturnType<typeof getRouter>>;
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>;
   }
 }

@@ -1,7 +1,7 @@
-import React, { useLayoutEffect, Suspense } from "react";
+import React, { Suspense } from "react";
 import Card from "@/components/Card";
 import { MOCK_COURSES } from "@/mock";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, Navigate } from "@tanstack/react-router";
 import { createFileRoute } from "@tanstack/react-router";
 import DashboardBanner from "./-components/DashboardBanner";
 import DashboardStreakWidget from "./-components/DashboardStreakWidget";
@@ -85,13 +85,10 @@ function DashboardInner() {
 
 function Dashboard() {
   const { isAuthenticated } = useAuthStore();
-  const navigate = useNavigate();
 
-  useLayoutEffect(() => {
-    if (!isAuthenticated) {
-      navigate({ to: "/learner", replace: true });
-    }
-  }, [isAuthenticated, navigate]);
+  if (!isAuthenticated) {
+    return <Navigate to="/learner/log-in" replace />;
+  }
 
   return (
     <Suspense fallback={<TetrisLoader />}>
