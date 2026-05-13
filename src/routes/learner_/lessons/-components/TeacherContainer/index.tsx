@@ -1,11 +1,11 @@
 import { Environment, Preload, useGLTF } from "@react-three/drei";
 import "./style.scss";
 import { Suspense, useRef, type ReactNode } from "react";
-import { Canvas, useFrame, type ThreeElements } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import TeacherAnimation from "../TeacherAnimation";
 import { Vector3, type Group } from "three";
 import TetrisLoader from "@/components/TetrisLoader";
-import type { TTeacherAnimation } from "../TeacherAnimation/type";
+import type { TTeacherAnimation } from "../TeacherAnimation/type.d";
 
 type TTeacherContainerProps = {
   animation?: TTeacherAnimation;
@@ -38,7 +38,11 @@ const TeacherContainer = (props: TTeacherContainerProps) => {
       <Suspense fallback={<TetrisLoader size="sm" speed="fast" />}>
         <Canvas
           camera={{ position: [1, 1.425, 1], fov: 15 }}
-          gl={{ preserveDrawingBuffer: true, antialias: true }}
+          gl={{
+            preserveDrawingBuffer: true,
+            antialias: true,
+            premultipliedAlpha: false,
+          }}
           style={{ background: "#1a1a1a" }}
         >
           <ambientLight intensity={0.4} />
@@ -51,8 +55,6 @@ const TeacherContainer = (props: TTeacherContainerProps) => {
             position={[1, 0.25, -2]}
             ref={teacherRef}
           />
-          <axesHelper args={[]} />
-          <gridHelper args={[10, 10]} />
           <CameraController target={[1, 1.425, 1]} />
           <Preload all />
         </Canvas>

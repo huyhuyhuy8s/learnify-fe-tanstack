@@ -104,11 +104,7 @@ function SignUpPage() {
           {step === 3 && (
             <SignUpVerification
               data={{ email: step1Data.email }}
-              errors={verificationErrors}
-              isPending={false}
               isResending={false}
-              onChange={onVerificationChange}
-              onSubmit={onVerificationSubmit}
               onResend={onResend}
             />
           )}

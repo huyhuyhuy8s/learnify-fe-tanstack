@@ -38,7 +38,7 @@ export type GetUserProfileResponse = {
   };
 };
 
-export function useGetUserProfile(userId: string) {
+export function useGetUserProfile(userId?: string) {
   return useQuery({
     queryKey: ["user", "profile", userId],
     queryFn: async () => {

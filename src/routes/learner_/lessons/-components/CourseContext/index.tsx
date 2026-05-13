@@ -8,7 +8,24 @@ import {
 import DropdownMenu from "../DropdownMenu";
 import "./style.scss";
 
-const CourseContext = () => {
+type TCourseContextSection = { value: string; label: string };
+
+type TCourseContextProps = {
+  references?: TCourseContextSection[];
+  documents?: TCourseContextSection[];
+  notes?: TCourseContextSection[];
+};
+
+const CourseContext = (props: TCourseContextProps) => {
+  const {
+    references = MOCK_REFERENCES,
+    documents = MOCK_DOCUMENTS,
+    notes = MOCK_NOTES,
+  } = props;
+
+  if (import.meta.env.DEV)
+    console.info("[CourseContext] props:", { references, documents, notes });
+
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   const handleToggle = (title: string, isOpen: boolean) => {
@@ -24,7 +41,7 @@ const CourseContext = () => {
         buttonBackgroundColor={COLORS.greenPastel100}
         isOpen={openDropdown === "References"}
         onToggle={(isOpen) => handleToggle("References", isOpen)}
-        options={MOCK_REFERENCES}
+        options={references}
       />
       <DropdownMenu
         icon="docs"
@@ -33,7 +50,7 @@ const CourseContext = () => {
         buttonBackgroundColor={COLORS.navyPastel100}
         isOpen={openDropdown === "Documents"}
         onToggle={(isOpen) => handleToggle("Documents", isOpen)}
-        options={MOCK_DOCUMENTS}
+        options={documents}
       />
       <DropdownMenu
         icon="note_stack"
@@ -42,7 +59,7 @@ const CourseContext = () => {
         buttonBackgroundColor={COLORS.yellow300}
         isOpen={openDropdown === "Notes"}
         onToggle={(isOpen) => handleToggle("Notes", isOpen)}
-        options={MOCK_NOTES}
+        options={notes}
       />
     </div>
   );

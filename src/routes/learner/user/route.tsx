@@ -14,7 +14,7 @@ function RouteComponent() {
   const { auth } = rootRoute.useLoaderData();
   const currentUserId = auth?.user?.id || "mock-id";
 
-  const { data, isLoading, isError } = useGetUserProfile(currentUserId);
+  const { data, isLoading, isError } = useGetUserProfile(currentUserId ?? "");
 
   const userDisplay = useMemo(() => {
     if (!isLoading && !isError && data?.currentUser?.users?.length) {

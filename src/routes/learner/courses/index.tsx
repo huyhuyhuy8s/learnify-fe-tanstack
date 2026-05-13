@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { MOCK_COURSES } from "@/mock";
 import "./style.scss";
@@ -5,18 +6,23 @@ import Card from "@/components/Card";
 import { useNavigate } from "@tanstack/react-router";
 import TextButton from "@/components/TextButton";
 import Search from "@/components/Search";
-import { useGetAllCourses, type TBackendCourse } from "@/hooks/useCourses";
+import {
+  useSuspenseGetAllCourses,
+  type TBackendCourse,
+} from "@/hooks/useCourses";
+import TetrisLoader from "@/components/TetrisLoader";
+
 export const Route = createFileRoute("/learner/courses/")({
-  component: PostsIndexComponent,
+  component: CoursesPage,
 });
 
-function PostsIndexComponent() {
+function CoursesInner() {
   const navigate = useNavigate();
-  const { data, isLoading, isError } = useGetAllCourses(0);
+  const { data } = useSuspenseGetAllCourses(0);
+  const isBackendSuccess = data?.isSuccess && data.courses.length > 0;
 
-  const getDisplayCourses = () => {
-    if (!isLoading && !isError && data?.isSuccess && data.courses.length > 0) {
-      return data.courses.map((course: TBackendCourse) => ({
+  const displayCourses = isBackendSuccess
+    ? data.courses.map((course: TBackendCourse) => ({
         id: course.id,
         typeSpecial: "course" as const,
         title: course.courseName,
@@ -24,12 +30,8 @@ function PostsIndexComponent() {
         duration: "45 mins",
         status: "default" as const,
         percentage: 0,
-      }));
-    }
-    return MOCK_COURSES;
-  };
-
-  const displayCourses = getDisplayCourses();
+      }))
+    : MOCK_COURSES;
 
   return (
     <div className="course-container">
@@ -74,7 +76,7 @@ function PostsIndexComponent() {
               onClick={() => navigate({ to: "/learner/courses" })}
             />
           </div>
-          <p className="result">{MOCK_COURSES.length ?? 0} results</p>
+          <p className="result">{displayCourses.length} results</p>
         </div>
         <div className="course-list">
           {displayCourses.map((course) => (
@@ -88,8 +90,8 @@ function PostsIndexComponent() {
               percentage={course.percentage}
               onClick={() =>
                 navigate({
-                  to: "/learner/courses/$postId",
-                  params: { postId: course.id.toString() },
+                  to: "/learner/courses/$courseId",
+                  params: { courseId: course.id.toString() },
                 })
               }
             />
@@ -97,5 +99,13 @@ function PostsIndexComponent() {
         </div>
       </div>
     </div>
+  );
+}
+
+function CoursesPage() {
+  return (
+    <Suspense fallback={<TetrisLoader />}>
+      <CoursesInner />
+    </Suspense>
   );
 }

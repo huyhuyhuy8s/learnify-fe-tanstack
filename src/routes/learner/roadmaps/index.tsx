@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Card from "@/components/Card";
 import Search from "@/components/Search";
 import { MOCK_ROADMAP } from "@/mock";
@@ -5,21 +6,16 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import CategoryItem from "./-components/CategoryItem";
 import { CATEGORIES } from "./-constants";
 import "./style.scss";
-import { memo } from "react";
+import TetrisLoader from "@/components/TetrisLoader";
 
 export const Route = createFileRoute("/learner/roadmaps/")({
   head: () => ({
-    meta: [
-      {
-        charSet: "utf-8",
-        title: "Roadmaps | Learnify for Learner",
-      },
-    ],
+    meta: [{ title: "Roadmaps | Learnify for Learner" }],
   }),
-  component: memo(RoadmapsPage),
+  component: RoadmapsPage,
 });
 
-function RoadmapsPage() {
+function RoadmapsInner() {
   const navigate = useNavigate();
 
   return (
@@ -30,9 +26,9 @@ function RoadmapsPage() {
         </h3>
         <p className="regular">
           Roadmaps are collections of learnings designed to build deep skills in
-          a particular area. Whether you’re looking to earn achievements, build
+          a particular area. Whether you're looking to earn achievements, build
           a collection of skills badges, or prepare for a certification, there
-          are paths right for you. When you’re done, share your accomplishments
+          are paths right for you. When you're done, share your accomplishments
           on social media and hiring platforms like Linkedin and Credly!
         </p>
       </div>
@@ -49,7 +45,7 @@ function RoadmapsPage() {
                 key={index}
                 icon={item.icon}
                 label={item.label}
-                onClick={() => console.log(`Maps to ${item.label}`)}
+                onClick={() => undefined}
               />
             ))}
           </div>
@@ -75,5 +71,13 @@ function RoadmapsPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+function RoadmapsPage() {
+  return (
+    <Suspense fallback={<TetrisLoader />}>
+      <RoadmapsInner />
+    </Suspense>
   );
 }

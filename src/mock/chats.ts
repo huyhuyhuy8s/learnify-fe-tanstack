@@ -13,6 +13,11 @@ export const TALKING_ANIMATIONS: TTeacherAnimation[] = [
   "Talking_2",
   "Talking_3",
   "Talking_5",
+  "metarig.001|mixamo.com|Layer0",
+  "metarig.001|mixamo.com|Layer0.001",
+  "Talking_4",
+  "Talking_4.001",
+  "Talking_7",
 ];
 
 export const MOCK_ANSWERS = [

@@ -94,7 +94,7 @@ export function useCreateReview() {
           response.createReview &&
           !(response.createReview as { isSuccess: boolean }).isSuccess
         ) {
-          toast.error("Đăng đánh giá thất bại:");
+          toast.error("Failed to submit review:");
           return;
         }
 
@@ -103,11 +103,11 @@ export function useCreateReview() {
         if (error instanceof ClientError) {
           const gqlError = error.response.errors?.[0];
           if (gqlError) {
-            toast.error(`Đăng đánh giá thất bại: ${gqlError.message}`);
+            toast.error(`Failed to submit review: ${gqlError.message}`);
             return;
           }
         }
-        toast.error(`Đăng đánh giá thất bại: ${(error as Error).message}`);
+        toast.error(`Failed to submit review: ${(error as Error).message}`);
         return;
       }
     },

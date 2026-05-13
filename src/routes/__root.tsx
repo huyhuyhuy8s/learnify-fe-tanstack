@@ -20,6 +20,7 @@ import { useTheme } from "@/hooks/useTheme";
 import type { RouterContext } from "@/router";
 import Loader from "@/components/Loader";
 import { useAuthStore } from "@/store/authStore";
+import { LayoutProvider } from "@/contexts/LayoutContext";
 import "./root.scss";
 import "@styles/_global.scss";
 import { fetchCurrentUser } from "@/apis/auth";
@@ -115,7 +116,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <GoogleOAuthProvider clientId={googleClientId}>
-          {children}
+          <LayoutProvider>{children}</LayoutProvider>
           <div style={{ position: "absolute" }}>
             <TanStackRouterDevtools position="bottom-right" />
             <ReactQueryDevtools buttonPosition="bottom-left" />

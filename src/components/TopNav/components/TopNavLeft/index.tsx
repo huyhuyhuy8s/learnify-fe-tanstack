@@ -8,6 +8,7 @@ type TTopNavLeftProps = {
   pathname: string[];
   lastPathname?: string;
   pathnameWithoutLast: string[];
+  customTitle?: string;
 };
 
 const LogoWrapper = () => (
@@ -23,6 +24,7 @@ const TopNavLeft = (props: TTopNavLeftProps) => {
     lastPathname,
     pathnameWithoutLast,
     fullWidth = false,
+    customTitle,
   } = props;
 
   const content =
@@ -41,7 +43,7 @@ const TopNavLeft = (props: TTopNavLeftProps) => {
             ...
           </button>
           <span className="material-symbols-rounded">keyboard_arrow_right</span>
-          <button className="medium">{lastPathname}</button>
+          <button className="medium">{customTitle || lastPathname}</button>
         </section>
       </>
     ) : pathname.length >= 2 ? (
@@ -60,7 +62,9 @@ const TopNavLeft = (props: TTopNavLeftProps) => {
               to="/learner"
               className="medium"
             >
-              {item}
+              {customTitle && index === pathname.length - 1
+                ? customTitle
+                : item}
             </Link>
           </Fragment>
         ))}

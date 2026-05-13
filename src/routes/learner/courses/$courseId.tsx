@@ -1,5 +1,5 @@
-import { useMemo, useState, Activity } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { useMemo, useState, useEffect, Activity } from "react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { COLORS } from "@/styles/colors";
 import NotFound from "@/components/NotFound";
 import PostErrorComponent from "@/components/PostErrorComponent";
@@ -11,11 +11,12 @@ import CommentForm from "./-components/CommentForm";
 import { useCourseDetail, useCreateReview } from "@/hooks/useCourseDetail";
 import type { TProgress } from "@/types/global";
 import { formatDate } from "@/utils";
+import { useLayout } from "@/contexts/LayoutContext";
 import { MOCK_COMMENT, MOCK_COURSE_DETAILS, MOCK_COURSES } from "@/mock";
-import "./postId.scss";
+import "./courseId.scss";
 import TetrisLoader from "@/components/TetrisLoader";
 
-export const Route = createFileRoute("/learner/courses/$postId")({
+export const Route = createFileRoute("/learner/courses/$courseId")({
   head: () => ({
     meta: [{ title: "Course Details | Learnify" }],
   }),
@@ -23,13 +24,15 @@ export const Route = createFileRoute("/learner/courses/$postId")({
   notFoundComponent: () => {
     return <NotFound />;
   },
-  component: PostComponent,
+  component: CourseComponent,
 });
 
-function PostComponent() {
-  const { postId } = Route.useParams();
-  const { data, isLoading, isError } = useCourseDetail(postId);
+function CourseComponent() {
+  const { courseId } = Route.useParams();
+  const { data, isLoading, isError } = useCourseDetail(courseId);
   const createReview = useCreateReview();
+  const navigate = useNavigate();
+  const { setLayoutConfigState } = useLayout();
   const [showCommentForm, setShowCommentForm] = useState(false);
   const mockCourse = useMemo(
     () => MOCK_COURSES.find((course) => course.id === Number(1)),
@@ -47,6 +50,14 @@ function PostComponent() {
     }
     return mockCourse || null;
   }, [data, isLoading, isError, mockCourse]);
+
+  useEffect(() => {
+    if (courseDisplay?.title)
+      setLayoutConfigState((prev) => ({
+        ...prev,
+        customTitle: courseDisplay.title,
+      }));
+  }, [courseDisplay?.title, setLayoutConfigState]);
 
   const lessonsDisplay = useMemo(() => {
     if (!isLoading && !isError && data?.getLessonsByCourseId?.isSuccess) {
@@ -117,7 +128,7 @@ function PostComponent() {
           <CommentForm
             onSubmit={(rating, content) => {
               createReview.mutate(
-                { courseId: postId, rating, content },
+                { courseId: courseId, rating, content },
                 {
                   onSuccess: () => setShowCommentForm(false),
                 }
@@ -137,7 +148,12 @@ function PostComponent() {
               duration={lesson.duration}
               status={lesson.status}
               percentage={lesson.percentage}
-              onClick={() => alert("hello")}
+              onClick={() =>
+                navigate({
+                  to: "/learner/lessons/$lessonId",
+                  params: { lessonId: lesson.id },
+                })
+              }
             />
           ))}
         </div>

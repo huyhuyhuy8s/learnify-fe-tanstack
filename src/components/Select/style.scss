@@ -1,0 +1,74 @@
+@use "@styles/colors" as *;
+@use "@styles/variables" as *;
+@use "@styles/functions" as *;
+
+.select {
+  width: 100%;
+
+  &__control {
+    border: toRem(2) solid $neutral-400 !important;
+    border-radius: $br-rounded !important;
+    min-height: toRem(55) !important;
+    background-color: $neutral-100 !important;
+    cursor: pointer !important;
+    box-shadow: none !important;
+
+    &:hover {
+      border-color: $neutral-400 !important;
+    }
+
+    &--is-focused {
+      border-color: $green-600 !important;
+      border-radius: $br-sm !important;
+    }
+  }
+
+  &__value-container {
+    padding: toRem(8) toRem(15) !important;
+  }
+
+  &__single-value {
+    color: $black !important;
+    font-size: toRem(14) !important;
+  }
+
+  &__placeholder {
+    color: $neutral-500 !important;
+    font-size: toRem(14) !important;
+  }
+
+  &__indicator-separator {
+    display: none !important;
+  }
+
+  &__indicator {
+    color: $neutral-400 !important;
+    padding: toRem(8) !important;
+
+    &:hover {
+      color: $neutral-600 !important;
+    }
+  }
+
+  &__menu {
+    border: toRem(1) solid $neutral-200 !important;
+    border-radius: $br-sm !important;
+    box-shadow: 0 toRem(4) toRem(12) rgba(0, 0, 0, 0.1) !important;
+    overflow: hidden !important;
+  }
+
+  &__option {
+    font-size: toRem(14) !important;
+    padding: toRem(12) toRem(15) !important;
+    cursor: pointer !important;
+
+    &--is-focused {
+      background-color: $green-100 !important;
+    }
+
+    &--is-selected {
+      background-color: $green-600 !important;
+      color: $white !important;
+    }
+  }
+}
