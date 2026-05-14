@@ -8,7 +8,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import DefaultCatchBoundary from "@/components/DefaultCatchBoundary";
 import NotFound from "@/components/NotFound";
 import { seo } from "@/utils/seo";
@@ -22,7 +22,6 @@ import Loader from "@/components/Loader";
 import { useAuthStore } from "@/store/authStore";
 import { LayoutProvider } from "@/contexts/LayoutContext";
 import "./root.scss";
-import "@styles/_global.scss";
 import { getCurrentUserFn } from "@/server/auth";
 
 gsap.registerPlugin(SplitText, CustomEase);
@@ -66,11 +65,6 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       { rel: "icon", href: "/favicon.ico" },
     ],
   }),
-  pendingComponent: () => (
-    <RootDocument>
-      <Loader />
-    </RootDocument>
-  ),
   errorComponent: (props) => {
     return (
       <RootDocument>
@@ -86,14 +80,40 @@ function RootComponent() {
   useTheme();
   const setAuth = useAuthStore((state) => state.setAuth);
   const { auth } = Route.useLoaderData();
+  const [phase1Done, setPhase1Done] = useState(false);
+  const [pageLoaded, setPageLoaded] = useState(false);
+  const [phase2Done, setPhase2Done] = useState(false);
+  const [showApp, setShowApp] = useState(false);
+
+  const phase2Ready = phase1Done && pageLoaded;
 
   useEffect(() => {
     setAuth(auth?.user || null);
   }, [setAuth, auth]);
 
+  useEffect(() => {
+    const onLoad = () => setPageLoaded(true);
+    window.addEventListener("load", onLoad);
+    if (document.readyState === "complete") setTimeout(onLoad, 0);
+    return () => window.removeEventListener("load", onLoad);
+  }, []);
+
+  useEffect(() => {
+    if (!phase2Done) return;
+    const timer = setTimeout(() => setShowApp(true), 600);
+    return () => clearTimeout(timer);
+  }, [phase2Done]);
+
   return (
     <RootDocument>
       <Outlet />
+      {!showApp && (
+        <Loader
+          onPhase1Complete={() => setPhase1Done(true)}
+          ready={phase2Ready}
+          onPhase2Complete={() => setPhase2Done(true)}
+        />
+      )}
     </RootDocument>
   );
 }

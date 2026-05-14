@@ -15,6 +15,7 @@ import {
   type TBackendCourse,
 } from "@/hooks/useCourses";
 import TetrisLoader from "@/components/TetrisLoader";
+import { logger } from "@/utils/logger";
 
 export const Route = createFileRoute("/learner/dashboard")({
   head: () => ({
@@ -39,6 +40,8 @@ function DashboardInner() {
         percentage: 0,
       }))
     : MOCK_COURSES;
+
+  logger.info(data, isBackendSuccess, displayCourse);
 
   return (
     <div className="dashboard">
@@ -96,5 +99,3 @@ function Dashboard() {
     </Suspense>
   );
 }
-
-export default Dashboard;

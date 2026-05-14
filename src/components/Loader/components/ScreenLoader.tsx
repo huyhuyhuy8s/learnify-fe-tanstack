@@ -2,14 +2,19 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
-const ScreenLoader = () => {
-  const loaderContainerContentRef = useRef<HTMLDivElement>(null);
+type TScreenLoaderProps = {
+  onPhase1Complete?: () => void;
+  ready?: boolean;
+  onPhase2Complete?: () => void;
+};
+
+const ScreenLoader = (props: TScreenLoaderProps) => {
+  const { onPhase1Complete, ready, onPhase2Complete } = props;
+  const ref = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      const tl = gsap.timeline({
-        delay: 1.0,
-      });
+      const tl = gsap.timeline({ delay: 1.0 });
       tl.to(".loader-4", {
         keyframes: {
           "0%": {
@@ -31,118 +36,107 @@ const ScreenLoader = () => {
         },
         duration: 1.5,
         ease: "hop",
-      })
-        .to(
-          ".loader-3",
-          {
-            keyframes: {
-              "0%": {
-                clipPath:
-                  "polygon(0% 0%, 100% 0%, 100% 100%, 100% 100%, 0% 100%)",
-              },
-              "20%": {
-                clipPath:
-                  "polygon(0% 0%, 100% 0%, 100% 20%, 50% 100%, 0% 100%)",
-              },
-              "30%": {
-                clipPath:
-                  "polygon(0% 0%, 100% 0%, 100% 0%, 38.5% 100%, 0% 100%)",
-              },
-              "50%": {
-                clipPath: "polygon(0% 0%, 70% 0%, 70% 0%, 0% 100%, 0% 100%)",
-              },
-              "60%": {
-                clipPath: "polygon(0% 0%, 49% 0%, 49% 0%, 0% 80%, 0% 80%)",
-              },
-              "80%": {
-                clipPath: "polygon(0% 0%, 20% 0%, 20% 0%, 0% 40%, 0% 40%)",
-              },
-              "100%": {
-                clipPath: "polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%)",
-              },
-              easeEach: "none",
+      }).to(
+        ".loader-3",
+        {
+          keyframes: {
+            "0%": {
+              clipPath:
+                "polygon(0% 0%, 100% 0%, 100% 100%, 100% 100%, 0% 100%)",
             },
-            duration: 1.5,
-            ease: "hop",
-          },
-          "-=0.5"
-        )
-        .to(
-          ".loader-2",
-          {
-            keyframes: {
-              "0%": {
-                clipPath:
-                  "polygon(0% 0%, 100% 0%, 100% 100%, 100% 100%, 0% 100%)",
-              },
-              "20%": {
-                clipPath:
-                  "polygon(0% 0%, 100% 0%, 100% 20%, 50% 100%, 0% 100%)",
-              },
-              "30%": {
-                clipPath:
-                  "polygon(0% 0%, 100% 0%, 100% 0%, 38.5% 100%, 0% 100%)",
-              },
-              "50%": {
-                clipPath: "polygon(0% 0%, 70% 0%, 70% 0%, 0% 100%, 0% 100%)",
-              },
-              "60%": {
-                clipPath: "polygon(0% 0%, 49% 0%, 49% 0%, 0% 80%, 0% 80%)",
-              },
-              "80%": {
-                clipPath: "polygon(0% 0%, 20% 0%, 20% 0%, 0% 40%, 0% 40%)",
-              },
-              "100%": {
-                clipPath: "polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%)",
-              },
-              easeEach: "none",
+            "20%": {
+              clipPath: "polygon(0% 0%, 100% 0%, 100% 20%, 50% 100%, 0% 100%)",
             },
-            duration: 1.5,
-            ease: "hop",
-          },
-          "-=0.5"
-        )
-        .to(
-          ".loader-1",
-          {
-            keyframes: {
-              "0%": {
-                clipPath:
-                  "polygon(0% 0%, 100% 0%, 100% 100%, 100% 100%, 0% 100%)",
-              },
-              "20%": {
-                clipPath:
-                  "polygon(0% 0%, 100% 0%, 100% 20%, 50% 100%, 0% 100%)",
-              },
-              "30%": {
-                clipPath:
-                  "polygon(0% 0%, 100% 0%, 100% 0%, 38.5% 100%, 0% 100%)",
-              },
-              "50%": {
-                clipPath: "polygon(0% 0%, 70% 0%, 70% 0%, 0% 100%, 0% 100%)",
-              },
-              "60%": {
-                clipPath: "polygon(0% 0%, 49% 0%, 49% 0%, 0% 80%, 0% 80%)",
-              },
-              "80%": {
-                clipPath: "polygon(0% 0%, 20% 0%, 20% 0%, 0% 40%, 0% 40%)",
-              },
-              "100%": {
-                clipPath: "polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%)",
-              },
-              easeEach: "none",
+            "30%": {
+              clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 38.5% 100%, 0% 100%)",
             },
-            duration: 1.5,
-            ease: "hop",
+            "50%": {
+              clipPath: "polygon(0% 0%, 70% 0%, 70% 0%, 0% 100%, 0% 100%)",
+            },
+            "60%": {
+              clipPath: "polygon(0% 0%, 49% 0%, 49% 0%, 0% 80%, 0% 80%)",
+            },
+            "80%": {
+              clipPath: "polygon(0% 0%, 20% 0%, 20% 0%, 0% 40%, 0% 40%)",
+            },
+            "100%": { clipPath: "polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%)" },
+            easeEach: "none",
           },
-          "-=0.5"
-        );
+          duration: 1.5,
+          ease: "hop",
+        },
+        "-=0.5"
+      );
+
+      if (onPhase1Complete) tl.call(onPhase1Complete);
     },
-    { scope: loaderContainerContentRef }
+    { scope: ref }
+  );
+
+  useGSAP(
+    () => {
+      if (!ready) return;
+      const tl = gsap.timeline();
+      tl.to(".loader-2", {
+        keyframes: {
+          "0%": {
+            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 100% 100%, 0% 100%)",
+          },
+          "20%": {
+            clipPath: "polygon(0% 0%, 100% 0%, 100% 20%, 50% 100%, 0% 100%)",
+          },
+          "30%": {
+            clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 38.5% 100%, 0% 100%)",
+          },
+          "50%": {
+            clipPath: "polygon(0% 0%, 70% 0%, 70% 0%, 0% 100%, 0% 100%)",
+          },
+          "60%": { clipPath: "polygon(0% 0%, 49% 0%, 49% 0%, 0% 80%, 0% 80%)" },
+          "80%": { clipPath: "polygon(0% 0%, 20% 0%, 20% 0%, 0% 40%, 0% 40%)" },
+          "100%": { clipPath: "polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%)" },
+          easeEach: "none",
+        },
+        duration: 1.5,
+        ease: "hop",
+      }).to(
+        ".loader-1",
+        {
+          keyframes: {
+            "0%": {
+              clipPath:
+                "polygon(0% 0%, 100% 0%, 100% 100%, 100% 100%, 0% 100%)",
+            },
+            "20%": {
+              clipPath: "polygon(0% 0%, 100% 0%, 100% 20%, 50% 100%, 0% 100%)",
+            },
+            "30%": {
+              clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 38.5% 100%, 0% 100%)",
+            },
+            "50%": {
+              clipPath: "polygon(0% 0%, 70% 0%, 70% 0%, 0% 100%, 0% 100%)",
+            },
+            "60%": {
+              clipPath: "polygon(0% 0%, 49% 0%, 49% 0%, 0% 80%, 0% 80%)",
+            },
+            "80%": {
+              clipPath: "polygon(0% 0%, 20% 0%, 20% 0%, 0% 40%, 0% 40%)",
+            },
+            "100%": { clipPath: "polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%)" },
+            easeEach: "none",
+          },
+          duration: 1.5,
+          ease: "hop",
+        },
+        "-=0.5"
+      );
+
+      if (onPhase2Complete) tl.call(onPhase2Complete);
+    },
+    { scope: ref, dependencies: [ready, onPhase2Complete] }
   );
 
   return (
-    <div className="loader-container-content" ref={loaderContainerContentRef}>
+    <div className="loader-container-content" ref={ref}>
       <div className="loader-1"></div>
       <div className="loader-2"></div>
       <div className="loader-3"></div>
