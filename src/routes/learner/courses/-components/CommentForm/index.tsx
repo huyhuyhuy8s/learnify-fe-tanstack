@@ -75,7 +75,7 @@ const CommentForm = ({
           disabled={isLoading}
         />
         <div className="submit-btn-wrapper">
-          {isLoading && <TetrisLoader size="small" />}
+          {isLoading && <TetrisLoader size="sm" />}
           <TextButton
             text="Submit Review"
             type="primary"
