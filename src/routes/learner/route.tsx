@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import "./style.scss";
 import Loader from "@/components/Loader";
 import { createLearnerHead } from "@/utils";
+import { Toaster } from "sonner";
 
 export const Route = createFileRoute("/learner")({
   beforeLoad: ({ context }) => {
@@ -33,6 +34,7 @@ function LearnerLayout() {
         <div className="inner">
           <div className="content">
             <Outlet />
+            <Toaster position="bottom-right" richColors />
           </div>
           <Footer />
         </div>

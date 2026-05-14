@@ -31,6 +31,16 @@
     display: flex;
     place-items: center;
     justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+}
+
+@include break(md) {
+  .home {
+    .decoration-shapes {
+      visibility: hidden;
+    }
   }
 }
 

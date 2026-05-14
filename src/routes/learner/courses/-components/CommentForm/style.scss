@@ -65,7 +65,7 @@
     .submit-btn-wrapper {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: toRem(8);
     }
   }
 }

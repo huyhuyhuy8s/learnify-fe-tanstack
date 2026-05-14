@@ -1,9 +1,8 @@
 import { Suspense } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { MOCK_COURSES } from "@/mock";
 import "./style.scss";
 import Card from "@/components/Card";
-import { useNavigate } from "@tanstack/react-router";
 import TextButton from "@/components/TextButton";
 import Search from "@/components/Search";
 import {

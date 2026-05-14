@@ -12,9 +12,11 @@ export type TSessionUser = {
   diamond?: number;
   currentSteak?: number;
 };
+import { useAuthStore, type TAuthState } from "./store/authStore";
 
 export function getRouter() {
   const queryClient = new QueryClient();
+  const authStore = useAuthStore.getState();
 
   const router = createRouter({
     routeTree,

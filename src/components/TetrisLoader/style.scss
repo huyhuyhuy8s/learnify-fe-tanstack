@@ -96,10 +96,6 @@
     font-size: $fs-paragraph;
     transition-property: color;
     @include transition;
-
-    [data-theme="dark"] & {
-      color: $white;
-    }
   }
 }
 
