@@ -2,6 +2,8 @@ import { GraphQLClient } from "graphql-request";
 import { useAuthStore } from "@/store/authStore";
 import { REFRESH_TOKEN_MUTATION } from "@/graphql/mutations";
 import { toast } from "sonner";
+import { logger } from "@/utils/logger";
+import { logoutFn } from "@/server/auth";
 
 const GRAPHQL_ENDPOINT = "https://learnify-be.onrender.com/graphql";
 // const GRAPHQL_ENDPOINT = "http://localhost:10000/graphql";
@@ -12,16 +14,24 @@ async function isGraphqlUnauthorized(res: Response) {
   try {
     const clone = res.clone();
     const body = await clone.json();
-    if (
-      body?.errors?.some(
-        (e: { extensions?: { code?: string }; message?: string }) =>
-          e?.extensions?.code === "UNAUTHENTICATED" ||
-          e?.extensions?.code === "UnauthorizedException" ||
-          e?.message?.includes("Unauthorized") ||
-          e?.message?.includes("No token provided") ||
-          e?.message?.includes("Invalid token")
-      )
-    ) {
+    const matched = body?.errors?.filter(
+      (e: { extensions?: { code?: string }; message?: string }) =>
+        e?.extensions?.code === "UNAUTHENTICATED" ||
+        e?.extensions?.code === "UnauthorizedException" ||
+        e?.message?.includes("Unauthorized") ||
+        e?.message?.includes("No token provided") ||
+        e?.message?.includes("Invalid token")
+    );
+    if (matched?.length) {
+      logger.debug(
+        "GraphQL unauthorized detected:",
+        matched.map(
+          (e: { extensions?: { code?: string }; message?: string }) => ({
+            code: e.extensions?.code,
+            message: e.message,
+          })
+        )
+      );
       return true;
     }
     return false;
@@ -70,7 +80,9 @@ const customFetch = async (
     if (refreshSuccess) {
       response = await fetch(input, fetchInit);
     } else {
+      await logoutFn();
       if (typeof window !== "undefined") {
+        logger.debug("Refresh failed, clearing session & redirecting");
         useAuthStore.getState().logout();
         toast.error("Session expired. Please log in again.");
         window.location.href = "/learner/log-in";

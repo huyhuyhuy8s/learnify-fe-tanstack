@@ -132,7 +132,7 @@ const ScreenLoader = (props: TScreenLoaderProps) => {
 
       if (onPhase2Complete) tl.call(onPhase2Complete);
     },
-    { scope: ref, dependencies: [ready, onPhase2Complete] }
+    { scope: ref, dependencies: [ready] }
   );
 
   return (
