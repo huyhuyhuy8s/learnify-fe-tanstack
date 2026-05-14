@@ -10,7 +10,7 @@ import "./userId.scss";
 
 export const Route = createFileRoute("/learner/user/$userId")({
   beforeLoad: async ({ location }) => {
-    const user = await getCurrentUserFn();
+    const { user } = await getCurrentUserFn();
     if (!user)
       throw redirect({
         to: "/learner/log-in",

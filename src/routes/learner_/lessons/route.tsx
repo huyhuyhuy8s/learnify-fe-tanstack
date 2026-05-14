@@ -7,7 +7,7 @@ import { getCurrentUserFn } from "@/server/auth";
 
 export const Route = createFileRoute("/learner_/lessons")({
   beforeLoad: async ({ location }) => {
-    const user = await getCurrentUserFn();
+    const { user } = await getCurrentUserFn();
     if (!user)
       throw redirect({
         to: "/learner/log-in",

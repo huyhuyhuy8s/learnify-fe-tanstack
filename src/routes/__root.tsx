@@ -20,6 +20,7 @@ import { useTheme } from "@/hooks/useTheme";
 import type { RouterContext } from "@/router";
 import Loader from "@/components/Loader";
 import { useAuthStore } from "@/store/authStore";
+import { toast } from "sonner";
 import { LayoutProvider } from "@/contexts/LayoutContext";
 import "./root.scss";
 import { getCurrentUserFn } from "@/server/auth";
@@ -30,8 +31,8 @@ CustomEase.create("glide", "0.8, 0, 0.2, 1");
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   loader: async () => {
-    const user = await getCurrentUserFn();
-    return { auth: { user, isAuthenticated: !!user } };
+    const { user, expired } = await getCurrentUserFn();
+    return { auth: { user, isAuthenticated: !!user, expired } };
   },
   head: () => ({
     meta: [
@@ -88,6 +89,7 @@ function RootComponent() {
   const phase2Ready = phase1Done && pageLoaded;
 
   useEffect(() => {
+    if (auth?.expired) toast.error("Session expired. Please log in again.");
     setAuth(auth?.user || null);
   }, [setAuth, auth]);
 
@@ -112,6 +114,7 @@ function RootComponent() {
           onPhase1Complete={() => setPhase1Done(true)}
           ready={phase2Ready}
           onPhase2Complete={() => setPhase2Done(true)}
+          disabled={import.meta.env.DEV}
         />
       )}
     </RootDocument>

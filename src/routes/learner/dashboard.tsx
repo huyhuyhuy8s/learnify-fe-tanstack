@@ -1,14 +1,14 @@
 import React, { Suspense } from "react";
 import Card from "@/components/Card";
 import { MOCK_COURSES } from "@/mock";
-import { useNavigate, Navigate } from "@tanstack/react-router";
+import { useNavigate, redirect } from "@tanstack/react-router";
 import { createFileRoute } from "@tanstack/react-router";
+import { getCurrentUserFn } from "@/server/auth";
 import DashboardBanner from "./-components/DashboardBanner";
 import DashboardStreakWidget from "./-components/DashboardStreakWidget";
 import DashboardAchievementsWidget from "./-components/DashboardAchievementsWidget";
 import DashboardProgressWidget from "./-components/DashboardProgressWidget";
 import "./dashboard.scss";
-import { useAuthStore } from "@/store";
 import { createLearnerHead } from "@/utils";
 import {
   useSuspenseGetAllCourses,
@@ -18,6 +18,14 @@ import TetrisLoader from "@/components/TetrisLoader";
 import { logger } from "@/utils/logger";
 
 export const Route = createFileRoute("/learner/dashboard")({
+  beforeLoad: async ({ location }) => {
+    const { user } = await getCurrentUserFn();
+    if (!user)
+      throw redirect({
+        to: "/learner/log-in",
+        search: { redirect: location.pathname },
+      });
+  },
   head: () => ({
     ...createLearnerHead("Dashboard"),
   }),
@@ -87,12 +95,6 @@ function DashboardInner() {
 }
 
 function Dashboard() {
-  const { isAuthenticated } = useAuthStore();
-
-  if (!isAuthenticated) {
-    return <Navigate to="/learner/log-in" replace />;
-  }
-
   return (
     <Suspense fallback={<TetrisLoader />}>
       <DashboardInner />

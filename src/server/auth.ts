@@ -2,6 +2,8 @@ import { createServerFn } from "@tanstack/react-start";
 import { useAppSession } from "@/utils/session";
 import { z } from "zod";
 
+const SESSION_TTL = 7 * 24 * 60 * 60 * 1000;
+
 type UserData = {
   id: string | number;
   email: string;
@@ -20,7 +22,17 @@ const sessionSchema = z.object({
 export const getCurrentUserFn = createServerFn({ method: "GET" }).handler(
   async () => {
     const session = await useAppSession();
-    return session.data.user || null;
+    const user = session.data.user || null;
+
+    if (user && session.data.loggedInAt) {
+      const elapsed = Date.now() - session.data.loggedInAt;
+      if (elapsed > SESSION_TTL) {
+        await session.clear();
+        return { user: null, expired: true };
+      }
+    }
+
+    return { user, expired: false };
   }
 );
 
@@ -28,7 +40,7 @@ export const setSessionFn = createServerFn({ method: "POST" })
   .inputValidator((data: UserData) => sessionSchema.parse(data))
   .handler(async ({ data }) => {
     const session = await useAppSession();
-    await session.update({ user: data });
+    await session.update({ user: data, loggedInAt: Date.now() });
     return { success: true };
   });
 

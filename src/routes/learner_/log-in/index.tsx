@@ -15,6 +15,7 @@ import { createLearnerHead } from "@/utils";
 import { getCurrentUserFn } from "@/server/auth";
 import z from "zod";
 import { logger } from "@/utils/logger";
+import { toast } from "sonner";
 
 const productSearchSchema = z.object({
   redirect: z.string().optional(),
@@ -24,7 +25,7 @@ export const Route = createFileRoute("/learner_/log-in/")({
   validateSearch: productSearchSchema,
   component: LogInPage,
   beforeLoad: async () => {
-    const user = await getCurrentUserFn();
+    const { user } = await getCurrentUserFn();
     if (user) throw redirect({ to: "/learner" });
   },
   head: () => ({
@@ -49,6 +50,7 @@ function LogInPage() {
         },
       });
     await router.invalidate();
+    toast.success("Logged in successfully!");
     if (redirect) navigate({ to: redirect });
     else navigate({ to: "/learner/dashboard" });
   };

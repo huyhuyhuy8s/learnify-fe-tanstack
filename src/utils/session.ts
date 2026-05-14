@@ -1,7 +1,10 @@
 import { useSession } from "@tanstack/react-start/server";
 import type { TSessionUser } from "@/router";
 
-export type TSessionData = { user?: TSessionUser };
+export type TSessionData = {
+  user?: TSessionUser;
+  loggedInAt?: number;
+};
 
 export function useAppSession() {
   return useSession<TSessionData>({
