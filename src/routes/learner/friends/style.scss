@@ -1,7 +1,7 @@
 @use "@styles/variables" as *;
+@use "@styles/colors" as *;
 @use "@styles/mixins" as *;
 @use "@styles/functions" as *;
-@use "@styles/colors" as *;
 
 .friend-page {
   margin-top: toRem(-50);
@@ -29,7 +29,7 @@
       border-top: toRem(2) solid transparent;
       border-right: toRem(1) solid $neutral-300;
       cursor: pointer;
-      transition: all 0.2s ease;
+      @include transition;
 
       &:last-child {
         border-right: none;

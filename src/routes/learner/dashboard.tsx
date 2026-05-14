@@ -15,7 +15,6 @@ import {
   type TBackendCourse,
 } from "@/hooks/useCourses";
 import TetrisLoader from "@/components/TetrisLoader";
-import { logger } from "@/utils/logger";
 
 export const Route = createFileRoute("/learner/dashboard")({
   beforeLoad: async ({ location }) => {
@@ -32,7 +31,7 @@ export const Route = createFileRoute("/learner/dashboard")({
   component: Dashboard,
 });
 
-function DashboardInner() {
+function Dashboard() {
   const { data } = useSuspenseGetAllCourses(0);
   const navigate = useNavigate();
   const isBackendSuccess = data?.isSuccess && data.courses.length > 0;
@@ -49,55 +48,48 @@ function DashboardInner() {
       }))
     : MOCK_COURSES;
 
-  logger.info(data, isBackendSuccess, displayCourse);
-
   return (
     <div className="dashboard">
-      <div className="dashboard-main">
-        <DashboardBanner />
-        <div className="dashboard-main-courses">
-          {displayCourse.map((course, index) => (
-            <React.Fragment key={course.id}>
-              <Card
-                typeSpecial={course.typeSpecial}
-                title={course.title}
-                description={course.description}
-                duration={course.duration}
-                status={course.status}
-                percentage={course.percentage}
-                onClick={() =>
-                  navigate({
-                    to: "/learner/courses/$courseId",
-                    params: { courseId: course.id.toString() },
-                  })
-                }
-              />
-              {(index + 1) % 3 === 0 && index !== displayCourse.length - 1 && (
-                <hr className="course-row-divider" />
-              )}
-            </React.Fragment>
-          ))}
+      <Suspense fallback={<TetrisLoader size="md" />}>
+        <div className="dashboard-main">
+          <DashboardBanner />
+          <div className="dashboard-main-courses">
+            {displayCourse.map((course, index) => (
+              <React.Fragment key={course.id}>
+                <Card
+                  typeSpecial={course.typeSpecial}
+                  title={course.title}
+                  description={course.description}
+                  duration={course.duration}
+                  status={course.status}
+                  percentage={course.percentage}
+                  onClick={() =>
+                    navigate({
+                      to: "/learner/courses/$courseId",
+                      params: { courseId: course.id.toString() },
+                    })
+                  }
+                />
+                {(index + 1) % 3 === 0 &&
+                  index !== displayCourse.length - 1 && (
+                    <hr className="course-row-divider" />
+                  )}
+              </React.Fragment>
+            ))}
+          </div>
         </div>
-      </div>
-      <div className="dashboard-sidebar">
-        <div className="dashboard-sidebar-widget">
-          <DashboardStreakWidget />
+        <div className="dashboard-sidebar">
+          <div className="dashboard-sidebar-widget">
+            <DashboardStreakWidget />
+          </div>
+          <div className="dashboard-sidebar-widget">
+            <DashboardAchievementsWidget />
+          </div>
+          <div className="dashboard-sidebar-widget">
+            <DashboardProgressWidget />
+          </div>
         </div>
-        <div className="dashboard-sidebar-widget">
-          <DashboardAchievementsWidget />
-        </div>
-        <div className="dashboard-sidebar-widget">
-          <DashboardProgressWidget />
-        </div>
-      </div>
+      </Suspense>
     </div>
-  );
-}
-
-function Dashboard() {
-  return (
-    <Suspense fallback={<TetrisLoader />}>
-      <DashboardInner />
-    </Suspense>
   );
 }

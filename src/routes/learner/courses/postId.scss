@@ -1,7 +1,7 @@
 @use "@styles/variables" as *;
+@use "@styles/colors" as *;
 @use "@styles/mixins" as *;
 @use "@styles/functions" as *;
-@use "@styles/colors" as *;
 
 .course-detail-container {
   display: grid;
@@ -48,7 +48,8 @@
           &:hover {
             background-color: $neutral-900;
             color: $white;
-            transition: all 0.3s ease;
+            @include transition;
+            transition-property: background-color, color;
           }
         }
       }

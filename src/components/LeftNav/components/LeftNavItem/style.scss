@@ -1,7 +1,7 @@
-@use '@styles/colors' as *;
-@use '@styles/functions' as *;
-@use '@styles/variables' as *;
-@use '@styles/mixins' as *;
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
 
 .left-nav-top-item {
   width: toRem(67.5);
@@ -51,7 +51,7 @@
       @include transition;
 
       span {
-        font-variation-settings: 'FILL' 1;
+        font-variation-settings: "FILL" 1;
       }
     }
 

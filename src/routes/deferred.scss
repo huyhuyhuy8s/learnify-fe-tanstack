@@ -1,25 +1,30 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
 .deferred {
-  padding: 0.5rem;
-}
+  padding: toRem(8);
 
-.deferred__count {
-  margin: 0.5rem 0;
-}
+  &__count {
+    margin: toRem(8) 0;
+  }
 
-.deferred__button {
-  margin-top: 0.5rem;
+  &__button {
+    margin-top: toRem(8);
+  }
 }
 
 .deferred-query {
-  margin-top: 1rem;
-}
+  margin-top: toRem(16);
 
-.deferred-query h1 {
-  margin-bottom: 0.5rem;
-}
+  h1 {
+    margin-bottom: toRem(8);
+  }
 
-.deferred-query__status,
-.deferred-query__message,
-.deferred-query__time {
-  margin: 0.25rem 0;
+  &__status,
+  &__message,
+  &__time {
+    margin: toRem(4) 0;
+  }
 }

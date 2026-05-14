@@ -1,9 +1,9 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { useAuthStore } from "@/store";
+import { getCurrentUserFn } from "@/server/auth";
 
 export const Route = createFileRoute("/learner/user/")({
-  beforeLoad: () => {
-    const { user } = useAuthStore.getState();
+  beforeLoad: async () => {
+    const { user } = await getCurrentUserFn();
     if (!user?.id) throw redirect({ to: "/learner/dashboard" });
     throw redirect({
       to: "/learner/user/$userId",

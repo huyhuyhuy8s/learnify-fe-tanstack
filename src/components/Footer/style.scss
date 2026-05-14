@@ -1,7 +1,7 @@
-@use '@styles/variables' as *;
-@use '@styles/functions' as *;
-@use '@styles/colors' as *;
-@use '@styles/mixins' as *;
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
 
 footer {
   display: flex;
@@ -27,8 +27,8 @@ footer {
     justify-content: space-between;
     gap: toRem(100);
 
-    >h6,
-    >p {
+    > h6,
+    > p {
       color: $neutral-400;
     }
   }
@@ -45,14 +45,13 @@ footer {
 
   .item-2,
   .item-3 {
-
     .navigation,
     .socials {
       display: flex;
       flex-direction: column;
       gap: toRem(20);
 
-      &>h6 {
+      & > h6 {
         color: $neutral-400;
       }
 
@@ -110,7 +109,6 @@ footer {
       gap: toRem(25);
     }
   }
-
 
   .item-1 {
     grid-row: 3 / 4;

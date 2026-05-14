@@ -27,10 +27,10 @@ export const Route = createFileRoute("/learner/roadmaps/$roadmapId")({
   notFoundComponent: () => {
     return <NotFound />;
   },
-  component: RoadmapComponent,
+  component: RoadmapItem,
 });
 
-function RoadmapComponent() {
+function RoadmapItem() {
   const { roadmapId } = Route.useParams();
   const roadmap = MOCK_ROADMAP.find(
     (roadmap) => roadmap.id === Number(roadmapId)

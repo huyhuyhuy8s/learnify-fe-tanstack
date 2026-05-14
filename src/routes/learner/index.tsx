@@ -1,25 +1,25 @@
-import { createFileRoute, useNavigate, Navigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, redirect } from "@tanstack/react-router";
 import "./home.scss";
 import Search from "@/components/Search";
 import TextButton from "@/components/TextButton";
 import { SEARCH_SUGGESTIONS } from "@/mock";
 import DecorationShapes from "./-components/DecorationShapes";
-import { useAuthStore } from "@/store";
+import { getCurrentUserFn } from "@/server/auth";
 
 export const Route = createFileRoute("/learner/")({
-  component: RouteComponent,
+  beforeLoad: async ({ location }) => {
+    const { user } = await getCurrentUserFn();
+    if (user)
+      throw redirect({
+        to: "/learner/dashboard",
+        search: { redirect: location.pathname },
+      });
+    return { user };
+  },
+  component: Home,
 });
 
-function RouteComponent() {
-  const { isAuthenticated } = useAuthStore();
-  if (isAuthenticated) {
-    return <Navigate to="/learner/dashboard" replace />;
-  }
-
-  return <Unauthorized />;
-}
-
-function Unauthorized() {
+function Home() {
   const navigate = useNavigate();
   return (
     <div className="home">

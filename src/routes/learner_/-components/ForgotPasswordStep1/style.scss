@@ -1,6 +1,6 @@
-@use "@styles/mixins" as *;
-@use "@styles/colors" as *;
 @use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
 
 .forgot-password-step1 {
   display: flex;

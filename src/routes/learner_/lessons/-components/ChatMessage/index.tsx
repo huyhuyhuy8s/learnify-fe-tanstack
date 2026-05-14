@@ -4,7 +4,7 @@ import { prepare, layout } from "@chenglou/pretext";
 import type { TMessageProps } from "./type";
 import "./style.scss";
 
-const FONT = '14px "Inter", system-ui, sans-serif';
+const FONT = '14px "Google Sans Flex", system-ui, sans-serif';
 const LINE_HEIGHT = 21;
 const BUBBLE_PAD = 24;
 const MAX_BUBBLE_RATIO = 0.7;

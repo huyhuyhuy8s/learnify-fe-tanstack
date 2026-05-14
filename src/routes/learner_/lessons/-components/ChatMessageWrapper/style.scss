@@ -1,6 +1,7 @@
-@use "@styles/functions" as *;
 @use "@styles/variables" as *;
 @use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
 
 .chat-messages {
   display: grid;

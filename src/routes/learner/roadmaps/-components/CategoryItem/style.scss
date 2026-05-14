@@ -1,7 +1,7 @@
 @use "@styles/variables" as *;
+@use "@styles/colors" as *;
 @use "@styles/mixins" as *;
 @use "@styles/functions" as *;
-@use "@styles/colors" as *;
 
 .category-item {
   display: flex;
@@ -10,11 +10,12 @@
   gap: toRem(20);
   cursor: pointer;
   color: $neutral-900;
-  transition: all 0.2s ease-in-out;
+  @include transition;
+  transition-property: color, transform;
 
   &:hover {
     color: $black;
-    transform: translateY(-2px);
+    transform: translateY(toRem(-2));
   }
 
   .icon {
