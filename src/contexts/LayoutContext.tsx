@@ -5,7 +5,6 @@ export type TLayoutConfig = {
   compactLeftNav: boolean;
   showFooter: boolean;
   fullInner: boolean;
-  customTitle?: string;
 };
 
 export type TLayoutContextValue = TLayoutConfig & {
@@ -19,7 +18,6 @@ export const LayoutProvider = ({ children }: PropsWithChildren) => {
     compactLeftNav: false,
     showFooter: true,
     fullInner: false,
-    customTitle: undefined,
   });
 
   const value = {

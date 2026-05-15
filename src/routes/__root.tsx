@@ -29,7 +29,7 @@ gsap.registerPlugin(SplitText, CustomEase);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
 CustomEase.create("glide", "0.8, 0, 0.2, 1");
 
-export const Route = createRootRouteWithContext<RouterContext>()({
+const Root = createRootRouteWithContext<RouterContext>()({
   loader: async () => {
     const { user, expired } = await getCurrentUserFn();
     return { auth: { user, isAuthenticated: !!user, expired } };
@@ -80,7 +80,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 function RootComponent() {
   useTheme();
   const setAuth = useAuthStore((state) => state.setAuth);
-  const { auth } = Route.useLoaderData();
+  const { auth } = Root.useLoaderData();
   const [phase1Done, setPhase1Done] = useState(false);
   const [pageLoaded, setPageLoaded] = useState(false);
   const [phase2Done, setPhase2Done] = useState(false);
@@ -120,6 +120,8 @@ function RootComponent() {
     </RootDocument>
   );
 }
+
+export const Route = Root;
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";

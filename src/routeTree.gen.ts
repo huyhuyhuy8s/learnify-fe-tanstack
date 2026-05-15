@@ -24,7 +24,6 @@ import { Route as LearnerLessonsRouteRouteImport } from "./routes/learner_/lesso
 import { Route as LearnerUserRouteRouteImport } from "./routes/learner/user/route";
 import { Route as LearnerRoadmapsRouteRouteImport } from "./routes/learner/roadmaps/route";
 import { Route as LearnerFriendsRouteRouteImport } from "./routes/learner/friends/route";
-import { Route as LearnerCoursesRouteRouteImport } from "./routes/learner/courses/route";
 import { Route as LearnerAboutRouteRouteImport } from "./routes/learner/about/route";
 import { Route as LearnerVerifyEmailIndexRouteImport } from "./routes/learner_/verify-email/index";
 import { Route as LearnerSignUpIndexRouteImport } from "./routes/learner_/sign-up/index";
@@ -118,11 +117,6 @@ const LearnerFriendsRouteRoute = LearnerFriendsRouteRouteImport.update({
   path: "/friends",
   getParentRoute: () => LearnerRouteRoute,
 } as any);
-const LearnerCoursesRouteRoute = LearnerCoursesRouteRouteImport.update({
-  id: "/courses",
-  path: "/courses",
-  getParentRoute: () => LearnerRouteRoute,
-} as any);
 const LearnerAboutRouteRoute = LearnerAboutRouteRouteImport.update({
   id: "/about",
   path: "/about",
@@ -175,9 +169,9 @@ const LearnerFriendsIndexRoute = LearnerFriendsIndexRouteImport.update({
   getParentRoute: () => LearnerFriendsRouteRoute,
 } as any);
 const LearnerCoursesIndexRoute = LearnerCoursesIndexRouteImport.update({
-  id: "/",
-  path: "/",
-  getParentRoute: () => LearnerCoursesRouteRoute,
+  id: "/courses/",
+  path: "/courses/",
+  getParentRoute: () => LearnerRouteRoute,
 } as any);
 const LearnerAboutIndexRoute = LearnerAboutIndexRouteImport.update({
   id: "/",
@@ -201,9 +195,9 @@ const LearnerRoadmapsRoadmapIdRoute =
     getParentRoute: () => LearnerRoadmapsRouteRoute,
   } as any);
 const LearnerCoursesCourseIdRoute = LearnerCoursesCourseIdRouteImport.update({
-  id: "/$courseId",
-  path: "/$courseId",
-  getParentRoute: () => LearnerCoursesRouteRoute,
+  id: "/courses/$courseId",
+  path: "/courses/$courseId",
+  getParentRoute: () => LearnerRouteRoute,
 } as any);
 const ApiUsersIdRoute = ApiUsersIdRouteImport.update({
   id: "/$id",
@@ -217,7 +211,6 @@ export interface FileRoutesByFullPath {
   "/deferred": typeof DeferredRoute;
   "/redirect": typeof RedirectRoute;
   "/learner/about": typeof LearnerAboutRouteRouteWithChildren;
-  "/learner/courses": typeof LearnerCoursesRouteRouteWithChildren;
   "/learner/friends": typeof LearnerFriendsRouteRouteWithChildren;
   "/learner/roadmaps": typeof LearnerRoadmapsRouteRouteWithChildren;
   "/learner/user": typeof LearnerUserRouteRouteWithChildren;
@@ -277,7 +270,6 @@ export interface FileRoutesById {
   "/deferred": typeof DeferredRoute;
   "/redirect": typeof RedirectRoute;
   "/learner/about": typeof LearnerAboutRouteRouteWithChildren;
-  "/learner/courses": typeof LearnerCoursesRouteRouteWithChildren;
   "/learner/friends": typeof LearnerFriendsRouteRouteWithChildren;
   "/learner/roadmaps": typeof LearnerRoadmapsRouteRouteWithChildren;
   "/learner/user": typeof LearnerUserRouteRouteWithChildren;
@@ -314,7 +306,6 @@ export interface FileRouteTypes {
     | "/deferred"
     | "/redirect"
     | "/learner/about"
-    | "/learner/courses"
     | "/learner/friends"
     | "/learner/roadmaps"
     | "/learner/user"
@@ -373,7 +364,6 @@ export interface FileRouteTypes {
     | "/deferred"
     | "/redirect"
     | "/learner/about"
-    | "/learner/courses"
     | "/learner/friends"
     | "/learner/roadmaps"
     | "/learner/user"
@@ -523,13 +513,6 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof LearnerFriendsRouteRouteImport;
       parentRoute: typeof LearnerRouteRoute;
     };
-    "/learner/courses": {
-      id: "/learner/courses";
-      path: "/courses";
-      fullPath: "/learner/courses";
-      preLoaderRoute: typeof LearnerCoursesRouteRouteImport;
-      parentRoute: typeof LearnerRouteRoute;
-    };
     "/learner/about": {
       id: "/learner/about";
       path: "/about";
@@ -602,10 +585,10 @@ declare module "@tanstack/react-router" {
     };
     "/learner/courses/": {
       id: "/learner/courses/";
-      path: "/";
+      path: "/courses";
       fullPath: "/learner/courses/";
       preLoaderRoute: typeof LearnerCoursesIndexRouteImport;
-      parentRoute: typeof LearnerCoursesRouteRoute;
+      parentRoute: typeof LearnerRouteRoute;
     };
     "/learner/about/": {
       id: "/learner/about/";
@@ -637,10 +620,10 @@ declare module "@tanstack/react-router" {
     };
     "/learner/courses/$courseId": {
       id: "/learner/courses/$courseId";
-      path: "/$courseId";
+      path: "/courses/$courseId";
       fullPath: "/learner/courses/$courseId";
       preLoaderRoute: typeof LearnerCoursesCourseIdRouteImport;
-      parentRoute: typeof LearnerCoursesRouteRoute;
+      parentRoute: typeof LearnerRouteRoute;
     };
     "/api/users/$id": {
       id: "/api/users/$id";
@@ -662,19 +645,6 @@ const LearnerAboutRouteRouteChildren: LearnerAboutRouteRouteChildren = {
 
 const LearnerAboutRouteRouteWithChildren =
   LearnerAboutRouteRoute._addFileChildren(LearnerAboutRouteRouteChildren);
-
-interface LearnerCoursesRouteRouteChildren {
-  LearnerCoursesCourseIdRoute: typeof LearnerCoursesCourseIdRoute;
-  LearnerCoursesIndexRoute: typeof LearnerCoursesIndexRoute;
-}
-
-const LearnerCoursesRouteRouteChildren: LearnerCoursesRouteRouteChildren = {
-  LearnerCoursesCourseIdRoute: LearnerCoursesCourseIdRoute,
-  LearnerCoursesIndexRoute: LearnerCoursesIndexRoute,
-};
-
-const LearnerCoursesRouteRouteWithChildren =
-  LearnerCoursesRouteRoute._addFileChildren(LearnerCoursesRouteRouteChildren);
 
 interface LearnerFriendsRouteRouteChildren {
   LearnerFriendsIndexRoute: typeof LearnerFriendsIndexRoute;
@@ -715,23 +685,25 @@ const LearnerUserRouteRouteWithChildren =
 
 interface LearnerRouteRouteChildren {
   LearnerAboutRouteRoute: typeof LearnerAboutRouteRouteWithChildren;
-  LearnerCoursesRouteRoute: typeof LearnerCoursesRouteRouteWithChildren;
   LearnerFriendsRouteRoute: typeof LearnerFriendsRouteRouteWithChildren;
   LearnerRoadmapsRouteRoute: typeof LearnerRoadmapsRouteRouteWithChildren;
   LearnerUserRouteRoute: typeof LearnerUserRouteRouteWithChildren;
   LearnerDashboardRoute: typeof LearnerDashboardRoute;
   LearnerIndexRoute: typeof LearnerIndexRoute;
+  LearnerCoursesCourseIdRoute: typeof LearnerCoursesCourseIdRoute;
+  LearnerCoursesIndexRoute: typeof LearnerCoursesIndexRoute;
   LearnerSearchIndexRoute: typeof LearnerSearchIndexRoute;
 }
 
 const LearnerRouteRouteChildren: LearnerRouteRouteChildren = {
   LearnerAboutRouteRoute: LearnerAboutRouteRouteWithChildren,
-  LearnerCoursesRouteRoute: LearnerCoursesRouteRouteWithChildren,
   LearnerFriendsRouteRoute: LearnerFriendsRouteRouteWithChildren,
   LearnerRoadmapsRouteRoute: LearnerRoadmapsRouteRouteWithChildren,
   LearnerUserRouteRoute: LearnerUserRouteRouteWithChildren,
   LearnerDashboardRoute: LearnerDashboardRoute,
   LearnerIndexRoute: LearnerIndexRoute,
+  LearnerCoursesCourseIdRoute: LearnerCoursesCourseIdRoute,
+  LearnerCoursesIndexRoute: LearnerCoursesIndexRoute,
   LearnerSearchIndexRoute: LearnerSearchIndexRoute,
 };
 
