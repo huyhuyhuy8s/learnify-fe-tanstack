@@ -19,7 +19,7 @@ function RoadmapsPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="roadmap-container">
+    <div className="roadmaps-container">
       <Suspense fallback={<TetrisLoader />}>
         <div className="title">
           <h3 className="medium">
@@ -34,7 +34,7 @@ function RoadmapsPage() {
             and Credly!
           </p>
         </div>
-        <div className="roadmap-content">
+        <div className="roadmaps-content">
           <Search
             onSearch={(query) =>
               navigate({ to: "/learner/roadmaps", search: { q: query } })
@@ -52,7 +52,7 @@ function RoadmapsPage() {
               ))}
             </div>
           </div>
-          <div className="roadmap-list">
+          <div className="roadmaps-list">
             {MOCK_ROADMAP.map((roadmap) => (
               <Card
                 key={roadmap.id}
@@ -65,7 +65,9 @@ function RoadmapsPage() {
                 onClick={() =>
                   navigate({
                     to: "/learner/roadmaps/$roadmapId",
-                    params: { roadmapId: roadmap.id.toString() },
+                    params: {
+                      roadmapId: roadmap.id.toString(),
+                    },
                   })
                 }
               />

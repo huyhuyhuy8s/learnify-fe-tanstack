@@ -1,5 +1,9 @@
 import { Suspense } from "react";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  useNavigate,
+  useRouter,
+} from "@tanstack/react-router";
 import { MOCK_COURSES } from "@/mock";
 import "./style.scss";
 import Card from "@/components/Card";
@@ -10,8 +14,47 @@ import {
   type TBackendCourse,
 } from "@/hooks/useCourses";
 import TetrisLoader from "@/components/TetrisLoader";
+import { createLearnerHead } from "@/utils";
+import ErrorScene from "@/components/ErrorScene";
+
+function CoursesErrorComponent() {
+  const router = useRouter();
+  return (
+    <ErrorScene>
+      <ErrorScene.Header>
+        <ErrorScene.Code errorCode={500} />
+        <ErrorScene.Title>Server Error</ErrorScene.Title>
+        <ErrorScene.Description>
+          Unable to load courses at this time. This could be a network issue or
+          a server problem. Please try again.
+        </ErrorScene.Description>
+      </ErrorScene.Header>
+      <ErrorScene.Content>
+        <div className="error-scene__control">
+          <TextButton
+            text="Try Again"
+            onClick={() => router.invalidate()}
+            className="error-scene__btn"
+            size="medium"
+            icon="refresh"
+          />
+          <TextButton
+            text="Go Back"
+            onClick={() => window.history.back()}
+            className="error-scene__btn error-scene__btn--secondary"
+            size="medium"
+            icon="arrow_back"
+            type="outlined"
+          />
+        </div>
+      </ErrorScene.Content>
+    </ErrorScene>
+  );
+}
 
 export const Route = createFileRoute("/learner/courses/")({
+  head: () => createLearnerHead("Courses"),
+  errorComponent: CoursesErrorComponent,
   component: CoursesPage,
 });
 
@@ -34,7 +77,7 @@ function CoursesPage() {
 
   return (
     <Suspense fallback={<TetrisLoader />}>
-      <div className="course-container">
+      <div className="courses-container">
         <div className="title">
           <h3 className="medium">
             Explore our <span className="beauty">Best courses</span> only for
@@ -48,7 +91,7 @@ function CoursesPage() {
             find the perfect course for you today!
           </p>
         </div>
-        <div className="course-content">
+        <div className="courses-content">
           <Search
             onSearch={(query) =>
               navigate({ to: "/learner/courses", search: { q: query } })
@@ -79,7 +122,7 @@ function CoursesPage() {
             </div>
             <p className="result">{displayCourses.length} results</p>
           </div>
-          <div className="course-list">
+          <div className="courses-list">
             {displayCourses.map((course) => (
               <Card
                 key={course.id}

@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { postQueryOptions } from "@/utils/posts";
 import NotFound from "@/components/NotFound";
-import PostErrorComponent from "@/components/PostErrorComponent";
 import DecorationCard from "@/components/DecorationCard";
 import TextButton from "@/components/TextButton";
 import Card from "@/components/Card";
@@ -23,10 +22,6 @@ export const Route = createFileRoute("/learner/roadmaps/$roadmapId")({
   head: ({ loaderData }) => ({
     meta: loaderData ? [{ title: loaderData.title }] : undefined,
   }),
-  errorComponent: PostErrorComponent,
-  notFoundComponent: () => {
-    return <NotFound />;
-  },
   component: RoadmapItem,
 });
 
@@ -41,8 +36,8 @@ function RoadmapItem() {
   }
 
   return (
-    <div className="roadmap-detail-container">
-      <div className="roadmap-detail-item-list">
+    <div className="roadmap__container">
+      <div className="roadmap__item-list">
         <DecorationCard
           listBadge={
             <TextButton
@@ -62,7 +57,7 @@ function RoadmapItem() {
           listFeature={roadmap.listFeature}
           percentage={roadmap.percentage ?? 0}
         />
-        <div className="roadmap-detail-content">
+        <div className="roadmap__content">
           <TextButton
             text="Send feedback"
             size="small"
@@ -71,7 +66,7 @@ function RoadmapItem() {
             typeSpecial="course"
             onClick={() => {}}
           />
-          <div className="roadmap-detail-list">
+          <div className="roadmap__list">
             {MOCK_COURSES.map((course) => (
               <Card
                 key={course.id}
@@ -87,7 +82,7 @@ function RoadmapItem() {
           </div>
         </div>
       </div>
-      <div className="roadmap-detail-comment">
+      <div className="roadmap__comment">
         {MOCK_COMMENT.map((comment) => (
           <CommentItem
             key={comment.id}
