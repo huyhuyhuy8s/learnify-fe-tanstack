@@ -29,6 +29,11 @@
     "url": "https://github.com/huyhuyhuy8s/learnify-fe-tanstack/issues"
   },
   "homepage": "https://github.com/huyhuyhuy8s/learnify-fe-tanstack#readme",
+  "pnpm": {
+    "overrides": {
+      "@tanstack/setup": "npm:empty-package@0.0.0"
+    }
+  },
   "dependencies": {
     "@chenglou/pretext": "^0.0.4",
     "@elevenlabs/elevenlabs-js": "^2.46.0",
