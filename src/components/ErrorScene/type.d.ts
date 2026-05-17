@@ -10,14 +10,9 @@ export type TErrorSceneHeaderProps = {
   children?: ReactNode;
 };
 
-export type TErrorSceneMediaProps = {
-  className?: string;
-  errorCode?: string | number;
-  children?: ReactNode;
-};
-
 export type TErrorSceneTitleProps = {
   className?: string;
+  errorCode?: string | number;
   children?: ReactNode;
 };
 

@@ -22,8 +22,7 @@ function CoursesErrorComponent() {
   return (
     <ErrorScene>
       <ErrorScene.Header>
-        <ErrorScene.Code errorCode={500} />
-        <ErrorScene.Title>Server Error</ErrorScene.Title>
+        <ErrorScene.Title errorCode={500}>Server Error</ErrorScene.Title>
         <ErrorScene.Description>
           Unable to load courses at this time. This could be a network issue or
           a server problem. Please try again.

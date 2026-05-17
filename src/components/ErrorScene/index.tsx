@@ -2,7 +2,6 @@ import classnames from "classnames";
 import type {
   TErrorSceneProps,
   TErrorSceneHeaderProps,
-  TErrorSceneMediaProps,
   TErrorSceneTitleProps,
   TErrorSceneDescriptionProps,
   TErrorSceneContentProps,
@@ -37,35 +36,25 @@ const ErrorSceneHeader = ({
   );
 };
 
-const ErrorSceneCode = ({
+const ErrorSceneTitle = ({
   className,
   errorCode,
   children,
   ...props
-}: TErrorSceneMediaProps) => {
-  return (
-    <div className={classnames("error-scene__media-wrapper", className)}>
-      <h1 className="error-scene__media black" {...props}>
-        {errorCode}
-      </h1>
-      {children}
-    </div>
-  );
-};
-
-const ErrorSceneTitle = ({
-  className,
-  children,
-  ...props
 }: TErrorSceneTitleProps) => {
   return (
-    <h2
-      data-slot="error-scene-title"
-      className={classnames("error-scene__title semibold beauty", className)}
-      {...props}
-    >
-      {children}
-    </h2>
+    <div className="error-scene-title" data-slot="error-scene-title">
+      <h3 className="error-scene__title-code">{errorCode}</h3>
+      <h2
+        className={classnames(
+          "error-scene__title-context semibold beauty",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </h2>
+    </div>
   );
 };
 
@@ -102,7 +91,6 @@ const ErrorSceneContent = ({
 };
 
 ErrorScene.Header = ErrorSceneHeader;
-ErrorScene.Code = ErrorSceneCode;
 ErrorScene.Title = ErrorSceneTitle;
 ErrorScene.Description = ErrorSceneDescription;
 ErrorScene.Content = ErrorSceneContent;

@@ -5,7 +5,9 @@ import { toast } from "sonner";
 import { logger } from "@/utils/logger";
 import { logoutFn } from "@/server/auth";
 
-const GRAPHQL_ENDPOINT = "https://learnify-be.onrender.com/graphql";
+const GRAPHQL_ENDPOINT =
+  import.meta.env.VITE_GRAPHQL_ENDPOINT ||
+  "https://learnify-be.onrender.com/graphql";
 // const GRAPHQL_ENDPOINT = "http://localhost:10000/graphql";
 
 let refreshPromise: Promise<boolean> | null = null;

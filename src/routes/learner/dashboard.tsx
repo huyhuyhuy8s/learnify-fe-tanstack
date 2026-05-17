@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import Card from "@/components/Card";
 import { MOCK_COURSES } from "@/mock";
-import { useNavigate, redirect } from "@tanstack/react-router";
+import { useNavigate, redirect, useRouter } from "@tanstack/react-router";
 import { createFileRoute } from "@tanstack/react-router";
 import { getCurrentUserFn } from "@/server/auth";
 import DashboardBanner from "./-components/DashboardBanner";
@@ -15,6 +15,42 @@ import {
   type TBackendCourse,
 } from "@/hooks/useCourses";
 import TetrisLoader from "@/components/TetrisLoader";
+import ErrorScene from "@/components/ErrorScene";
+import TextButton from "@/components/TextButton";
+
+function CoursesErrorComponent() {
+  const router = useRouter();
+  return (
+    <ErrorScene>
+      <ErrorScene.Header>
+        <ErrorScene.Title errorCode={500}>Server Error</ErrorScene.Title>
+        <ErrorScene.Description>
+          Unable to load courses at this time. This could be a network issue or
+          a server problem. Please try again.
+        </ErrorScene.Description>
+      </ErrorScene.Header>
+      <ErrorScene.Content>
+        <div className="error-scene__control">
+          <TextButton
+            text="Try Again"
+            onClick={() => router.invalidate()}
+            className="error-scene__btn"
+            size="medium"
+            icon="refresh"
+          />
+          <TextButton
+            text="Go Back"
+            onClick={() => window.history.back()}
+            className="error-scene__btn error-scene__btn--secondary"
+            size="medium"
+            icon="arrow_back"
+            type="outlined"
+          />
+        </div>
+      </ErrorScene.Content>
+    </ErrorScene>
+  );
+}
 
 export const Route = createFileRoute("/learner/dashboard")({
   beforeLoad: async ({ location }) => {
@@ -28,6 +64,7 @@ export const Route = createFileRoute("/learner/dashboard")({
   head: () => ({
     ...createLearnerHead("Dashboard"),
   }),
+  errorComponent: CoursesErrorComponent,
   component: Dashboard,
 });
 
