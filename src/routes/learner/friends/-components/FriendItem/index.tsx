@@ -5,11 +5,22 @@ import FriendItemFooter from "./components/FriendFooter";
 
 type Props = TFriendItem & {
   isActive?: boolean;
+  onAccept?: () => void;
+  onDecline?: () => void;
 };
 
 const FriendItem = (props: Props) => {
-  const { index, name, onClick, imgUrl, typeFriendItem, streaks, isActive } =
-    props;
+  const {
+    index,
+    name,
+    onClick,
+    imgUrl,
+    typeFriendItem,
+    streaks,
+    isActive,
+    onAccept,
+    onDecline,
+  } = props;
 
   return (
     <button
@@ -30,11 +41,11 @@ const FriendItem = (props: Props) => {
         streaks={streaks}
         onClickAccept={(e) => {
           e.stopPropagation();
-          alert("Accept Friend");
+          onAccept?.();
         }}
         onClickDecline={(e) => {
           e.stopPropagation();
-          alert("Decline User");
+          onDecline?.();
         }}
       />
     </button>

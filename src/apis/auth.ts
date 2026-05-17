@@ -6,9 +6,7 @@ export const fetchCurrentUser = async (
   serverCookieHeader?: string
 ): Promise<User | null> => {
   try {
-    const endpoint =
-      import.meta.env.VITE_GRAPHQL_ENDPOINT ||
-      "https://learnify-be.onrender.com/graphql";
+    const endpoint = import.meta.env.VITE_BACKEND_URL;
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
     };

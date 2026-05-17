@@ -5,7 +5,8 @@ export const MOCK_FRIEND: TFriendItem[] = [
   {
     id: 1,
     name: "Do Duc Anh",
-    imgUrl: "https://i.pravatar.cc/150?img=11",
+    imgUrl:
+      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
     typeFriendItem: "leaderboard",
     streaks: 180,
     onClick: () => console.info("Clicked friend: Do Duc Anh"),
@@ -48,7 +49,8 @@ export const mockFriends: TFriendDetail[] = [
     id: 1,
     imgBackground:
       "https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=800&q=80",
-    imgUrl: "https://i.pravatar.cc/150?img=11",
+    imgUrl:
+      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
     name: "Do Duc Anh",
     email: "doducanh@example.com",
     phoneNumber: "0901234567",
