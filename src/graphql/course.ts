@@ -118,3 +118,46 @@ export const GET_COURSE_LESSONS_COMMENT_QUERY = `
   }
   }
 `;
+
+export const ENROLL_COURSE_MUTATION = `
+  mutation EnrollCourse($input: CreateEnrollmentInput!) {
+    enrollCourse(input: $input) {
+      id
+      userId
+      enrolledAt
+      courseId
+    }
+  }
+`;
+
+export const GET_USER_ENROLLMENTS_QUERY = `
+  query GetUserEnrollments($userId: String!) {
+    getUserEnrollments(userId: $userId) {
+      id
+      courseId
+      userId
+      enrolledAt
+    }
+  }
+`;
+
+export const GET_PROGRESS_QUERY = `
+  query GetProgressByUserAndCourse($userId: String!, $courseId: String!) {
+    getProgressByUserAndCourse(userId: $userId, courseId: $courseId) {
+      isSuccess
+      count
+      message
+      progress {
+        id
+        userId
+        status
+        percentage
+        lastCompleteAt
+        lastCompletedLessonId
+        completedLessons
+        totalLessons
+        courseId
+      }
+    }
+  }
+`;

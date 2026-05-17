@@ -12,7 +12,14 @@ import TextButton from "@/components/TextButton";
 import Card from "@/components/Card";
 import CommentItem from "./-components/CommentItem";
 import CommentForm from "./-components/CommentForm";
-import { useCreateReview } from "@/hooks/useCourseDetail";
+import {
+  useCreateReview,
+  useUserEnrollments,
+  useCourseProgress,
+  useEnrollCourse,
+} from "@/hooks/useCourseDetail";
+import { useAuthStore } from "@/store/authStore";
+import { toast } from "sonner";
 import type { TProgress, TStatusCard } from "@/types/global";
 import { formatDate } from "@/utils";
 import { MOCK_COMMENT } from "@/mock";
@@ -80,11 +87,43 @@ export const Route = createFileRoute("/learner/courses/$courseId")({
 function CourseComponent() {
   const navigate = useNavigate();
   const { courseId } = Route.useParams();
+
+  const currentUser = useAuthStore((state) => state.user);
+  const userId = currentUser?.id;
+
   const { data } = useSuspenseQuery(courseQueryOptions(courseId));
   const { getCourseById, getLessonsByCourseId, getReviewsByCourse } = data;
+
   const createReview = useCreateReview();
+  const enrollCourseMutation = useEnrollCourse();
+
+  const { data: enrollments } = useUserEnrollments(userId);
+  const { data: progressData } = useCourseProgress(userId, courseId);
+
   const [showCommentForm, setShowCommentForm] = useState(false);
   const [showComment, setShowComment] = useState(false);
+
+  const isEnrolled = useMemo(() => {
+    if (!enrollments) return false;
+    return enrollments.some((enrollment) => enrollment.courseId === courseId);
+  }, [enrollments, courseId]);
+
+  const currentProgressPercentage = useMemo(() => {
+    if (
+      !isEnrolled ||
+      !progressData ||
+      !progressData.isSuccess ||
+      !progressData.progress
+    ) {
+      return 0;
+    }
+    const firstProgress = progressData.progress[0];
+    if (!firstProgress) {
+      return 0;
+    }
+
+    return firstProgress.percentage;
+  }, [isEnrolled, progressData]);
 
   const lessonsDisplay = useMemo(() => {
     if (getLessonsByCourseId?.isSuccess) {
@@ -94,12 +133,12 @@ function CourseComponent() {
         title: lesson.lessonName,
         description: lesson.abstract ?? "No description",
         duration: "45 mins",
-        status: "default" as const,
+        status: isEnrolled ? "default" : "locked",
         percentage: 0,
       }));
     }
     return null;
-  }, [getLessonsByCourseId]);
+  }, [getLessonsByCourseId, isEnrolled]);
 
   const commentDisplay = useMemo(() => {
     if (getReviewsByCourse?.isSuccess) {
@@ -116,13 +155,46 @@ function CourseComponent() {
 
   const courseDisplay = useMemo(() => {
     if (!getCourseById?.id) return null;
+    let currentStatus = getCourseById.status as unknown as TStatusCard;
+    if (!isEnrolled) {
+      currentStatus = "locked";
+    } else if (
+      currentProgressPercentage > 0 &&
+      currentProgressPercentage < 100
+    ) {
+      currentStatus = "inProgress";
+    } else if (currentProgressPercentage === 100) {
+      currentStatus = "completed";
+    }
+
     return {
       title: getCourseById.courseName,
-      status: getCourseById.status as unknown as TStatusCard,
+      status: currentStatus,
       listFeature: getCourseById.keyLearnings ?? [],
-      percentage: 0 as TProgress,
+      percentage: currentProgressPercentage as TProgress,
     };
-  }, [getCourseById]);
+  }, [getCourseById, currentProgressPercentage, isEnrolled]);
+
+  const handleEnrollCourse = () => {
+    if (!userId) {
+      toast.error("Vui lòng đăng nhập để tham gia khóa học");
+      return;
+    }
+    enrollCourseMutation.mutate({ courseId, userId });
+  };
+
+  const handleLessonClick = (lessonId: string) => {
+    if (!isEnrolled) {
+      toast.warning(
+        "Bạn cần Enroll (tham gia) khóa học trước khi xem bài học!"
+      );
+      return;
+    }
+    navigate({
+      to: "/learner/lessons/$lessonId",
+      params: { lessonId },
+    });
+  };
 
   if (!courseDisplay) return <NotFound />;
 
@@ -169,6 +241,22 @@ function CourseComponent() {
           percentage={courseDisplay.percentage}
         />
         <div className="course__controller">
+          {!isEnrolled && (
+            <TextButton
+              text={
+                enrollCourseMutation.isPending
+                  ? "Đang xử lý..."
+                  : "Enroll Course"
+              }
+              size="small"
+              icon="school"
+              type="primary"
+              typeSpecial="course"
+              onClick={handleEnrollCourse}
+              disabled={enrollCourseMutation.isPending}
+            />
+          )}
+
           <TextButton
             text="Send feedback"
             size="small"
@@ -211,12 +299,7 @@ function CourseComponent() {
               duration={lesson.duration}
               status={lesson.status}
               percentage={lesson.percentage}
-              onClick={() =>
-                navigate({
-                  to: "/learner/lessons/$lessonId",
-                  params: { lessonId: lesson.id },
-                })
-              }
+              onClick={() => handleLessonClick(lesson.id)}
             />
           ))}
         </div>
