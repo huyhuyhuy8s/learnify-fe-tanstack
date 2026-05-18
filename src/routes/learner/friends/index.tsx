@@ -15,7 +15,6 @@ import {
 import { DEFAULT_AVATAR } from "@/constants/avatar";
 import type { TBackendUser } from "@/hooks/useProfile";
 import type { TFriendItem } from "./-components/FriendItem/type";
-import { useAuthStore } from "@/store/authStore";
 import "./style.scss";
 
 export const Route = createFileRoute("/learner/friends/")({
@@ -32,7 +31,7 @@ function FriendsPage() {
   const [typeFriend, setTypeFriend] = useState<TTypeFriendItem>("leaderboard");
   const [selectedIndex, setSelectedIndex] = useState<string | null>(null);
 
-  const currentUser = useAuthStore((state) => state.user);
+  const { user: currentUser } = Route.useRouteContext();
 
   const { data: friendsData, isLoading: isLoadingFriends } = useGetMyFriends();
   const { data: pendingData, isLoading: isLoadingPending } =
