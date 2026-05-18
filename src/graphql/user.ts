@@ -37,3 +37,23 @@ query GetUserProfile($userId: String!) {
     }
   }
 `;
+
+export const UPDATE_USER = `
+mutation Mutation($data: UpdateUserInput!) {
+  updateUser(data: $data) {
+    isSuccess
+    message
+    count
+    users {
+      id
+      email
+      role
+      phoneNumber
+      username
+      avatar
+      diamond
+      currentSteak
+    }
+  }
+}
+`;

@@ -1,12 +1,15 @@
 import { Suspense, useEffect } from "react";
-import { createFileRoute, redirect } from "@tanstack/react-router";
-import { getCurrentUserFn } from "@/server/auth";
+import { createFileRoute } from "@tanstack/react-router";
 import { MOCK_USER_PROFILE } from "@/mock/user";
-import { useSuspenseGetUserProfile } from "@/hooks/useProfile";
+import {
+  useSuspenseGetUserProfile,
+  useUpdateUserProfile,
+} from "@/hooks/useProfile";
 import { useLayout } from "@/contexts/LayoutContext";
 import TetrisLoader from "@/components/TetrisLoader";
 import { logger } from "@/utils/logger";
 import "./userId.scss";
+import { EditableField } from "./-components/EditableField";
 
 export const Route = createFileRoute("/learner/user/$userId")({
   component: UserProfile,
@@ -25,6 +28,8 @@ function UserProfile() {
   }, [user?.username, setLayoutConfigState]);
 
   const { data } = useSuspenseGetUserProfile(currentUserId);
+  const updateUserMutation = useUpdateUserProfile();
+
   const isBackendSuccess = !!data?.currentUser?.users?.length;
   const successCourses = data.countSuccessEnrollments?.data || [];
   const inProgressCourses = data.countInProgressEnrollments?.data || [];
@@ -48,6 +53,13 @@ function UserProfile() {
         };
       })()
     : MOCK_USER_PROFILE;
+
+  const handleUpdateUser = (field: string, newValue: string) => {
+    updateUserMutation.mutate({
+      id: userDisplay.id,
+      [field]: newValue,
+    });
+  };
 
   return (
     <div className="profile">
@@ -93,6 +105,34 @@ function UserProfile() {
               <span>{userDisplay.phoneNumber}</span>
             </div>
           </div>
+        </div>
+
+        <div className="profile-personal-info-card">
+          <h2 className="profile-personal-info-title">Thông tin cá nhân</h2>
+
+          <EditableField
+            label="Tên người dùng"
+            value={userDisplay.username}
+            fieldName="username"
+            onSave={handleUpdateUser}
+            isLoading={updateUserMutation.isPending}
+          />
+
+          <EditableField
+            label="Email"
+            value={userDisplay.email}
+            fieldName="email"
+            onSave={handleUpdateUser}
+            isLoading={updateUserMutation.isPending}
+          />
+
+          <EditableField
+            label="Số điện thoại"
+            value={userDisplay.phoneNumber}
+            fieldName="phoneNumber"
+            onSave={handleUpdateUser}
+            isLoading={updateUserMutation.isPending}
+          />
         </div>
 
         <div className="profile-courses">

@@ -104,6 +104,23 @@
     }
   }
 
+  &-personal-info {
+    &-card {
+      background: $white;
+      border-radius: toRem(16);
+      padding: toRem(24);
+      margin-bottom: toRem(40);
+      @include box-shadow(0, 2, 8, 0);
+
+      .profile-personal-info-title {
+        font-size: toRem(18);
+        font-weight: 600;
+        margin-bottom: toRem(24);
+        color: $neutral-800;
+      }
+    }
+  }
+
   &-courses {
     &-title {
       font-size: toRem(22);

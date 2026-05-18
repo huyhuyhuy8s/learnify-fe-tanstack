@@ -1,0 +1,75 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+.editable-field {
+  margin-bottom: toRem(24);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &-label {
+    display: block;
+    font-size: toRem(14);
+    color: $neutral-400;
+    margin-bottom: toRem(8);
+  }
+
+  &-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-text {
+    font-size: toRem(16);
+    color: $neutral-800;
+    padding: toRem(8) 0;
+  }
+
+  &-input {
+    flex: 1;
+    padding: toRem(8) toRem(12);
+    border: toRem(1) solid $neutral-300;
+    border-radius: toRem(8);
+    font-size: toRem(16);
+    margin-right: toRem(16);
+    color: $neutral-800;
+    outline: none;
+    background-color: $white;
+    @include transition;
+
+    &:focus {
+      border-color: $mode-yellow;
+    }
+
+    &:disabled {
+      background-color: $neutral-300;
+      cursor: not-allowed;
+    }
+  }
+
+  &-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: $neutral-600;
+    padding: toRem(8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: toRem(8);
+    @include transition;
+
+    &:hover {
+      background-color: rgba($black, 0.05);
+      color: $neutral-800;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
