@@ -7,6 +7,7 @@ export type TCourseCardProps = {
   description?: string;
   duration?: string;
   typeSpecial?: TSpecial;
+  disabled?: boolean;
   status?: TStatusCard;
   percentage?: number;
 };

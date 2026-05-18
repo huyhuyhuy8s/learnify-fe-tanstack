@@ -46,6 +46,7 @@ const ChatHeader = (props: TChatHeaderProps) => {
             icon="arrow_drop_down"
             type="secondary"
             size="tiny"
+            tooltip="Change topic"
             className="chat-header-context-dropdown"
           />
         </div>
@@ -60,6 +61,7 @@ const ChatHeader = (props: TChatHeaderProps) => {
                 size="tiny"
                 color={COLORS.white}
                 backgroundColor={COLORS.accentLilacVodka}
+                tooltip="Skip to Q&A"
               />
             )}
             {state === "qa" && (
@@ -69,6 +71,7 @@ const ChatHeader = (props: TChatHeaderProps) => {
                 size="tiny"
                 color={COLORS.white}
                 backgroundColor={COLORS.accentBlueCeleste}
+                tooltip="Skip to Quiz"
               />
             )}
             {state === "quiz" && (
@@ -78,6 +81,7 @@ const ChatHeader = (props: TChatHeaderProps) => {
                 size="tiny"
                 color={COLORS.white}
                 backgroundColor={COLORS.accentPortage}
+                tooltip="Complete lesson"
               />
             )}
             <IconButton
@@ -86,6 +90,7 @@ const ChatHeader = (props: TChatHeaderProps) => {
               size="tiny"
               color={COLORS.white}
               backgroundColor={COLORS.modeOrange}
+              tooltip="Report issue"
             />
           </>
         )}

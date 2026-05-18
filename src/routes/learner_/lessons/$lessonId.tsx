@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback, useMemo, useEffect } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import useSpeechSynthesis from "@/hooks/useSpeechSynthesis";
 import { useLesson } from "@/hooks/useLesson";
 import useLessonFlow from "@/hooks/useLessonFlow";
@@ -17,10 +17,50 @@ import ChatHeader from "./-components/ChatHeader";
 import ChatMessageWrapper, {
   type TChatMessageRef,
 } from "./-components/ChatMessageWrapper";
-import type { TQuizQuestion } from "./-components/QuizPanel/type";
 import "./lessonId.scss";
+import { mockQuizQuestions } from "@/mock/quiz";
+import NotFound from "@/components/NotFound";
+import ErrorScene from "@/components/ErrorScene";
+import TextButton from "@/components/TextButton";
+
+function CourseErrorComponent() {
+  const router = useRouter();
+  return (
+    <ErrorScene>
+      <ErrorScene.Header>
+        <ErrorScene.Title errorCode={500}>Server Error</ErrorScene.Title>
+        <ErrorScene.Description>
+          Something went wrong while loading this course. The server encountered
+          an issue. Please try again or come back later.
+        </ErrorScene.Description>
+      </ErrorScene.Header>
+      <ErrorScene.Content>
+        <div className="error-scene__control">
+          <TextButton
+            text="Try Again"
+            onClick={() => router.invalidate()}
+            className="error-scene__btn"
+            size="medium"
+            icon="refresh"
+          />
+          <TextButton
+            text="Go Back"
+            onClick={() => window.history.back()}
+            className="error-scene__btn error-scene__btn--secondary"
+            size="medium"
+            icon="arrow_back"
+            type="outlined"
+          />
+        </div>
+      </ErrorScene.Content>
+    </ErrorScene>
+  );
+}
 
 export const Route = createFileRoute("/learner_/lessons/$lessonId")({
+  errorComponent: CourseErrorComponent,
+  notFoundComponent: NotFound,
+  pendingComponent: TetrisLoader,
   component: LessonDetail,
 });
 
@@ -81,65 +121,20 @@ function LessonDetail() {
     skipToQA();
   }, [skipToQA]);
 
-  const mockQuizQuestions: TQuizQuestion[] = useMemo(
-    () => [
-      {
-        id: "q1",
-        type: "multiple-choice",
-        question: "What is the main function of the mitochondria?",
-        options: [
-          "Protein synthesis",
-          "Energy production",
-          "DNA replication",
-          "Cell division",
-        ],
-        correctAnswer: [1],
-        explanation:
-          "Mitochondria are known as the powerhouse of the cell, responsible for producing energy through cellular respiration.",
-      },
-      {
-        id: "q2",
-        type: "true-false",
-        question: "Photosynthesis occurs in the mitochondria.",
-        options: ["True", "False"],
-        correctAnswer: [1],
-        explanation:
-          "Photosynthesis occurs in the chloroplasts, not the mitochondria. Chloroplasts contain chlorophyll which captures light energy.",
-      },
-      {
-        id: "q3",
-        type: "multiple-answer",
-        question: "Which of the following are types of RNA?",
-        options: ["mRNA", "tRNA", "rRNA", "dRNA"],
-        correctAnswer: [0, 1, 2],
-        explanation:
-          "The three main types of RNA are messenger RNA (mRNA), transfer RNA (tRNA), and ribosomal RNA (rRNA). 'dRNA' is not a real type.",
-      },
-      {
-        id: "q4",
-        type: "matching",
-        question: "Match each organelle to its primary function:",
-        options: [
-          "Protein synthesis",
-          "Cellular respiration",
-          "Digestion & waste removal",
-          "Storage of genetic material",
-          "Lipid synthesis",
-        ],
-        correctAnswer: [0, 1, 2, 3, 4],
-        matchPairs: [
-          { left: "Ribosome", right: "Protein synthesis" },
-          { left: "Mitochondria", right: "Cellular respiration" },
-          { left: "Lysosome", right: "Digestion & waste removal" },
-          { left: "Nucleus", right: "Storage of genetic material" },
-          { left: "Smooth ER", right: "Lipid synthesis" },
-        ],
-        explanation:
-          "Each organelle has a specialized function: ribosomes synthesize proteins, mitochondria produce energy, lysosomes digest waste, the nucleus stores DNA, and the smooth ER produces lipids.",
-      },
-    ],
-    []
-  );
+  const handleSkipLesson = useCallback(() => {
+    chatRef.current?.stop();
+    skipToQA();
+  }, [skipToQA]);
+
+  const handleSkipQA = useCallback(() => {
+    chatRef.current?.stop();
+    skipToQuiz();
+  }, [skipToQuiz]);
+
+  const handleSkipQuiz = useCallback(() => {
+    chatRef.current?.stop();
+    completeLesson();
+  }, [completeLesson]);
 
   if (isLoading) return <TetrisLoader />;
 
@@ -150,9 +145,9 @@ function LessonDetail() {
           <ChatHeader
             initialValue={data?.lesson?.lessonName}
             state={state}
-            onSkipLesson={skipToQA}
-            onSkipQA={skipToQuiz}
-            onSkipQuiz={completeLesson}
+            onSkipLesson={handleSkipLesson}
+            onSkipQA={handleSkipQA}
+            onSkipQuiz={handleSkipQuiz}
           />
         )}
 

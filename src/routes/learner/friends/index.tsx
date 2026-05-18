@@ -1,10 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
-import classNames from "classnames";
 import FriendItem from "./-components/FriendItem";
 import FriendDetail from "./-components/FriendDetail";
 import type { TTypeFriendItem } from "./-components/FriendItem/type";
+import type { TFriendItem } from "./-components/FriendItem/type";
 import type { TFriendDetail } from "./-components/FriendDetail/type";
+import { Suspense, useState, useMemo } from "react";
+import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
+import classNames from "classnames";
+import { getCurrentUserFn } from "@/server/auth";
 import {
   useGetMyFriends,
   useGetPendingRequests,
@@ -12,12 +14,61 @@ import {
   useRespondFriendRequest,
   useSendFriendRequest,
 } from "@/hooks/useFriends";
-import { DEFAULT_AVATAR } from "@/constants/avatar";
 import type { TBackendUser } from "@/hooks/useProfile";
-import type { TFriendItem } from "./-components/FriendItem/type";
+import ErrorScene from "@/components/ErrorScene";
+import TextButton from "@/components/TextButton";
+import TetrisLoader from "@/components/TetrisLoader";
+import { DEFAULT_AVATAR } from "@/constants/avatar";
+import { createLearnerHead } from "@/utils";
 import "./style.scss";
 
+function FriendsErrorComponent() {
+  const router = useRouter();
+  return (
+    <ErrorScene>
+      <ErrorScene.Header>
+        <ErrorScene.Title errorCode={500}>Server Error</ErrorScene.Title>
+        <ErrorScene.Description>
+          Unable to load friends at this time. This could be a network issue or
+          a server problem. Please try again.
+        </ErrorScene.Description>
+      </ErrorScene.Header>
+      <ErrorScene.Content>
+        <div className="error-scene__control">
+          <TextButton
+            text="Try Again"
+            onClick={() => router.invalidate()}
+            className="error-scene__btn"
+            size="medium"
+            icon="refresh"
+          />
+          <TextButton
+            text="Go Back"
+            onClick={() => window.history.back()}
+            className="error-scene__btn error-scene__btn--secondary"
+            size="medium"
+            icon="arrow_back"
+            type="outlined"
+          />
+        </div>
+      </ErrorScene.Content>
+    </ErrorScene>
+  );
+}
+
 export const Route = createFileRoute("/learner/friends/")({
+  beforeLoad: async ({ location }) => {
+    const { user } = await getCurrentUserFn();
+    if (!user)
+      throw redirect({
+        to: "/learner/log-in",
+        search: { redirect: location.pathname },
+      });
+    return { user };
+  },
+  head: () => createLearnerHead("Friends"),
+  errorComponent: FriendsErrorComponent,
+  pendingComponent: TetrisLoader,
   component: FriendsPage,
 });
 
@@ -159,72 +210,74 @@ function FriendsPage() {
     (typeFriend === "leaderboard" && isLoadingLeaderboard);
 
   return (
-    <div className="friend-page">
-      <div className="friend-page-header">
-        {tabs.map((tab) => (
-          <button
-            key={tab.value}
-            onClick={() => {
-              setTypeFriend(tab.value);
-              setSelectedIndex(null);
-            }}
-            className={classNames("friend-page-header-tab", {
-              "friend-page-header-tab--active": typeFriend === tab.value,
-            })}
-          >
-            <p className="regular">{tab.label}</p>
-          </button>
-        ))}
-      </div>
+    <Suspense fallback={<TetrisLoader />}>
+      <div className="friend-page">
+        <div className="friend-page-header">
+          {tabs.map((tab) => (
+            <button
+              key={tab.value}
+              onClick={() => {
+                setTypeFriend(tab.value);
+                setSelectedIndex(null);
+              }}
+              className={classNames("friend-page-header-tab", {
+                "friend-page-header-tab--active": typeFriend === tab.value,
+              })}
+            >
+              <p className="regular">{tab.label}</p>
+            </button>
+          ))}
+        </div>
 
-      <div className="friend-page-body">
-        <div className="friend-page-body-left">
-          {isLoading ? (
-            <p className="friend-page-body-left-empty">Loading...</p>
-          ) : displayList.length > 0 ? (
-            displayList.map((friend, idx) => (
-              <FriendItem
-                id={friend.id}
-                key={friend.id}
-                name={friend.name}
-                imgUrl={friend.imgUrl}
-                typeFriendItem={friend.typeFriendItem}
-                streaks={friend.streaks}
-                index={idx + 1}
-                isActive={selectedIndex === friend.id}
-                onClick={() => setSelectedIndex(friend.id)}
-                onAccept={() =>
-                  handleRespondRequest(friend.id.toString(), true)
-                }
-                onDecline={() =>
-                  handleRespondRequest(friend.id.toString(), false)
+        <div className="friend-page-body">
+          <div className="friend-page-body-left">
+            {isLoading ? (
+              <TetrisLoader size="md" speed="fast" />
+            ) : displayList.length > 0 ? (
+              displayList.map((friend, idx) => (
+                <FriendItem
+                  id={friend.id}
+                  key={friend.id}
+                  name={friend.name}
+                  imgUrl={friend.imgUrl}
+                  typeFriendItem={friend.typeFriendItem}
+                  streaks={friend.streaks}
+                  index={idx + 1}
+                  isActive={selectedIndex === friend.id}
+                  onClick={() => setSelectedIndex(friend.id)}
+                  onAccept={() =>
+                    handleRespondRequest(friend.id.toString(), true)
+                  }
+                  onDecline={() =>
+                    handleRespondRequest(friend.id.toString(), false)
+                  }
+                />
+              ))
+            ) : (
+              <p className="friend-page-body-left-empty">No items found.</p>
+            )}
+          </div>
+
+          <div className="friend-page-body-right">
+            {friendDetailData && selectedFriend ? (
+              <FriendDetail
+                {...friendDetailData}
+                showAddFriendBtn={shouldShowAddFriendBtn}
+                isSendingRequest={sendRequestMutation.isPending}
+                onSendFriendRequest={() =>
+                  handleSendRequest(selectedFriend.id.toString())
                 }
               />
-            ))
-          ) : (
-            <p className="friend-page-body-left-empty">No items found.</p>
-          )}
-        </div>
-
-        <div className="friend-page-body-right">
-          {friendDetailData && selectedFriend ? (
-            <FriendDetail
-              {...friendDetailData}
-              showAddFriendBtn={shouldShowAddFriendBtn}
-              isSendingRequest={sendRequestMutation.isPending}
-              onSendFriendRequest={() =>
-                handleSendRequest(selectedFriend.id.toString())
-              }
-            />
-          ) : (
-            <div className="placeholder-profile">
-              <h5>It's empty here</h5>
-              <p>Click on any user to have a quick peak profile</p>
-            </div>
-          )}
+            ) : (
+              <div className="placeholder-profile">
+                <h5>It's empty here</h5>
+                <p>Click on any user to have a quick peak profile</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </Suspense>
   );
 }
 

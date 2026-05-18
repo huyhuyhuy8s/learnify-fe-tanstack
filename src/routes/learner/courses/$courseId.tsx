@@ -36,8 +36,7 @@ function CourseErrorComponent() {
   return (
     <ErrorScene>
       <ErrorScene.Header>
-        <ErrorScene.Code errorCode={500} />
-        <ErrorScene.Title>Server Error</ErrorScene.Title>
+        <ErrorScene.Title errorCode={500}>Server Error</ErrorScene.Title>
         <ErrorScene.Description>
           Something went wrong while loading this course. The server encountered
           an issue. Please try again or come back later.
@@ -322,6 +321,7 @@ function CourseComponent() {
               status={lesson.status}
               percentage={lesson.percentage}
               onClick={() => handleLessonClick(lesson.id)}
+              disabled={lesson.status === "locked"}
             />
           ))}
         </div>

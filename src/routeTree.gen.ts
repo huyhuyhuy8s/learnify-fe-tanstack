@@ -23,7 +23,6 @@ import { Route as ApiUsersRouteImport } from "./routes/api/users";
 import { Route as LearnerLessonsRouteRouteImport } from "./routes/learner_/lessons/route";
 import { Route as LearnerUserRouteRouteImport } from "./routes/learner/user/route";
 import { Route as LearnerRoadmapsRouteRouteImport } from "./routes/learner/roadmaps/route";
-import { Route as LearnerFriendsRouteRouteImport } from "./routes/learner/friends/route";
 import { Route as LearnerAboutRouteRouteImport } from "./routes/learner/about/route";
 import { Route as LearnerVerifyEmailIndexRouteImport } from "./routes/learner_/verify-email/index";
 import { Route as LearnerSignUpIndexRouteImport } from "./routes/learner_/sign-up/index";
@@ -112,11 +111,6 @@ const LearnerRoadmapsRouteRoute = LearnerRoadmapsRouteRouteImport.update({
   path: "/roadmaps",
   getParentRoute: () => LearnerRouteRoute,
 } as any);
-const LearnerFriendsRouteRoute = LearnerFriendsRouteRouteImport.update({
-  id: "/friends",
-  path: "/friends",
-  getParentRoute: () => LearnerRouteRoute,
-} as any);
 const LearnerAboutRouteRoute = LearnerAboutRouteRouteImport.update({
   id: "/about",
   path: "/about",
@@ -164,9 +158,9 @@ const LearnerRoadmapsIndexRoute = LearnerRoadmapsIndexRouteImport.update({
   getParentRoute: () => LearnerRoadmapsRouteRoute,
 } as any);
 const LearnerFriendsIndexRoute = LearnerFriendsIndexRouteImport.update({
-  id: "/",
-  path: "/",
-  getParentRoute: () => LearnerFriendsRouteRoute,
+  id: "/friends/",
+  path: "/friends/",
+  getParentRoute: () => LearnerRouteRoute,
 } as any);
 const LearnerCoursesIndexRoute = LearnerCoursesIndexRouteImport.update({
   id: "/courses/",
@@ -211,7 +205,6 @@ export interface FileRoutesByFullPath {
   "/deferred": typeof DeferredRoute;
   "/redirect": typeof RedirectRoute;
   "/learner/about": typeof LearnerAboutRouteRouteWithChildren;
-  "/learner/friends": typeof LearnerFriendsRouteRouteWithChildren;
   "/learner/roadmaps": typeof LearnerRoadmapsRouteRouteWithChildren;
   "/learner/user": typeof LearnerUserRouteRouteWithChildren;
   "/learner/lessons": typeof LearnerLessonsRouteRouteWithChildren;
@@ -270,7 +263,6 @@ export interface FileRoutesById {
   "/deferred": typeof DeferredRoute;
   "/redirect": typeof RedirectRoute;
   "/learner/about": typeof LearnerAboutRouteRouteWithChildren;
-  "/learner/friends": typeof LearnerFriendsRouteRouteWithChildren;
   "/learner/roadmaps": typeof LearnerRoadmapsRouteRouteWithChildren;
   "/learner/user": typeof LearnerUserRouteRouteWithChildren;
   "/learner_/lessons": typeof LearnerLessonsRouteRouteWithChildren;
@@ -306,7 +298,6 @@ export interface FileRouteTypes {
     | "/deferred"
     | "/redirect"
     | "/learner/about"
-    | "/learner/friends"
     | "/learner/roadmaps"
     | "/learner/user"
     | "/learner/lessons"
@@ -364,7 +355,6 @@ export interface FileRouteTypes {
     | "/deferred"
     | "/redirect"
     | "/learner/about"
-    | "/learner/friends"
     | "/learner/roadmaps"
     | "/learner/user"
     | "/learner_/lessons"
@@ -506,13 +496,6 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof LearnerRoadmapsRouteRouteImport;
       parentRoute: typeof LearnerRouteRoute;
     };
-    "/learner/friends": {
-      id: "/learner/friends";
-      path: "/friends";
-      fullPath: "/learner/friends";
-      preLoaderRoute: typeof LearnerFriendsRouteRouteImport;
-      parentRoute: typeof LearnerRouteRoute;
-    };
     "/learner/about": {
       id: "/learner/about";
       path: "/about";
@@ -578,10 +561,10 @@ declare module "@tanstack/react-router" {
     };
     "/learner/friends/": {
       id: "/learner/friends/";
-      path: "/";
+      path: "/friends";
       fullPath: "/learner/friends/";
       preLoaderRoute: typeof LearnerFriendsIndexRouteImport;
-      parentRoute: typeof LearnerFriendsRouteRoute;
+      parentRoute: typeof LearnerRouteRoute;
     };
     "/learner/courses/": {
       id: "/learner/courses/";
@@ -646,17 +629,6 @@ const LearnerAboutRouteRouteChildren: LearnerAboutRouteRouteChildren = {
 const LearnerAboutRouteRouteWithChildren =
   LearnerAboutRouteRoute._addFileChildren(LearnerAboutRouteRouteChildren);
 
-interface LearnerFriendsRouteRouteChildren {
-  LearnerFriendsIndexRoute: typeof LearnerFriendsIndexRoute;
-}
-
-const LearnerFriendsRouteRouteChildren: LearnerFriendsRouteRouteChildren = {
-  LearnerFriendsIndexRoute: LearnerFriendsIndexRoute,
-};
-
-const LearnerFriendsRouteRouteWithChildren =
-  LearnerFriendsRouteRoute._addFileChildren(LearnerFriendsRouteRouteChildren);
-
 interface LearnerRoadmapsRouteRouteChildren {
   LearnerRoadmapsRoadmapIdRoute: typeof LearnerRoadmapsRoadmapIdRoute;
   LearnerRoadmapsIndexRoute: typeof LearnerRoadmapsIndexRoute;
@@ -685,25 +657,25 @@ const LearnerUserRouteRouteWithChildren =
 
 interface LearnerRouteRouteChildren {
   LearnerAboutRouteRoute: typeof LearnerAboutRouteRouteWithChildren;
-  LearnerFriendsRouteRoute: typeof LearnerFriendsRouteRouteWithChildren;
   LearnerRoadmapsRouteRoute: typeof LearnerRoadmapsRouteRouteWithChildren;
   LearnerUserRouteRoute: typeof LearnerUserRouteRouteWithChildren;
   LearnerDashboardRoute: typeof LearnerDashboardRoute;
   LearnerIndexRoute: typeof LearnerIndexRoute;
   LearnerCoursesCourseIdRoute: typeof LearnerCoursesCourseIdRoute;
   LearnerCoursesIndexRoute: typeof LearnerCoursesIndexRoute;
+  LearnerFriendsIndexRoute: typeof LearnerFriendsIndexRoute;
   LearnerSearchIndexRoute: typeof LearnerSearchIndexRoute;
 }
 
 const LearnerRouteRouteChildren: LearnerRouteRouteChildren = {
   LearnerAboutRouteRoute: LearnerAboutRouteRouteWithChildren,
-  LearnerFriendsRouteRoute: LearnerFriendsRouteRouteWithChildren,
   LearnerRoadmapsRouteRoute: LearnerRoadmapsRouteRouteWithChildren,
   LearnerUserRouteRoute: LearnerUserRouteRouteWithChildren,
   LearnerDashboardRoute: LearnerDashboardRoute,
   LearnerIndexRoute: LearnerIndexRoute,
   LearnerCoursesCourseIdRoute: LearnerCoursesCourseIdRoute,
   LearnerCoursesIndexRoute: LearnerCoursesIndexRoute,
+  LearnerFriendsIndexRoute: LearnerFriendsIndexRoute,
   LearnerSearchIndexRoute: LearnerSearchIndexRoute,
 };
 

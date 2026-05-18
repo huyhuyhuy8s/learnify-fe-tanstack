@@ -66,6 +66,7 @@ const useLessonPlayback = (
   const segmentIdxRef = useRef(0);
   const delayRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const cancelledRef = useRef(false);
+  const isMutedRef = useRef(isMuted);
 
   useEffect(() => {
     logger.debug(
@@ -73,6 +74,10 @@ const useLessonPlayback = (
     );
     isPlayingRef.current = isPlaying;
   }, [isPlaying]);
+
+  useEffect(() => {
+    isMutedRef.current = isMuted;
+  }, [isMuted]);
 
   const buildMessages = useCallback((): TMessage[] => {
     const result: TMessage[] = [];
@@ -168,7 +173,7 @@ const useLessonPlayback = (
         onAnimationChange(randomFrom(TALKING_ANIMATIONS));
         onStatusChange("speaking");
 
-        if (!isMuted) {
+        if (!isMutedRef.current) {
           const segmentText = segments[seg];
           logger.debug(`[playback] speak: "${segmentText?.slice(0, 40)}"`);
           if (segmentText) {
@@ -200,7 +205,6 @@ const useLessonPlayback = (
     buildMessages,
     speak,
     prefetch,
-    isMuted,
     onAnimationChange,
     onStatusChange,
     onComplete,

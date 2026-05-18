@@ -58,7 +58,6 @@ const TeacherController = (props: TTeacherControllerProps) => {
         <IconButton
           icon={isMuted ? "volume_off" : "volume_up"}
           onClick={isMuted ? onUnmute : onMute}
-          disabled={isThinking || isSpeaking || isPaused}
           tooltip={isMuted ? "Unmute" : "Mute"}
           size="tiny"
           type="secondary"
