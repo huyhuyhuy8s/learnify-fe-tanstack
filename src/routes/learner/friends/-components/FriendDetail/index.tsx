@@ -1,7 +1,13 @@
 import type { TFriendDetail } from "./type";
 import "./style.scss";
 
-const FriendDetail = (props: TFriendDetail) => {
+type Props = TFriendDetail & {
+  showAddFriendBtn?: boolean;
+  isSendingRequest?: boolean;
+  onSendFriendRequest?: () => void;
+};
+
+const FriendDetail = (props: Props) => {
   const {
     imgBackground,
     imgUrl,
@@ -11,6 +17,9 @@ const FriendDetail = (props: TFriendDetail) => {
     badges,
     follower,
     course,
+    showAddFriendBtn,
+    isSendingRequest,
+    onSendFriendRequest,
   } = props;
 
   return (
@@ -33,8 +42,17 @@ const FriendDetail = (props: TFriendDetail) => {
       <div className="friend-detail-body">
         <h3 className="friend-detail-name bold">{name}</h3>
         <p className="friend-detail-meta">{email}</p>
+        {showAddFriendBtn && (
+          <button
+            className="friend-detail-add-btn"
+            onClick={onSendFriendRequest}
+            disabled={isSendingRequest}
+          >
+            {isSendingRequest ? "Sending..." : "Add Friend"}
+          </button>
+        )}
 
-        <div className="friend-detail-stats">
+        <div className="friend-detail-stats friend-detail-stats--with-btn">
           <div className="friend-detail-stat-item">
             <span className="friend-detail-stat-value">{badges}</span>
             <span className="friend-detail-stat-label">Badges</span>

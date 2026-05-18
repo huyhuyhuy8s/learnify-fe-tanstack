@@ -1,17 +1,18 @@
+import { DEFAULT_AVATAR } from "@/constants/avatar";
 import type { TFriendDetail } from "@/routes/learner/friends/-components/FriendDetail/type";
 import type { TFriendItem } from "@/routes/learner/friends/-components/FriendItem/type";
 
 export const MOCK_FRIEND: TFriendItem[] = [
   {
-    id: 1,
+    id: "1",
     name: "Do Duc Anh",
-    imgUrl: "https://i.pravatar.cc/150?img=11",
+    imgUrl: DEFAULT_AVATAR,
     typeFriendItem: "leaderboard",
     streaks: 180,
     onClick: () => console.info("Clicked friend: Do Duc Anh"),
   },
   {
-    id: 2,
+    id: "2",
     name: "John Doe",
     imgUrl: "https://i.pravatar.cc/150?img=12",
     typeFriendItem: "leaderboard",
@@ -19,7 +20,7 @@ export const MOCK_FRIEND: TFriendItem[] = [
     onClick: () => console.info("Clicked friend: John Doe"),
   },
   {
-    id: 3,
+    id: "3",
     name: "Jane Smith",
     imgUrl: "https://i.pravatar.cc/150?img=5",
     typeFriendItem: "friends",
@@ -27,14 +28,14 @@ export const MOCK_FRIEND: TFriendItem[] = [
     onClick: () => console.info("Clicked friend: Jane Smith"),
   },
   {
-    id: 4,
+    id: "4",
     name: "Bob Johnson",
     imgUrl: "https://i.pravatar.cc/150?img=14",
     typeFriendItem: "request",
     onClick: () => console.info("Clicked friend: Bob Johnson"),
   },
   {
-    id: 5,
+    id: "5",
     name: "Alice Williams",
     imgUrl: "https://i.pravatar.cc/150?img=32",
     typeFriendItem: "leaderboard",
@@ -45,10 +46,10 @@ export const MOCK_FRIEND: TFriendItem[] = [
 
 export const mockFriends: TFriendDetail[] = [
   {
-    id: 1,
+    id: "1",
     imgBackground:
       "https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=800&q=80",
-    imgUrl: "https://i.pravatar.cc/150?img=11",
+    imgUrl: DEFAULT_AVATAR,
     name: "Do Duc Anh",
     email: "doducanh@example.com",
     phoneNumber: "0901234567",
@@ -58,7 +59,7 @@ export const mockFriends: TFriendDetail[] = [
     course: 3,
   },
   {
-    id: 2,
+    id: "2",
     imgUrl: "https://i.pravatar.cc/150?img=12",
     name: "John Doe",
     email: "johndoe@example.com",
@@ -68,7 +69,7 @@ export const mockFriends: TFriendDetail[] = [
     course: 8,
   },
   {
-    id: 3,
+    id: "3",
     imgBackground:
       "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=800&q=80",
     imgUrl: "https://i.pravatar.cc/150?img=5",
@@ -81,7 +82,7 @@ export const mockFriends: TFriendDetail[] = [
     course: 1,
   },
   {
-    id: 4,
+    id: "4",
     imgBackground:
       "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
     imgUrl: "https://i.pravatar.cc/150?img=14",
@@ -93,7 +94,7 @@ export const mockFriends: TFriendDetail[] = [
     course: 24,
   },
   {
-    id: 5,
+    id: "5",
     imgUrl: "https://i.pravatar.cc/150?img=32",
     name: "Alice Williams",
     email: "alicewilliams@example.com",

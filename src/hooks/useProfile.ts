@@ -6,6 +6,7 @@ export type TBackendUser = {
   id: string;
   username: string;
   email: string;
+  avatar?: string;
   diamond: number;
   currentSteak: number;
   phoneNumber: string;
