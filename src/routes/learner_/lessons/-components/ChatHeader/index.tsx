@@ -3,15 +3,19 @@ import "./style.scss";
 import IconButton from "@/components/IconButton";
 import { COLORS } from "@/styles/colors";
 import { useChatHeader } from "./-hooks/useChatHeader";
-
-export type TChatHeaderProps = {
-  className?: string;
-  initialValue?: string;
-  onUpdate?: (value: string) => void;
-};
+import type { TChatHeaderProps } from "./type";
 
 const ChatHeader = (props: TChatHeaderProps) => {
-  const { className, initialValue, onUpdate } = props;
+  const {
+    className,
+    initialValue,
+    onUpdate,
+    onSkipLesson,
+    onSkipQA,
+    onSkipQuiz,
+    onFlag,
+    state,
+  } = props;
   const { inputRef, wrapperRef, handleInputChange, handleSubmit } =
     useChatHeader({
       placeholder: "New Conversation",
@@ -47,34 +51,44 @@ const ChatHeader = (props: TChatHeaderProps) => {
         </div>
       </div>
       <div className="chat-header-actions">
-        <IconButton
-          icon="last_page"
-          onClick={() => undefined}
-          size="tiny"
-          color={COLORS.white}
-          backgroundColor={COLORS.accentLilacVodka}
-        />
-        <IconButton
-          icon="keyboard_double_arrow_right"
-          onClick={() => undefined}
-          size="tiny"
-          color={COLORS.white}
-          backgroundColor={COLORS.accentBlueCeleste}
-        />
-        <IconButton
-          icon="stat_3"
-          onClick={() => undefined}
-          size="tiny"
-          color={COLORS.white}
-          backgroundColor={COLORS.accentPortage}
-        />
-        <IconButton
-          icon="flag"
-          onClick={() => undefined}
-          size="tiny"
-          color={COLORS.white}
-          backgroundColor={COLORS.modeOrange}
-        />
+        {state && state !== "initial" && state !== "complete" && (
+          <>
+            {state === "lesson" && (
+              <IconButton
+                icon="last_page"
+                onClick={onSkipLesson}
+                size="tiny"
+                color={COLORS.white}
+                backgroundColor={COLORS.accentLilacVodka}
+              />
+            )}
+            {state === "qa" && (
+              <IconButton
+                icon="keyboard_double_arrow_right"
+                onClick={onSkipQA}
+                size="tiny"
+                color={COLORS.white}
+                backgroundColor={COLORS.accentBlueCeleste}
+              />
+            )}
+            {state === "quiz" && (
+              <IconButton
+                icon="stat_3"
+                onClick={onSkipQuiz}
+                size="tiny"
+                color={COLORS.white}
+                backgroundColor={COLORS.accentPortage}
+              />
+            )}
+            <IconButton
+              icon="flag"
+              onClick={onFlag}
+              size="tiny"
+              color={COLORS.white}
+              backgroundColor={COLORS.modeOrange}
+            />
+          </>
+        )}
       </div>
     </form>
   );

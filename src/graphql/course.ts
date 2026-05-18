@@ -21,6 +21,7 @@ export const GET_SECTIONS_BY_LESSON = `
       urlPdf
       content
       order
+      lecturer_segment
     }
   }
 `;

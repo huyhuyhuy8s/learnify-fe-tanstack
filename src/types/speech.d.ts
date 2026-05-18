@@ -11,6 +11,7 @@ export type TSpeechSynthesisReturn = {
     text: string,
     options?: TSpeechSynthesisOptions
   ) => Promise<HTMLAudioElement | null>;
+  prefetch: (text: string, options?: TSpeechSynthesisOptions) => void;
   stop: () => void;
   pause: () => void;
   resume: () => void;

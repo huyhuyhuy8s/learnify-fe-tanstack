@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { ElevenLabsClient, play } from "@elevenlabs/elevenlabs-js";
+import { ElevenLabsClient } from "@elevenlabs/elevenlabs-js";
 import type {
   TSpeechSynthesisOptions,
   TSpeechSynthesisReturn,
 } from "@/types/speech.d";
 import { logger } from "@/utils/logger";
+import { getEdgeTtsAudio } from "@/lib/edgeTts";
 
 const useSpeechSynthesis = (): TSpeechSynthesisReturn => {
   const isSupported =
@@ -18,6 +19,10 @@ const useSpeechSynthesis = (): TSpeechSynthesisReturn => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const useElevenLabsRef = useRef(false);
   const elevenLabsClientRef = useRef<ElevenLabsClient | null>(null);
+  const speakResolveRef = useRef<
+    ((value: HTMLAudioElement | null) => void) | null
+  >(null);
+  const prefetchCacheRef = useRef<Map<string, string>>(new Map());
 
   const stopPolling = useCallback(() => {
     setIsSpeaking(false);
@@ -29,6 +34,28 @@ const useSpeechSynthesis = (): TSpeechSynthesisReturn => {
     audioRef.current = null;
   }, [stopPolling]);
 
+  const prefetch = useCallback(
+    async (text: string, options?: TSpeechSynthesisOptions) => {
+      if (!text.trim() || options?.muted) return;
+      const key = `${text}:${options?.voiceId || "vi-VN-HoaiMyNeural"}`;
+      if (prefetchCacheRef.current.has(key)) return;
+      try {
+        const result = await getEdgeTtsAudio({
+          data: { text, voice: options?.voiceId || "vi-VN-HoaiMyNeural" },
+        });
+        if (result?.audio) {
+          prefetchCacheRef.current.set(
+            key,
+            `data:audio/mpeg;base64,${result.audio}`
+          );
+        }
+      } catch {
+        // silent — speak() will fall through to Edge TTS / ElevenLabs / browser TTS
+      }
+    },
+    []
+  );
+
   const speak = useCallback(
     async (
       text: string,
@@ -36,27 +63,81 @@ const useSpeechSynthesis = (): TSpeechSynthesisReturn => {
     ): Promise<HTMLAudioElement | null> => {
       if (!text.trim() || options?.muted) return null;
 
+      // Check prefetch cache
+      const cacheKey = `${text}:${options?.voiceId || "vi-VN-HoaiMyNeural"}`;
+      const cached = prefetchCacheRef.current.get(cacheKey);
+      if (cached) {
+        prefetchCacheRef.current.delete(cacheKey);
+        const audioElement = new Audio(cached);
+        audioRef.current = audioElement;
+        return await new Promise<HTMLAudioElement | null>((resolve) => {
+          speakResolveRef.current = resolve;
+
+          audioElement.onended = () => {
+            speakResolveRef.current = null;
+            handleSpeechEnd();
+            resolve(audioElement);
+          };
+          audioElement.onerror = () => {
+            speakResolveRef.current = null;
+            handleSpeechEnd();
+            resolve(null);
+          };
+
+          setIsSpeaking(true);
+          audioElement.play();
+        });
+      }
+
+      // Edge TTS (free, no API key needed, supports Vietnamese)
+      try {
+        const result = await getEdgeTtsAudio({
+          data: {
+            text,
+            voice: options?.voiceId || "vi-VN-HoaiMyNeural",
+          },
+        });
+
+        if (!result?.audio) {
+          throw new Error("Empty audio response from Edge TTS");
+        }
+
+        const url = `data:audio/mpeg;base64,${result.audio}`;
+        const audioElement = new Audio(url);
+        audioRef.current = audioElement;
+
+        return await new Promise<HTMLAudioElement | null>((resolve) => {
+          speakResolveRef.current = resolve;
+
+          audioElement.onended = () => {
+            speakResolveRef.current = null;
+            handleSpeechEnd();
+            resolve(audioElement);
+          };
+          audioElement.onerror = () => {
+            speakResolveRef.current = null;
+            handleSpeechEnd();
+            resolve(null);
+          };
+
+          setIsSpeaking(true);
+          audioElement.play();
+        });
+      } catch (error) {
+        audioRef.current = null;
+        logger.warn("[EdgeTTS] failed, falling back to ElevenLabs:", error);
+      }
+
       const apiKey = import.meta.env.VITE_ELEVENLABS_API_KEY;
       const voiceId =
-        options?.voiceId || import.meta.env.VITE_ELEVENLABS_VOICE_ID;
+        options?.voiceId ||
+        import.meta.env.VITE_ELEVENLABS_VOICE_ID ||
+        "21m00Tcm4TlvDq8ikWAM";
       const modelId =
         import.meta.env.VITE_ELEVENLABS_MODEL_ID || "eleven_multilingual_v2";
 
-      const useElevenLabs = !!apiKey;
-      logger.debug(
-        "[TTS] useElevenLabs:",
-        useElevenLabs,
-        "| voiceId:",
-        voiceId
-      );
-
-      if (useElevenLabs) {
+      if (apiKey) {
         try {
-          logger.debug(
-            "[TTS] Calling ElevenLabs API with text:",
-            text.substring(0, 50) + "..."
-          );
-
           const client = new ElevenLabsClient({ apiKey });
           elevenLabsClientRef.current = client;
 
@@ -64,7 +145,6 @@ const useSpeechSynthesis = (): TSpeechSynthesisReturn => {
             text,
             modelId,
           });
-
           const chunks: Uint8Array[] = [];
           const reader = response.getReader();
           while (true) {
@@ -87,27 +167,33 @@ const useSpeechSynthesis = (): TSpeechSynthesisReturn => {
           const url = URL.createObjectURL(blob);
 
           const audioElement = new Audio(url);
-
           audioRef.current = audioElement;
           useElevenLabsRef.current = true;
 
-          audioElement.onended = () => {
-            URL.revokeObjectURL(url);
-            handleSpeechEnd();
-          };
+          return await new Promise<HTMLAudioElement | null>((resolve) => {
+            speakResolveRef.current = resolve;
 
-          audioElement.onerror = () => {
-            URL.revokeObjectURL(url);
-            handleSpeechEnd();
-          };
+            audioElement.onended = () => {
+              speakResolveRef.current = null;
+              URL.revokeObjectURL(url);
+              handleSpeechEnd();
+              resolve(audioElement);
+            };
+            audioElement.onerror = () => {
+              speakResolveRef.current = null;
+              URL.revokeObjectURL(url);
+              handleSpeechEnd();
+              resolve(null);
+            };
 
-          setIsSpeaking(true);
-          await audioElement.play();
-
-          return audioElement;
+            setIsSpeaking(true);
+            audioElement.play();
+          });
         } catch (error) {
-          logger.error("ElevenLabs TTS error:", error);
-          return null;
+          logger.error(
+            "ElevenLabs TTS error, falling back to browser TTS:",
+            error
+          );
         }
       }
 
@@ -120,38 +206,66 @@ const useSpeechSynthesis = (): TSpeechSynthesisReturn => {
       const utterance = new SpeechSynthesisUtterance(text);
       utteranceRef.current = utterance;
 
+      // Select Vietnamese voice for browser SpeechSynthesis fallback
+      let voices = synth.getVoices();
+      if (voices.length === 0) {
+        await new Promise<void>((resolve) => {
+          synth.onvoiceschanged = () => {
+            synth.onvoiceschanged = null;
+            resolve();
+          };
+        });
+        voices = synth.getVoices();
+      }
+      const vnVoice = voices.find((v) => v.lang.startsWith("vi"));
+      if (vnVoice) utterance.voice = vnVoice;
+
       if (options?.rate !== undefined) utterance.rate = options.rate;
       if (options?.pitch !== undefined) utterance.pitch = options.pitch;
       if (options?.volume !== undefined) utterance.volume = options.volume;
 
-      utterance.onend = handleSpeechEnd;
-      utterance.onerror = handleSpeechEnd;
+      return await new Promise<null>((resolve) => {
+        speakResolveRef.current = () => {
+          resolve(null);
+        };
 
-      setIsSpeaking(true);
-      synth.speak(utterance);
+        utterance.onend = () => {
+          speakResolveRef.current = null;
+          handleSpeechEnd();
+          resolve(null);
+        };
+        utterance.onerror = () => {
+          speakResolveRef.current = null;
+          handleSpeechEnd();
+          resolve(null);
+        };
 
-      return null;
+        setIsSpeaking(true);
+        synth.speak(utterance);
+      });
     },
     [isSupported, handleSpeechEnd]
   );
 
   const stop = useCallback(() => {
+    if (speakResolveRef.current) {
+      speakResolveRef.current(null);
+      speakResolveRef.current = null;
+    }
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current = null;
     }
-
     if (isSupported) {
       window.speechSynthesis.cancel();
     }
-
     synthRef.current = null;
     utteranceRef.current = null;
     stopPolling();
   }, [isSupported, stopPolling]);
 
   const pause = useCallback(() => {
-    if (audioRef.current && useElevenLabsRef.current) {
+    if (audioRef.current) {
       audioRef.current.pause();
       setIsPaused(true);
     } else if (isSupported && synthRef.current) {
@@ -161,7 +275,7 @@ const useSpeechSynthesis = (): TSpeechSynthesisReturn => {
   }, [isSupported]);
 
   const resume = useCallback(() => {
-    if (audioRef.current && useElevenLabsRef.current && isPaused) {
+    if (audioRef.current && isPaused) {
       audioRef.current.play();
       setIsPaused(false);
     } else if (isSupported && isPaused) {
@@ -172,11 +286,26 @@ const useSpeechSynthesis = (): TSpeechSynthesisReturn => {
 
   useEffect(() => {
     return () => {
-      stop();
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+      if (isSupported) {
+        window.speechSynthesis.cancel();
+      }
     };
-  }, [stop]);
+  }, [isSupported]);
 
-  return { speak, stop, pause, resume, isSpeaking, isPaused, isSupported };
+  return {
+    speak,
+    prefetch,
+    stop,
+    pause,
+    resume,
+    isSpeaking,
+    isPaused,
+    isSupported,
+  };
 };
 
 export default useSpeechSynthesis;

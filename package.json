@@ -56,6 +56,7 @@
     "@unpic/react": "^1.0.2",
     "classnames": "^2.5.1",
     "clsx": "^2.1.1",
+    "edge-tts-universal": "^1.4.0",
     "graphql": "^16.13.2",
     "graphql-request": "^7.4.0",
     "gsap": "^3.14.2",

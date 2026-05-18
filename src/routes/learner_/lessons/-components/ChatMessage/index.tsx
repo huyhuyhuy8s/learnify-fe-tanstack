@@ -12,7 +12,7 @@ const MIN_BUBBLE_HEIGHT = 36;
 
 const ChatMessage = (props: TMessageProps) => {
   const { message, className } = props;
-  const { content, sender, timestamp } = message;
+  const { content, sender, timestamp, type, imageUrl } = message;
   const bodyRef = useRef<HTMLDivElement>(null);
   const [bubbleHeight, setBubbleHeight] = useState<number | null>(null);
 
@@ -54,7 +54,11 @@ const ChatMessage = (props: TMessageProps) => {
         style={bubbleHeight ? { minHeight: bubbleHeight } : undefined}
       >
         <div className="message-bubble">
-          <p className="message-text">{content}</p>
+          {type === "image" && imageUrl ? (
+            <img className="message-image" src={imageUrl} alt={content} />
+          ) : (
+            <p className="message-text">{content}</p>
+          )}
         </div>
         <span className="message-time">{formattedTime}</span>
       </div>

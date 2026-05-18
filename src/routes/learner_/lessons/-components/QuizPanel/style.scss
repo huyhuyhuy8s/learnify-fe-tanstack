@@ -1,0 +1,328 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/functions" as *;
+
+.quiz-panel {
+  display: flex;
+  flex-direction: column;
+  gap: toRem(20);
+  padding: toRem(24);
+  background-color: $green-100;
+  border: toRem(2) solid $green-200;
+  border-radius: $br-xl;
+  height: 100%;
+  overflow-y: auto;
+
+  &-progress {
+    font-size: $fs-small;
+    color: $neutral-500;
+    font-weight: $fw-medium;
+  }
+
+  &-question {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(16);
+
+    &-type {
+      font-size: $fs-smaller;
+      font-weight: $fw-semibold;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: $green-600;
+    }
+
+    &-text {
+      font-size: $fs-heading4;
+      font-weight: $fw-semibold;
+      color: $neutral-900;
+      margin: 0;
+      line-height: 1.4;
+    }
+  }
+
+  &-options {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(8);
+  }
+
+  &-option {
+    display: flex;
+    align-items: center;
+    gap: toRem(12);
+    padding: toRem(12) toRem(16);
+    border: toRem(2) solid $neutral-200;
+    border-radius: $br-lg;
+    background: $white;
+    cursor: pointer;
+    font-size: $fs-paragraph;
+    text-align: left;
+    transition:
+      border-color 0.15s,
+      background-color 0.15s;
+
+    &:hover:not(:disabled) {
+      border-color: $green-400;
+    }
+
+    &.selected {
+      border-color: $green-500;
+      background-color: $green-pastel-100;
+    }
+
+    &.correct {
+      border-color: $green-600;
+      background-color: $green-100;
+    }
+
+    &.wrong {
+      border-color: $salmon-500;
+      background-color: $salmon-100;
+    }
+
+    &:disabled {
+      cursor: default;
+    }
+
+    &-indicator {
+      font-size: toRem(20);
+      color: $neutral-400;
+    }
+
+    &.selected &-indicator {
+      color: $green-500;
+    }
+
+    &.correct &-indicator {
+      color: $green-600;
+    }
+
+    &.wrong &-indicator {
+      color: $salmon-500;
+    }
+
+    &-label {
+      flex: 1;
+    }
+  }
+
+  &-matching {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(12);
+
+    &-row {
+      display: flex;
+      align-items: center;
+      gap: toRem(12);
+    }
+
+    &-left {
+      flex: 1;
+      font-weight: $fw-medium;
+      color: $neutral-800;
+    }
+
+    &-select {
+      flex: 1;
+      padding: toRem(8) toRem(12);
+      border: toRem(2) solid $neutral-200;
+      border-radius: $br-md;
+      font-size: $fs-paragraph;
+      background: $white;
+    }
+
+    &-status {
+      flex: 0 0 auto;
+      font-size: $fs-small;
+      font-weight: $fw-semibold;
+      min-width: toRem(120);
+
+      &.correct {
+        color: $green-600;
+      }
+
+      &.wrong {
+        color: $salmon-500;
+      }
+    }
+  }
+
+  &-explanation {
+    padding: toRem(12) toRem(16);
+    background-color: $cool-100;
+    border: toRem(1) solid $cool-200;
+    border-radius: $br-md;
+
+    &-label {
+      font-weight: $fw-semibold;
+      color: $cool-700;
+      display: block;
+      margin-bottom: toRem(4);
+    }
+
+    &-text {
+      margin: 0;
+      color: $neutral-700;
+      line-height: 1.5;
+      font-size: $fs-paragraph;
+    }
+  }
+
+  &-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: toRem(12);
+    margin-top: toRem(8);
+  }
+
+  &-submit,
+  &-next {
+    padding: toRem(10) toRem(24);
+    border: none;
+    border-radius: $br-md;
+    font-size: $fs-paragraph;
+    font-weight: $fw-semibold;
+    cursor: pointer;
+    transition: opacity 0.15s;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &-submit {
+    background-color: $green-600;
+    color: $white;
+
+    &:hover:not(:disabled) {
+      background-color: $green-700;
+    }
+  }
+
+  &-next {
+    background-color: $navy-600;
+    color: $white;
+
+    &:hover:not(:disabled) {
+      background-color: $navy-700;
+    }
+  }
+
+  &-results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: toRem(20);
+    text-align: center;
+
+    &-header {
+      font-size: $fs-heading3;
+      font-weight: $fw-bold;
+      color: $neutral-900;
+    }
+
+    &-score {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: toRem(4);
+    }
+
+    &-fraction {
+      font-size: toRem(48);
+      font-weight: $fw-bold;
+      color: $green-700;
+    }
+
+    &-percent {
+      font-size: $fs-heading4;
+      color: $neutral-500;
+    }
+
+    &-bar-track {
+      width: 100%;
+      max-width: toRem(300);
+      height: toRem(12);
+      background-color: $neutral-200;
+      border-radius: toRem(6);
+      overflow: hidden;
+    }
+
+    &-bar-fill {
+      height: 100%;
+      background-color: $green-500;
+      border-radius: toRem(6);
+      transition: width 0.5s ease;
+    }
+
+    &-list {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: toRem(8);
+      text-align: left;
+    }
+
+    &-item {
+      display: flex;
+      align-items: center;
+      gap: toRem(8);
+      padding: toRem(10) toRem(14);
+      border-radius: $br-md;
+      flex-wrap: wrap;
+
+      &.correct {
+        background-color: $green-pastel-100;
+        border: toRem(1) solid $green-200;
+      }
+
+      &.wrong {
+        background-color: $salmon-100;
+        border: toRem(1) solid $salmon-200;
+      }
+
+      &-icon {
+        font-size: toRem(20);
+
+        .correct & {
+          color: $green-600;
+        }
+
+        .wrong & {
+          color: $salmon-500;
+        }
+      }
+
+      &-label {
+        flex: 1;
+        font-size: $fs-paragraph;
+        color: $neutral-800;
+      }
+
+      &-hint {
+        width: 100%;
+        font-size: $fs-small;
+        color: $neutral-600;
+        padding-left: toRem(28);
+      }
+    }
+
+    &-complete {
+      padding: toRem(12) toRem(32);
+      border: none;
+      border-radius: $br-md;
+      font-size: $fs-paragraph;
+      font-weight: $fw-semibold;
+      cursor: pointer;
+      background-color: $green-600;
+      color: $white;
+
+      &:hover {
+        background-color: $green-700;
+      }
+    }
+  }
+}

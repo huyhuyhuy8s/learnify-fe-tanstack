@@ -3,7 +3,8 @@ export type TMessage = {
   content: string;
   sender: "user" | "teacher";
   timestamp: Date;
-  type?: "text" | "attachment" | "system";
+  type?: "text" | "attachment" | "system" | "image";
+  imageUrl?: string;
 };
 
 export type TMessageProps = {

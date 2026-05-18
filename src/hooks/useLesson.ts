@@ -15,11 +15,12 @@ type LessonItem = {
   createdAt: string;
   updatedAt: string;
 };
-type SectionItem = {
+export type SectionItem = {
   id: string;
   urlPdf: string;
   content?: string;
   order: number;
+  lecturer_segment: string[];
 };
 type CourseItem = {
   id: string;

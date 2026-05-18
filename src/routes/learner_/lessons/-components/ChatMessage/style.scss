@@ -93,4 +93,12 @@
   &-user &-time {
     text-align: right;
   }
+
+  &-image {
+    max-width: 100%;
+    max-height: 40dvh;
+    object-fit: contain;
+    display: block;
+    border-radius: inherit;
+  }
 }
