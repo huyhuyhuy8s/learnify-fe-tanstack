@@ -24,6 +24,7 @@ const TextButton = (props: TTextButtonProps) => {
     style,
     className,
     buttonType = "button",
+    loading = false,
   } = props;
 
   const { onClickHandler, buttonClassNames, iconLabel, toolTipContent } =
@@ -37,6 +38,7 @@ const TextButton = (props: TTextButtonProps) => {
       text,
       tooltip,
       disabled,
+      loading,
       onClick,
       className,
     });
@@ -44,36 +46,44 @@ const TextButton = (props: TTextButtonProps) => {
   return (
     <button
       style={{
-        backgroundColor: disabled ? COLORS.neutral400 : backgroundColor,
+        backgroundColor:
+          disabled || loading ? COLORS.neutral400 : backgroundColor,
         ...style,
       }}
       className={buttonClassNames}
       title={toolTipContent}
       onClick={onClickHandler}
       type={buttonType}
+      disabled={disabled || loading}
     >
-      <Icon
-        visible={leftIcon}
-        type={type}
-        typeSpecial={typeSpecial}
-        icon={disabled ? "lock" : icon}
-        color={disabled ? COLORS.white : color}
-      />
-      <span
-        className="text"
-        style={{
-          color: disabled ? COLORS.white : color,
-        }}
-      >
-        {iconLabel}
-      </span>
-      <Icon
-        visible={rightIcon}
-        type={type}
-        typeSpecial={typeSpecial}
-        icon={disabled ? "lock" : icon}
-        color={disabled ? COLORS.white : color}
-      />
+      {loading ? (
+        <div className="text-button_spinner" />
+      ) : (
+        <>
+          <Icon
+            visible={leftIcon}
+            type={type}
+            typeSpecial={typeSpecial}
+            icon={disabled ? "lock" : icon}
+            color={disabled ? COLORS.white : color}
+          />
+          <span
+            className="text"
+            style={{
+              color: disabled ? COLORS.white : color,
+            }}
+          >
+            {iconLabel}
+          </span>
+          <Icon
+            visible={rightIcon}
+            type={type}
+            typeSpecial={typeSpecial}
+            icon={disabled ? "lock" : icon}
+            color={disabled ? COLORS.white : color}
+          />
+        </>
+      )}
     </button>
   );
 };

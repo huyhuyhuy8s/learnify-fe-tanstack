@@ -17,6 +17,7 @@ export type TUseButtonProps = {
   text: string;
   tooltip: string;
   disabled: boolean;
+  loading?: boolean;
   onClick: () => void;
   className?: string;
 };
@@ -32,12 +33,13 @@ export const useButton = (props: TUseButtonProps) => {
     text,
     tooltip,
     disabled,
+    loading = false,
     onClick,
     className,
   } = props;
 
   const onClickHandler = () => {
-    if (disabled) return;
+    if (disabled || loading) return;
     onClick();
   };
 
@@ -50,7 +52,8 @@ export const useButton = (props: TUseButtonProps) => {
     { [`typeSecondary-${typeSecondary}`]: type === "secondary" },
     shape,
     { [`typeSpecial-${typeSpecial}`]: type === "special" },
-    { disabled: disabled }
+    { disabled: disabled || loading },
+    { loading: loading }
   );
 
   const iconLabel = type === "special" ? typeSpecial : text;

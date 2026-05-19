@@ -1,20 +1,20 @@
-import { Suspense, useEffect } from "react";
-import { createFileRoute, notFound, useRouter } from "@tanstack/react-router";
 import ErrorScene from "@/components/ErrorScene";
 import NotFound from "@/components/NotFound";
 import TetrisLoader from "@/components/TetrisLoader";
 import TextButton from "@/components/TextButton";
+import { useLayout } from "@/contexts/LayoutContext";
+import { GET_PROFILE } from "@/graphql/user";
+import type { GetUserProfileResponse } from "@/hooks/useProfile";
 import {
   useSuspenseGetUserProfile,
   useUpdateUserProfile,
 } from "@/hooks/useProfile";
-import { useLayout } from "@/contexts/LayoutContext";
+import { graphqlClient } from "@/lib/graphql";
 import { MOCK_USER_PROFILE } from "@/mock/user";
 import { createLearnerHead } from "@/utils";
 import { logger } from "@/utils/logger";
-import { graphqlClient } from "@/lib/graphql";
-import { GET_PROFILE } from "@/graphql/user";
-import type { GetUserProfileResponse } from "@/hooks/useProfile";
+import { createFileRoute, notFound, useRouter } from "@tanstack/react-router";
+import { Suspense, useEffect } from "react";
 import EditableField from "./-components/EditableField";
 import "./userId.scss";
 

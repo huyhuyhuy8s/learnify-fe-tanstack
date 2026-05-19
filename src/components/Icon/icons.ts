@@ -165,6 +165,11 @@ import cognitionFillSvg from "@material-symbols/svg-400/rounded/cognition-fill.s
 import record_voice_overSvg from "@material-symbols/svg-400/rounded/record_voice_over.svg?raw";
 import record_voice_overFillSvg from "@material-symbols/svg-400/rounded/record_voice_over-fill.svg?raw";
 
+import view_in_arSvg from "@material-symbols/svg-400/rounded/view_in_ar.svg?raw";
+import view_in_arFillSvg from "@material-symbols/svg-400/rounded/view_in_ar-fill.svg?raw";
+import imageSvg from "@material-symbols/svg-400/rounded/image.svg?raw";
+import imageFillSvg from "@material-symbols/svg-400/rounded/image-fill.svg?raw";
+
 function extractPath(raw: string) {
   const match = raw.match(/<path d="([^"]+)"/);
   return match?.[1] ?? "";
@@ -412,5 +417,13 @@ export const iconPaths: Record<string, { regular: string; fill: string }> = {
   record_voice_over: {
     regular: extractPath(record_voice_overSvg),
     fill: extractPath(record_voice_overFillSvg),
+  },
+  view_in_ar: {
+    regular: extractPath(view_in_arSvg),
+    fill: extractPath(view_in_arFillSvg),
+  },
+  image: {
+    regular: extractPath(imageSvg),
+    fill: extractPath(imageFillSvg),
   },
 } as const;

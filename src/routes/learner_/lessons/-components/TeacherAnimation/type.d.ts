@@ -22,4 +22,5 @@ export type TTeacherAnimationProps = {
   animation?: TTeacherAnimation;
   position?: [number, number, number];
   rotation?: [number, number, number];
+  onReady?: () => void;
 };

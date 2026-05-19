@@ -20,6 +20,7 @@ type TconButtonProp = {
   style?: React.CSSProperties;
   buttonType?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
   disabled?: boolean;
+  loading?: boolean;
 };
 
 const IconButton = (props: TconButtonProp) => {
@@ -40,6 +41,7 @@ const IconButton = (props: TconButtonProp) => {
     style,
     buttonType = "button",
     disabled = false,
+    loading = false,
   } = props;
 
   const [clicked, setClicked] = useState(false);
@@ -49,7 +51,8 @@ const IconButton = (props: TconButtonProp) => {
     state,
     shape,
     size,
-    { disabled: disabled },
+    { disabled: disabled || loading },
+    { loading: loading },
     className
   );
   const iconVal = useMemo(
@@ -58,6 +61,7 @@ const IconButton = (props: TconButtonProp) => {
   );
 
   const handleClick = () => {
+    if (loading) return;
     setClicked(!clicked);
     onClick();
   };
@@ -74,9 +78,13 @@ const IconButton = (props: TconButtonProp) => {
       title={tooltip}
       aria-label={ariaLabel || tooltip}
       type={buttonType}
-      disabled={disabled}
+      disabled={disabled || loading}
     >
-      <Icon name={iconVal} fill={fill} style={{ color }} />
+      {loading ? (
+        <div className="icon-button_spinner" />
+      ) : (
+        <Icon name={iconVal} fill={fill} style={{ color }} />
+      )}
     </button>
   );
 };

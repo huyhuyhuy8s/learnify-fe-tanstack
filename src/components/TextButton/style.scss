@@ -41,6 +41,26 @@
     }
   }
 
+  &.loading {
+    cursor: not-allowed;
+    opacity: 0.8;
+    animation: pulse 1.5s ease-in-out infinite;
+
+    span,
+    svg {
+      color: $white;
+    }
+  }
+
+  .text-button_spinner {
+    width: toRem(20);
+    height: toRem(20);
+    border: toRem(2) solid rgba(255, 255, 255, 0.3);
+    border-top-color: $white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
   &.large {
     padding: toRem(10) toRem(30);
     gap: toRem(10);
@@ -300,5 +320,22 @@
 
   &-roundedSquare {
     border-radius: $br-sm;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
   }
 }

@@ -181,6 +181,18 @@ const useLessonPlayback = (
             if (nextText) prefetch(nextText);
             await speak(segmentText);
           }
+        } else {
+          const segmentText = segments[seg];
+          const estimatedDuration = Math.max(
+            1,
+            (segmentText?.length || 10) / 2.5
+          );
+          logger.debug(
+            `[playback] muted - keeping talking animation for ${estimatedDuration.toFixed(1)}s`
+          );
+          await new Promise<void>((resolve) => {
+            delayRef.current = setTimeout(resolve, estimatedDuration * 1000);
+          });
         }
         segTextIdx++;
 

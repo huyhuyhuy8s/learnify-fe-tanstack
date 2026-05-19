@@ -6,9 +6,9 @@
 .lesson-detail-page {
   display: grid;
   grid-template-columns: 1fr 25dvw;
-  grid-template-rows: calc(
-      100dvh - toRem(77) - toRem(40) - 25dvw / 4 * 3 - toRem(20)
-    ) 1fr;
+  grid-template-rows:
+    calc(100dvh - toRem(77) - toRem(40) - 25dvw / 4 * 3 - toRem(20))
+    1fr;
   padding: toRem(20);
   height: 100%;
   gap: toRem(20);
@@ -54,24 +54,14 @@
       color: $neutral-400;
       margin: 0;
     }
+  }
 
-    &-start {
-      margin-top: toRem(8);
-      align-self: center;
-      padding: toRem(12) toRem(32);
-      border: none;
-      border-radius: $br-md;
-      font-size: $fs-paragraph;
-      font-weight: $fw-semibold;
-      cursor: pointer;
-      background-color: $green-600;
-      color: $white;
-      transition: background-color 0.15s;
-
-      &:hover {
-        background-color: $green-700;
-      }
-    }
+  &_loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
   }
 
   &-complete {

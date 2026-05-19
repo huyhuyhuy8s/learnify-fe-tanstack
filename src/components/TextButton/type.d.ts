@@ -25,6 +25,7 @@ export type TTextButtonProps = {
   disabled?: boolean;
   className?: string;
   buttonType?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  loading?: boolean;
 };
 
 export type TIconProps = {

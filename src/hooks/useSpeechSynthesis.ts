@@ -288,13 +288,33 @@ const useSpeechSynthesis = (): TSpeechSynthesisReturn => {
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
+        audioRef.current.src = "";
         audioRef.current = null;
       }
       if (isSupported) {
         window.speechSynthesis.cancel();
       }
+      const cache = prefetchCacheRef.current;
+      cache.clear();
+      logger.debug("[speech] cleanup complete");
     };
   }, [isSupported]);
+
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      logger.debug("[speech] beforeunload - force stopping audio");
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.src = "";
+        audioRef.current = null;
+      }
+      window.speechSynthesis?.cancel();
+      prefetchCacheRef.current.clear();
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, []);
 
   return {
     speak,

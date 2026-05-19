@@ -5,6 +5,9 @@ export type TTeacherControllerProps = {
   isMuted: boolean;
   isSettingsOpen: boolean;
   selectedVoiceId: string;
+  is3DMode: boolean;
+  isLoading?: boolean;
+  loadingMessage?: string;
   onPause: () => void;
   onResume: () => void;
   onStop: () => void;
@@ -14,5 +17,6 @@ export type TTeacherControllerProps = {
   onCloseSettings: () => void;
   onSelectVoice: (voiceId: string) => void;
   onPreviewVoice?: (voiceId: string) => void;
+  onToggle3DMode: (enabled: boolean) => void;
   className?: string;
 };

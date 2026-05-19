@@ -41,6 +41,7 @@ type TChatMessageWrapperProps = {
   mode?: "qa" | "lesson";
   sections?: SectionItem[];
   onLessonComplete?: () => void;
+  isModelReady?: boolean;
 };
 
 const ChatMessageWrapper = forwardRef<
@@ -55,12 +56,18 @@ const ChatMessageWrapper = forwardRef<
     mode = "qa",
     sections = [],
     onLessonComplete,
+    isModelReady = false,
   } = props;
   const [messages, setMessages] = useState<TMessage[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const playbackStartedRef = useRef(false);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const isNearBottomRef = useRef(true);
+  const isModelReadyRef = useRef(false);
+
+  useEffect(() => {
+    isModelReadyRef.current = isModelReady;
+  }, [isModelReady]);
 
   const scrollToBottom = useCallback(() => {
     if (isNearBottomRef.current) {
@@ -109,13 +116,11 @@ const ChatMessageWrapper = forwardRef<
   });
 
   useEffect(() => {
-    logger.debug(
-      `[ChatMessageWrapper] effect | mode=${mode} | started=${playbackStartedRef.current} | sections.length=${sections.length}`
-    );
     if (
       mode === "lesson" &&
       !playbackStartedRef.current &&
-      sections.length > 0
+      sections.length > 0 &&
+      isModelReadyRef.current
     ) {
       playbackStartedRef.current = true;
       logger.debug("[ChatMessageWrapper] calling playbackStart()");

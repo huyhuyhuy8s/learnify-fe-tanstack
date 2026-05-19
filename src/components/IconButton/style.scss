@@ -51,6 +51,21 @@
     filter: brightness(0.6) saturate(0.1);
   }
 
+  &.loading {
+    cursor: not-allowed;
+    opacity: 0.8;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  .icon-button_spinner {
+    width: 50%;
+    height: 50%;
+    border: toRem(2) solid rgba(255, 255, 255, 0.3);
+    border-top-color: $white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
   &.primary {
     background-color: $mode-green;
 
@@ -134,5 +149,22 @@
     &:hover {
       border-radius: $br-md;
     }
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
   }
 }
