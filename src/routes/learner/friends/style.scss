@@ -8,7 +8,6 @@
   display: flex;
   flex-direction: column;
   background-color: $green-100;
-  // border: toRem(1) solid $neutral-300;
   height: calc(100dvh - toRem(77) - toRem(100));
 
   &-header {

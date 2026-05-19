@@ -4,8 +4,9 @@
 @use "@styles/functions" as *;
 
 .profile {
-  max-width: toRem(1100);
-  margin: 0 auto;
+  width: 100%;
+  margin-top: toRem(-50);
+  padding: 0 toRem(100);
 
   &-banner {
     height: toRem(220);
@@ -82,8 +83,10 @@
         &-dot {
           color: $mode-neutral;
         }
+
         &-item {
           color: $neutral-600;
+
           > strong {
             font-weight: 600;
             color: $neutral-800;
@@ -101,6 +104,23 @@
           color: $mode-neutral;
         }
       }
+    }
+  }
+
+  &-personal-info {
+    &-card {
+      background: $white;
+      border-radius: toRem(16);
+      padding: toRem(24);
+      margin-bottom: toRem(40);
+      @include box-shadow(0, 2, 8, 0);
+    }
+
+    &-title {
+      font-size: toRem(18);
+      font-weight: 600;
+      margin-bottom: toRem(24);
+      color: $neutral-800;
     }
   }
 

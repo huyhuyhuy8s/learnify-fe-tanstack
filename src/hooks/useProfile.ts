@@ -1,6 +1,12 @@
 import { graphqlClient } from "@/lib/graphql";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import { GET_PROFILE } from "@/graphql/user";
+import {
+  useQuery,
+  useSuspenseQuery,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { GET_PROFILE, UPDATE_USER } from "@/graphql/user";
+import { toast } from "sonner";
 
 export type TBackendUser = {
   id: string;
@@ -39,6 +45,13 @@ export type GetUserProfileResponse = {
   };
 };
 
+export type UpdateUserInput = {
+  id: string;
+  username?: string;
+  phoneNumber?: string;
+  email?: string;
+};
+
 const emptyProfile: GetUserProfileResponse = {
   currentUser: { count: 0, isSuccess: false, message: "", users: [] },
   countSuccessEnrollments: { count: 0, data: [] },
@@ -74,6 +87,25 @@ export function useSuspenseGetUserProfile(userId?: string) {
       } catch {
         return emptyProfile;
       }
+    },
+  });
+}
+
+export function useUpdateUserProfile() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (data: UpdateUserInput) => {
+      return await graphqlClient.request(UPDATE_USER, { data });
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["user", "profile", variables.id],
+      });
+      toast.success("Profile updated successfully!");
+    },
+    onError: (error) => {
+      toast.error(`Failed to update profile: ${(error as Error).message}`);
     },
   });
 }

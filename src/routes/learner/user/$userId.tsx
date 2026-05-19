@@ -1,13 +1,80 @@
-import TetrisLoader from "@/components/TetrisLoader";
-import { useLayout } from "@/contexts/LayoutContext";
-import { useSuspenseGetUserProfile } from "@/hooks/useProfile";
-import { MOCK_USER_PROFILE } from "@/mock/user";
-import { logger } from "@/utils/logger";
-import { createFileRoute } from "@tanstack/react-router";
 import { Suspense, useEffect } from "react";
+import { createFileRoute, notFound, useRouter } from "@tanstack/react-router";
+import ErrorScene from "@/components/ErrorScene";
+import NotFound from "@/components/NotFound";
+import TetrisLoader from "@/components/TetrisLoader";
+import TextButton from "@/components/TextButton";
+import {
+  useSuspenseGetUserProfile,
+  useUpdateUserProfile,
+} from "@/hooks/useProfile";
+import { useLayout } from "@/contexts/LayoutContext";
+import { MOCK_USER_PROFILE } from "@/mock/user";
+import { createLearnerHead } from "@/utils";
+import { logger } from "@/utils/logger";
+import { graphqlClient } from "@/lib/graphql";
+import { GET_PROFILE } from "@/graphql/user";
+import type { GetUserProfileResponse } from "@/hooks/useProfile";
+import EditableField from "./-components/EditableField";
 import "./userId.scss";
 
+function UserErrorComponent() {
+  const router = useRouter();
+  return (
+    <ErrorScene>
+      <ErrorScene.Header>
+        <ErrorScene.Title errorCode={500}>Server Error</ErrorScene.Title>
+        <ErrorScene.Description>
+          Something went wrong while loading this profile. Please try again or
+          come back later.
+        </ErrorScene.Description>
+      </ErrorScene.Header>
+      <ErrorScene.Content>
+        <div className="error-scene__control">
+          <TextButton
+            text="Try Again"
+            onClick={() => router.invalidate()}
+            className="error-scene__btn"
+            size="medium"
+            icon="refresh"
+          />
+          <TextButton
+            text="Go Back"
+            onClick={() => window.history.back()}
+            className="error-scene__btn error-scene__btn--secondary"
+            size="medium"
+            icon="arrow_back"
+            type="outlined"
+          />
+        </div>
+      </ErrorScene.Content>
+    </ErrorScene>
+  );
+}
+
 export const Route = createFileRoute("/learner/user/$userId")({
+  loader: async ({ params: { userId }, context }) => {
+    const data = await context.queryClient.ensureQueryData({
+      queryKey: ["user", "profile", userId],
+      queryFn: async () => {
+        try {
+          return await graphqlClient.request<GetUserProfileResponse>(
+            GET_PROFILE,
+            { userId }
+          );
+        } catch {
+          throw new Error("Failed to fetch user profile");
+        }
+      },
+    });
+    if (!data.currentUser?.users?.length) throw notFound();
+    return { title: data.currentUser.users[0]?.username };
+  },
+  head: ({ loaderData }) =>
+    createLearnerHead(loaderData?.title ?? "User Profile"),
+  errorComponent: UserErrorComponent,
+  pendingComponent: TetrisLoader,
+  notFoundComponent: NotFound,
   component: UserProfile,
 });
 
@@ -24,6 +91,8 @@ function UserProfile() {
   }, [user?.username, setLayoutConfigState]);
 
   const { data } = useSuspenseGetUserProfile(currentUserId);
+  const updateUserMutation = useUpdateUserProfile();
+
   const isBackendSuccess = !!data?.currentUser?.users?.length;
   const successCourses = data.countSuccessEnrollments?.data || [];
   const inProgressCourses = data.countInProgressEnrollments?.data || [];
@@ -47,6 +116,13 @@ function UserProfile() {
         };
       })()
     : MOCK_USER_PROFILE;
+
+  const handleUpdateUser = (field: string, newValue: string) => {
+    updateUserMutation.mutate({
+      id: userDisplay.id,
+      [field]: newValue,
+    });
+  };
 
   return (
     <div className="profile">
@@ -92,6 +168,34 @@ function UserProfile() {
               <span>{userDisplay.phoneNumber}</span>
             </div>
           </div>
+        </div>
+
+        <div className="profile-personal-info-card">
+          <h2 className="profile-personal-info-title">Thông tin cá nhân</h2>
+
+          <EditableField
+            label="Tên người dùng"
+            value={userDisplay.username}
+            fieldName="username"
+            onSave={handleUpdateUser}
+            isLoading={updateUserMutation.isPending}
+          />
+
+          <EditableField
+            label="Email"
+            value={userDisplay.email}
+            fieldName="email"
+            onSave={handleUpdateUser}
+            isLoading={updateUserMutation.isPending}
+          />
+
+          <EditableField
+            label="Số điện thoại"
+            value={userDisplay.phoneNumber}
+            fieldName="phoneNumber"
+            onSave={handleUpdateUser}
+            isLoading={updateUserMutation.isPending}
+          />
         </div>
 
         <div className="profile-courses">
