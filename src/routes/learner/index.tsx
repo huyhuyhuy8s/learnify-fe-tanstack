@@ -1,10 +1,10 @@
-import { createFileRoute, useNavigate, redirect } from "@tanstack/react-router";
-import "./home.scss";
 import Search from "@/components/Search";
 import TextButton from "@/components/TextButton";
 import { SEARCH_SUGGESTIONS } from "@/mock";
-import DecorationShapes from "./-components/DecorationShapes";
 import { getCurrentUserFn } from "@/server/auth";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
+import DecorationShapes from "./-components/DecorationShapes";
+import "./home.scss";
 
 export const Route = createFileRoute("/learner/")({
   beforeLoad: async ({ location }) => {
@@ -29,10 +29,10 @@ function Home() {
           Unlock your <span className="beauty">Potential</span> for tomorrow,
           today
         </h1>
-        <h5 className="regular">
+        <p className="regular">
           Discover expert-led course with personalized guidance from our
           interactive 3D AI Teachers
-        </h5>
+        </p>
       </div>
       <Search />
       <div className="search-suggestions">

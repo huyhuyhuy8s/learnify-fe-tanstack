@@ -1,33 +1,35 @@
+import DefaultCatchBoundary from "@/components/DefaultCatchBoundary";
+import Loader from "@/components/Loader";
+import NotFound from "@/components/NotFound";
+import { LayoutProvider } from "@/contexts/LayoutContext";
+import { useTheme } from "@/hooks/useTheme";
+import type { RouterContext } from "@/router";
+import { getCurrentUserFn } from "@/server/auth";
+import { useAuthStore } from "@/store/authStore";
+import { seo } from "@/utils/seo";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import "@styles/_global.scss";
 import {
   HeadContent,
   Outlet,
   Scripts,
   createRootRouteWithContext,
 } from "@tanstack/react-router";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import { GoogleOAuthProvider } from "@react-oauth/google";
-import * as React from "react";
-import { useEffect, useState } from "react";
-import DefaultCatchBoundary from "@/components/DefaultCatchBoundary";
-import NotFound from "@/components/NotFound";
-import { seo } from "@/utils/seo";
-import "@styles/_global.scss";
 import gsap from "gsap";
 import CustomEase from "gsap/CustomEase";
 import { SplitText } from "gsap/SplitText";
-import { useTheme } from "@/hooks/useTheme";
-import type { RouterContext } from "@/router";
-import Loader from "@/components/Loader";
-import { useAuthStore } from "@/store/authStore";
+import * as React from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { LayoutProvider } from "@/contexts/LayoutContext";
 import "./root.scss";
-import { getCurrentUserFn } from "@/server/auth";
 
 gsap.registerPlugin(SplitText, CustomEase);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
 CustomEase.create("glide", "0.8, 0, 0.2, 1");
+
+const DevTools = import.meta.env.DEV
+  ? lazy(() => import("@/components/DevTools"))
+  : () => null;
 
 const Root = createRootRouteWithContext<RouterContext>()({
   loader: async () => {
@@ -38,6 +40,7 @@ const Root = createRootRouteWithContext<RouterContext>()({
     meta: [
       {
         charSet: "utf-8",
+        lang: "en-US",
       },
       {
         name: "viewport",
@@ -127,18 +130,19 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
 
   return (
-    <html>
+    <html lang="en">
       <head>
         <HeadContent />
       </head>
       <body>
         <GoogleOAuthProvider clientId={googleClientId}>
-          <LayoutProvider>{children}</LayoutProvider>
-          <div style={{ position: "absolute" }}>
-            <TanStackRouterDevtools position="bottom-right" />
-            <ReactQueryDevtools buttonPosition="bottom-left" />
-            <Scripts />
-          </div>
+          <LayoutProvider>
+            <main>{children}</main>
+          </LayoutProvider>
+          <Suspense fallback={null}>
+            <DevTools />
+          </Suspense>
+          <Scripts />
         </GoogleOAuthProvider>
       </body>
     </html>

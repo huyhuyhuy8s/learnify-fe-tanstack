@@ -10,17 +10,17 @@
   align-items: center;
   gap: toRem(50);
 
-  > .title {
+  &__title {
     display: flex;
     flex-direction: column;
     gap: toRem(20);
 
-    h3,
-    p {
+    &-context,
+    &-description {
       text-align: center;
     }
 
-    p {
+    &-description {
       color: $mode-neutral;
     }
   }

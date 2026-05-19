@@ -1,6 +1,6 @@
+import { logger } from "@/utils/logger";
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
-import { logger } from "@/utils/logger";
 
 const searchSchema = z.object({
   q: z.string().catch(""),

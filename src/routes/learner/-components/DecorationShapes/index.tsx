@@ -1,20 +1,21 @@
-import { COLORS } from "@/styles/colors";
+import Icon from "@/components/Icon";
 import {
-  Gem,
-  Pill,
-  SoftBurst,
   Flower,
-  SidedCookie6,
-  Semicircle,
+  Gem,
   LeafClover4,
+  Pill,
+  Semicircle,
+  SidedCookie6,
+  SoftBurst,
 } from "@/components/Shapes";
+import { COLORS } from "@/styles/colors";
 import "./style.scss";
 
 const DecorationShapes = () => {
   return (
     <section className="decoration-shapes">
       <div className="gem">
-        <span className="material-symbols-rounded">psychology</span>
+        <Icon name="psychology" className="icon" />
         <Gem size="20rem" color={COLORS.modeOrange} />
       </div>
       <div className="pill">
@@ -34,10 +35,10 @@ const DecorationShapes = () => {
         />
       </div>
       <div className="experiment">
-        <span className="material-symbols-rounded">experiment</span>
+        <Icon name="experiment" />
       </div>
       <div className="stylus_fountain_pen">
-        <span className="material-symbols-rounded">stylus_fountain_pen</span>
+        <Icon name="stylus_fountain_pen" />
       </div>
       <div className="flower">
         <Flower
@@ -48,7 +49,7 @@ const DecorationShapes = () => {
         />
       </div>
       <div className="school">
-        <span className="material-symbols-rounded">school</span>
+        <Icon name="school" className="icon" />
         <SidedCookie6 size="220px" color={COLORS.modeYellow} />
       </div>
       <div className="semicircle">
@@ -56,7 +57,7 @@ const DecorationShapes = () => {
         <Semicircle size="150px" color={COLORS.modeDarkGreen} />
       </div>
       <div className="clover">
-        <span className="material-symbols-rounded">school</span>
+        <Icon name="person" className="icon" />
         <LeafClover4
           size="200px"
           color={COLORS.modeYellow}

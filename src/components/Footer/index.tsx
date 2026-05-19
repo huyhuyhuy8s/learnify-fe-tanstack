@@ -2,20 +2,12 @@ import { Link } from "@tanstack/react-router";
 import { OptimizeImage } from "@/components/Images";
 import "./style.scss";
 import IconButton from "@/components/IconButton";
-import gsap from "gsap";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-
-gsap.registerPlugin(ScrollToPlugin);
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const scrollToTop = () => {
-    gsap.to(window, {
-      duration: 0.5,
-      scrollTo: { y: 0 },
-      ease: "power3.out",
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -80,6 +72,7 @@ const Footer = () => {
         <IconButton
           icon="arrow_upward"
           specialIcon="arrow_upward"
+          ariaLabel="Scroll to top"
           onClick={scrollToTop}
         />
       </div>

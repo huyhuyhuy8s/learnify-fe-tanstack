@@ -1,6 +1,6 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
-import "@/styles/_global.scss";
 import { MOCK_COURSES, MOCK_USER } from "@/mock";
+import "@/styles/_global.scss";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
   beforeLoad: async () => {

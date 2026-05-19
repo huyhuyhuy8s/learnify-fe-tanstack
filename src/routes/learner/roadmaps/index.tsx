@@ -1,12 +1,12 @@
-import { Suspense } from "react";
 import Card from "@/components/Card";
 import Search from "@/components/Search";
+import TetrisLoader from "@/components/TetrisLoader";
 import { MOCK_ROADMAP } from "@/mock";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Suspense } from "react";
 import CategoryItem from "./-components/CategoryItem";
 import { CATEGORIES } from "./-constants";
 import "./style.scss";
-import TetrisLoader from "@/components/TetrisLoader";
 
 export const Route = createFileRoute("/learner/roadmaps/")({
   head: () => ({

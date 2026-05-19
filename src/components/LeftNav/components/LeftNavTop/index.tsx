@@ -11,7 +11,7 @@ const LeftNavTop = (props: TLeftNavTopProps) => {
 
   return (
     <div className="left-nav-top">
-      <IconButton icon="search" size="small" />
+      <IconButton icon="search" size="small" ariaLabel="Search" />
       <div className="item-list">
         {topItems.map((item) => (
           <LeftNavItem

@@ -1,13 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { postQueryOptions } from "@/utils/posts";
-import NotFound from "@/components/NotFound";
-import DecorationCard from "@/components/DecorationCard";
-import TextButton from "@/components/TextButton";
 import Card from "@/components/Card";
-import CommentItem from "./-components/CommentItem";
-import "./roadmapId.scss";
+import DecorationCard from "@/components/DecorationCard";
+import NotFound from "@/components/NotFound";
+import TextButton from "@/components/TextButton";
 import { MOCK_COMMENT, MOCK_COURSES, MOCK_ROADMAP } from "@/mock";
 import { COLORS } from "@/styles/colors";
+import { postQueryOptions } from "@/utils/posts";
+import { createFileRoute } from "@tanstack/react-router";
+import CommentItem from "./-components/CommentItem";
+import "./roadmapId.scss";
 
 export const Route = createFileRoute("/learner/roadmaps/$roadmapId")({
   loader: async ({ params: { roadmapId }, context }) => {

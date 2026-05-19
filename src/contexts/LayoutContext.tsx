@@ -5,6 +5,7 @@ export type TLayoutConfig = {
   compactLeftNav: boolean;
   showFooter: boolean;
   fullInner: boolean;
+  customTitle?: string;
 };
 
 export type TLayoutContextValue = TLayoutConfig & {

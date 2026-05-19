@@ -1,21 +1,21 @@
-import { Suspense } from "react";
+import Card from "@/components/Card";
+import ErrorScene from "@/components/ErrorScene";
+import Search from "@/components/Search";
+import TetrisLoader from "@/components/TetrisLoader";
+import TextButton from "@/components/TextButton";
+import {
+  useSuspenseGetAllCourses,
+  type TBackendCourse,
+} from "@/hooks/useCourses";
+import { MOCK_COURSES } from "@/mock";
+import { createLearnerHead } from "@/utils";
 import {
   createFileRoute,
   useNavigate,
   useRouter,
 } from "@tanstack/react-router";
-import { MOCK_COURSES } from "@/mock";
+import { Suspense } from "react";
 import "./style.scss";
-import Card from "@/components/Card";
-import TextButton from "@/components/TextButton";
-import Search from "@/components/Search";
-import {
-  useSuspenseGetAllCourses,
-  type TBackendCourse,
-} from "@/hooks/useCourses";
-import TetrisLoader from "@/components/TetrisLoader";
-import { createLearnerHead } from "@/utils";
-import ErrorScene from "@/components/ErrorScene";
 
 function CoursesErrorComponent() {
   const router = useRouter();
@@ -77,12 +77,12 @@ function CoursesPage() {
   return (
     <Suspense fallback={<TetrisLoader />}>
       <div className="courses-container">
-        <div className="title">
-          <h3 className="medium">
+        <div className="courses-container__title">
+          <h2 className="courses-container__title-context medium">
             Explore our <span className="beauty">Best courses</span> only for
             you
-          </h3>
-          <p className="regular">
+          </h2>
+          <p className="courses-container__title-description regular">
             We offer a wide range of courses designed to help you achieve your
             learning goals. Whether you're looking to develop new skills,
             advance your career, or explore new interests, our courses are

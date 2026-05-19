@@ -1,7 +1,7 @@
 import classNames from "classnames";
+import FriendItemFooter from "./components/FriendFooter";
 import "./style.scss";
 import type { TFriendItem } from "./type";
-import FriendItemFooter from "./components/FriendFooter";
 
 type Props = TFriendItem & {
   isActive?: boolean;

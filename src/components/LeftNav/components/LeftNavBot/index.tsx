@@ -22,6 +22,7 @@ const LeftNavBot = () => {
         shape="circle"
         type="outlined"
         size="small"
+        ariaLabel="Language"
       />
       {!hydrated ? (
         <div className="left-nav-bot-theme-placeholder" />
@@ -33,6 +34,7 @@ const LeftNavBot = () => {
           type="outlined"
           size="small"
           onClick={toggleTheme}
+          ariaLabel="Toggle theme"
         />
       )}
     </div>

@@ -1,25 +1,27 @@
-import FriendItem from "./-components/FriendItem";
-import FriendDetail from "./-components/FriendDetail";
-import type { TTypeFriendItem } from "./-components/FriendItem/type";
-import type { TFriendItem } from "./-components/FriendItem/type";
-import type { TFriendDetail } from "./-components/FriendDetail/type";
-import { Suspense, useState, useMemo } from "react";
-import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
-import classNames from "classnames";
-import { getCurrentUserFn } from "@/server/auth";
+import ErrorScene from "@/components/ErrorScene";
+import TetrisLoader from "@/components/TetrisLoader";
+import TextButton from "@/components/TextButton";
+import { DEFAULT_AVATAR } from "@/constants/avatar";
 import {
+  useGetLeaderboard,
   useGetMyFriends,
   useGetPendingRequests,
-  useGetLeaderboard,
   useRespondFriendRequest,
   useSendFriendRequest,
 } from "@/hooks/useFriends";
 import type { TBackendUser } from "@/hooks/useProfile";
-import ErrorScene from "@/components/ErrorScene";
-import TextButton from "@/components/TextButton";
-import TetrisLoader from "@/components/TetrisLoader";
-import { DEFAULT_AVATAR } from "@/constants/avatar";
+import { getCurrentUserFn } from "@/server/auth";
 import { createLearnerHead } from "@/utils";
+import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
+import classNames from "classnames";
+import { Suspense, useMemo, useState } from "react";
+import FriendDetail from "./-components/FriendDetail";
+import type { TFriendDetail } from "./-components/FriendDetail/type";
+import FriendItem from "./-components/FriendItem";
+import type {
+  TFriendItem,
+  TTypeFriendItem,
+} from "./-components/FriendItem/type";
 import "./style.scss";
 
 function FriendsErrorComponent() {
@@ -280,5 +282,3 @@ function FriendsPage() {
     </Suspense>
   );
 }
-
-export default FriendsPage;

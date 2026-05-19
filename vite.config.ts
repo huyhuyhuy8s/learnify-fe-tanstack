@@ -23,6 +23,31 @@ export default defineConfig({
       presets: [reactCompilerPreset()],
     }),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (
+            id.includes("node_modules/react-dom") ||
+            id.includes("node_modules/react/")
+          )
+            return "vendor-react";
+          if (id.includes("node_modules/gsap")) return "vendor-anim";
+          if (
+            id.includes("node_modules/lodash") ||
+            id.includes("node_modules/zod")
+          )
+            return "vendor-util";
+          if (id.includes("node_modules/@tanstack")) return "vendor-tanstack";
+          if (
+            id.includes("node_modules/@react-three") ||
+            id.includes("node_modules/three")
+          )
+            return "vendor-3d";
+        },
+      },
+    },
+  },
   css: {
     preprocessorOptions: {
       scss: {

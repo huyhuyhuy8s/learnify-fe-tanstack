@@ -1,22 +1,26 @@
-import React, { Suspense } from "react";
 import Card from "@/components/Card";
-import { MOCK_COURSES } from "@/mock";
-import { useNavigate, redirect, useRouter } from "@tanstack/react-router";
-import { createFileRoute } from "@tanstack/react-router";
-import { getCurrentUserFn } from "@/server/auth";
-import DashboardBanner from "./-components/DashboardBanner";
-import DashboardStreakWidget from "./-components/DashboardStreakWidget";
-import DashboardAchievementsWidget from "./-components/DashboardAchievementsWidget";
-import DashboardProgressWidget from "./-components/DashboardProgressWidget";
-import "./dashboard.scss";
-import { createLearnerHead } from "@/utils";
+import ErrorScene from "@/components/ErrorScene";
+import TetrisLoader from "@/components/TetrisLoader";
+import TextButton from "@/components/TextButton";
 import {
   useSuspenseGetAllCourses,
   type TBackendCourse,
 } from "@/hooks/useCourses";
-import TetrisLoader from "@/components/TetrisLoader";
-import ErrorScene from "@/components/ErrorScene";
-import TextButton from "@/components/TextButton";
+import { MOCK_COURSES } from "@/mock";
+import { getCurrentUserFn } from "@/server/auth";
+import { createLearnerHead } from "@/utils";
+import {
+  createFileRoute,
+  redirect,
+  useNavigate,
+  useRouter,
+} from "@tanstack/react-router";
+import React, { Suspense } from "react";
+import DashboardAchievementsWidget from "./-components/DashboardAchievementsWidget";
+import DashboardBanner from "./-components/DashboardBanner";
+import DashboardProgressWidget from "./-components/DashboardProgressWidget";
+import DashboardStreakWidget from "./-components/DashboardStreakWidget";
+import "./dashboard.scss";
 
 function CoursesErrorComponent() {
   const router = useRouter();

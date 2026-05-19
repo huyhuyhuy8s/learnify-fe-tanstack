@@ -1,34 +1,35 @@
-import { Activity, useMemo, useState } from "react";
+import Card from "@/components/Card";
+import DecorationCard from "@/components/DecorationCard";
+import Empty from "@/components/Empty";
+import ErrorScene from "@/components/ErrorScene";
+import Icon from "@/components/Icon";
+import NotFound from "@/components/NotFound";
+import TetrisLoader from "@/components/TetrisLoader";
+import TextButton from "@/components/TextButton";
+import {
+  useCourseProgress,
+  useCreateReview,
+  useEnrollCourse,
+  useUserEnrollments,
+} from "@/hooks/useCourseDetail";
+import { MOCK_COMMENT } from "@/mock";
+import { useAuthStore } from "@/store/authStore";
+import { COLORS } from "@/styles/colors";
+import type { TProgress, TStatusCard } from "@/types/global";
+import { createLearnerHead, formatDate } from "@/utils";
+import { courseQueryOptions } from "@/utils/courses";
+import { logger } from "@/utils/logger";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   createFileRoute,
   notFound,
   useNavigate,
   useRouter,
 } from "@tanstack/react-router";
-import { COLORS } from "@/styles/colors";
-import NotFound from "@/components/NotFound";
-import DecorationCard from "@/components/DecorationCard";
-import TextButton from "@/components/TextButton";
-import Card from "@/components/Card";
-import CommentItem from "./-components/CommentItem";
-import CommentForm from "./-components/CommentForm";
-import {
-  useCreateReview,
-  useUserEnrollments,
-  useCourseProgress,
-  useEnrollCourse,
-} from "@/hooks/useCourseDetail";
-import { useAuthStore } from "@/store/authStore";
+import { Activity, useMemo, useState } from "react";
 import { toast } from "sonner";
-import type { TProgress, TStatusCard } from "@/types/global";
-import { formatDate } from "@/utils";
-import { MOCK_COMMENT } from "@/mock";
-import TetrisLoader from "@/components/TetrisLoader";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { courseQueryOptions } from "@/utils/courses";
-import { logger } from "@/utils/logger";
-import Empty from "@/components/Empty";
-import ErrorScene from "@/components/ErrorScene";
+import CommentForm from "./-components/CommentForm";
+import CommentItem from "./-components/CommentItem";
 import "./courseId.scss";
 
 function CourseErrorComponent() {
@@ -74,9 +75,8 @@ export const Route = createFileRoute("/learner/courses/$courseId")({
     if (!data.getCourseById) throw notFound();
     return { title: data.getCourseById?.courseName };
   },
-  head: () => ({
-    meta: [{ title: "Course Details | Learnify" }],
-  }),
+  head: ({ loaderData }) =>
+    createLearnerHead(loaderData?.title ?? "Course Details"),
   errorComponent: CourseErrorComponent,
   pendingComponent: TetrisLoader,
   notFoundComponent: NotFound,
@@ -224,7 +224,7 @@ function CourseComponent() {
       <Empty>
         <Empty.Header>
           <Empty.Media variant="icon">
-            <span className="material-symbols-rounded">sell</span>
+            <Icon name="sell" />
           </Empty.Media>
           <Empty.Title>No products found</Empty.Title>
           <Empty.Description>No products match your search</Empty.Description>
@@ -250,7 +250,7 @@ function CourseComponent() {
               size="tiny"
               type="special"
               typeSpecial="course"
-              backgroundColor={COLORS.navy300}
+              backgroundColor={COLORS.navy500}
               color={COLORS.neutral100}
               onClick={() => {}}
             />

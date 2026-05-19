@@ -7,45 +7,42 @@
   margin-top: toRem(-50);
   display: flex;
   flex-direction: column;
-  min-height: 80dvh;
   background-color: $green-100;
-  border: toRem(1) solid $neutral-300;
+  // border: toRem(1) solid $neutral-300;
+  height: calc(100dvh - toRem(77) - toRem(100));
 
   &-header {
     display: flex;
-    border: toRem(1) solid $neutral-300;
     background-color: $green-100;
 
     &-tab {
       flex: 1;
       display: flex;
-      align-items: center;
+      place-items: center;
       justify-content: center;
-      gap: toRem(8);
-      padding: toRem(16) 0;
-      color: $neutral-900;
-      background: transparent;
-      border: none;
-      border-top: toRem(2) solid transparent;
-      border-right: toRem(1) solid $neutral-300;
-      cursor: pointer;
+      padding: toRem(8) 0;
+      background: $white;
+      border: toRem(1) solid $neutral-300;
       @include transition;
 
-      &:last-child {
+      &:not(:last-child) {
         border-right: none;
       }
 
+      > p {
+        @include transition;
+        color: $neutral-700;
+      }
+
       &:hover {
-        background-color: $green-100;
+        background-color: $neutral-150;
       }
 
       &--active {
-        background-color: $green-100;
-        color: $neutral-900;
-        border-bottom: toRem(2) solid $neutral-900;
-        margin-bottom: toRem(-1);
+        border-bottom: toRem(1) solid $neutral-900;
 
-        & > p {
+        > p {
+          color: $neutral-900;
           font-weight: 600;
         }
       }
@@ -56,6 +53,7 @@
     display: flex;
     flex: 1;
     overflow: hidden;
+    border: toRem(1) solid $neutral-300;
 
     &-left {
       flex: 0 0 50%;

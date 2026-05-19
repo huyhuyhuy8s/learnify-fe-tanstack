@@ -1,11 +1,10 @@
-import { Suspense, useEffect } from "react";
-import { createFileRoute, redirect } from "@tanstack/react-router";
-import { getCurrentUserFn } from "@/server/auth";
-import { MOCK_USER_PROFILE } from "@/mock/user";
-import { useSuspenseGetUserProfile } from "@/hooks/useProfile";
-import { useLayout } from "@/contexts/LayoutContext";
 import TetrisLoader from "@/components/TetrisLoader";
+import { useLayout } from "@/contexts/LayoutContext";
+import { useSuspenseGetUserProfile } from "@/hooks/useProfile";
+import { MOCK_USER_PROFILE } from "@/mock/user";
 import { logger } from "@/utils/logger";
+import { createFileRoute } from "@tanstack/react-router";
+import { Suspense, useEffect } from "react";
 import "./userId.scss";
 
 export const Route = createFileRoute("/learner/user/$userId")({

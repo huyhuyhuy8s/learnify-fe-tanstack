@@ -4,7 +4,7 @@
 @use "@styles/functions" as *;
 @use "sass:math";
 
-body {
+main {
   display: flex;
 }
 
@@ -29,7 +29,7 @@ body {
   .content {
     display: flex;
     flex-direction: column;
-    min-height: calc(100dvh - toRem(65) - toRem(100) - toRem(100));
+    min-height: calc(100dvh - toRem(65) - toRem(100));
   }
 }
 
