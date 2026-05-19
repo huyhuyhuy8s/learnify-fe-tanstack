@@ -1,6 +1,7 @@
 import "./style.scss";
 import classNames from "classnames";
 import { useState, useMemo, type ButtonHTMLAttributes } from "react";
+import Icon from "@/components/Icon";
 
 type TconButtonProp = {
   icon: string;
@@ -14,6 +15,7 @@ type TconButtonProp = {
   backgroundColor?: string;
   fill?: boolean;
   tooltip?: string;
+  ariaLabel?: string;
   className?: string;
   style?: React.CSSProperties;
   buttonType?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
@@ -33,6 +35,7 @@ const IconButton = (props: TconButtonProp) => {
     backgroundColor,
     fill = false,
     tooltip,
+    ariaLabel,
     className,
     style,
     buttonType = "button",
@@ -49,9 +52,6 @@ const IconButton = (props: TconButtonProp) => {
     { disabled: disabled },
     className
   );
-  const iconClassName = classNames("material-symbols-rounded", {
-    filled: fill,
-  });
   const iconVal = useMemo(
     () => (type === "special" ? (clicked ? specialIcon : icon) : icon),
     [clicked, specialIcon, icon, type]
@@ -72,12 +72,11 @@ const IconButton = (props: TconButtonProp) => {
       }}
       onClick={handleClick}
       title={tooltip}
+      aria-label={ariaLabel || tooltip}
       type={buttonType}
       disabled={disabled}
     >
-      <span className={iconClassName} style={{ color }}>
-        {iconVal}
-      </span>
+      <Icon name={iconVal} fill={fill} style={{ color }} />
     </button>
   );
 };

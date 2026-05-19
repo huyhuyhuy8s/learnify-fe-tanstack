@@ -14,14 +14,14 @@
   @include transition;
   display: none;
 
-  .material-symbols-rounded {
+  .icon {
     font-size: toRem(36);
     color: inherit;
     filter: invert(1);
   }
 
   &:hover {
-    .material-symbols-rounded {
+    .icon {
       filter: invert(0.8);
     }
   }

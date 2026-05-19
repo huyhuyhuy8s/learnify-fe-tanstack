@@ -1,12 +1,13 @@
-import type { TCategoryItemProps } from "./type.d.ts";
+import Icon from "@/components/Icon";
 import "./style.scss";
+import type { TCategoryItemProps } from "./type.d.ts";
 
 const CategoryItem = (props: TCategoryItemProps) => {
   const { icon, label, onClick } = props;
 
   return (
     <div className="category-item" onClick={onClick}>
-      <span className="material-symbols-rounded icon">{icon}</span>
+      <Icon name={icon} className="icon" />
       <span className="label">{label}</span>
     </div>
   );

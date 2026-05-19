@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import { Link } from "@tanstack/react-router";
 import Logo from "@/components/Logo";
+import Icon from "@/components/Icon";
 import "./style.scss";
 
 type TTopNavLeftProps = {
@@ -33,16 +34,16 @@ const TopNavLeft = (props: TTopNavLeftProps) => {
         {fullWidth && <LogoWrapper />}
         <section className="top-nav-left-context">
           <Link to="/learner">
-            <span className="material-symbols-rounded">home</span>
+            <Icon name="home" fill size={24} />
           </Link>
-          <span className="material-symbols-rounded">keyboard_arrow_right</span>
+          <Icon name="keyboard_arrow_right" />
           <button
             className="more medium"
             title={pathnameWithoutLast.join(" / ")}
           >
             ...
           </button>
-          <span className="material-symbols-rounded">keyboard_arrow_right</span>
+          <Icon name="keyboard_arrow_right" />
           <button className="medium">{customTitle || lastPathname}</button>
         </section>
       </>
@@ -50,13 +51,11 @@ const TopNavLeft = (props: TTopNavLeftProps) => {
       <>
         {fullWidth && <LogoWrapper />}
         <Link to="/learner">
-          <span className="material-symbols-rounded">home</span>
+          <Icon name="home" fill size={24} />
         </Link>
         {pathname.map((item, index) => (
           <Fragment key={item}>
-            <span className="material-symbols-rounded">
-              keyboard_arrow_right
-            </span>
+            <Icon name="keyboard_arrow_right" />
             <Link
               href={`/learner/${pathname.slice(0, index + 1).join("/")}`}
               to="/learner"

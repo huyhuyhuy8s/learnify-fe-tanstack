@@ -1,16 +1,21 @@
 import { memo } from "react";
+import Icon from "@/components/Icon";
 import type { TSignUpVerificationProps } from "./type.d";
 import "./style.scss";
 
 const SignUpVerification = memo(function SignUpVerification({
   data,
+  errors,
+  isPending,
   isResending,
+  onChange,
+  onSubmit,
   onResend,
 }: TSignUpVerificationProps) {
   return (
     <div className="sign-up-verification">
       <div className="sign-up-verification-icon">
-        <span className="material-symbols-rounded">mark_email_unread</span>
+        <Icon name="mark_email_unread" />
       </div>
 
       <h3 className="semibold">Check your inbox!</h3>

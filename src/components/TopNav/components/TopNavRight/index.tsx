@@ -1,5 +1,6 @@
 import AccountMenu from "@/components/AccountMenu";
 import IconButton from "@/components/IconButton";
+import Icon from "@/components/Icon";
 import classNames from "classnames";
 import { useMemo, useState, useRef, useCallback } from "react";
 import { logoutFn } from "@/server/auth";
@@ -65,11 +66,11 @@ const TopNavRight = () => {
     return (
       <>
         <div className="crystal">
-          <span className="material-symbols-rounded">diamond</span>
+          <Icon name="diamond" />
           <p>{user.diamond || 0}</p>
         </div>
         <div className="streak">
-          <span className="material-symbols-rounded">mode_heat</span>
+          <Icon name="mode_heat" />
           <p>{user.currentSteak || 0}</p>
         </div>
         <IconButton
@@ -78,6 +79,7 @@ const TopNavRight = () => {
           type="outlined"
           size="tiny"
           shape="circle"
+          ariaLabel="Notifications"
           onClick={() => {}}
         />
         <IconButton
@@ -86,6 +88,7 @@ const TopNavRight = () => {
           type="outlined"
           size="tiny"
           shape="circle"
+          ariaLabel="Account menu"
           onClick={() => setAccountMenuVisible(!accountMenuVisible)}
         />
         <AccountMenu

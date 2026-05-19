@@ -1,5 +1,5 @@
 import classnames from "classnames";
-
+import Icon from "@/components/Icon";
 import type { TVoiceSettingsPopupProps } from "./type.d";
 
 import "./style.scss";
@@ -25,7 +25,7 @@ const VoiceSettingsPopup = (props: TVoiceSettingsPopupProps) => {
       <div className="voice-settings-popup_header">
         <span className="voice-settings-popup_title">Voice Settings</span>
         <button className="voice-settings-popup_close" onClick={onClose}>
-          <span className="material-symbols-rounded">close</span>
+          <Icon name="close" />
         </button>
       </div>
       <div className="voice-settings-popup_options">
@@ -57,7 +57,7 @@ const VoiceSettingsPopup = (props: TVoiceSettingsPopupProps) => {
                   onPreviewVoice(voice.id);
                 }}
               >
-                <span className="material-symbols-rounded">play_arrow</span>
+                <Icon name="play_arrow" />
               </button>
             )}
           </div>

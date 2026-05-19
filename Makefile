@@ -16,6 +16,10 @@ dev:
 build:
 	pnpm build
 
+prod:
+	pnpm build
+	pnpm preview
+
 lint:
 	pnpm lint
 

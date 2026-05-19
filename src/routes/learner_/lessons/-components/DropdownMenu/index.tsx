@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { useState } from "react";
 import "./style.scss";
 import { COLORS } from "@/styles/colors";
+import Icon from "@/components/Icon";
 import IconButton from "@/components/IconButton";
 
 type TDropdownMenuOption = {
@@ -57,18 +58,13 @@ const DropdownMenu = (props: TDropdownMenuProps) => {
         style={{ backgroundColor: buttonBackgroundColor, color: buttonColor }}
       >
         <div className="dropdown-menu-control-button-context">
-          <span className="material-symbols-rounded">{icon}</span>
+          <Icon name={icon} />
           <h6 className="medium">{title}</h6>
         </div>
-        <span
-          className={classNames(
-            "material-symbols-rounded",
-            { visible: isVisible },
-            "arrow"
-          )}
-        >
-          keyboard_arrow_down
-        </span>
+        <Icon
+          name="keyboard_arrow_down"
+          className={classNames("arrow", { visible: isVisible })}
+        />
       </button>
       <div
         className={classNames("dropdown-menu-options", { visible: isVisible })}
@@ -77,7 +73,7 @@ const DropdownMenu = (props: TDropdownMenuProps) => {
           {options.map((option) => (
             <div className="dropdown-menu-option" key={option.label}>
               <button className="dropdown-menu-option-context">
-                <span className="material-symbols-rounded">{iconOption}</span>
+                <Icon name={iconOption} />
                 <h6 className="medium" title={option.label}>
                   {option.label}
                 </h6>

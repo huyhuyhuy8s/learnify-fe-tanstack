@@ -6,6 +6,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { graphqlClient } from "@/lib/graphql";
 import { VERIFY_EMAIL_MUTATION } from "@/graphql/mutations";
+import Icon from "@/components/Icon";
 import "./verify-email.scss";
 
 type VerifyEmailSearch = {
@@ -110,7 +111,7 @@ function VerifyEmailPage() {
 
         {status === "success" && (
           <div className="verify-email-success">
-            <span className="material-symbols-rounded">check_circle</span>
+            <Icon name="check_circle" />
             <h3 className="semibold">{message}</h3>
             <p className="regular">
               Đang chuyển hướng về trang chủ sau {countdown} giây...
@@ -120,7 +121,7 @@ function VerifyEmailPage() {
 
         {status === "error" && (
           <div className="verify-email-error">
-            <span className="material-symbols-rounded">error</span>
+            <Icon name="error" />
             <h3 className="semibold">Xác thực thất bại</h3>
             <p className="regular">{message}</p>
             <button

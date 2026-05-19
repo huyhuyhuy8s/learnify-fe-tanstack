@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import Icon from "@/components/Icon";
 import "./Sidebar.scss";
 
 const MindmapIcon = ({ className }: { className?: string }) => (
@@ -48,9 +49,7 @@ export const Sidebar = () => {
                 item.href === "/search" ? "sidebar__item--search" : ""
               }`}
             >
-              <span className="material-symbols-rounded sidebar__icon">
-                {item.icon}
-              </span>
+              <Icon name={item.icon} className="sidebar__icon" />
               <span className="sidebar__label">{item.label}</span>
             </div>
           </Link>
@@ -58,14 +57,10 @@ export const Sidebar = () => {
       </div>
       <div className="sidebar__actions">
         <button title="Change language" className="sidebar__action-btn">
-          <span className="material-symbols-rounded sidebar__action-icon">
-            language
-          </span>
+          <Icon name="language" className="sidebar__action-icon" />
         </button>
         <button title="Toggle dark mode" className="sidebar__action-btn">
-          <span className="material-symbols-rounded sidebar__action-icon">
-            dark_mode
-          </span>
+          <Icon name="dark_mode" className="sidebar__action-icon" />
         </button>
       </div>
     </aside>

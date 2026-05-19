@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import CustomLink from "@/components/CustomLink";
+import Icon from "@/components/Icon";
 import { GoogleLogin } from "@react-oauth/google";
 import { useSignUpForm } from "../-hooks/useSignUpForm";
 import { useGoogleLogin } from "@/hooks/useGoogleLogin";
@@ -46,8 +47,8 @@ function SignUpPage() {
   return (
     <div className="sign-up" id="sign-up-page">
       <CustomLink className="sign-up-logo" to="/learner">
-        <span className="material-symbols-rounded">local_library</span>
-        <h4 className="semibold">Learnify</h4>
+        <Icon name="local_library" />
+        <h2 className="semibold">Learnify</h2>
       </CustomLink>
 
       <div className="sign-up-card">
@@ -105,7 +106,11 @@ function SignUpPage() {
           {step === 3 && (
             <SignUpVerification
               data={{ email: step1Data.email }}
+              errors={verificationErrors}
+              isPending={isPending}
               isResending={false}
+              onChange={onVerificationChange}
+              onSubmit={onVerificationSubmit}
               onResend={onResend}
             />
           )}

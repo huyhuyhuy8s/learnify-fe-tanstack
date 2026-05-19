@@ -37,7 +37,7 @@
     border-radius: 50%;
     cursor: pointer;
 
-    .material-symbols-rounded {
+    .icon {
       font-size: toRem(18);
       color: $neutral-500;
     }
@@ -112,7 +112,7 @@
       cursor: pointer;
       transition: background-color $transition-duration;
 
-      .material-symbols-rounded {
+      .icon {
         font-size: toRem(18);
         color: $neutral-600;
       }

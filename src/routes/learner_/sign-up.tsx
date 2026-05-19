@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import CustomLink from "@/components/CustomLink";
+import Icon from "@/components/Icon";
 import { GoogleLogin } from "@react-oauth/google";
 import { useSignUpForm } from "./-hooks/useSignUpForm";
 import { useGoogleLogin } from "@/hooks/useGoogleLogin";
@@ -45,7 +46,7 @@ function SignUpPage() {
   return (
     <div className="sign-up" id="sign-up-page">
       <CustomLink className="sign-up-logo" to="/learner">
-        <span className="material-symbols-rounded">local_library</span>
+        <Icon name="local_library" />
         <h4 className="semibold">Learnify</h4>
       </CustomLink>
 

@@ -4,7 +4,6 @@ import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query
 import { routeTree } from "./routeTree.gen";
 import DefaultCatchBoundary from "./components/DefaultCatchBoundary";
 import NotFound from "./components/NotFound";
-import "material-symbols/rounded.scss";
 export type TSessionUser = {
   id: string;
   email: string;

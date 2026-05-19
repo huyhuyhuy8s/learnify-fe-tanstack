@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import "./style.scss";
-
+import Icon from "@/components/Icon";
 import type { TTeacherStatus, TTeacherStatusIndicatorProps } from "./type.d";
 
 const STATUS_ICONS: Record<TTeacherStatus, string> = {
@@ -22,9 +22,10 @@ const TeacherStatusIndicator = (props: TTeacherStatusIndicatorProps) => {
 
   return (
     <div className={classnames("teacher-status-indicator", className)}>
-      <span className="material-symbols-rounded teacher-status-indicator_icon">
-        {STATUS_ICONS[status]}
-      </span>
+      <Icon
+        name={STATUS_ICONS[status]}
+        className="teacher-status-indicator_icon"
+      />
       <span className="teacher-status-indicator_label">
         {STATUS_LABELS[status]}
       </span>

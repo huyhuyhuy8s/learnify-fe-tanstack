@@ -2,6 +2,7 @@ import classnames from "classnames";
 import { useState } from "react";
 import { toast } from "sonner";
 import TextButton from "@/components/TextButton";
+import Icon from "@/components/Icon";
 import TetrisLoader from "@/components/TetrisLoader";
 import "./style.scss";
 
@@ -42,18 +43,20 @@ const CommentForm = ({
           {[1, 2, 3, 4, 5].map((star) => (
             <span
               key={star}
-              className="material-symbols-rounded icon"
               onClick={() => setRating(star)}
-              style={{
-                color:
-                  star <= rating
-                    ? "var(--color-yellow-400)"
-                    : "var(--color-neutral-200)",
-                cursor: "pointer",
-                fontVariationSettings: star <= rating ? "'FILL' 1" : "'FILL' 0",
-              }}
+              style={{ cursor: "pointer" }}
             >
-              star
+              <Icon
+                name="star"
+                className="icon"
+                fill={star <= rating}
+                style={{
+                  color:
+                    star <= rating
+                      ? "var(--color-yellow-400)"
+                      : "var(--color-neutral-200)",
+                }}
+              />
             </span>
           ))}
         </div>

@@ -40,14 +40,14 @@
   }
 
   &-success {
-    .material-symbols-rounded {
+    .icon {
       font-size: toRem(64);
       color: $accent-emerald;
     }
   }
 
   &-error {
-    .material-symbols-rounded {
+    .icon {
       font-size: toRem(64);
       color: $accent-blaze;
     }

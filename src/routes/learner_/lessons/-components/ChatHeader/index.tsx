@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import "./style.scss";
+import Icon from "@/components/Icon";
 import IconButton from "@/components/IconButton";
 import { COLORS } from "@/styles/colors";
 import { useChatHeader } from "./-hooks/useChatHeader";
@@ -28,12 +29,7 @@ const ChatHeader = (props: TChatHeaderProps) => {
   return (
     <form className={cls} onSubmit={handleSubmit}>
       <div className="chat-header-context" ref={wrapperRef}>
-        <span
-          className="material-symbols-rounded"
-          style={{ pointerEvents: "none" }}
-        >
-          chat
-        </span>
+        <Icon name="chat" style={{ pointerEvents: "none" }} />
         <div>
           <input
             id="chat-header-input"

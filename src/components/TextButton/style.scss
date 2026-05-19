@@ -19,16 +19,15 @@
     border-radius: $br-xs;
   }
 
-  &:active {
-    font-variation-settings: "FILL" 1;
+  svg {
+    @include transition;
+    transition-property: color;
   }
 
   span {
-    @include transition;
-    transition-property: color;
     color: $neutral-100;
 
-    &:not(.material-symbols-rounded)::first-letter {
+    &::first-letter {
       text-transform: uppercase;
     }
   }
@@ -36,7 +35,8 @@
   &.disabled {
     background-color: $neutral-400;
 
-    span {
+    span,
+    svg {
       color: $white;
     }
   }
@@ -46,7 +46,7 @@
     gap: toRem(10);
     border-width: toRem(2);
 
-    .material-symbols-rounded {
+    .icon {
       font-size: toRem(30);
     }
 
@@ -62,7 +62,7 @@
     gap: toRem(10);
     border-width: toRem(2);
 
-    .material-symbols-rounded {
+    .icon {
       font-size: toRem(25);
     }
 
@@ -78,7 +78,7 @@
     gap: toRem(10);
     border-width: toRem(2);
 
-    .material-symbols-rounded {
+    .icon {
       font-size: toRem(20);
     }
 
@@ -94,7 +94,7 @@
     border-width: toRem(1);
     gap: toRem(5);
 
-    .material-symbols-rounded {
+    .icon {
       font-size: toRem(15);
     }
 
@@ -107,14 +107,16 @@
   &.primary {
     background-color: $mode-green;
 
-    span {
+    span,
+    svg {
       color: $neutral-100;
     }
 
     &:hover {
       background-color: $green-600;
 
-      span {
+      span,
+      svg {
         color: $neutral-200;
       }
     }
@@ -122,21 +124,24 @@
     &:active {
       background-color: $green-400;
 
-      span {
+      span,
+      svg {
         color: $neutral-900;
       }
     }
   }
 
   &.secondary {
-    span {
+    span,
+    svg {
       color: $neutral-800;
     }
 
     &:hover {
       border-color: $neutral-900;
 
-      span {
+      span,
+      svg {
         color: $neutral-900;
       }
     }
@@ -145,7 +150,8 @@
       border-color: $neutral-900;
       background-color: $neutral-250;
 
-      span {
+      span,
+      svg {
         color: $neutral-900;
       }
     }
@@ -156,14 +162,16 @@
     border-color: $neutral-800;
     border-style: solid;
 
-    span {
+    span,
+    svg {
       color: $neutral-800;
     }
 
     &:hover {
       border-color: $neutral-900;
 
-      span {
+      span,
+      svg {
         color: $neutral-900;
       }
     }
@@ -172,7 +180,8 @@
       border-color: $neutral-900;
       background-color: $neutral-250;
 
-      span {
+      span,
+      svg {
         color: $neutral-900;
       }
     }
@@ -185,9 +194,10 @@
     &-course,
     &-check,
     &-certificate {
-      background-color: $navy-pastel-200;
+      background-color: $navy-250;
 
-      span {
+      span,
+      svg {
         color: $neutral-800;
       }
     }
@@ -196,7 +206,8 @@
     &-public {
       background-color: $mode-neutral;
 
-      span {
+      span,
+      svg {
         color: $white;
       }
     }
@@ -206,7 +217,8 @@
     &-career {
       background-color: $orange-pastel-200;
 
-      span {
+      span,
+      svg {
         color: $neutral-800;
       }
     }

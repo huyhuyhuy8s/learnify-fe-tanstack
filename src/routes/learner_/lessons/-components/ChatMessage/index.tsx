@@ -1,6 +1,7 @@
 import { memo, useRef, useState, useLayoutEffect, useMemo } from "react";
 import classnames from "classnames";
 import { prepare, layout } from "@chenglou/pretext";
+import Icon from "@/components/Icon";
 import type { TMessageProps } from "./type";
 import "./style.scss";
 
@@ -44,9 +45,7 @@ const ChatMessage = (props: TMessageProps) => {
   return (
     <div className={cls}>
       <div className="message-avatar">
-        <span className="material-symbols-rounded">
-          {sender === "teacher" ? "smart_toy" : "person"}
-        </span>
+        <Icon name={sender === "teacher" ? "smart_toy" : "person"} />
       </div>
       <div
         className="message-body"

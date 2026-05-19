@@ -5,6 +5,7 @@ import classnames from "classnames";
 import { useState, useEffect } from "react";
 import { useRouterState } from "@tanstack/react-router";
 import { useScrollTop } from "@/hooks/useScrollTop";
+import Icon from "@/components/Icon";
 import "./style.scss";
 
 type TLeftNavProps = {
@@ -50,7 +51,7 @@ const LeftNav = (props: TLeftNavProps) => {
     return (
       <nav className={navClassNames}>
         <button>
-          <span className="material-symbols-rounded">menu</span>
+          <Icon name="menu" />
         </button>
       </nav>
     );

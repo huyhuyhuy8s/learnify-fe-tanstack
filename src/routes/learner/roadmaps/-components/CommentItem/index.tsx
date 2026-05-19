@@ -1,3 +1,4 @@
+import Icon from "@/components/Icon";
 import type { TCommentItemProps } from "./type.d.ts";
 import "./style.scss";
 
@@ -13,7 +14,7 @@ const CommentItem = (props: TCommentItemProps) => {
           <p>{time}</p>
         </div>
         <div className="comment-3dot">
-          <span className="material-symbols-rounded icon">more_vert</span>
+          <Icon name="more_vert" className="icon" />
         </div>
       </div>
       <div className="comment-item-body">{content}</div>

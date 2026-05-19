@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import Icon from "@/components/Icon";
 import useSpeechSynthesis from "@/hooks/useSpeechSynthesis";
 import { useLesson } from "@/hooks/useLesson";
 import useLessonFlow from "@/hooks/useLessonFlow";
@@ -215,9 +216,7 @@ function LessonDetail() {
 
         {state === "complete" && (
           <div className="lesson-detail-complete">
-            <span className="lesson-detail-complete-icon material-symbols-rounded">
-              check_circle
-            </span>
+            <Icon name="check_circle" className="lesson-detail-complete-icon" />
             <h2 className="lesson-detail-complete-title">Lesson Complete!</h2>
             <p className="lesson-detail-complete-text">
               You have finished this lesson. Great work!

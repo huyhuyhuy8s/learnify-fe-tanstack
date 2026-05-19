@@ -18,7 +18,7 @@
       padding: toRem(2.5) toRem(15);
       border-radius: $br-xl;
 
-      span {
+      svg {
         font-size: toRem(24);
         color: $mode-neutral;
       }
@@ -32,7 +32,7 @@
 
     &:hover {
       .icon-box {
-        span {
+        svg {
           color: $neutral-800;
         }
       }
@@ -50,8 +50,8 @@
       transition-property: background-color;
       @include transition;
 
-      span {
-        font-variation-settings: "FILL" 1;
+      > .icon {
+        font-variation-settings: "FILL" 0;
       }
     }
 

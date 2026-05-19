@@ -11,6 +11,7 @@ import classNames from "classnames";
 import ChatMessage from "../ChatMessage";
 import type { TMessage } from "../ChatMessage/type";
 import ChatInput from "../ChatInput";
+import Icon from "@/components/Icon";
 import useChat from "@/hooks/useChat";
 import useLessonPlayback from "@/hooks/useLessonPlayback";
 import type { TTeacherAnimation } from "../TeacherAnimation/type";
@@ -175,7 +176,7 @@ const ChatMessageWrapper = forwardRef<
       <div className="chat-messages-list" ref={messagesContainerRef}>
         {displayMessages.length === 0 ? (
           <div className="chat-messages-empty">
-            <span className="material-symbols-rounded">chat</span>
+            <Icon name="chat" />
             <p className="chat-messages-empty-text">
               {mode === "lesson"
                 ? "Preparing your lesson..."

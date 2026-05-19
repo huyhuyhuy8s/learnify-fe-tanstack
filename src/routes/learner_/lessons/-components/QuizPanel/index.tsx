@@ -1,5 +1,6 @@
 import { useState, useCallback, useMemo } from "react";
 import classnames from "classnames";
+import Icon from "@/components/Icon";
 import type { TQuizQuestion, TQuizAnswer } from "./type";
 import "./style.scss";
 
@@ -151,9 +152,10 @@ const QuizPanel = ({ questions, onComplete, className }: TQuizPanelProps) => {
                     wrong: a?.submitted && !correct,
                   })}
                 >
-                  <span className="quiz-panel-results-item-icon material-symbols-rounded">
-                    {correct ? "check_circle" : "cancel"}
-                  </span>
+                  <Icon
+                    name={correct ? "check_circle" : "cancel"}
+                    className="quiz-panel-results-item-icon"
+                  />
                   <span className="quiz-panel-results-item-label">
                     Q{i + 1}. {q.question}
                   </span>
@@ -215,9 +217,12 @@ const QuizPanel = ({ questions, onComplete, className }: TQuizPanelProps) => {
                   onClick={() => handleSelectOption(i)}
                   disabled={currentAnswer?.submitted}
                 >
-                  <span className="quiz-panel-option-indicator material-symbols-rounded">
-                    {isSelected ? "check_circle" : "radio_button_unchecked"}
-                  </span>
+                  <Icon
+                    name={
+                      isSelected ? "check_circle" : "radio_button_unchecked"
+                    }
+                    className="quiz-panel-option-indicator"
+                  />
                   <span className="quiz-panel-option-label">{option}</span>
                 </button>
               );

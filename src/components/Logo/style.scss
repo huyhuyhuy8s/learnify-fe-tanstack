@@ -8,11 +8,11 @@
   place-items: center;
   justify-content: center;
   gap: toRem(10);
-  color: $neutral-700;
+  color: $black;
   text-decoration: none;
 
-  .material-symbols-rounded {
-    font-variation-settings: "FILL" 0;
+  > .icon {
+    color: $black;
   }
 
   &-text {
@@ -21,8 +21,8 @@
   }
 
   &.medium {
-    .material-symbols-rounded {
-      font-size: 30px;
+    .icon {
+      font-size: toRem(30);
     }
 
     .logo-text {
@@ -35,7 +35,7 @@
   }
 
   &.small {
-    .material-symbols-rounded {
+    .icon {
       font-size: $fs-heading5;
     }
 

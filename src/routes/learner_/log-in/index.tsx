@@ -5,6 +5,7 @@ import {
   useRouter,
 } from "@tanstack/react-router";
 import CustomLink from "@/components/CustomLink";
+import Icon from "@/components/Icon";
 import { GoogleLogin } from "@react-oauth/google";
 import { useGoogleLogin } from "@/hooks/useGoogleLogin";
 import { setSessionFn } from "@/server/auth";
@@ -58,8 +59,8 @@ function LogInPage() {
   return (
     <div className="log-in" id="log-in-page">
       <CustomLink className="log-in-logo" to="/learner">
-        <span className="material-symbols-rounded">local_library</span>
-        <h4 className="semibold">Learnify</h4>
+        <Icon name="local_library" />
+        <h2 className="semibold">Learnify</h2>
       </CustomLink>
 
       <div className="log-in-card">
@@ -107,7 +108,7 @@ function LogInPage() {
         <div className="log-in-separator" />
 
         <div className="log-in-right">
-          <span className="material-symbols-rounded">local_library</span>
+          <Icon name="local_library" />
         </div>
       </div>
     </div>

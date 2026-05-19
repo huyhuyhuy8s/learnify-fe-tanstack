@@ -1,6 +1,7 @@
 import { useState } from "react";
 import classnames from "classnames";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
+import Icon from "@/components/Icon";
 import { useQuery } from "@tanstack/react-query";
 import IconButton from "@/components/IconButton";
 import { COLORS } from "@/styles/colors";
@@ -116,9 +117,10 @@ const CourseController = ({ className }: TCourseControllerProps) => {
                       })
                     }
                   >
-                    <span className="course-controller_lesson-icon material-symbols-rounded">
-                      {isActive ? "play_circle" : "radio_button_unchecked"}
-                    </span>
+                    <Icon
+                      name={isActive ? "play_circle" : "radio_button_unchecked"}
+                      className="course-controller_lesson-icon"
+                    />
                     <span
                       className="course-controller_lesson-name"
                       title={lesson.lessonName}

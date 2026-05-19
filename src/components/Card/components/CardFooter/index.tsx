@@ -1,3 +1,4 @@
+import Icon from "@/components/Icon";
 import IconButton from "@/components/IconButton";
 import useCardFooterButton from "../../hooks/useCardFooterButton";
 import classNames from "classnames";
@@ -30,7 +31,7 @@ const CardFooter = (props: TCardFooterProps) => {
   return (
     <div className={cardFooterClassName}>
       <div className="duration">
-        {duration && <span className="material-symbols-rounded">pace</span>}
+        {duration && <Icon name="pace" />}
         <small>{duration}</small>
       </div>
       <IconButton
