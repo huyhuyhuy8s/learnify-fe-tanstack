@@ -48,7 +48,7 @@ deploy:
 		echo "Error: remote 'vps' not found. Run 'make vps-init' first."; \
 		exit 1; \
 	fi
-	git push vps HEAD:main
+	git push vps HEAD:staging
 
 logs:
 	ssh $(VPS_HOST) "docker compose -f $(DEPLOY_DIR)/docker-compose.yml logs -f --tail=50"

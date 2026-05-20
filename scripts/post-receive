@@ -12,7 +12,7 @@ warn() { echo "[learnify-hook][WARN] $1" >&2; }
 log "Post-receive hook fired"
 
 log "Checking out latest code to ${WORK_TREE}"
-GIT_WORK_TREE="$WORK_TREE" git checkout -f main
+GIT_WORK_TREE="$WORK_TREE" git checkout -f staging
 
 if [[ -f "$ENV_FILE" ]]; then
     log ".env.production found at ${ENV_FILE}"

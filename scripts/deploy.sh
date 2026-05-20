@@ -58,7 +58,7 @@ if ! git diff --quiet || ! git diff --cached --quiet; then
 fi
 
 info "Pushing branch '${BRANCH}' to 'vps' remote..."
-git push vps "${BRANCH}:main"
+git push vps "${BRANCH}:staging"
 
 log "Push complete. Monitor with:"
 log "  ssh ${VPS_HOST} 'docker compose -f ${DEPLOY_DIR}/docker-compose.yml logs -f --tail=50'"
