@@ -11,7 +11,9 @@ export function useAppSession() {
     name: "learnify-fe-session",
     password: process.env.SESSION_SECRET!,
     cookie: {
-      secure: import.meta.env.PROD,
+      secure:
+        process.env.SECURE_COOKIE === "true" ||
+        (import.meta.env.PROD && process.env.SECURE_COOKIE !== "false"),
       sameSite: "lax",
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60,
