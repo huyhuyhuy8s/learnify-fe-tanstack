@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+GIT_DIR="/opt/learnify/.git"
+WORK_TREE="/opt/learnify"
+ENV_FILE="/opt/learnify/.env.production"
+ENV_SOURCE="/root/.learnify.env.production"
+
+log()  { echo "[learnify-hook] $(date '+%Y-%m-%d %H:%M:%S') $1"; }
+warn() { echo "[learnify-hook][WARN] $1" >&2; }
+
+log "Post-receive hook fired"
+
+log "Checking out latest code to ${WORK_TREE}"
+GIT_WORK_TREE="$WORK_TREE" git checkout -f main
+
+if [[ -f "$ENV_SOURCE" ]]; then
+    log "Restoring .env.production from ${ENV_SOURCE}"
+    cp "$ENV_SOURCE" "$ENV_FILE"
+else
+    warn ".env.production not found at ${ENV_SOURCE}"
+    warn "Container will use default env vars — check SESSION_SECRET and BACKEND_URL"
+fi
+
+log "Building and starting Docker containers..."
+cd "$WORK_TREE"
+
+docker compose up -d --build --remove-orphans
+
+log "Pruning old Docker images..."
+docker image prune -f
+
+log "Deploy complete. Containers running:"
+docker compose ps
+
+log "Recent logs:"
+docker compose logs --tail=10 --follow &
+sleep 5
+kill %1 2>/dev/null || true
