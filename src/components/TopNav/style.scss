@@ -1,0 +1,43 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@use "sass:math";
+
+.top-nav {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: toRem(12) toRem(24);
+  background-color: $white;
+  @include transition;
+  transition-property: background-color, border-color;
+  border-bottom: toRem(1) solid $navy-pastel-200;
+  z-index: 1;
+
+  & > .new {
+    gap: toRem(10);
+  }
+
+  &.full-width {
+    position: relative;
+  }
+
+  &-left,
+  &-right {
+    display: flex;
+    place-items: center;
+  }
+}
+
+.top {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+@include break(s) {
+  .top-nav-left {
+    visibility: hidden;
+  }
+}

@@ -1,0 +1,123 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
+.empty {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: toRem(24);
+  border-radius: $br-xl;
+  border: 2px dashed $neutral-300;
+  padding: toRem(48);
+  text-align: center;
+  text-wrap: balance;
+
+  @include break(s) {
+    padding: toRem(24);
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: clamp(toRem(384), 30dvw + 1rem, 100%);
+  }
+
+  &__media-wrapper {
+    position: relative;
+    margin-bottom: toRem(24);
+  }
+
+  &__media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    svg {
+      pointer-events: none;
+      flex-shrink: 0;
+    }
+
+    &[data-variant="icon"] {
+      height: toRem(56);
+      aspect-ratio: 1 / 1;
+      border-radius: $br-sm;
+      border: 1px solid $neutral-200;
+      background-color: $white;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06);
+      position: relative;
+
+      svg:not([class*="size-"]) {
+        height: toRem(40);
+        aspect-ratio: 1/1;
+      }
+
+      &::before {
+        content: "";
+        pointer-events: none;
+        position: absolute;
+        inset: 0;
+        border-radius: calc(#{$br-sm} - 1px);
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+      }
+    }
+
+    &--decorator {
+      width: toRem(56);
+      height: toRem(56);
+      border-radius: $br-sm;
+      border: 1px solid $neutral-200;
+      background-color: $white;
+      position: absolute;
+      bottom: 1px;
+      pointer-events: none;
+      box-shadow: none;
+    }
+
+    &--decorator-left {
+      transform-origin: bottom left;
+      transform: translateX(-2px) scale(0.74) rotate(-20deg);
+    }
+
+    &--decorator-right {
+      transform-origin: bottom right;
+      transform: translateX(2px) scale(0.74) rotate(20deg);
+    }
+  }
+
+  &__description {
+    color: $neutral-600;
+
+    a {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+
+      &:hover {
+        color: $mode-green;
+      }
+    }
+  }
+
+  &__title + &__description {
+    margin-top: toRem(4);
+  }
+
+  &__content {
+    display: flex;
+    width: 100%;
+    max-width: toRem(384);
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    gap: toRem(16);
+    font-size: toRem(14);
+    text-wrap: balance;
+  }
+}

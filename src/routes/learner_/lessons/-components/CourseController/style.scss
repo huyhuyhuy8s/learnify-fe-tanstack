@@ -1,0 +1,112 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
+.course-controller {
+  height: calc(100dvh - toRem(77));
+  background-color: $white;
+  border-right: toRem(1) solid $navy-pastel-200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  @include transition;
+  transition-property: width;
+  overflow: hidden;
+
+  width: toRem(60);
+
+  &.expanded {
+    width: 20dvw;
+    align-items: stretch;
+  }
+
+  &_compact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: toRem(20);
+    width: 100%;
+  }
+
+  &_expanded {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: toRem(20);
+    border-bottom: toRem(1) solid $navy-pastel-200;
+  }
+
+  &_title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &_lessons {
+    display: flex;
+    flex-direction: column;
+    padding: toRem(8);
+    gap: toRem(4);
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  &_lesson {
+    display: flex;
+    align-items: center;
+    gap: toRem(10);
+    padding: toRem(10) toRem(16);
+    border: none;
+    background: transparent;
+    border-radius: $br-md;
+    cursor: pointer;
+    text-align: left;
+    @include transition;
+    transition-property: background-color;
+
+    &:hover {
+      background-color: $neutral-150;
+    }
+
+    &.active {
+      background-color: $green-100;
+    }
+
+    &.active:hover {
+      background-color: $green-200;
+    }
+
+    &-icon {
+      font-size: toRem(20);
+      color: $neutral-500;
+      flex-shrink: 0;
+    }
+
+    &.active &-icon {
+      color: $green-600;
+    }
+
+    &-name {
+      font-size: $fs-paragraph;
+      color: $neutral-800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &_loading {
+    padding: toRem(20);
+    text-align: center;
+    color: $neutral-400;
+    font-size: $fs-paragraph;
+  }
+}

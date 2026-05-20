@@ -4,44 +4,44 @@ import {
   rootRouteId,
   useMatch,
   useRouter,
-} from '@tanstack/react-router'
-import type { ErrorComponentProps } from '@tanstack/react-router'
+} from "@tanstack/react-router";
+import type { ErrorComponentProps } from "@tanstack/react-router";
+import "./style.scss";
+import { logger } from "@/utils/logger";
 
 function DefaultCatchBoundary({ error }: ErrorComponentProps) {
-  const router = useRouter()
+  const router = useRouter();
   const isRoot = useMatch({
     strict: false,
     select: (state) => state.id === rootRouteId,
-  })
+  });
 
-  console.error(error)
+  logger.error(error);
 
   return (
-    <div className="min-w-0 flex-1 p-4 flex flex-col items-center justify-center gap-6">
+    <div className="default-catch-boundary">
       <ErrorComponent error={error} />
-      <div className="flex gap-2 items-center flex-wrap">
+      <div className="default-catch-boundary__actions">
         <button
-          onClick={() => {
-            router.invalidate()
+          onClick={async () => {
+            await router.invalidate();
+            await router.load();
           }}
-          className={`px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded-sm text-white uppercase font-extrabold`}
+          className="default-catch-boundary__btn"
         >
           Try Again
         </button>
         {isRoot ? (
-          <Link
-            to="/"
-            className={`px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded-sm text-white uppercase font-extrabold`}
-          >
+          <Link to="/" className="default-catch-boundary__link">
             Home
           </Link>
         ) : (
           <Link
             to="/"
-            className={`px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded-sm text-white uppercase font-extrabold`}
+            className="default-catch-boundary__link"
             onClick={(e) => {
-              e.preventDefault()
-              window.history.back()
+              e.preventDefault();
+              window.history.back();
             }}
           >
             Go Back
@@ -49,7 +49,7 @@ function DefaultCatchBoundary({ error }: ErrorComponentProps) {
         )}
       </div>
     </div>
-  )
+  );
 }
 
 export default DefaultCatchBoundary;

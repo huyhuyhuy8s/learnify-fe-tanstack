@@ -1,0 +1,98 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.friend-item {
+  display: flex;
+  align-items: center;
+  padding: toRem(20) toRem(25);
+  border: toRem(1) solid $neutral-300;
+  border-radius: $br-md;
+  background-color: $green-100;
+  gap: toRem(16);
+  cursor: pointer;
+  @include transition;
+  width: 100%;
+
+  &-index {
+    width: toRem(24);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: toRem(14);
+    font-weight: 500;
+    color: $mode-neutral;
+  }
+  &-info {
+    display: flex;
+    align-items: center;
+    gap: toRem(12);
+    flex: 1;
+  }
+}
+
+.friend-item-skeleton {
+  pointer-events: none;
+  cursor: default;
+
+  .skeleton-shape {
+    background-color: $neutral-200;
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite linear;
+  }
+
+  &__index {
+    width: toRem(12);
+    height: toRem(12);
+    border-radius: 50%;
+  }
+
+  &__avatar {
+    width: toRem(40);
+    height: toRem(40);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  &__name {
+    width: toRem(150);
+    height: toRem(14);
+    border-radius: toRem(8);
+  }
+
+  &__action {
+    width: toRem(50);
+    height: toRem(14);
+    border-radius: toRem(8);
+  }
+}
+
+@include break(s) {
+  .friend-item {
+    padding: toRem(12) toRem(16);
+    gap: toRem(12);
+  }
+  .friend-item-skeleton__avatar {
+    width: toRem(32);
+    height: toRem(32);
+  }
+
+  .friend-item-skeleton__name {
+    width: toRem(120);
+  }
+}

@@ -1,55 +1,92 @@
-import './style.scss';
-import classNames from 'classnames';
+import "./style.scss";
+import classNames from "classnames";
+import { useState, useMemo, type ButtonHTMLAttributes } from "react";
+import Icon from "@/components/Icon";
 
-interface IconButtonProp {
-  name: string;
+type TconButtonProp = {
+  icon: string;
+  onClick?: () => void;
   type?: "primary" | "special" | "secondary" | "outlined" | "custom";
   state?: "default" | "hover" | "clicked" | "clickedHover";
-  shape?: "square" | "hover";
-  specialIcon?: "search" | "person" | "notification" | "language" | "mode";
-  stage?: 1 | 2;
+  shape?: "square" | "circle";
+  specialIcon?: string;
   size?: "tiny" | "small" | "medium" | "large";
   color?: string;
   backgroundColor?: string;
   fill?: boolean;
-  weight?: number;
-  grade?: number;
-  opticalSize?: number;
-}
+  tooltip?: string;
+  ariaLabel?: string;
+  className?: string;
+  style?: React.CSSProperties;
+  buttonType?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  disabled?: boolean;
+  loading?: boolean;
+};
 
-const IconButton = (props: IconButtonProp) => {
+const IconButton = (props: TconButtonProp) => {
   const {
-    name,
+    icon,
+    onClick = () => {},
     type = "primary",
     state = "default",
     shape = "square",
     specialIcon = "search",
-    stage = 1,
     size = "medium",
-    color = "#fff",
-    backgroundColor = "none",
+    color,
+    backgroundColor,
     fill = false,
-    weight = 600,
-    grade = 0,
-    opticalSize = 24,
+    tooltip,
+    ariaLabel,
+    className,
+    style,
+    buttonType = "button",
+    disabled = false,
+    loading = false,
   } = props;
 
-  const buttonClassName = classNames('icon-button', type, state, shape, size);
-  const iconClassName = classNames('material-symbols-rounded', {'filled': fill});
+  const [clicked, setClicked] = useState(false);
+  const buttonClassName = classNames(
+    "icon-button",
+    type,
+    state,
+    shape,
+    size,
+    { disabled: disabled || loading },
+    { loading: loading },
+    className
+  );
+  const iconVal = useMemo(
+    () => (type === "special" ? (clicked ? specialIcon : icon) : icon),
+    [clicked, specialIcon, icon, type]
+  );
+
+  const handleClick = () => {
+    if (loading) return;
+    setClicked(!clicked);
+    onClick();
+  };
 
   return (
     <button
       className={buttonClassName}
       style={{
+        ...style,
         backgroundColor,
         color,
       }}
+      onClick={handleClick}
+      title={tooltip}
+      aria-label={ariaLabel || tooltip}
+      type={buttonType}
+      disabled={disabled || loading}
     >
-      <span className={iconClassName}>
-        {name}
-      </span>
+      {loading ? (
+        <div className="icon-button_spinner" />
+      ) : (
+        <Icon name={iconVal} fill={fill} style={{ color }} />
+      )}
     </button>
-  )
-}
+  );
+};
 
 export default IconButton;

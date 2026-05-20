@@ -1,0 +1,68 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
+.left-nav-top-item {
+  width: toRem(67.5);
+
+  .link-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: toRem(8);
+
+    .icon-box {
+      display: flex;
+      padding: toRem(2.5) toRem(15);
+      border-radius: $br-xl;
+
+      svg {
+        font-size: toRem(24);
+        color: $mode-neutral;
+      }
+    }
+
+    small {
+      color: $mode-neutral;
+      transition-property: color font-weight;
+      @include transition;
+    }
+
+    &:hover {
+      .icon-box {
+        svg {
+          color: $neutral-800;
+        }
+      }
+
+      small {
+        font-weight: $fw-semibold;
+        color: $neutral-800;
+      }
+    }
+  }
+
+  .active {
+    .icon-box {
+      background-color: $green-pastel-100;
+      transition-property: background-color;
+      @include transition;
+
+      > .icon {
+        font-variation-settings: "FILL" 0;
+      }
+    }
+
+    small {
+      font-weight: $fw-semibold;
+    }
+
+    &:hover {
+      .icon-box {
+        background-color: $green-pastel-200;
+      }
+    }
+  }
+}

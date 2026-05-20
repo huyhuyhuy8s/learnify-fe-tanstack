@@ -1,0 +1,104 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/functions" as *;
+
+.message {
+  display: flex;
+  gap: toRem(8);
+  margin-bottom: toRem(12);
+
+  &-user {
+    flex-direction: row-reverse;
+  }
+
+  &-teacher {
+    flex-direction: row;
+  }
+
+  &-avatar {
+    flex-shrink: 0;
+    width: toRem(32);
+    height: toRem(32);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: toRem(14);
+    font-weight: $fw-semibold;
+    margin-top: toRem(4);
+  }
+
+  &-user &-avatar {
+    background-color: $mode-green;
+    color: $white;
+  }
+
+  &-teacher &-avatar {
+    background-color: $navy-pastel-200;
+    color: $neutral-700;
+  }
+
+  &-body {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(2);
+    max-width: 70%;
+  }
+
+  &-user &-body {
+    align-items: flex-end;
+  }
+
+  &-teacher &-body {
+    align-items: flex-start;
+  }
+
+  &-bubble {
+    padding: toRem(10) toRem(14);
+    border-radius: toRem(16);
+    position: relative;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: pre-wrap;
+    line-height: 1.5;
+    max-width: 100%;
+  }
+
+  &-user &-bubble {
+    background-color: $green-200;
+    color: $black;
+    border-bottom-right-radius: toRem(4);
+  }
+
+  &-teacher &-bubble {
+    background-color: $neutral-150;
+    color: $neutral-900;
+    border-bottom-left-radius: toRem(4);
+  }
+
+  &-text {
+    margin: 0;
+    font-size: $fs-paragraph;
+    font-weight: $fw-regular;
+    line-height: 1.5;
+  }
+
+  &-time {
+    font-size: toRem(11);
+    color: $neutral-400;
+    padding: 0 toRem(4);
+  }
+
+  &-user &-time {
+    text-align: right;
+  }
+
+  &-image {
+    max-width: 100%;
+    max-height: 40dvh;
+    object-fit: contain;
+    display: block;
+    border-radius: inherit;
+  }
+}

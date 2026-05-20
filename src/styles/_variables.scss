@@ -1,17 +1,21 @@
-@use 'functions' as *;
+@use "functions" as *;
 
 /*
  * FONT SIZE
  */
-$fs-heading1: toRem(61.04);
-$fs-heading2: toRem(48.83);
-$fs-heading3: toRem(39.06);
-$fs-heading4: toRem(31.25);
-$fs-heading5: toRem(25);
-$fs-heading6: toRem(20);
-$fs-paragraph: toRem(16);
-$fs-small: toRem(12.8);
-$fs-smaller: toRem(10.24);
+$fs-heading1: clamp(toRem(36), calc(1.5rem + 3vw), toRem(61.04));
+$fs-heading2: clamp(toRem(30), calc(1.25rem + 2.5vw), toRem(48.83));
+$fs-heading3: clamp(toRem(24), calc(1.2rem + 2vw), toRem(39.06));
+$fs-heading4: clamp(toRem(20), calc(1.1rem + 1.5vw), toRem(31.25));
+$fs-heading5: clamp(toRem(18), calc(1rem + 1vw), toRem(25));
+$fs-heading6: clamp(toRem(16), calc(1rem + 0.5vw), toRem(20));
+$fs-paragraph: clamp(
+  toRem(16),
+  calc(0.875rem + 0.25vw),
+  toRem(16)
+); // Stays 16px, but allows scaling if preferred
+$fs-small: clamp(toRem(11), calc(0.75rem + 0.15vw), toRem(12.8));
+$fs-smaller: clamp(toRem(9), calc(0.65rem + 0.1vw), toRem(10.24));
 
 /*
  * FONT WEIGHT
@@ -41,4 +45,9 @@ $br-xxtl: toRem(40);
 $br-xxxtl: toRem(45);
 $br-rounded: toRem(50);
 
-
+// TRANSITION
+$transition-duration: 400ms;
+$transition-delay: 50ms;
+$transition-timing-function: cubic-bezier(0.19, 0.63, 0, 0.95);
+$transition: all $transition-duration $transition-timing-function
+  $transition-delay;

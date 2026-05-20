@@ -1,0 +1,58 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+.friend-item-footer {
+  display: flex;
+  align-items: center;
+  gap: toRem(8);
+
+  &-streaks {
+    background-color: $accent-minty;
+    color: $mode-neutral;
+    padding: toRem(6) toRem(12);
+    border-radius: $br-xl;
+    font-size: toRem(12);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  &-lower-streaks {
+    background-color: $mode-orange;
+  }
+
+  &-btn {
+    padding: toRem(5) toRem(15);
+    border-radius: $br-xl;
+    font-size: toRem(13);
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    white-space: nowrap;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &--accept {
+      background-color: $mode-green;
+      color: $neutral-100;
+      border: toRem(2) solid #2a4c3b;
+    }
+
+    &--decline {
+      background-color: $neutral-100;
+      color: $neutral-900;
+      border: toRem(2) solid $neutral-900;
+    }
+  }
+}
+@include break(s) {
+  .friend-item-footer {
+    display: block;
+
+    &-btn {
+      padding: toRem(2) toRem(8);
+    }
+  }
+}

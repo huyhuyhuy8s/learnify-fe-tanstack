@@ -1,4 +1,7 @@
-**/build
-**/public
+dist
+build
+.vinxi
+node_modules
 pnpm-lock.yaml
-routeTree.gen.ts
+package-lock.json
+src/routeTree.gen.ts

@@ -1,0 +1,144 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
+.about-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: toRem(100);
+  $grid-template-cols: 1fr 45dvw;
+
+  &-divider {
+    border: none;
+    height: toRem(3);
+    background-color: $neutral-200;
+    width: 100%;
+  }
+
+  .with-bullet {
+    position: relative;
+    padding-left: toRem(40);
+    display: flex;
+    flex-direction: column;
+    gap: toRem(10);
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: toRem(15);
+      aspect-ratio: 1 / 1;
+      background-color: $neutral-400;
+      border-radius: $br-rounded;
+    }
+
+    &.subtitle,
+    .subtitle {
+      color: $neutral-400;
+    }
+  }
+
+  &-head {
+    gap: toRem(40);
+    display: flex;
+    place-items: center;
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+      gap: toRem(20);
+      width: 100%;
+
+      > .title {
+        font-size: toRem(120);
+        font-weight: 700;
+        color: $mode-green;
+        line-height: toRem(150);
+      }
+    }
+  }
+
+  &-hero {
+    display: grid;
+    grid-template-columns: 1fr 50dvw;
+    gap: toRem(100);
+
+    &-context {
+      display: flex;
+      flex-direction: column;
+      gap: toRem(20);
+    }
+
+    img {
+      border-radius: $br-xl;
+      object-fit: cover;
+      max-width: 50dvw;
+      aspect-ratio: 3 / 2;
+    }
+  }
+
+  &-direction,
+  &-vision,
+  &-team {
+    display: grid;
+    grid-template-columns: $grid-template-cols;
+    gap: toRem(40);
+    align-items: start;
+  }
+
+  &-stats-section {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(20dvw, 1fr));
+    gap: toRem(20);
+  }
+}
+
+@include break(md) {
+  .about-page {
+    &-hero {
+      grid-template-columns: 1fr 25dvw;
+
+      img {
+        height: 100%;
+      }
+    }
+
+    &-stats-section {
+      grid-template-columns: repeat(2, minmax(20dvw, 1fr));
+      grid-template-rows: repeat(auto-fit, minmax(toRem(100), 1fr));
+    }
+  }
+}
+
+@include break(s) {
+  .about-page {
+    &-head {
+      svg {
+        display: none !important;
+      }
+    }
+
+    &-hero {
+      grid-template-columns: 1fr;
+
+      img {
+        max-width: 100%;
+      }
+    }
+
+    &-stats-section {
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(auto-fit, minmax(toRem(100), 1fr));
+    }
+
+    &-direction,
+    &-vision,
+    &-team {
+      grid-template-columns: 1fr;
+    }
+  }
+}

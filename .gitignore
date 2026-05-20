@@ -41,7 +41,6 @@ yarn-error.*
 # generated native folders
 /ios
 /android
-
 test.json
 
 # Webstorm
@@ -60,3 +59,26 @@ test.json
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# AI
+.claude
+/docs/architecture.md
+/tools
+/src/api
+/src/persistence
+/docs/decisions
+/docs/runbooks
+CLAUDE.md
+AGENTS.md
+claude.sh
+sessions.json
+
+# GraphQL
+src/gql
+
+# GEMINI
+.agents
+/skills-lock.json
+/.tanstack/tmp
+/opencode.json
+/ssh-vps.sh
