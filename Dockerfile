@@ -34,9 +34,6 @@ RUN corepack enable && corepack prepare pnpm@latest --activate && \
 COPY . .
 RUN pnpm codegen && pnpm build
 
-RUN pnpm prune --prod
-
-
 FROM node:22-slim AS production
 
 ENV PNPM_HOME="/pnpm"
