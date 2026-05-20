@@ -184,21 +184,15 @@ sudo chown $USER:$USER /opt/learnify
 
 ## Step 5 — Install Nginx + Certbot
 
-```bash
-sudo apt install nginx certbot python3-certbot-nginx -y
+> **Status: ✅ DONE**
 
-# Start nginx and enable on boot
-sudo systemctl enable nginx
-sudo systemctl start nginx
-
-# Verify
-curl -I http://localhost
-# Should return 200 OK
-```
+System nginx is disabled — Docker nginx handles all traffic on port 80/443.
 
 ---
 
 ## Step 6 — Set up the git remote and post-receive hook
+
+> **Status: ✅ DONE**
 
 ### On your LOCAL machine:
 
@@ -235,87 +229,72 @@ chmod +x /opt/learnify/.git/hooks/post-receive
 
 ## Step 7 — Create the .env.production on the VPS
 
-```bash
-# Create the secure location for .env.production
-sudo mkdir -p /root/.learnify
+> **Status: ✅ DONE**
 
-# Generate a new SESSION_SECRET
-openssl rand -base64 48
-# Copy the output and use it below
-
-# Create the env file
-sudo tee /root/.learnify/.env.production << 'EOF'
-# Build-time vars (VITE_* — baked into client bundle)
-VITE_GRAPHQL_ENDPOINT="https://learnify-be-cu88.onrender.com/graphql"
-VITE_GOOGLE_CLIENT_ID="your-google-client-id.apps.googleusercontent.com"
-VITE_ELEVENLABS_API_KEY=""
-VITE_ELEVENLABS_VOICE_ID="21m00Tcm4TlvDq8ikWAM"
-VITE_ELENVENLABS_MODEL_ID="eleven_turbo_v2_5"
-VITE_ELEVENLABS_OUTPUT_FORMAT="mp3_44100_128"
-VITE_ELEVENLABS_ENABLE_TIMESTAMPS="true"
-VITE_EDGETTS_VOICE_ID="zh-CN-XiaoxiaoMultilingualNeural"
-
-# Runtime vars
-NODE_ENV="production"
-SESSION_SECRET="paste-your-generated-secret-here"
-BACKEND_URL="https://learnify-be-cu88.onrender.com/graphql"
-EOF
-
-sudo chmod 600 /root/.learnify/.env.production
-```
+File exists at `/opt/learnify/.env.production` with backup at `/root/.learnify/.env.production`.
 
 ---
 
 ## Step 8 — First deployment
 
-On your **local machine**:
+> **Status: ✅ DONE**
+
+The e2-micro is too slow to build Docker images directly. Build locally and copy.
+
+### Build locally
 
 ```bash
 cd ~/Projects/learnify-fe-tanstack
 
-# Push to VPS — this triggers the post-receive hook
-git push vps main
+# Build Docker image on your fast local machine
+docker build -t learnify-app:latest .
+
+# Save to compressed file
+docker save learnify-app:latest | gzip > /tmp/learnify-image.tar.gz
+
+# Copy to VPS
+scp -i ~/.ssh/gcloud_key /tmp/learnify-image.tar.gz root@YOUR_VPS_IP:/tmp/
+
+# Load and start on VPS
+ssh -i ~/.ssh/gcloud_key root@YOUR_VPS_IP "docker load < /tmp/learnify-image.tar.gz && cd /opt/learnify && docker compose up -d"
 ```
 
-The post-receive hook will:
-
-1. `git checkout -f main` into `/opt/learnify` (working tree)
-2. Copy `.env.production` from `/root/.learnify/`
-3. `docker compose up -d --build` — builds and starts containers
-
-### Monitor the build
+### Subsequent deploys (after code changes)
 
 ```bash
-# Watch the Docker build logs on the VPS
-docker compose -f /opt/learnify/docker-compose.yml logs -f --tail=100
+# 1. Rebuild locally
+docker build -t learnify-app:latest .
+
+# 2. Copy + deploy
+docker save learnify-app:latest | gzip | ssh -i ~/.ssh/gcloud_key root@YOUR_VPS_IP "gunzip | docker load && cd /opt/learnify && docker compose up -d --force-recreate"
 ```
 
-The first build on the e2-micro will take **10-20 minutes** (1GB RAM + slow disk IO). Be patient.
+### The post-receive hook
 
-> **Tip:** If Docker build fails due to OOM (out of memory), add swap (Step 3) and reduce Node.js memory limit to 256MB.
+Fires on `git push vps main`. But for Docker builds, use the local build approach above. The hook handles:
+1. `git checkout -f main` into `/opt/learnify`
+2. Restores `.env.production` if missing
+3. Starts containers if docker-compose.yml changed
 
 ---
 
 ## Step 9 — Configure Nginx
 
-Once the app containers are running and healthy:
+> **Status: ✅ DONE**
 
-```bash
-# Test the nginx config
-sudo nginx -t
-
-# Reload nginx to pick up the new config
-sudo systemctl reload nginx
-
-# Check if it's running
-curl -I http://localhost
+Docker nginx handles all traffic on port 80/443. Verified:
 ```
-
-You should see `200 OK` from the health check.
+curl http://34.177.82.80/health  → 200 OK
+curl http://34.177.82.80/        → 307 → /learner
+```
 
 ---
 
-## Step 10 — Let's Encrypt SSL (optional but recommended)
+## Step 10 — Let's Encrypt SSL (optional)
+
+> **Status: 🔜 PENDING** — Requires a domain name pointed to the VPS IP.
+
+Once you have a domain (`yourdomain.com` → `34.177.82.80`):
 
 ```bash
 # Stop nginx temporarily (certbot needs port 80)
@@ -341,14 +320,7 @@ Certbot auto-renews every 90 days. Check the timer: `systemctl status certbot.ti
 
 ## Step 11 — Test the full stack
 
-```bash
-# From your local machine
-curl http://YOUR_VPS_IP/health
-# Or if SSL is set up:
-curl https://yourdomain.com/health
-```
-
-Expected: `OK`
+> **Status: ✅ DONE** for HTTP. SSL pending (Step 10).
 
 ---
 
