@@ -42,8 +42,8 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME/bin:$PATH"
 ENV NODE_ENV=production
 
-RUN groupadd --gid 1001 node && \
-    useradd --uid 1001 --gid node --shell /bin/bash --create-home node
+RUN groupadd --gid 1002 appuser || true && \
+    useradd --uid 1001 --gid appuser --shell /bin/bash --create-home node
 
 WORKDIR /app
 
