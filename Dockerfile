@@ -32,7 +32,7 @@ RUN corepack enable && corepack prepare pnpm@latest --activate && \
     pnpm install --frozen-lockfile --ignore-scripts
 
 COPY . .
-RUN pnpm build
+RUN pnpm codegen && pnpm build
 
 RUN pnpm prune --prod
 
