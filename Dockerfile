@@ -28,7 +28,8 @@ ENV VITE_EDGETTS_VOICE_ID=$VITE_EDGETTS_VOICE_ID
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile
+RUN corepack enable && corepack prepare pnpm@latest --activate && \
+    pnpm install --frozen-lockfile --ignore-scripts
 
 COPY . .
 RUN pnpm build
@@ -46,7 +47,7 @@ WORKDIR /app
 
 COPY package.json pnpm-lock.yaml ./
 RUN corepack enable && corepack prepare pnpm@latest --activate && \
-    pnpm install --frozen-lockfile --prod
+    pnpm install --frozen-lockfile --prod --ignore-scripts
 
 COPY --from=builder --chown=node:node /app/dist ./dist
 
