@@ -23,10 +23,9 @@ else
     warn ".env.production not found — container may use empty defaults"
 fi
 
-log "Building and starting Docker containers..."
+log "Restarting Docker containers..."
 cd "$WORK_TREE"
-
-docker compose up -d --build --remove-orphans
+docker compose up -d --force-recreate
 
 log "Pruning old Docker images..."
 docker image prune -f

@@ -29,6 +29,9 @@ lint-fix:
 codegen:
 	pnpm codegen
 
+VPS_HOST ?= root@34.177.82.80
+DEPLOY_DIR ?= /opt/learnify
+
 vps-init:
 	@if [ -z "$(VPS_HOST)" ]; then \
 		echo "Usage: make vps-init VPS_HOST=root@34.56.78.90 DEPLOY_DIR=/opt/learnify"; \
@@ -48,6 +51,8 @@ deploy:
 		echo "Error: remote 'vps' not found. Run 'make vps-init' first."; \
 		exit 1; \
 	fi
+	docker build -t learnify-app:latest .
+	docker save learnify-app:latest | gzip | ssh $(VPS_HOST) "gunzip | docker load"
 	git push vps HEAD:staging
 
 logs:
