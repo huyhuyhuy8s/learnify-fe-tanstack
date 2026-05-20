@@ -81,3 +81,4 @@ src/gql
 /skills-lock.json
 /.tanstack/tmp
 /opencode.json
+/ssh-vps.sh

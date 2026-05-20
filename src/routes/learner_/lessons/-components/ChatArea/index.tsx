@@ -18,7 +18,7 @@ type TSectionItem = {
 
 type TChatAreaProps = {
   className?: string;
-  state: string;
+  state?: "initial" | "complete" | "lesson" | "qa" | "quiz";
   lessonName?: string;
   abstract?: string;
   sectionCount?: number;

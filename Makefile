@@ -29,12 +29,6 @@ lint-fix:
 codegen:
 	pnpm codegen
 
-# ─────────────────────────────────────────────────────────────────
-# VPS Deployment (Option B: Git post-receive hook on the VPS)
-# ─────────────────────────────────────────────────────────────────
-
-# Set up the VPS git remote and bare repo on the VPS.
-# Run once: make vps-init VPS_HOST=root@34.56.78.90
 vps-init:
 	@if [ -z "$(VPS_HOST)" ]; then \
 		echo "Usage: make vps-init VPS_HOST=root@34.56.78.90 DEPLOY_DIR=/opt/learnify"; \
@@ -49,7 +43,6 @@ vps-init:
 	git remote add vps $(VPS_HOST):$(DEPLOY_DIR)
 	@echo "Done. Run 'make deploy' to push to VPS."
 
-# Push current branch to VPS (triggers post-receive hook → build + restart)
 deploy:
 	@if ! git remote get-url vps &>/dev/null; then \
 		echo "Error: remote 'vps' not found. Run 'make vps-init' first."; \
@@ -57,10 +50,8 @@ deploy:
 	fi
 	git push vps HEAD:main
 
-# Tail logs on the VPS (Ctrl+C to stop)
 logs:
 	ssh $(VPS_HOST) "docker compose -f $(DEPLOY_DIR)/docker-compose.yml logs -f --tail=50"
 
-# SSH into the VPS
 ssh:
 	ssh $(VPS_HOST)

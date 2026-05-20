@@ -13,6 +13,7 @@ const config: CodegenConfig = {
           Upload: "File",
           BigInt: "string",
         },
+        strictScalars: true,
       },
     },
   },
