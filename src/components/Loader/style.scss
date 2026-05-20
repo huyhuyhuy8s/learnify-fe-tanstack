@@ -1,7 +1,48 @@
-@use "@styles/mixins" as *;
 @use "@styles/variables" as *;
-@use "@styles/functions" as *;
 @use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
+@keyframes char-rise {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes spinner-dash {
+  0%,
+  100% {
+    stroke-dashoffset: 900;
+  }
+  50% {
+    stroke-dashoffset: 750;
+  }
+}
+
+@keyframes spinner-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes logo-pulse {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
 
 .loader-container {
   position: fixed;
@@ -9,7 +50,6 @@
 
   .logo {
     background-color: transparent;
-
     position: absolute;
     inset: 0;
     width: 100dvw;
@@ -22,8 +62,10 @@
     gap: toRem(10);
 
     .char {
-      transform: translateY(100%);
+      display: inline-block;
+      transform: translateY(100%) translateZ(0);
       will-change: transform;
+      animation: char-rise 2.8s forwards cubic-bezier(0.9, 0, 0.1, 1);
     }
 
     h2 {
@@ -32,10 +74,16 @@
       left: 50%;
       transform: translate(-50%, -50%);
       overflow: hidden;
+      animation: logo-pulse 2s ease-in-out infinite;
     }
 
     .spinner-tracker {
       stroke: $black;
+      animation: spinner-dash 2s ease-in-out infinite;
+    }
+
+    svg {
+      animation: spinner-rotate 2s ease-in-out infinite;
     }
 
     small {
@@ -53,21 +101,17 @@
       width: 100dvw;
       height: 100dvh;
       clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 100% 100%, 0 100%);
-      will-change: clip-path;
     }
 
     &-4 {
       background-color: $white;
     }
-
     &-3 {
       background-color: $mode-yellow;
     }
-
     &-2 {
       background-color: $mode-salmon;
     }
-
     &-1 {
       background-color: $mode-orange;
     }

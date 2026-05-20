@@ -1,9 +1,15 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { getCurrentUserFn } from "@/server/auth";
 
 export const Route = createFileRoute("/learner/user")({
-  component: RouteComponent,
+  beforeLoad: async () => {
+    const { user } = await getCurrentUserFn();
+    if (!user)
+      throw redirect({
+        to: "/learner/log-in",
+        search: { redirect: "/learner/user" },
+      });
+    return { user };
+  },
+  component: () => <Outlet />,
 });
-
-function RouteComponent() {
-  return <div>Hello "/learner/user"!</div>;
-}

@@ -1,11 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { OptimizeImage } from "@/components/Images";
+import { Slanted } from "@/components/Shapes";
 import { ABOUT_STATS } from "@/mock";
 import AboutStat from "@/routes/learner/about/-components/AboutStat/index";
 import TeamList from "@/routes/learner/about/-components/TeamList";
-import { OptimizeImage } from "@/components/Images";
-import "./style.scss";
 import { COLORS } from "@/styles/colors";
-import { Slanted } from "@/components/Shapes";
+import { createFileRoute } from "@tanstack/react-router";
+import "./style.scss";
 
 export const Route = createFileRoute("/learner/about/")({
   component: AboutPage,
@@ -17,16 +17,16 @@ function AboutPage() {
       <section className="about-page-head">
         <div className="about-page-head-content">
           <h1 className="title">Learnify</h1>
-          <h3 className="regular">
+          <h2 className="regular">
             Smart learning. Real skills. Ready careers.
-          </h3>
+          </h2>
         </div>
         <Slanted color={COLORS.greenPastel200} size="15%" />
       </section>
 
       <section className="about-page-hero">
         <div className="about-page-hero-context">
-          <h6 className="regular">
+          <p className="regular">
             Learnify is an educational platform that highlights the future and
             craft of learning—from foundational concepts to hands-on practice to
             career-ready mastery. By showcasing the innovative technology and
@@ -34,8 +34,8 @@ function AboutPage() {
             modern education is built and deepen your connection with your own
             potential. Our approach begins with curiosity: we want to give you a
             window into the way interactive learning actually works.
-          </h6>
-          <h6 className="regular">
+          </p>
+          <p className="regular">
             What do we mean when we talk about learning at Learnify? It's our 3D
             AI Lecturer, your personal guide to mastering complex topics. It's
             our hands-on labs, the interactive environments that turn theory
@@ -43,11 +43,11 @@ function AboutPage() {
             accessible skill-building, and continuous mentorship. In short:
             learning is everywhere—and it's always evolving. Education is never
             done.
-          </h6>
-          <h6 className="regular">
+          </p>
+          <p className="regular">
             Keep in touch with Learnify on Fanpage, YouTube, and
             hello@learnify.com.
-          </h6>
+          </p>
         </div>
 
         <OptimizeImage src="/footer.webp" alt="Learnify abstract visual" />

@@ -12,14 +12,15 @@ const Card = (props: TCourseCardProps) => {
     description,
     duration,
     typeSpecial,
+    disabled = false,
     status = "default",
     percentage = 0,
   } = props;
 
   return (
     <div
-      className={classnames("card", className)}
-      onClick={onClick}
+      className={classnames("card", { disabled: disabled }, className)}
+      onClick={disabled ? undefined : onClick}
       role="button"
       tabIndex={0}
     >

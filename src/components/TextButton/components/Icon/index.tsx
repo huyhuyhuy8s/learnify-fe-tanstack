@@ -1,5 +1,6 @@
 import type { TIconProps } from "../../type";
 import { COLORS } from "@/styles/colors";
+import Icon from "@/components/Icon";
 import {
   Circle,
   Sunny,
@@ -8,7 +9,7 @@ import {
   GhostIsh,
 } from "@/components/Shapes";
 
-const Icon = (props: TIconProps) => {
+const TextButtonIcon = (props: TIconProps) => {
   const { visible, type, typeSpecial, icon, color } = props;
 
   if (!visible) return null;
@@ -28,53 +29,21 @@ const Icon = (props: TIconProps) => {
       case "check":
         return <GhostIsh color={specialIconColor} />;
       case "certificate":
-        return (
-          <span
-            className="material-symbols-rounded"
-            style={{ color: specialIconColor }}
-          >
-            verified
-          </span>
-        );
+        return <Icon name="verified" style={{ color: specialIconColor }} />;
       case "private":
-        return (
-          <span
-            className="material-symbols-rounded"
-            style={{ color: color || COLORS.white }}
-          >
-            lock
-          </span>
-        );
+        return <Icon name="lock" style={{ color: color || COLORS.white }} />;
       case "public":
-        return (
-          <span
-            className="material-symbols-rounded"
-            style={{ color: color || COLORS.white }}
-          >
-            public
-          </span>
-        );
-
+        return <Icon name="public" style={{ color: color || COLORS.white }} />;
       case "starter":
-        return <span className="material-symbols-rounded">sell</span>;
+        return <Icon name="sell" />;
       case "pro":
-        return (
-          <span className="material-symbols-rounded">business_center</span>
-        );
+        return <Icon name="business_center" />;
       case "career":
-        return <span className="material-symbols-rounded">star</span>;
+        return <Icon name="star" />;
     }
   }
 
-  return (
-    <span
-      className="material-symbols-rounded"
-      style={{
-        color,
-      }}
-    >
-      {icon}
-    </span>
-  );
+  if (!icon) return null;
+  return <Icon name={icon} style={{ color }} />;
 };
-export default Icon;
+export default TextButtonIcon;

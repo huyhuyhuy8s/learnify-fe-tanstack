@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql";
-import { useAuthStore } from "@/store/authStore";
-import { LOGIN_MUTATION, CURRENT_USER_QUERY } from "@/graphql/mutations";
-import type { AuthResponse, LoginInput, UserReturn } from "@/gql/graphql";
+import { useRouter } from "@tanstack/react-router";
+import { LOGIN_MUTATION } from "@/graphql/mutations";
+import type { AuthResponse, LoginInput } from "@/gql/graphql";
 
 async function loginRequest(variables: { data: LoginInput }) {
   const response = await graphqlClient.request<{ login: AuthResponse }>(
@@ -11,33 +11,19 @@ async function loginRequest(variables: { data: LoginInput }) {
   );
 
   if (!response.login.success) {
-    throw new Error(response.login.message || "Đăng nhập thất bại");
+    throw new Error(response.login.message || "Login failed");
   }
 
-  const userResponse = await graphqlClient.request<{ currentUser: UserReturn }>(
-    CURRENT_USER_QUERY
-  );
-
-  const user =
-    userResponse.currentUser.isSuccess &&
-    userResponse.currentUser.users.length > 0
-      ? userResponse.currentUser.users[0]
-      : null;
-
-  if (!user) {
-    throw new Error("Không lấy được thông tin người dùng");
-  }
-
-  return { login: response.login, user };
+  return response.login;
 }
 
 export function useLogin() {
-  const setAuth = useAuthStore((state) => state.setAuth);
+  const router = useRouter();
 
   return useMutation({
     mutationFn: loginRequest,
-    onSuccess: (data) => {
-      setAuth(data.user);
+    onSuccess: async () => {
+      await router.invalidate();
     },
   });
 }

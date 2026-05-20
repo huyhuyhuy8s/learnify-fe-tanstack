@@ -1,5 +1,5 @@
 export type TFriendDetail = {
-  id: number;
+  id: string;
   imgBackground?: string;
   imgUrl: string;
   name: string;

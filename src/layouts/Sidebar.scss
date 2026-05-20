@@ -1,101 +1,108 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
 .sidebar {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  width: 4rem;
-  background-color: #f4f6f4;
-  padding: 0.5rem;
+  height: 100dvh;
+  width: toRem(64);
+  background-color: $green-100;
+  padding: toRem(8);
   align-items: center;
   justify-content: space-between;
-  border-right: 1px solid rgba(63, 79, 66, 0.1);
-}
+  border-right: toRem(1) solid rgba($green-600, 0.1);
 
-.sidebar__menu {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  width: 100%;
-  align-items: center;
-  margin-top: 1rem;
-}
+  &__menu {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(32);
+    width: 100%;
+    align-items: center;
+    margin-top: toRem(16);
+  }
 
-.sidebar__link {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  width: 100%;
-  text-align: center;
-  color: #3f4f42;
-  text-decoration: none;
-}
+  &__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: toRem(4);
+    width: 100%;
+    text-align: center;
+    color: $green-600;
+    text-decoration: none;
 
-.sidebar__link--active {
-  background-color: #2d3e33;
-  color: white;
-  padding: 0.75rem;
-  border-radius: 1rem;
-}
+    &--active {
+      background-color: $green-700;
+      color: $white;
+      padding: toRem(12);
+      border-radius: $br-xl;
+    }
+  }
 
-.sidebar__item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.75rem;
-  width: 100%;
-  border-radius: 1rem;
-  transition: background-color 0.2s ease;
-}
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: toRem(4);
+    padding: toRem(12);
+    width: 100%;
+    border-radius: $br-xl;
+    @include transition;
+    transition-property: background-color;
 
-.sidebar__item:hover {
-  background-color: rgba(45, 62, 51, 0.1);
-}
+    &:hover {
+      background-color: rgba($green-700, 0.1);
+    }
 
-.sidebar__item--search {
-  color: white;
-}
+    &--search {
+      color: $white;
+    }
+  }
 
-.sidebar__icon {
-  font-size: 1.5rem;
-}
+  &__icon {
+    font-size: toRem(24);
+  }
 
-.sidebar__label {
-  font-size: 0.6875rem;
-  font-weight: 500;
-  display: block;
-  width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+  &__label {
+    font-size: toRem(11);
+    font-weight: $fw-medium;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
-.sidebar__actions {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: auto;
-  margin-bottom: 1.5rem;
-}
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(16);
+    margin-top: auto;
+    margin-bottom: toRem(24);
+  }
 
-.sidebar__action-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 50%;
-  border: 1px solid rgba(63, 79, 66, 0.2);
-  color: #3f4f42;
-  background: transparent;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
+  &__action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: toRem(44);
+    height: toRem(44);
+    border-radius: 50%;
+    border: toRem(1) solid rgba($green-600, 0.2);
+    color: $green-600;
+    background: transparent;
+    cursor: pointer;
+    @include transition;
+    transition-property: background-color;
 
-.sidebar__action-btn:hover {
-  background-color: rgba(63, 79, 66, 0.05);
-}
+    &:hover {
+      background-color: rgba($green-600, 0.05);
+    }
+  }
 
-.sidebar__action-icon {
-  font-size: 1.5rem;
+  &__action-icon {
+    font-size: toRem(24);
+  }
 }

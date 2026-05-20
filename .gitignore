@@ -78,3 +78,7 @@ src/gql
 
 # GEMINI
 .agents
+/skills-lock.json
+/.tanstack/tmp
+/opencode.json
+/ssh-vps.sh

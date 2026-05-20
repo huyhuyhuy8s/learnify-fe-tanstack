@@ -1,3 +1,4 @@
+import { logger } from "@/utils/logger";
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
@@ -13,7 +14,7 @@ export const Route = createFileRoute("/learner/search/")({
 function RouteComponent() {
   const { q } = Route.useSearch();
 
-  console.log("Search query:", q);
+  logger.debug("Search query:", q);
 
   return <div>Showing results for: {q}</div>;
 }

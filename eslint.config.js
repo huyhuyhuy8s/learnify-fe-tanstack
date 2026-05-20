@@ -17,7 +17,6 @@ export default tseslint.config(
       "node_modules",
       ".vinxi",
       "src/routeTree.gen.ts",
-      "src/gql/**",
       "lambda",
       "scripts",
       "config",
@@ -53,6 +52,7 @@ export default tseslint.config(
       "@typescript-eslint/no-explicit-any": "warn",
       quotes: ["error", "double"],
       "@typescript-eslint/consistent-type-imports": "error",
+      "no-console": ["warn", { allow: ["info", "warn", "error", "debug"] }],
     },
     settings: {
       react: {

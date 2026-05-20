@@ -1,4 +1,5 @@
 import classnames from "classnames";
+import Icon from "@/components/Icon";
 import "./style.scss";
 
 type TControllerProps = {
@@ -19,9 +20,7 @@ const Controller = (props: TControllerProps) => {
         active ? "Collapse left navigation" : "Expand left navigation"
       }
     >
-      <span className="material-symbols-rounded">
-        {active ? "chevron_left" : "chevron_right"}
-      </span>
+      <Icon name={active ? "chevron_left" : "chevron_right"} />
     </button>
   );
 };

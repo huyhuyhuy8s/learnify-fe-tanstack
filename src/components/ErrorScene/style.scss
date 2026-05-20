@@ -1,0 +1,87 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
+.error-scene {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: toRem(24);
+  border-radius: $br-xl;
+  border: 2px solid $orange-200;
+  padding: toRem(48);
+  text-align: center;
+  text-wrap: balance;
+  height: 100%;
+
+  @include break(s) {
+    padding: toRem(24);
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: clamp(toRem(384), 30dvw + 1rem, 100%);
+  }
+
+  &__description {
+    color: $neutral-600;
+
+    a {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+
+      &:hover {
+        color: $mode-green;
+      }
+    }
+  }
+
+  &-title {
+    display: flex;
+    gap: toRem(10);
+    margin-bottom: toRem(14);
+    place-items: center;
+  }
+
+  &__title {
+    &-context {
+      position: relative;
+    }
+
+    &-code {
+      border-radius: $br-md;
+      border: 1px solid $orange-200;
+      background-color: $orange-100;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06);
+      padding: toRem(2.5) toRem(5);
+    }
+  }
+
+  &__description {
+    margin-top: toRem(4);
+  }
+
+  &__content {
+    display: flex;
+    width: 100%;
+    max-width: toRem(384);
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    gap: toRem(16);
+    font-size: toRem(14);
+    text-wrap: balance;
+  }
+
+  &__control {
+    display: flex;
+    gap: toRem(16);
+  }
+}

@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import { memo } from "react";
+import Icon from "@/components/Icon";
 import type { TSignUpStep2Props } from "./type.d";
 import "./style.scss";
 
@@ -20,7 +21,7 @@ const SignUpStep2 = memo(function SignUpStep2({
       }}
     >
       <button className="sign-up-back" type="button" onClick={onBack}>
-        <span className="material-symbols-rounded">arrow_back</span>
+        <Icon name="arrow_back" />
         <p className="regular">Back</p>
       </button>
 

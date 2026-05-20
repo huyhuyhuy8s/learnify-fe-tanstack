@@ -1,19 +1,22 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import {
+  createFileRoute,
+  useNavigate,
+  useRouter,
+} from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
 import { graphqlClient } from "@/lib/graphql";
 import { VERIFY_EMAIL_MUTATION } from "@/graphql/mutations";
+import Icon from "@/components/Icon";
 import "./verify-email.scss";
 
 type VerifyEmailSearch = {
   token?: string;
-  email?: string;
 };
 
 export const Route = createFileRoute("/learner_/verify-email")({
   validateSearch: (search: Record<string, unknown>): VerifyEmailSearch => {
     return {
       token: typeof search.token === "string" ? search.token : undefined,
-      email: typeof search.email === "string" ? search.email : undefined,
     };
   },
   component: VerifyEmailPage,
@@ -29,36 +32,46 @@ export const Route = createFileRoute("/learner_/verify-email")({
 
 function VerifyEmailPage() {
   const navigate = useNavigate();
+  const router = useRouter();
   const search = Route.useSearch() as VerifyEmailSearch;
+  const token = search.token;
+
   const [status, setStatus] = useState<"loading" | "success" | "error">(
-    "loading"
+    token ? "loading" : "error"
   );
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(
+    token
+      ? "Đang xác thực tài khoản của bạn..."
+      : "Đường dẫn không hợp lệ. Thiếu mã xác thực."
+  );
   const [countdown, setCountdown] = useState(3);
 
-  useEffect(() => {
-    const verifyEmail = async () => {
-      try {
-        const { token, email } = search;
-        if (!token || !email) {
-          setStatus("error");
-          setMessage("Invalid verification link. Missing token or email.");
-          return;
-        }
+  const hasCalledAPI = useRef(false);
 
+  useEffect(() => {
+    if (!token) return;
+    if (hasCalledAPI.current) return;
+
+    const verifyEmail = async () => {
+      hasCalledAPI.current = true;
+
+      try {
         const response = await graphqlClient.request(VERIFY_EMAIL_MUTATION, {
-          email,
-          code: token,
+          token: token,
         });
 
         if (response.verifyEmail.success) {
           setStatus("success");
-          setMessage("Email verified successfully!");
+          setMessage("Xác thực email thành công!");
+
+          await router.invalidate();
+          await router.load();
+
           const timer = setInterval(() => {
             setCountdown((prev) => {
               if (prev <= 1) {
                 clearInterval(timer);
-                navigate({ to: "/learner" });
+                navigate({ to: "/learner/dashboard" });
                 return 0;
               }
               return prev - 1;
@@ -66,16 +79,25 @@ function VerifyEmailPage() {
           }, 1000);
         } else {
           setStatus("error");
-          setMessage(response.verifyEmail.message || "Verification failed.");
+          setMessage(response.verifyEmail.message || "Xác thực thất bại.");
         }
-      } catch {
+      } catch (error: unknown) {
         setStatus("error");
-        setMessage("An error occurred during verification. Please try again.");
+
+        const maybeGraphQLError = error as {
+          response?: { errors?: Array<{ message?: string }> };
+        };
+
+        const errorMessage =
+          maybeGraphQLError?.response?.errors?.[0]?.message ||
+          "Đã xảy ra lỗi hệ thống khi xác thực. Vui lòng thử lại.";
+
+        setMessage(errorMessage);
       }
     };
 
     verifyEmail();
-  }, [search, navigate]);
+  }, [token, navigate, router]);
 
   return (
     <div className="verify-email" id="verify-email-page">
@@ -83,31 +105,31 @@ function VerifyEmailPage() {
         {status === "loading" && (
           <div className="verify-email-loading">
             <div className="verify-email-spinner" />
-            <h3 className="semibold">Verifying your email...</h3>
+            <h3 className="semibold">{message}</h3>
           </div>
         )}
 
         {status === "success" && (
           <div className="verify-email-success">
-            <span className="material-symbols-rounded">check_circle</span>
+            <Icon name="check_circle" />
             <h3 className="semibold">{message}</h3>
             <p className="regular">
-              Redirecting to dashboard in {countdown} seconds...
+              Đang chuyển hướng về trang chủ sau {countdown} giây...
             </p>
           </div>
         )}
 
         {status === "error" && (
           <div className="verify-email-error">
-            <span className="material-symbols-rounded">error</span>
-            <h3 className="semibold">Verification Failed</h3>
+            <Icon name="error" />
+            <h3 className="semibold">Xác thực thất bại</h3>
             <p className="regular">{message}</p>
             <button
               className="verify-email-retry-btn"
               type="button"
-              onClick={() => navigate({ to: "/learner/sign-up" })}
+              onClick={() => navigate({ to: "/learner/log-in" })}
             >
-              <h6 className="semibold">Try again</h6>
+              <h6 className="semibold">Quay lại trang Đăng nhập</h6>
             </button>
           </div>
         )}

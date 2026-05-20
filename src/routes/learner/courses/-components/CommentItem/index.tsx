@@ -1,3 +1,4 @@
+import Icon from "@/components/Icon";
 import type { TCommentItemProps } from "./type.d.ts";
 import "./style.scss";
 
@@ -13,23 +14,21 @@ const CommentItem = (props: TCommentItemProps) => {
           <p>{time}</p>
           <div className="comment-head-infor-stars">
             {Array.from({ length: 5 }).map((_, index) => (
-              <span
+              <Icon
                 key={index}
-                className="material-symbols-rounded icon"
+                name="star"
+                className="icon"
                 style={{
                   color: index < rating ? "#FFC107" : "#E0E0E0",
                   fontSize: "18px",
-                  fontVariationSettings:
-                    index < rating ? "'FILL' 1" : "'FILL' 0",
                 }}
-              >
-                star
-              </span>
+                fill={index < rating}
+              />
             ))}
           </div>
         </div>
         <div className="comment-3dot">
-          <span className="material-symbols-rounded icon">more_vert</span>
+          <Icon name="more_vert" className="icon" />
         </div>
       </div>
       <div className="comment-item-body">{content}</div>

@@ -1,14 +1,14 @@
 @use "@styles/variables" as *;
 @use "@styles/colors" as *;
-@use "@styles/functions" as *;
 @use "@styles/mixins" as *;
+@use "@styles/functions" as *;
 
 .account-menu {
   position: absolute;
   display: flex;
   flex-direction: column;
   gap: toRem(20);
-  width: clamp (toRem(400), calc(12.5dvw + 1rem), 15dvw);
+  max-width: clamp(toRem(400), calc(12.5dvw + 1rem), 15dvw);
   padding: toRem(20);
   border-radius: $br-xl;
   border: toRem(2) solid $neutral-200;

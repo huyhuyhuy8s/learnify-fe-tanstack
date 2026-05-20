@@ -1,6 +1,5 @@
-import classNames from "classnames";
-import { useState } from "react";
 import { Link } from "@tanstack/react-router";
+import Icon from "@/components/Icon";
 import "./style.scss";
 
 type TLeftNavItemProps = {
@@ -13,12 +12,6 @@ type TLeftNavItemProps = {
 
 const LeftNavItem = (props: TLeftNavItemProps) => {
   const { iconName, label, href, className = "" } = props;
-  const [fill, setFill] = useState(false);
-  const iconClassName = classNames(
-    "material-symbols-rounded",
-    { filled: fill },
-    className
-  );
 
   return (
     <div className="left-nav-top-item">
@@ -28,7 +21,7 @@ const LeftNavItem = (props: TLeftNavItemProps) => {
         activeOptions={{ includeSearch: true, exact: href === "/learner/" }}
       >
         <div className="icon-box">
-          <span className={iconClassName}>{iconName}</span>
+          <Icon name={iconName} className={className} />
         </div>
         <small>{label}</small>
       </Link>

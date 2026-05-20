@@ -4,8 +4,14 @@ import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query
 import { routeTree } from "./routeTree.gen";
 import DefaultCatchBoundary from "./components/DefaultCatchBoundary";
 import NotFound from "./components/NotFound";
-import "material-symbols/rounded.scss";
-import { useAuthStore, type TAuthState } from "./store/authStore";
+export type TSessionUser = {
+  id: string;
+  email: string;
+  username?: string;
+  diamond?: number;
+  currentSteak?: number;
+};
+import { useAuthStore } from "./store/authStore";
 
 export function getRouter() {
   const queryClient = new QueryClient();
@@ -13,7 +19,7 @@ export function getRouter() {
 
   const router = createRouter({
     routeTree,
-    context: { queryClient, auth: authStore },
+    context: { queryClient, auth: null },
     defaultPreload: "intent",
     defaultErrorComponent: DefaultCatchBoundary,
     defaultNotFoundComponent: () => <NotFound />,
@@ -34,5 +40,8 @@ declare module "@tanstack/react-router" {
 
 export interface RouterContext {
   queryClient: QueryClient;
-  auth: TAuthState;
+  auth: {
+    user: TSessionUser | null;
+    isAuthenticated: boolean;
+  } | null;
 }

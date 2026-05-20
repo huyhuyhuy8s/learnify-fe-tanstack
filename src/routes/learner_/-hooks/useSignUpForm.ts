@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { z } from "zod";
 import { useRegister } from "@/hooks/useRegister";
-import { useNavigate } from "@tanstack/react-router";
+import { logger } from "@/utils/logger";
 
 export type TSignUpStep1 = {
   firstName: string;
@@ -48,7 +48,6 @@ export const verificationSchema = z.object({
 
 export const useSignUpForm = () => {
   const register = useRegister();
-  const navigate = useNavigate();
 
   const [step, setStep] = useState<1 | 2 | 3>(1);
 
@@ -140,22 +139,20 @@ export const useSignUpForm = () => {
       });
 
       if (result.register.success) {
-        setVerificationData({ email: step1Data.email });
-        navigate({
-          to: "/learner/verify-email",
-          search: {
-            token: result.register.message || "",
-            email: step1Data.email,
-          },
-        });
+        setStep(3);
         return true;
       }
       return false;
-    } catch {
-      setStep2Errors({ api: "Registration failed. Please try again." });
+    } catch (error) {
+      setStep2Errors({
+        api:
+          error instanceof Error
+            ? error.message
+            : "Registration failed. Please try again.",
+      });
       return false;
     }
-  }, [step1Data, step2Data, register, navigate]);
+  }, [step1Data, step2Data, register]);
 
   const handleVerificationChange = useCallback(
     (index: number, value: string) => {
@@ -195,7 +192,7 @@ export const useSignUpForm = () => {
         email: verificationData.email,
       });
     } catch {
-      console.error("Failed to resend code");
+      logger.error("Failed to resend code");
     }
   }, [verificationData.email]);
 

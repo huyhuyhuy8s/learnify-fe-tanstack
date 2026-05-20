@@ -1,32 +1,16 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import type { UserResponse } from "@/gql/graphql";
+import type { TSessionUser } from "@/router";
 
 export type TAuthState = {
-  user: UserResponse | null;
+  user: TSessionUser | null;
   isAuthenticated: boolean;
-  setAuth: (user: UserResponse | null) => void;
+  setAuth: (user: TSessionUser | null) => void;
   logout: () => void;
 };
 
-export const useAuthStore = create<TAuthState>()(
-  persist(
-    (set) => ({
-      user: null,
-      isAuthenticated: false,
-      setAuth: (user) => set({ user, isAuthenticated: !!user }),
-      logout: () =>
-        set({
-          user: null,
-          isAuthenticated: false,
-        }),
-    }),
-    {
-      name: "auth-storage",
-      partialize: (state) => ({
-        user: state.user,
-        isAuthenticated: state.isAuthenticated,
-      }),
-    }
-  )
-);
+export const useAuthStore = create<TAuthState>()((set) => ({
+  user: null,
+  isAuthenticated: false,
+  setAuth: (user) => set({ user, isAuthenticated: !!user }),
+  logout: () => set({ user: null, isAuthenticated: false }),
+}));

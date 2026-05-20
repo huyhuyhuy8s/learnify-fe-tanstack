@@ -1,8 +1,8 @@
-.comment-container {
-  background-color: #ffffff;
+.comment-form {
+  background-color: var(--color-white);
   border-radius: 12px;
   padding: 16px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-neutral-200);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -17,7 +17,7 @@
       margin: 0;
       font-size: 16px;
       font-weight: 600;
-      color: #333;
+      color: var(--color-neutral-700);
     }
 
     .stars {
@@ -39,7 +39,7 @@
       width: 100%;
       padding: 12px;
       border-radius: 8px;
-      border: 1px solid #d1d5db;
+      border: 1px solid var(--color-neutral-300);
       resize: vertical;
       font-family: inherit;
       font-size: 14px;
@@ -47,11 +47,11 @@
       transition: border-color 0.2s;
 
       &:focus {
-        border-color: #007bff;
+        border-color: var(--color-green-500);
       }
 
       &:disabled {
-        background-color: #f3f4f6;
+        background-color: var(--color-neutral-100);
         cursor: not-allowed;
       }
     }
@@ -61,5 +61,11 @@
     display: flex;
     justify-content: flex-end;
     gap: 12px;
+
+    .submit-btn-wrapper {
+      display: flex;
+      align-items: center;
+      gap: toRem(8);
+    }
   }
 }

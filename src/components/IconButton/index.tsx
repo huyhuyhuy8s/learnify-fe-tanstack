@@ -1,6 +1,7 @@
 import "./style.scss";
 import classNames from "classnames";
-import { useState, useMemo } from "react";
+import { useState, useMemo, type ButtonHTMLAttributes } from "react";
+import Icon from "@/components/Icon";
 
 type TconButtonProp = {
   icon: string;
@@ -14,7 +15,12 @@ type TconButtonProp = {
   backgroundColor?: string;
   fill?: boolean;
   tooltip?: string;
+  ariaLabel?: string;
   className?: string;
+  style?: React.CSSProperties;
+  buttonType?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  disabled?: boolean;
+  loading?: boolean;
 };
 
 const IconButton = (props: TconButtonProp) => {
@@ -26,11 +32,16 @@ const IconButton = (props: TconButtonProp) => {
     shape = "square",
     specialIcon = "search",
     size = "medium",
-    color = "#fff",
-    backgroundColor = "none",
+    color,
+    backgroundColor,
     fill = false,
     tooltip,
+    ariaLabel,
     className,
+    style,
+    buttonType = "button",
+    disabled = false,
+    loading = false,
   } = props;
 
   const [clicked, setClicked] = useState(false);
@@ -40,17 +51,17 @@ const IconButton = (props: TconButtonProp) => {
     state,
     shape,
     size,
+    { disabled: disabled || loading },
+    { loading: loading },
     className
   );
-  const iconClassName = classNames("material-symbols-rounded", {
-    filled: fill,
-  });
   const iconVal = useMemo(
-    () => (clicked ? specialIcon : icon),
-    [clicked, specialIcon, icon]
+    () => (type === "special" ? (clicked ? specialIcon : icon) : icon),
+    [clicked, specialIcon, icon, type]
   );
 
   const handleClick = () => {
+    if (loading) return;
     setClicked(!clicked);
     onClick();
   };
@@ -59,13 +70,21 @@ const IconButton = (props: TconButtonProp) => {
     <button
       className={buttonClassName}
       style={{
+        ...style,
         backgroundColor,
         color,
       }}
       onClick={handleClick}
       title={tooltip}
+      aria-label={ariaLabel || tooltip}
+      type={buttonType}
+      disabled={disabled || loading}
     >
-      <span className={iconClassName}>{iconVal}</span>
+      {loading ? (
+        <div className="icon-button_spinner" />
+      ) : (
+        <Icon name={iconVal} fill={fill} style={{ color }} />
+      )}
     </button>
   );
 };

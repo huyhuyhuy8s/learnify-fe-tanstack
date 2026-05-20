@@ -1,46 +1,51 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
 .default-catch-boundary {
   min-width: 0;
   flex: 1;
-  padding: 1rem;
+  padding: toRem(16);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
-}
+  gap: toRem(24);
 
-.default-catch-boundary__actions {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  flex-wrap: wrap;
-}
+  &__actions {
+    display: flex;
+    gap: toRem(8);
+    align-items: center;
+    flex-wrap: wrap;
+  }
 
-.default-catch-boundary__btn {
-  padding: 0.5rem 0.75rem;
-  background-color: #4b5563;
-  border-radius: 0.125rem;
-  color: white;
-  text-transform: uppercase;
-  font-weight: 800;
-  border: none;
-  cursor: pointer;
-}
+  &__btn {
+    padding: toRem(8) toRem(12);
+    background-color: $neutral-600;
+    border-radius: $br-xs;
+    color: $white;
+    text-transform: uppercase;
+    font-weight: $fw-extrabold;
+    border: none;
+    cursor: pointer;
 
-.default-catch-boundary__btn--dark {
-  background-color: #374151;
-}
+    &--dark {
+      background-color: $neutral-700;
+    }
+  }
 
-.default-catch-boundary__link {
-  padding: 0.5rem 0.75rem;
-  background-color: #4b5563;
-  border-radius: 0.125rem;
-  color: white;
-  text-transform: uppercase;
-  font-weight: 800;
-  text-decoration: none;
-}
+  &__link {
+    padding: toRem(8) toRem(12);
+    background-color: $neutral-600;
+    border-radius: $br-xs;
+    color: $white;
+    text-transform: uppercase;
+    font-weight: $fw-extrabold;
+    text-decoration: none;
 
-.default-catch-boundary__link--dark {
-  background-color: #374151;
+    &--dark {
+      background-color: $neutral-700;
+    }
+  }
 }

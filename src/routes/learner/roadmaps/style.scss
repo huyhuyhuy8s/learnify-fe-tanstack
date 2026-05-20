@@ -1,9 +1,9 @@
 @use "@styles/variables" as *;
+@use "@styles/colors" as *;
 @use "@styles/mixins" as *;
 @use "@styles/functions" as *;
-@use "@styles/colors" as *;
 
-.roadmap-container {
+.roadmaps-container {
   padding: 0 toRem(100);
   display: flex;
   flex-direction: column;
@@ -25,7 +25,7 @@
     }
   }
 
-  .roadmap-content {
+  .roadmaps-content {
     display: flex;
     flex-direction: column;
     gap: toRem(25);
@@ -46,7 +46,7 @@
     }
   }
 
-  .roadmap-list {
+  .roadmaps-list {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(toRem(300), 1fr));
@@ -56,10 +56,10 @@
 }
 
 @include break(md) {
-  .roadmap-container {
+  .roadmaps-container {
     padding: 0;
 
-    .roadmap-content {
+    .roadmaps-content {
       > .search {
         padding: toRem(10) toRem(20);
 

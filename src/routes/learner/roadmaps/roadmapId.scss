@@ -1,54 +1,41 @@
 @use "@styles/variables" as *;
+@use "@styles/colors" as *;
 @use "@styles/mixins" as *;
 @use "@styles/functions" as *;
-@use "@styles/colors" as *;
 
-.roadmap-detail-container {
-  display: grid;
-  grid-template-columns: 1fr 20dvw;
-  gap: toRem(20);
+.roadmap {
+  &__container {
+    display: grid;
+    grid-template-columns: 1fr 20dvw;
+    gap: toRem(20);
+  }
 
-  .roadmap-detail-item-list {
+  &__item-list {
     display: flex;
     flex-direction: column;
     align-items: start;
     gap: toRem(50);
+  }
 
-    > .title {
-      display: flex;
-      flex-direction: column;
-      gap: toRem(20);
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(25);
+    width: 100%;
 
-      h3,
-      p {
-        text-align: center;
-      }
-
-      p {
-        color: $mode-neutral;
-      }
-    }
-
-    .roadmap-detail-content {
-      display: flex;
-      flex-direction: column;
-      gap: toRem(25);
-      width: 100%;
-
-      > button {
-        width: fit-content;
-      }
-    }
-
-    .roadmap-detail-list {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(toRem(300), 1fr));
-      gap: toRem(20);
+    > button {
+      width: fit-content;
     }
   }
 
-  .roadmap-detail-comment {
+  &__list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(toRem(300), 1fr));
+    gap: toRem(20);
+  }
+
+  &__comment {
     display: flex;
     flex-direction: column;
     gap: toRem(16);
@@ -56,28 +43,20 @@
 }
 
 @include break(md) {
-  .roadmap-detail-container {
-    padding: 0;
-    flex-direction: column;
-    align-items: center;
+  .roadmap {
+    &__container {
+      padding: 0;
+      flex-direction: column;
+      align-items: center;
+    }
 
-    .roadmap-detail-list {
+    &__list {
       width: 100%;
     }
 
-    .roadmap-detail-comment {
+    &__comment {
       max-width: 100%;
       margin-top: toRem(20);
-    }
-
-    .roadmap-detail-content {
-      > .search {
-        padding: toRem(10) toRem(20);
-
-        > button > span {
-          font-size: toRem(24);
-        }
-      }
     }
   }
 }

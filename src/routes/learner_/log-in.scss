@@ -1,7 +1,7 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
 @use "@styles/mixins" as *;
 @use "@styles/functions" as *;
-@use "@styles/colors" as *;
-@use "@styles/variables" as *;
 
 .log-in {
   display: flex;
@@ -184,7 +184,7 @@
     justify-content: center;
     place-items: center;
 
-    span {
+    .icon {
       font-size: 5dvw;
       font-weight: $fw-bold;
       color: $mode-green;

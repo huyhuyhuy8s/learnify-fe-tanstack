@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import Icon from "@/components/Icon";
 
 type TAccountMenuItemProps = {
   icon: string;
@@ -16,14 +17,14 @@ const AccountMenuItem = ({
   if (onClick) {
     return (
       <button className="account-menu-item" onClick={onClick}>
-        <span className="material-symbols-rounded">{icon}</span>
+        <Icon name={icon} />
         <small className="medium">{text}</small>
       </button>
     );
   }
   return (
     <Link className="account-menu-item" to={to}>
-      <span className="material-symbols-rounded">{icon}</span>
+      <Icon name={icon} />
       <small className="medium">{text}</small>
     </Link>
   );

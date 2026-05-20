@@ -1,7 +1,7 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
 @use "@styles/mixins" as *;
 @use "@styles/functions" as *;
-@use "@styles/colors" as *;
-@use "@styles/variables" as *;
 
 .home {
   margin-top: 20dvh;
@@ -31,6 +31,16 @@
     display: flex;
     place-items: center;
     justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+}
+
+@include break(md) {
+  .home {
+    .decoration-shapes {
+      visibility: hidden;
+    }
   }
 }
 

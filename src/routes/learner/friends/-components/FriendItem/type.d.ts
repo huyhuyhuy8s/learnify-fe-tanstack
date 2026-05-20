@@ -3,7 +3,7 @@ import type React from "react";
 export type TTypeFriendItem = "leaderboard" | "friends" | "request";
 
 export type TFriendItem = {
-  id: number;
+  id: string;
   name: string;
   onClick: () => void;
   imgUrl: string;

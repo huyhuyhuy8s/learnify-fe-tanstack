@@ -1,25 +1,25 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import "./home.scss";
 import Search from "@/components/Search";
 import TextButton from "@/components/TextButton";
 import { SEARCH_SUGGESTIONS } from "@/mock";
+import { getCurrentUserFn } from "@/server/auth";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import DecorationShapes from "./-components/DecorationShapes";
-import { useAuthStore } from "@/store";
-import DashboardAfterLogin from "./-components/DashboardAfterLogin";
+import "./home.scss";
 
 export const Route = createFileRoute("/learner/")({
-  component: RouteComponent,
+  beforeLoad: async ({ location }) => {
+    const { user } = await getCurrentUserFn();
+    if (user)
+      throw redirect({
+        to: "/learner/dashboard",
+        search: { redirect: location.pathname },
+      });
+    return { user };
+  },
+  component: Home,
 });
 
-function RouteComponent() {
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  if (isAuthenticated) {
-    return <DashboardAfterLogin />;
-  }
-  return <Unauthorized />;
-}
-
-function Unauthorized() {
+function Home() {
   const navigate = useNavigate();
   return (
     <div className="home">
@@ -29,10 +29,10 @@ function Unauthorized() {
           Unlock your <span className="beauty">Potential</span> for tomorrow,
           today
         </h1>
-        <h5 className="regular">
+        <p className="regular">
           Discover expert-led course with personalized guidance from our
           interactive 3D AI Teachers
-        </h5>
+        </p>
       </div>
       <Search />
       <div className="search-suggestions">

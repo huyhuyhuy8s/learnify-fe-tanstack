@@ -1,14 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { postQueryOptions } from "@/utils/posts";
-import NotFound from "@/components/NotFound";
-import PostErrorComponent from "@/components/PostErrorComponent";
-import DecorationCard from "@/components/DecorationCard";
-import TextButton from "@/components/TextButton";
 import Card from "@/components/Card";
-import CommentItem from "./-components/CommentItem";
-import "./roadmapId.scss";
+import DecorationCard from "@/components/DecorationCard";
+import NotFound from "@/components/NotFound";
+import TextButton from "@/components/TextButton";
 import { MOCK_COMMENT, MOCK_COURSES, MOCK_ROADMAP } from "@/mock";
 import { COLORS } from "@/styles/colors";
+import { postQueryOptions } from "@/utils/posts";
+import { createFileRoute } from "@tanstack/react-router";
+import CommentItem from "./-components/CommentItem";
+import "./roadmapId.scss";
 
 export const Route = createFileRoute("/learner/roadmaps/$roadmapId")({
   loader: async ({ params: { roadmapId }, context }) => {
@@ -23,14 +22,10 @@ export const Route = createFileRoute("/learner/roadmaps/$roadmapId")({
   head: ({ loaderData }) => ({
     meta: loaderData ? [{ title: loaderData.title }] : undefined,
   }),
-  errorComponent: PostErrorComponent,
-  notFoundComponent: () => {
-    return <NotFound />;
-  },
-  component: RoadmapComponent,
+  component: RoadmapItem,
 });
 
-function RoadmapComponent() {
+function RoadmapItem() {
   const { roadmapId } = Route.useParams();
   const roadmap = MOCK_ROADMAP.find(
     (roadmap) => roadmap.id === Number(roadmapId)
@@ -41,8 +36,8 @@ function RoadmapComponent() {
   }
 
   return (
-    <div className="roadmap-detail-container">
-      <div className="roadmap-detail-item-list">
+    <div className="roadmap__container">
+      <div className="roadmap__item-list">
         <DecorationCard
           listBadge={
             <TextButton
@@ -62,7 +57,7 @@ function RoadmapComponent() {
           listFeature={roadmap.listFeature}
           percentage={roadmap.percentage ?? 0}
         />
-        <div className="roadmap-detail-content">
+        <div className="roadmap__content">
           <TextButton
             text="Send feedback"
             size="small"
@@ -71,7 +66,7 @@ function RoadmapComponent() {
             typeSpecial="course"
             onClick={() => {}}
           />
-          <div className="roadmap-detail-list">
+          <div className="roadmap__list">
             {MOCK_COURSES.map((course) => (
               <Card
                 key={course.id}
@@ -87,7 +82,7 @@ function RoadmapComponent() {
           </div>
         </div>
       </div>
-      <div className="roadmap-detail-comment">
+      <div className="roadmap__comment">
         {MOCK_COMMENT.map((comment) => (
           <CommentItem
             key={comment.id}

@@ -1,8 +1,8 @@
 /* member-item.scss */
 @use "@styles/variables" as *;
+@use "@styles/colors" as *;
 @use "@styles/mixins" as *;
 @use "@styles/functions" as *;
-@use "@styles/colors" as *;
 
 .team-list {
   display: grid;

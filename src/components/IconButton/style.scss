@@ -1,7 +1,7 @@
-@use "@styles/colors" as *;
 @use "@styles/variables" as *;
-@use "@styles/functions" as *;
+@use "@styles/colors" as *;
 @use "@styles/mixins" as *;
+@use "@styles/functions" as *;
 
 .icon-button {
   display: flex;
@@ -13,9 +13,9 @@
   @include transition;
   transition-property: background-color, border-radius;
 
-  span {
+  svg {
     @include transition;
-    transition-property: font-variation-settings color;
+    transition-property: color;
     aspect-ratio: 1 / 1;
   }
 
@@ -23,7 +23,7 @@
     padding: toRem(18);
     width: toRem(70);
 
-    span {
+    svg {
       font-size: toRem(30);
     }
   }
@@ -32,7 +32,7 @@
     padding: toRem(13);
     width: toRem(56);
 
-    span {
+    svg {
       font-size: toRem(24);
     }
   }
@@ -42,27 +42,41 @@
     width: toRem(40);
     border-width: toRem(1) !important;
 
-    span {
-      font-size: toRem(18);
+    svg {
+      font-size: toRem(22);
     }
   }
 
-  &.material-symbols-rounded.filled {
-    font-variation-settings: "FILL" 1;
+  &.disabled {
+    filter: brightness(0.6) saturate(0.1);
+  }
+
+  &.loading {
+    cursor: not-allowed;
+    opacity: 0.8;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  .icon-button_spinner {
+    width: 50%;
+    height: 50%;
+    border: toRem(2) solid rgba(255, 255, 255, 0.3);
+    border-top-color: $white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
   }
 
   &.primary {
     background-color: $mode-green;
 
-    span {
-      color: $neutral-200;
+    svg {
+      color: $white;
     }
 
     &:hover {
       background-color: $green-600;
 
-      span {
-        font-variation-settings: "FILL" 1;
+      svg {
         color: $neutral-100;
       }
     }
@@ -70,28 +84,27 @@
     &:active {
       background-color: $green-500;
 
-      span {
+      svg {
         color: $neutral-900;
       }
     }
   }
 
   &.secondary {
-    background-color: inherit;
+    background-color: transparent;
 
-    span {
+    svg {
       color: $mode-green;
     }
 
     &:hover {
-      span {
-        font-variation-settings: "FILL" 1;
+      svg {
         color: $green-600;
       }
     }
 
     &:active {
-      span {
+      svg {
         color: $green-500;
       }
     }
@@ -101,15 +114,14 @@
     background-color: inherit;
     border: toRem(2) solid $mode-green;
 
-    span {
+    svg {
       color: $mode-green;
     }
 
     &:hover {
       border-color: $green-600;
 
-      span {
-        font-variation-settings: "FILL" 1;
+      svg {
         color: $green-600;
       }
     }
@@ -117,7 +129,7 @@
     &:active {
       border-color: $green-500;
 
-      span {
+      svg {
         color: $green-500;
       }
     }
@@ -137,5 +149,22 @@
     &:hover {
       border-radius: $br-md;
     }
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
   }
 }

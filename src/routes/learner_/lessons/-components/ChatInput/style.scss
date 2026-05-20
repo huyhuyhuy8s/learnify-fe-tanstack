@@ -1,0 +1,38 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
+.chat-input {
+  background-color: $neutral-150;
+  padding: toRem(20);
+  border-radius: $br-xl;
+  display: flex;
+  align-items: flex-end;
+  gap: toRem(10);
+
+  textarea {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: toRem(16);
+    color: $neutral-900;
+    resize: none;
+    overflow: hidden;
+    min-height: toRem(20);
+    max-height: toRem(200);
+    line-height: 1.5;
+    font-family: inherit;
+    padding: 0;
+    width: 100%;
+    align-self: center;
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: $neutral-300;
+    }
+  }
+}

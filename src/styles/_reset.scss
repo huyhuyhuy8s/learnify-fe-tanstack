@@ -74,13 +74,16 @@ select {
 }
 
 button {
+  background-color: transparent;
   cursor: pointer;
   border: none;
   border-width: 0;
 }
 
-input {
+input,
+textarea {
   border: none;
+  background-color: transparent;
 }
 
 a {

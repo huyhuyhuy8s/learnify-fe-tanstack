@@ -24,6 +24,8 @@ export type TTextButtonProps = {
   style?: React.CSSProperties;
   disabled?: boolean;
   className?: string;
+  buttonType?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  loading?: boolean;
 };
 
 export type TIconProps = {

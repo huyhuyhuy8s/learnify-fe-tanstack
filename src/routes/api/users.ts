@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import axios from "redaxios";
 import type { User } from "@/utils/users";
+import { logger } from "@/utils/logger";
 
 export const Route = createFileRoute("/api/users")({
   server: {
     handlers: {
       GET: async ({ request }) => {
-        console.info("Fetching users... @", request.url);
+        logger.info("Fetching users... @", request.url);
         const res = await axios.get<Array<User>>(
           "https://jsonplaceholder.typicode.com/users"
         );

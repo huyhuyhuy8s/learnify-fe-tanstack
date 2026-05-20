@@ -1,6 +1,7 @@
 import "./style.scss";
 import { useNavigate } from "@tanstack/react-router";
-import _ from "lodash";
+import trim from "lodash/trim";
+import Icon from "@/components/Icon";
 
 type TSearchProps = {
   style?: React.CSSProperties;
@@ -16,7 +17,7 @@ const Search = (props: TSearchProps) => {
     React.SyntheticEvent<HTMLFormElement>
   > = (e) => {
     e.preventDefault();
-    const query = _.trim(new FormData(e.currentTarget).get("q") as string);
+    const query = trim(new FormData(e.currentTarget).get("q") as string);
     if (!query) return;
 
     if (onSearch) onSearch(query);
@@ -31,8 +32,8 @@ const Search = (props: TSearchProps) => {
       onSubmit={handleSubmit}
     >
       <input type="text" placeholder={placeholder} id="search" name="q" />
-      <button type="submit">
-        <span className="material-symbols-rounded">search</span>
+      <button type="submit" aria-label="Search">
+        <Icon name="search" size={30} />
       </button>
     </form>
   );

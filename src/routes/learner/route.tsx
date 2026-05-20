@@ -1,33 +1,31 @@
-import LeftNav from "@/components/LeftNav";
-import TopNav from "@/components/TopNav";
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import Footer from "@/components/Footer";
-import "./style.scss";
-import Loader from "@/components/Loader";
+import LeftNav from "@/components/LeftNav";
+import TetrisLoader from "@/components/TetrisLoader";
+import TopNav from "@/components/TopNav";
+import { createLearnerHead } from "@/utils";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { Suspense } from "react";
 import { Toaster } from "sonner";
+import "./style.scss";
 
 export const Route = createFileRoute("/learner")({
   head: () => ({
-    meta: [
-      {
-        charSet: "utf-8",
-        title: "Learnify for Learner",
-      },
-    ],
+    ...createLearnerHead("Home"),
   }),
-  component: RouteComponent,
+  component: LearnerLayout,
 });
 
-function RouteComponent() {
+function LearnerLayout() {
   return (
     <>
-      <Loader disabled />
       <LeftNav />
       <article className="body">
         <TopNav />
         <div className="inner">
           <div className="content">
-            <Outlet />
+            <Suspense fallback={<TetrisLoader />}>
+              <Outlet />
+            </Suspense>
             <Toaster position="bottom-right" richColors />
           </div>
           <Footer />
