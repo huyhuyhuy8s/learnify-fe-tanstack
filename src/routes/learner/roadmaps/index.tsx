@@ -22,9 +22,9 @@ function RoadmapsPage() {
     <div className="roadmaps-container">
       <Suspense fallback={<TetrisLoader />}>
         <div className="title">
-          <h3 className="medium">
+          <h2 className="medium">
             Shape <span className="beauty">your future</span> by yourself
-          </h3>
+          </h2>
           <p className="regular">
             Roadmaps are collections of learnings designed to build deep skills
             in a particular area. Whether you're looking to earn achievements,

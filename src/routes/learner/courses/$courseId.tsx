@@ -180,6 +180,7 @@ function CourseComponent() {
         time: formatDate(review.createdAt),
         rating: review.rating,
         content: review.content || "No description",
+        isOptimistic: review.id.startsWith("optimistic-"),
       }));
     }
     return MOCK_COMMENT;
@@ -333,7 +334,13 @@ function CourseComponent() {
             type="outlined"
             typeSpecial="course"
             className="course__send-btn"
-            onClick={() => setShowCommentForm((prev) => !prev)}
+            onClick={() => {
+              if (!currentUser) {
+                toast.warning("Please log in to leave feedback");
+                return;
+              }
+              setShowCommentForm((prev) => !prev);
+            }}
           />
           <Activity mode={showCommentForm ? "visible" : "hidden"}>
             <CommentForm

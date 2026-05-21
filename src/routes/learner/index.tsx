@@ -24,12 +24,12 @@ function Home() {
   return (
     <div className="home">
       <DecorationShapes />
-      <div className="title">
-        <h1 className="semibold">
+      <div className="home__title">
+        <h1 className="home__title-main semibold">
           Unlock your <span className="beauty">Potential</span> for tomorrow,
           today
         </h1>
-        <p className="regular">
+        <p className="home__title-sub regular">
           Discover expert-led course with personalized guidance from our
           interactive 3D AI Teachers
         </p>

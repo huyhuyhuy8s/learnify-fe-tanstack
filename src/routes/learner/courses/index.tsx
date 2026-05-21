@@ -78,10 +78,10 @@ function CoursesPage() {
     <Suspense fallback={<TetrisLoader />}>
       <div className="courses-container">
         <div className="courses-container__title">
-          <h1 className="courses-container__title-context medium">
+          <h2 className="courses-container__title-context medium">
             Explore our <span className="beauty">Best courses</span> only for
             you
-          </h1>
+          </h2>
           <p className="courses-container__title-description regular">
             We offer a wide range of courses designed to help you achieve your
             learning goals. Whether you're looking to develop new skills,
