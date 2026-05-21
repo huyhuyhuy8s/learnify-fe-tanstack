@@ -82,3 +82,4 @@ src/gql
 /.tanstack/tmp
 /opencode.json
 /ssh-vps.sh
+/knowledge
