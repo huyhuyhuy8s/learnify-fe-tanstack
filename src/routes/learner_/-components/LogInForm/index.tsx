@@ -21,6 +21,9 @@ const LogInForm = memo(function LogInForm(props: TLogInFormProps) {
       }}
     >
       <div>
+        <label htmlFor="log-in-email" className="sr-only">
+          Email
+        </label>
         <input
           className={classnames("log-in-form-input", {
             "log-in-form-input-error": errors.email,
@@ -35,6 +38,12 @@ const LogInForm = memo(function LogInForm(props: TLogInFormProps) {
       </div>
 
       <div>
+        <label htmlFor="log-in-password" className="sr-only">
+          Password
+        </label>
+        <label htmlFor="log-in-password" className="sr-only">
+          Password
+        </label>
         <input
           className={classnames("log-in-form-input", {
             "log-in-form-input-error": errors.password,

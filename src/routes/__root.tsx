@@ -53,6 +53,12 @@ const Root = createRootRouteWithContext<RouterContext>()({
       }),
     ],
     links: [
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
+      },
       { rel: "image/x-icon", href: "/favicon.ico" },
       {
         rel: "icon",
@@ -76,7 +82,11 @@ const Root = createRootRouteWithContext<RouterContext>()({
       </RootDocument>
     );
   },
-  notFoundComponent: () => <NotFound />,
+  notFoundComponent: () => (
+    <RootDocument>
+      <NotFound />
+    </RootDocument>
+  ),
   component: RootComponent,
 });
 

@@ -21,7 +21,7 @@ function AboutPage() {
             Smart learning. Real skills. Ready careers.
           </h2>
         </div>
-        <Slanted color={COLORS.greenPastel200} size="15%" />
+        <Slanted color={COLORS.greenPastel200} size="15dvw" />
       </section>
 
       <section className="about-page-hero">

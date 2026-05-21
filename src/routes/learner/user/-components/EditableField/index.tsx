@@ -33,12 +33,15 @@ const EditableField = (props: TEditableFieldProps) => {
 
   return (
     <div className="editable-field">
-      <label className="editable-field-label">{label}</label>
+      <label className="editable-field-label" htmlFor={`editable-${fieldName}`}>
+        {label}
+      </label>
       <div className="editable-field-wrapper">
         {isEditing ? (
           <input
             ref={inputRef}
             type="text"
+            id={`editable-${fieldName}`}
             className="editable-field-input"
             value={currentValue}
             onChange={(e) => setCurrentValue(e.target.value)}
@@ -55,6 +58,7 @@ const EditableField = (props: TEditableFieldProps) => {
           onClick={() => setIsEditing((prev) => !prev)}
           disabled={isLoading}
           type="button"
+          aria-label={`Edit ${fieldName}`}
         >
           <svg
             width="16"

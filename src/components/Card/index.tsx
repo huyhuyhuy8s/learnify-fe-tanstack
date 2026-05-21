@@ -20,7 +20,13 @@ const Card = (props: TCourseCardProps) => {
   return (
     <div
       className={classnames("card", { disabled: disabled }, className)}
-      onClick={disabled ? undefined : onClick}
+      onClick={onClick}
+      onKeyDown={(e) => {
+        if ((e.key === "Enter" || e.key === " ") && onClick) {
+          e.preventDefault();
+          onClick();
+        }
+      }}
       role="button"
       tabIndex={0}
     >

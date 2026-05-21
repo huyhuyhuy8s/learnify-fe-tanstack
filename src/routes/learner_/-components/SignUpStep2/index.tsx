@@ -31,6 +31,7 @@ const SignUpStep2 = memo(function SignUpStep2({
             "sign-up-input-error": errors.password,
           })}
           type="password"
+          aria-label="Password"
           placeholder="Password"
           id="sign-up-password"
           value={data.password}
@@ -45,6 +46,7 @@ const SignUpStep2 = memo(function SignUpStep2({
             "sign-up-input-error": errors.confirmPassword,
           })}
           type="password"
+          aria-label="Confirm password"
           placeholder="Confirm Password"
           id="sign-up-confirm-password"
           value={data.confirmPassword}

@@ -40,13 +40,20 @@ const ForgotPasswordStep2 = ({
             resetting your password.
           </p>
 
-          <div className="forgot-password-step2-code-input">
+          <form
+            className="forgot-password-step2-code-input"
+            onSubmit={(e) => {
+              e.preventDefault();
+              onSubmit();
+            }}
+          >
             {data.code.map((digit, index) => (
               <input
                 key={index}
                 ref={(el) => {
                   inputRefs.current[index] = el;
                 }}
+                aria-label={`Digit ${index + 1} of 6`}
                 className={classnames("forgot-password-step2-code-digit", {
                   "forgot-password-step2-code-digit-error": errors.code,
                 })}
@@ -58,7 +65,7 @@ const ForgotPasswordStep2 = ({
                 onKeyDown={(e) => handleKeyDown(index, e)}
               />
             ))}
-          </div>
+          </form>
 
           {errors.code && (
             <p className="forgot-password-step2-error">{errors.code}</p>
@@ -66,9 +73,8 @@ const ForgotPasswordStep2 = ({
 
           <button
             className="forgot-password-step2-verify-btn"
-            type="button"
+            type="submit"
             disabled={isPending}
-            onClick={onSubmit}
           >
             <h6 className="semibold">Verify code</h6>
           </button>

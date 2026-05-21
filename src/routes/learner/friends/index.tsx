@@ -12,10 +12,11 @@ import {
 import type { TBackendUser } from "@/hooks/useProfile";
 import { getCurrentUserFn } from "@/server/auth";
 import { createLearnerHead } from "@/utils";
-import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import classNames from "classnames";
 import { Suspense, useMemo, useState } from "react";
 import FriendDetail from "./-components/FriendDetail";
+import FriendEmptyState from "./-components/FriendEmptyState";
 import type { TFriendDetail } from "./-components/FriendDetail/type";
 import FriendItem from "./-components/FriendItem";
 import type {
@@ -59,13 +60,8 @@ function FriendsErrorComponent() {
 }
 
 export const Route = createFileRoute("/learner/friends/")({
-  beforeLoad: async ({ location }) => {
+  beforeLoad: async () => {
     const { user } = await getCurrentUserFn();
-    if (!user)
-      throw redirect({
-        to: "/learner/log-in",
-        search: { redirect: location.pathname },
-      });
     return { user };
   },
   head: () => createLearnerHead("Friends"),
@@ -210,6 +206,10 @@ function FriendsPage() {
     (typeFriend === "friends" && isLoadingFriends) ||
     (typeFriend === "request" && isLoadingPending) ||
     (typeFriend === "leaderboard" && isLoadingLeaderboard);
+
+  if (!currentUser) {
+    return <FriendEmptyState />;
+  }
 
   return (
     <Suspense fallback={<TetrisLoader />}>

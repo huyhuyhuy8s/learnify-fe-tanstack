@@ -19,7 +19,7 @@ const Footer = () => {
       />
       <div className="footer-content">
         <div className="item item-1">
-          <h1 className="bold">Learnify</h1>
+          <h2 className="bold">Learnify</h2>
           <p>
             Made by{" "}
             <a href="https://tanstack.com/start/latest">Tanstack Start</a>
@@ -27,44 +27,24 @@ const Footer = () => {
         </div>
         <div className="item item-2">
           <div className="navigation">
-            <h6>Navigation</h6>
+            <p className="footer-section-label">Navigation</p>
             <div className="navigation-context">
-              <h6>
-                <Link to="/learner/courses">Courses</Link>
-              </h6>
-              <h6>
-                <Link to="/learner/roadmaps">Roadmaps</Link>
-              </h6>
-              <h6>
-                <Link to="/learner/friends">Friends</Link>
-              </h6>
-              <h6>
-                <Link to="/learner/about">About</Link>
-              </h6>
+              <Link to="/learner/courses">Courses</Link>
+              <Link to="/learner/roadmaps">Roadmaps</Link>
+              <Link to="/learner/friends">Friends</Link>
+              <Link to="/learner/about">About</Link>
             </div>
           </div>
           <p>&copy;{currentYear} Learnify. All right reserved.</p>
         </div>
         <div className="item item-3">
           <div className="socials">
-            <h6>Socials</h6>
+            <p className="footer-section-label">Socials</p>
             <div className="socials-context">
-              <h6>
-                {" "}
-                <a href="/">IG</a>{" "}
-              </h6>
-              <h6>
-                {" "}
-                <a href="/">DR</a>{" "}
-              </h6>
-              <h6>
-                {" "}
-                <a href="/">FB</a>{" "}
-              </h6>
-              <h6>
-                {" "}
-                <a href="/">X</a>{" "}
-              </h6>
+              <a href="/">IG</a>
+              <a href="/">DR</a>
+              <a href="/">FB</a>
+              <a href="/">X</a>
             </div>
           </div>
           <a href="/">Privacy Policy</a>

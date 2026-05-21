@@ -56,10 +56,18 @@ export const Sidebar = () => {
         ))}
       </div>
       <div className="sidebar__actions">
-        <button title="Change language" className="sidebar__action-btn">
+        <button
+          title="Change language"
+          aria-label="Change language"
+          className="sidebar__action-btn"
+        >
           <Icon name="language" className="sidebar__action-icon" />
         </button>
-        <button title="Toggle dark mode" className="sidebar__action-btn">
+        <button
+          title="Toggle dark mode"
+          aria-label="Toggle dark mode"
+          className="sidebar__action-btn"
+        >
           <Icon name="dark_mode" className="sidebar__action-icon" />
         </button>
       </div>

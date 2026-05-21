@@ -20,9 +20,19 @@ const ForgotPasswordStep1 = ({
             address below.
           </p>
 
-          <div className="forgot-password-step1-form">
+          <form
+            className="forgot-password-step1-form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              onSubmit();
+            }}
+          >
             <div>
+              <label htmlFor="forgot-email" className="sr-only">
+                Email address
+              </label>
               <input
+                id="forgot-email"
                 className={classnames("forgot-password-step1-input", {
                   "forgot-password-step1-input-error": errors.email,
                 })}
@@ -38,13 +48,12 @@ const ForgotPasswordStep1 = ({
 
             <button
               className="forgot-password-step1-submit-btn"
-              type="button"
+              type="submit"
               disabled={isPending}
-              onClick={onSubmit}
             >
               <h6 className="semibold">Send reset code</h6>
             </button>
-          </div>
+          </form>
 
           <p className="forgot-password-step1-back-link regular">
             Remember your password?{" "}

@@ -24,6 +24,7 @@ const SignUpStep1 = memo(function SignUpStep1({
               "sign-up-input-error": errors.firstName,
             })}
             type="text"
+            aria-label="First name"
             placeholder="First name"
             id="sign-up-first-name"
             value={data.firstName}
@@ -39,6 +40,7 @@ const SignUpStep1 = memo(function SignUpStep1({
               "sign-up-input-error": errors.lastName,
             })}
             type="text"
+            aria-label="Last name"
             placeholder="Last name"
             id="sign-up-last-name"
             value={data.lastName}
@@ -56,6 +58,7 @@ const SignUpStep1 = memo(function SignUpStep1({
             "sign-up-input-error": errors.email,
           })}
           type="email"
+          aria-label="Email address"
           placeholder="name@learnify-email.com"
           id="sign-up-email"
           value={data.email}

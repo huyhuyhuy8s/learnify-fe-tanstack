@@ -14,6 +14,7 @@ import {
 } from "@/hooks/useCourseDetail";
 import { MOCK_COMMENT } from "@/mock";
 import { useAuthStore } from "@/store/authStore";
+import { useLayout } from "@/contexts/LayoutContext";
 import { COLORS } from "@/styles/colors";
 import type { TProgress, TStatusCard } from "@/types/global";
 import { createLearnerHead, formatDate } from "@/utils";
@@ -26,7 +27,7 @@ import {
   useNavigate,
   useRouter,
 } from "@tanstack/react-router";
-import { Activity, useMemo, useState } from "react";
+import { Activity, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import CommentForm from "./-components/CommentForm";
 import CommentItem from "./-components/CommentItem";
@@ -92,6 +93,16 @@ function CourseComponent() {
 
   const { data } = useSuspenseQuery(courseQueryOptions(courseId));
   const { getCourseById, getLessonsByCourseId, getReviewsByCourse } = data;
+  const { setLayoutConfigState } = useLayout();
+
+  useEffect(() => {
+    if (getCourseById?.courseName) {
+      setLayoutConfigState((prev) => ({
+        ...prev,
+        customTitle: getCourseById.courseName,
+      }));
+    }
+  }, [getCourseById?.courseName, setLayoutConfigState]);
 
   const createReview = useCreateReview();
   const enrollCourseMutation = useEnrollCourse();
@@ -190,6 +201,7 @@ function CourseComponent() {
 
     return {
       title: getCourseById.courseName,
+      abstract: getCourseById.abstract ?? null,
       status: currentStatus,
       listFeature: getCourseById.keyLearnings ?? [],
       percentage: currentProgressPercentage as TProgress,
@@ -204,11 +216,15 @@ function CourseComponent() {
     enrollCourseMutation.mutate({ courseId, userId });
   };
 
-  const handleLessonClick = (lessonId: string) => {
+  const handleLessonClick = (lessonId: string, isLocked: boolean) => {
     if (!isEnrolled) {
       toast.warning(
         "You need to enroll in the course before accessing lessons!"
       );
+      return;
+    }
+    if (isLocked) {
+      toast.warning("Complete the previous lesson to unlock this one!");
       return;
     }
     navigate({
@@ -261,6 +277,9 @@ function CourseComponent() {
           listFeature={courseDisplay.listFeature}
           percentage={courseDisplay.percentage}
         />
+        {courseDisplay.abstract && (
+          <p className="course__abstract">{courseDisplay.abstract}</p>
+        )}
         <div className="course__controller">
           {!isEnrolled && (
             <TextButton
@@ -279,14 +298,6 @@ function CourseComponent() {
           )}
 
           <TextButton
-            text="Send feedback"
-            size="small"
-            icon="add"
-            type="outlined"
-            typeSpecial="course"
-            onClick={() => setShowCommentForm((prev) => !prev)}
-          />
-          <TextButton
             text="Show feedback"
             size="small"
             icon="feedback"
@@ -295,21 +306,6 @@ function CourseComponent() {
             onClick={() => setShowComment((prev) => !prev)}
           />
         </div>
-
-        <Activity mode={showCommentForm ? "visible" : "hidden"}>
-          <CommentForm
-            onSubmit={(rating, content) => {
-              createReview.mutate(
-                { courseId: courseId, rating, content },
-                {
-                  onSuccess: () => setShowCommentForm(false),
-                }
-              );
-            }}
-            onCancel={() => setShowCommentForm(false)}
-            isLoading={createReview.isPending}
-          />
-        </Activity>
         <div className="course__list">
           {lessonsDisplay.map((lesson) => (
             <Card
@@ -320,7 +316,9 @@ function CourseComponent() {
               duration={lesson.duration}
               status={lesson.status}
               percentage={lesson.percentage}
-              onClick={() => handleLessonClick(lesson.id)}
+              onClick={() =>
+                handleLessonClick(lesson.id, lesson.status === "locked")
+              }
               disabled={lesson.status === "locked"}
             />
           ))}
@@ -328,6 +326,29 @@ function CourseComponent() {
       </div>
       <Activity mode={showComment ? "visible" : "hidden"}>
         <div className="course__comment">
+          <TextButton
+            text="Send feedback"
+            size="small"
+            icon="add"
+            type="outlined"
+            typeSpecial="course"
+            className="course__send-btn"
+            onClick={() => setShowCommentForm((prev) => !prev)}
+          />
+          <Activity mode={showCommentForm ? "visible" : "hidden"}>
+            <CommentForm
+              onSubmit={(rating, content) => {
+                createReview.mutate(
+                  { courseId: courseId, rating, content },
+                  {
+                    onSuccess: () => setShowCommentForm(false),
+                  }
+                );
+              }}
+              onCancel={() => setShowCommentForm(false)}
+              isLoading={createReview.isPending}
+            />
+          </Activity>
           {commentDisplay.map((comment) => (
             <CommentItem
               key={comment.id}

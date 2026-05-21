@@ -31,6 +31,9 @@ const Search = (props: TSearchProps) => {
       style={style}
       onSubmit={handleSubmit}
     >
+      <label htmlFor="search" className="sr-only">
+        Search for courses
+      </label>
       <input type="text" placeholder={placeholder} id="search" name="q" />
       <button type="submit" aria-label="Search">
         <Icon name="search" size={30} />
