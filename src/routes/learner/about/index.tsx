@@ -50,22 +50,26 @@ function AboutPage() {
           </p>
         </div>
 
-        <OptimizeImage src="/footer.webp" alt="Learnify abstract visual" />
+        <OptimizeImage
+          priority
+          src="/footer.webp"
+          alt="Learnify abstract visual"
+        />
       </section>
 
       <hr className="about-page-divider" />
 
       <section className="about-page-direction">
         <div className="with-bullet">
-          <h5 className="title">Inspiring with human-centric design.</h5>
-          <h5 className="subtitle">Empowering through technology</h5>
+          <h4 className="title">Inspiring with human-centric design.</h4>
+          <h4 className="subtitle">Empowering through technology</h4>
         </div>
-        <h4>
+        <h5>
           Learnify was born from a simple belief: learning should be personal,
           engaging, and accessible to everyone. We combine expert-curated
           content with AI-driven guidance to create an experience that adapts to
           your unique pace and goals.
-        </h4>
+        </h5>
       </section>
 
       <section className="about-page-stats-section">
@@ -83,19 +87,19 @@ function AboutPage() {
       <hr className="about-page-divider" />
 
       <section className="about-page-vision">
-        <h5 className="with-bullet subtitle">Our Visions</h5>
-        <h4>
+        <h4 className="with-bullet subtitle">Our Visions</h4>
+        <h5>
           From interactive mind-maps to motivational streaks, every feature is
           designed to help you build lasting knowledge—not just pass the next
           exam.
-        </h4>
+        </h5>
       </section>
 
       <hr className="about-page-divider" />
 
       <section className="about-page-team">
-        <h5 className="with-bullet subtitle">Our Crews</h5>
-        <h4 className="semibold">People</h4>
+        <h4 className="with-bullet subtitle">Our Crews</h4>
+        <h5 className="semibold">People</h5>
       </section>
 
       <TeamList />

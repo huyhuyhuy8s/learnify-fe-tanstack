@@ -40,12 +40,20 @@
   --color-dark-green-400: #939e93;
   --color-dark-green-500: #96a194;
   --color-green-300: #8ca08d;
+  --color-green-400: #7a8a7b;
   --color-green-pastel-100: #96a194;
   --color-green-pastel-200: #8ca08d;
   --color-neutral-pastel-100: #9b9b9b;
   --color-navy-400: #929ca9;
   --color-brown-500: #aa9883;
   --color-accent-blaze: #f06b6b;
+}
+
+@mixin wcag-accent-dark-overrides {
+  --color-accent-minty: #2a5a3a;
+  --color-accent-indicolite: #2a6a2a;
+  --color-accent-classic-pink: #7a3a5a;
+  --color-accent-smoothing-lime: #5a6a2a;
 }
 
 :root {
@@ -57,4 +65,5 @@
   @include generate-dark-theme($color-map);
   @include generate-accents($accent-map);
   @include wcag-dark-overrides;
+  @include wcag-accent-dark-overrides;
 }

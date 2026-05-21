@@ -16,6 +16,7 @@ const Footer = () => {
         className="footer-banner"
         src="/footer.webp"
         alt="footer-banner"
+        priority
       />
       <div className="footer-content">
         <div className="item item-1">
