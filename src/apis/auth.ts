@@ -31,13 +31,13 @@ export const fetchCurrentUser = async (
         "| isSuccess:",
         data?.currentUser?.isSuccess
       );
-      return null;
+      throw new Error("Failed to load user data");
     }
     const user = data.currentUser.users[0];
     logger.info("[auth] success - user:", user?.id);
     return user;
   } catch (error) {
     logger.error("[auth] fetch error:", error);
-    return null;
+    throw new Error("Failed to load user data");
   }
 };

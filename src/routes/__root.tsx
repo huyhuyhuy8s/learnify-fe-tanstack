@@ -1,27 +1,27 @@
-import * as React from "react";
-import { Suspense, lazy, useEffect, useState } from "react";
+import DefaultCatchBoundary from "@/components/DefaultCatchBoundary";
+import Loader from "@/components/Loader";
+import NotFound from "@/components/NotFound";
+import { LayoutProvider } from "@/contexts/LayoutContext";
+import { useTheme } from "@/hooks/useTheme";
+import "@/i18n";
+import type { RouterContext } from "@/router";
+import { getCurrentUserFn } from "@/server/auth";
+import { useAuthStore } from "@/store/authStore";
+import { seo } from "@/utils/seo";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import "@styles/_global.scss";
 import {
   HeadContent,
   Outlet,
   Scripts,
   createRootRouteWithContext,
 } from "@tanstack/react-router";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import gsap from "gsap";
 import CustomEase from "gsap/CustomEase";
 import { SplitText } from "gsap/SplitText";
-import { toast } from "sonner";
-import "@/i18n";
-import DefaultCatchBoundary from "@/components/DefaultCatchBoundary";
-import Loader from "@/components/Loader";
-import NotFound from "@/components/NotFound";
-import { LayoutProvider } from "@/contexts/LayoutContext";
-import { useTheme } from "@/hooks/useTheme";
-import type { RouterContext } from "@/router";
-import { getCurrentUserFn } from "@/server/auth";
-import { useAuthStore } from "@/store/authStore";
-import { seo } from "@/utils/seo";
-import "@styles/_global.scss";
+import * as React from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
+import { Toaster, toast } from "sonner";
 import "./root.scss";
 
 gsap.registerPlugin(SplitText, CustomEase);
@@ -103,8 +103,12 @@ function RootComponent() {
   const phase2Ready = phase1Done && pageLoaded;
 
   useEffect(() => {
-    if (auth?.expired) toast.error("Session expired. Please log in again.");
-    setAuth(auth?.user || null);
+    if (auth.expired) toast.error("Session expired. Please log in again.");
+    setAuth(
+      auth.user
+        ? { ...auth.user, subscription: auth.user.subscription || "Free" }
+        : null
+    );
   }, [setAuth, auth]);
 
   useEffect(() => {
@@ -166,6 +170,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           <Suspense fallback={null}>
             <DevTools />
           </Suspense>
+          <Toaster position="bottom-right" richColors />
           <Scripts />
         </GoogleOAuthProvider>
       </body>

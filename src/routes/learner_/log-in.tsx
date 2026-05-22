@@ -7,6 +7,7 @@ import Logo from "@/components/Logo";
 import { useGoogleLogin } from "@/hooks/useGoogleLogin";
 import LogInForm from "./-components/LogInForm";
 import "./log-in.scss";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/learner_/log-in")({
   head: () => ({
@@ -37,7 +38,6 @@ function LogInPage() {
             <GoogleLogin
               onSuccess={(credentialResponse) => {
                 if (!credentialResponse?.credential) {
-                  console.error("Google login failed: no credential returned");
                   return;
                 }
                 const idToken = credentialResponse.credential;
@@ -48,7 +48,7 @@ function LogInPage() {
                 });
               }}
               onError={() => {
-                console.error("Google login failed");
+                toast.error("Failed to login");
               }}
               useOneTap
               theme="outline"
