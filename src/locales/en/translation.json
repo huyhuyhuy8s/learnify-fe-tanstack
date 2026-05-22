@@ -71,7 +71,8 @@
     "load_courses": "Unable to load courses at this time. This could be a network issue or a server problem. Please try again.",
     "load_friends": "Unable to load friends at this time. This could be a network issue or a server problem. Please try again.",
     "try_again": "Try Again",
-    "go_back": "Go Back"
+    "go_back": "Go Back",
+    "session_expired": "Session expired. Please log in again."
   },
   "auth": {
     "login": {
@@ -290,11 +291,26 @@
   "voice_settings": {
     "title": "Voice Settings",
     "voices": [
-      { "label": "Aria", "description": "African American" },
-      { "label": "Charlotte", "description": "British" },
-      { "label": "Domi", "description": "American" },
-      { "label": "Rachel", "description": "American" },
-      { "label": "Sarah", "description": "Soft Female" }
+      {
+        "label": "Aria",
+        "description": "African American"
+      },
+      {
+        "label": "Charlotte",
+        "description": "British"
+      },
+      {
+        "label": "Domi",
+        "description": "American"
+      },
+      {
+        "label": "Rachel",
+        "description": "American"
+      },
+      {
+        "label": "Sarah",
+        "description": "Soft Female"
+      }
     ]
   },
   "teacher_panel": {
@@ -345,5 +361,42 @@
     "submit_answer": "Submit Answer",
     "see_results": "See Results",
     "next_question": "Next Question"
+  },
+  "subscriptions": {
+    "heading": "Choose the <Beauty>perfect</Beauty> plan for your goals",
+    "subtitle": "Master new skills and earn industry-recognized certificates through hands-on learning—guided by our expert 3D AI Lecturers. No prior experience needed.",
+    "starter": {
+      "title": "Starter",
+      "price": "<0>Free</0>",
+      "subtitle": "Start learning with basic access to hands-on labs and earn your first skill badges.",
+      "descriptions": [
+        "<0>35 free</0> credits every month",
+        "<0>10 questions</0> for 3D AI Lecturers per month",
+        "Access to foundational courses and limited labs"
+      ]
+    },
+    "pro": {
+      "title": "Pro",
+      "price": "<0>$49</0> / month",
+      "subtitle": "Unlock unlimited hands-on learning from beginner to advanced levels.",
+      "descriptions": [
+        "<0>Unlimited</0> access to thousands of courses and labs",
+        "Full access to the Learnify content library",
+        "<0>Included everything in Start plan</0>"
+      ]
+    },
+    "career": {
+      "title": "Career",
+      "price": "<0>$99</0> / month",
+      "subtitle": "Launch your career in high-paying fields with the skills employers are looking for.",
+      "descriptions": [
+        "Validated by <0>top employers</0>",
+        "<0>Unlimited questions</0> for 3D AI Lecturers",
+        "Access to <0>professional certification programs</0>"
+      ]
+    },
+    "select": "Select",
+    "free-trial": "Start free trial",
+    "learn_more": "Learn more"
   }
 }

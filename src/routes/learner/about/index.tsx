@@ -21,7 +21,7 @@ function AboutPage() {
           <h1 className="about-page__head-title">{t("about.page_title")}</h1>
           <h2 className="about-page__head-tagline">{t("about.tagline")}</h2>
         </div>
-        <Slanted color={COLORS.greenPastel200} size="15dvw" />
+        <Slanted color={COLORS.greenPastel200} size="15vw" />
       </section>
 
       <section className="about-page__hero">

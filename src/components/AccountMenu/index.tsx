@@ -49,7 +49,7 @@ const AccountMenu = (props: TAccountMenuProps) => {
         <AccountMenuItem
           icon="subscriptions"
           text={t("account_menu.subscription")}
-          to="/learner/subscription"
+          to="/learner/subscriptions"
         />
         <AccountMenuItem
           icon="settings"

@@ -31,3 +31,10 @@ $breakpoints: (
     @error "Invalid breakpoint: #{$breakpoint}.";
   }
 }
+
+@mixin flex-gap($gap) {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  gap: toRem($gap);
+}

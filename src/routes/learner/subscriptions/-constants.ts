@@ -2,7 +2,8 @@ import type { TSubscription } from "./-types/type";
 
 export const SUBSCRIPTIONS: TSubscription[] = [
   {
-    type: "Free",
+    type: "Starter",
+    title: "Starter",
     icon: "sell",
     price: "<strong>Free</strong>",
     subtitle:
@@ -15,6 +16,7 @@ export const SUBSCRIPTIONS: TSubscription[] = [
   },
   {
     type: "Pro",
+    title: "Pro",
     icon: "business_center",
     price: "<strong>$49</strong> / month",
     subtitle:
@@ -27,6 +29,7 @@ export const SUBSCRIPTIONS: TSubscription[] = [
   },
   {
     type: "Career",
+    title: "Career",
     icon: "star",
     price: "<strong>$99</strong> / month",
     subtitle:

@@ -1,5 +1,6 @@
 export type TSubscription = {
-  type: "Free" | "Pro" | "Career";
+  type: "Starter" | "Pro" | "Career";
+  title: string;
   icon: string;
   price: string;
   subtitle: string;

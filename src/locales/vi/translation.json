@@ -71,7 +71,8 @@
     "load_courses": "Không thể tải khóa học lúc này. Đây có thể là sự cố mạng hoặc máy chủ. Vui lòng thử lại.",
     "load_friends": "Không thể tải danh sách bạn bè lúc này. Đây có thể là sự cố mạng hoặc máy chủ. Vui lòng thử lại.",
     "try_again": "Thử lại",
-    "go_back": "Quay lại"
+    "go_back": "Quay lại",
+    "session_expired": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại."
   },
   "auth": {
     "login": {
@@ -290,11 +291,26 @@
   "voice_settings": {
     "title": "Cài đặt giọng nói",
     "voices": [
-      { "label": "Aria", "description": "Người Mỹ gốc Phi" },
-      { "label": "Charlotte", "description": "Anh" },
-      { "label": "Domi", "description": "Mỹ" },
-      { "label": "Rachel", "description": "Mỹ" },
-      { "label": "Sarah", "description": "Nữ nhẹ nhàng" }
+      {
+        "label": "Aria",
+        "description": "Người Mỹ gốc Phi"
+      },
+      {
+        "label": "Charlotte",
+        "description": "Anh"
+      },
+      {
+        "label": "Domi",
+        "description": "Mỹ"
+      },
+      {
+        "label": "Rachel",
+        "description": "Mỹ"
+      },
+      {
+        "label": "Sarah",
+        "description": "Nữ nhẹ nhàng"
+      }
     ]
   },
   "teacher_panel": {
@@ -345,5 +361,42 @@
     "submit_answer": "Gửi câu trả lời",
     "see_results": "Xem kết quả",
     "next_question": "Câu hỏi tiếp theo"
+  },
+  "subscriptions": {
+    "heading": "Chọn gói <Beauty>hoàn hảo</Beauty> cho mục tiêu của bạn",
+    "subtitle": "Làm chủ kỹ năng mới và nhận chứng chỉ được công nhận trong ngành thông qua học tập thực hành—với sự hướng dẫn của Giảng viên AI 3D chuyên gia của chúng tôi. Không yêu cầu kinh nghiệm trước.",
+    "starter": {
+      "title": "Starter",
+      "price": "<0>Miễn phí</0>",
+      "subtitle": "Bắt đầu học với quyền truy cập cơ bản vào phòng thực hành và kiếm huy hiệu kỹ năng đầu tiên của bạn.",
+      "descriptions": [
+        "<0>35 tín chỉ</0> miễn phí mỗi tháng",
+        "<0>10 câu hỏi</0> cho Giảng viên AI 3D mỗi tháng",
+        "Truy cập các khóa học nền tảng và phòng thực hành có giới hạn"
+      ]
+    },
+    "pro": {
+      "title": "Pro",
+      "price": "<0>$49</0> / tháng",
+      "subtitle": "Mở khóa quyền truy cập không giới hạn vào học tập thực hành từ cơ bản đến nâng cao.",
+      "descriptions": [
+        "Truy cập <0>không giới hạn</0> vào hàng nghìn khóa học và phòng thực hành",
+        "Toàn quyền truy cập thư viện nội dung Learnify",
+        "<0>Bao gồm mọi thứ trong gói Starter</0>"
+      ]
+    },
+    "career": {
+      "title": "Career",
+      "price": "<0>$99</0> / tháng",
+      "subtitle": "Phát triển sự nghiệp của bạn trong các lĩnh vực lương cao với những kỹ năng mà nhà tuyển dụng đang tìm kiếm.",
+      "descriptions": [
+        "Được xác nhận bởi <0>các nhà tuyển dụng hàng đầu</0>",
+        "<0>Hỏi không giới hạn</0> cho Giảng viên AI 3D",
+        "Truy cập <0>chương trình chứng chỉ chuyên nghiệp</0>"
+      ]
+    },
+    "select": "Chọn",
+    "free-trial": "Thử miễn phí",
+    "learn_more": "Tìm hiểu thêm"
   }
 }
