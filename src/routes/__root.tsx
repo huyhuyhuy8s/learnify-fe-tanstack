@@ -1,3 +1,17 @@
+import * as React from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
+import {
+  HeadContent,
+  Outlet,
+  Scripts,
+  createRootRouteWithContext,
+} from "@tanstack/react-router";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import gsap from "gsap";
+import CustomEase from "gsap/CustomEase";
+import { SplitText } from "gsap/SplitText";
+import { toast } from "sonner";
+import "@/i18n";
 import DefaultCatchBoundary from "@/components/DefaultCatchBoundary";
 import Loader from "@/components/Loader";
 import NotFound from "@/components/NotFound";
@@ -7,20 +21,7 @@ import type { RouterContext } from "@/router";
 import { getCurrentUserFn } from "@/server/auth";
 import { useAuthStore } from "@/store/authStore";
 import { seo } from "@/utils/seo";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import "@styles/_global.scss";
-import {
-  HeadContent,
-  Outlet,
-  Scripts,
-  createRootRouteWithContext,
-} from "@tanstack/react-router";
-import gsap from "gsap";
-import CustomEase from "gsap/CustomEase";
-import { SplitText } from "gsap/SplitText";
-import * as React from "react";
-import { Suspense, lazy, useEffect, useState } from "react";
-import { toast } from "sonner";
 import "./root.scss";
 
 gsap.registerPlugin(SplitText, CustomEase);
@@ -138,9 +139,22 @@ export const Route = Root;
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
+  const [lang, setLang] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("app-language") || "en";
+    }
+    return "en";
+  });
+
+  useEffect(() => {
+    import("@/i18n").then(({ default: i18n }) => {
+      setLang(i18n.language);
+      i18n.on("languageChanged", setLang);
+    });
+  }, []);
 
   return (
-    <html lang="en">
+    <html lang={lang} suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>

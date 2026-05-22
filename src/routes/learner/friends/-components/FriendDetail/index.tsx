@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import type { TFriendDetail } from "./type";
 import "./style.scss";
 
@@ -8,6 +9,7 @@ type Props = TFriendDetail & {
 };
 
 const FriendDetail = (props: Props) => {
+  const { t } = useTranslation();
   const {
     imgBackground,
     imgUrl,
@@ -24,65 +26,79 @@ const FriendDetail = (props: Props) => {
 
   return (
     <div className="friend-detail">
-      <div className="friend-detail-header">
+      <div className="friend-detail__header">
         {imgBackground ? (
           <img
-            className="friend-detail-bg"
+            className="friend-detail__bg"
             src={imgBackground}
             alt="Background"
           />
         ) : (
-          <div className="friend-detail-bg friend-detail-bg--empty"></div>
+          <div className="friend-detail__bg friend-detail__bg--empty"></div>
         )}
-        <div className="friend-detail-avatar-wrapper">
-          <img className="friend-detail-avatar" src={imgUrl} alt={name} />
+        <div className="friend-detail__avatar-wrapper">
+          <img className="friend-detail__avatar" src={imgUrl} alt={name} />
         </div>
       </div>
 
-      <div className="friend-detail-body">
-        <h3 className="friend-detail-name bold">{name}</h3>
-        <p className="friend-detail-meta">{email}</p>
+      <div className="friend-detail__body">
+        <h3 className="friend-detail__name bold">{name}</h3>
+        <p className="friend-detail__meta">{email}</p>
         {showAddFriendBtn && (
           <button
-            className="friend-detail-add-btn"
+            className="friend-detail__add-btn"
             onClick={onSendFriendRequest}
             disabled={isSendingRequest}
           >
-            {isSendingRequest ? "Sending..." : "Add Friend"}
+            {isSendingRequest
+              ? t("friends.detail.sending")
+              : t("friends.detail.add_friend")}
           </button>
         )}
 
-        <div className="friend-detail-stats friend-detail-stats--with-btn">
-          <div className="friend-detail-stat-item">
-            <span className="friend-detail-stat-value">{badges}</span>
-            <span className="friend-detail-stat-label">Badges</span>
+        <div className="friend-detail__stats friend-detail__stats--with-btn">
+          <div className="friend-detail__stat-item">
+            <span className="friend-detail__stat-value">{badges}</span>
+            <span className="friend-detail__stat-label">
+              {t("friends.detail.badges")}
+            </span>
           </div>
-          <div className="friend-detail-stat-item">
-            <span className="friend-detail-stat-value">{follower}</span>
-            <span className="friend-detail-stat-label">Followers</span>
+          <div className="friend-detail__stat-item">
+            <span className="friend-detail__stat-value">{follower}</span>
+            <span className="friend-detail__stat-label">
+              {t("friends.detail.followers")}
+            </span>
           </div>
-          <div className="friend-detail-stat-item">
-            <span className="friend-detail-stat-value">{streak}</span>
-            <span className="friend-detail-stat-label">Streak Days</span>
+          <div className="friend-detail__stat-item">
+            <span className="friend-detail__stat-value">{streak}</span>
+            <span className="friend-detail__stat-label">
+              {t("friends.detail.streak_days")}
+            </span>
           </div>
-          <div className="friend-detail-stat-item">
-            <span className="friend-detail-stat-value">{course}</span>
-            <span className="friend-detail-stat-label">Courses</span>
+          <div className="friend-detail__stat-item">
+            <span className="friend-detail__stat-value">{course}</span>
+            <span className="friend-detail__stat-label">
+              {t("friends.detail.courses")}
+            </span>
           </div>
         </div>
 
-        <div className="friend-detail-achievements">
-          <h2 className="friend-detail-achievements-title">Achievements</h2>
-          <div className="friend-detail-achievements-list">
-            <div className="friend-detail-achievement-item">
-              <div className="friend-detail-achievement-icon friend-detail-achievement-icon--yellow"></div>
-              <span className="friend-detail-achievement-label">
-                Path Enroll
+        <div className="friend-detail__achievements">
+          <h2 className="friend-detail__achievements-title">
+            {t("friends.detail.achievements")}
+          </h2>
+          <div className="friend-detail__achievements-list">
+            <div className="friend-detail__achievement-item">
+              <div className="friend-detail__achievement-icon friend-detail__achievement-icon--yellow"></div>
+              <span className="friend-detail__achievement-label">
+                {t("friends.detail.path_enroll")}
               </span>
             </div>
-            <div className="friend-detail-achievement-item">
-              <div className="friend-detail-achievement-icon friend-detail-achievement-icon--red"></div>
-              <span className="friend-detail-achievement-label">First Lab</span>
+            <div className="friend-detail__achievement-item">
+              <div className="friend-detail__achievement-icon friend-detail__achievement-icon--red"></div>
+              <span className="friend-detail__achievement-label">
+                {t("friends.detail.first_lab")}
+              </span>
             </div>
           </div>
         </div>

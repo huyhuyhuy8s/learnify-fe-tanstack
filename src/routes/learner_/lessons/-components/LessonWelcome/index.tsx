@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import TextButton from "@/components/TextButton";
 
 type TLessonWelcomeProps = {
@@ -9,20 +10,23 @@ type TLessonWelcomeProps = {
 };
 
 const LessonWelcome = (props: TLessonWelcomeProps) => {
+  const { t } = useTranslation();
   const { lessonName, abstract, sectionCount, modelsReady, onStart } = props;
 
   return (
     <div className="lesson-detail-welcome">
-      <h2 className="lesson-detail-welcome-title">{lessonName || "Lesson"}</h2>
+      <h2 className="lesson-detail-welcome-title">
+        {lessonName || t("lesson_welcome.lesson_fallback")}
+      </h2>
       {abstract && <p className="lesson-detail-welcome-abstract">{abstract}</p>}
       <p className="lesson-detail-welcome-sections">
-        {sectionCount || 0} sections to cover
+        {t("lesson_welcome.sections_to_cover", { count: sectionCount || 0 })}
       </p>
       <TextButton
-        text="Start Lesson"
+        text={t("lesson_welcome.start_lesson")}
         onClick={onStart}
         disabled={!modelsReady}
-        tooltip={!modelsReady ? "Enriching your 3D lessons" : ""}
+        tooltip={!modelsReady ? t("lesson_welcome.tooltip_disabled") : ""}
         size="medium"
         icon="play"
       />

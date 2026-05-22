@@ -7,16 +7,18 @@ import {
   forwardRef,
 } from "react";
 import classNames from "classnames";
+import { useTranslation } from "react-i18next";
+
+import Icon from "@/components/Icon";
+import useChat from "@/hooks/useChat";
+import useLessonPlayback from "@/hooks/useLessonPlayback";
+import { logger } from "@/utils/logger";
 
 import ChatMessage from "../ChatMessage";
 import type { TMessage } from "../ChatMessage/type";
 import ChatInput from "../ChatInput";
-import Icon from "@/components/Icon";
-import useChat from "@/hooks/useChat";
-import useLessonPlayback from "@/hooks/useLessonPlayback";
 import type { TTeacherAnimation } from "../TeacherAnimation/type";
 import type { TTeacherStatus } from "../TeacherStatusIndicator/type";
-import { logger } from "@/utils/logger";
 import "./style.scss";
 
 export type TChatMessageRef = {
@@ -58,6 +60,7 @@ const ChatMessageWrapper = forwardRef<
     onLessonComplete,
     isModelReady = false,
   } = props;
+  const { t } = useTranslation();
   const [messages, setMessages] = useState<TMessage[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const playbackStartedRef = useRef(false);
@@ -184,8 +187,8 @@ const ChatMessageWrapper = forwardRef<
             <Icon name="chat" />
             <p className="chat-messages-empty-text">
               {mode === "lesson"
-                ? "Preparing your lesson..."
-                : "Start a conversation with your AI tutor"}
+                ? t("chat_message_wrapper.preparing_lesson")
+                : t("chat_message_wrapper.start_conversation")}
             </p>
           </div>
         ) : (
@@ -198,7 +201,7 @@ const ChatMessageWrapper = forwardRef<
       {mode === "qa" && (
         <ChatInput
           onSendMessage={handleSendMessage}
-          placeholder="Ask your AI tutor anything..."
+          placeholder={t("chat_message_wrapper.placeholder_qa")}
           disabled={chat.isLoading || chat.isSpeaking}
         />
       )}

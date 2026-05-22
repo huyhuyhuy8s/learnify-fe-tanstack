@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import classnames from "classnames";
 import { useRef } from "react";
 import type { TForgotPasswordStep2Props } from "./type.d";
@@ -13,6 +14,7 @@ const ForgotPasswordStep2 = ({
   onResend,
   onBack,
 }: TForgotPasswordStep2Props) => {
+  const { t } = useTranslation();
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleInputChange = (index: number, value: string) => {
@@ -32,16 +34,15 @@ const ForgotPasswordStep2 = ({
 
   return (
     <div className="forgot-password-step2">
-      <div className="forgot-password-step2-container">
-        <div className="forgot-password-step2-content">
-          <h3 className="semibold">Verify your email</h3>
+      <div className="forgot-password-step2__container">
+        <div className="forgot-password-step2__content">
+          <h3 className="semibold">{t("auth.forgot_password.verify_title")}</h3>
           <p className="regular">
-            We've sent a 6-digit code to your email. Enter it below to continue
-            resetting your password.
+            {t("auth.forgot_password.verify_description")}
           </p>
 
           <form
-            className="forgot-password-step2-code-input"
+            className="forgot-password-step2__code-input"
             onSubmit={(e) => {
               e.preventDefault();
               onSubmit();
@@ -53,9 +54,11 @@ const ForgotPasswordStep2 = ({
                 ref={(el) => {
                   inputRefs.current[index] = el;
                 }}
-                aria-label={`Digit ${index + 1} of 6`}
-                className={classnames("forgot-password-step2-code-digit", {
-                  "forgot-password-step2-code-digit-error": errors.code,
+                aria-label={t("auth.forgot_password.digit_aria", {
+                  n: index + 1,
+                })}
+                className={classnames("forgot-password-step2__code-digit", {
+                  "forgot-password-step2__code-digit--error": errors.code,
                 })}
                 type="text"
                 inputMode="numeric"
@@ -68,36 +71,38 @@ const ForgotPasswordStep2 = ({
           </form>
 
           {errors.code && (
-            <p className="forgot-password-step2-error">{errors.code}</p>
+            <p className="forgot-password-step2__error">{errors.code}</p>
           )}
 
           <button
-            className="forgot-password-step2-verify-btn"
+            className="forgot-password-step2__verify-btn"
             type="submit"
             disabled={isPending}
           >
-            <h6 className="semibold">Verify code</h6>
+            <h6 className="semibold">
+              {t("auth.forgot_password.verify_code")}
+            </h6>
           </button>
 
-          <p className="forgot-password-step2-resend-link regular">
-            Not received any mail?{" "}
+          <p className="forgot-password-step2__resend-link regular">
+            {t("auth.forgot_password.resend_link")}{" "}
             <button
-              className="forgot-password-step2-resend-action"
+              className="forgot-password-step2__resend-action"
               type="button"
               disabled={isResending}
               onClick={onResend}
             >
-              Resend here
+              {t("auth.forgot_password.resend_here")}
             </button>
           </p>
 
-          <p className="forgot-password-step2-back-link regular">
+          <p className="forgot-password-step2__back-link regular">
             <button
-              className="forgot-password-step2-back-action"
+              className="forgot-password-step2__back-action"
               type="button"
               onClick={onBack}
             >
-              Back
+              {t("auth.forgot_password.back")}
             </button>
           </p>
         </div>

@@ -4,13 +4,13 @@
 @use "@styles/functions" as *;
 
 .log-in {
-  &-form {
+  &__form {
     display: flex;
     flex-direction: column;
     gap: toRem(20);
   }
 
-  &-form-input {
+  &__form-input {
     display: flex;
     align-items: center;
     padding: toRem(15) toRem(30);
@@ -34,7 +34,7 @@
       border-radius: $br-sm;
     }
 
-    &-error {
+    &--error {
       border-color: $orange-500;
 
       &:focus {
@@ -43,13 +43,13 @@
     }
   }
 
-  &-form-utils {
+  &__form-utils {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
 
-  &-form-check {
+  &__form-check {
     display: flex;
     align-items: center;
     gap: toRem(10);
@@ -62,7 +62,7 @@
     }
   }
 
-  &-form-forgot {
+  &__form-forgot {
     font-size: $fs-paragraph;
     color: $green-600;
     @include transition;
@@ -73,18 +73,18 @@
     }
   }
 
-  &-error {
+  &__error {
     color: $orange-500;
     font-size: toRem(12);
     margin-top: toRem(4);
     padding-left: toRem(4);
   }
 
-  &-api-error {
+  &__api-error {
     text-align: center;
   }
 
-  &-form-submit {
+  &__form-submit {
     display: flex;
     place-items: center;
     justify-content: center;

@@ -1,8 +1,10 @@
 import { useState } from "react";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
-import Icon from "@/components/Icon";
 import { useQuery } from "@tanstack/react-query";
+
+import Icon from "@/components/Icon";
 import IconButton from "@/components/IconButton";
 import { COLORS } from "@/styles/colors";
 import { graphqlClient } from "@/lib/graphql";
@@ -12,12 +14,14 @@ import {
   GET_COURSE_BY_ID,
 } from "@/graphql/course";
 import type { TCourseControllerProps } from "./type";
+
 import "./style.scss";
 
 type LessonMeta = { id: string; lessonName: string; courseId: string };
 type LessonList = { id: string; lessonName: string }[];
 
 const CourseController = ({ className }: TCourseControllerProps) => {
+  const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
   const lessonId = useRouterState({
     select: (s) => {
@@ -68,7 +72,9 @@ const CourseController = ({ className }: TCourseControllerProps) => {
   });
 
   const courseName =
-    courseData?.courseName || lessonData?.lessonName || "Course";
+    courseData?.courseName ||
+    lessonData?.lessonName ||
+    t("course_controller.course_fallback");
   const loading =
     isExpanded && (loadingLesson || (!!courseId && loadingLessons));
 
@@ -93,13 +99,13 @@ const CourseController = ({ className }: TCourseControllerProps) => {
               shape="circle"
               type="custom"
               color={COLORS.neutral900}
-              tooltip="Close"
+              tooltip={t("course_controller.close")}
             />
           </div>
           <div className="course-controller_lessons">
             {loading ? (
               <div className="course-controller_loading">
-                Loading lessons...
+                {t("course_controller.loading_lessons")}
               </div>
             ) : (
               courseLessons?.map((lesson) => {
@@ -142,7 +148,7 @@ const CourseController = ({ className }: TCourseControllerProps) => {
             shape="circle"
             type="custom"
             color={COLORS.neutral900}
-            tooltip="Open course menu"
+            tooltip={t("course_controller.open_menu")}
           />
         </div>
       )}

@@ -1,3 +1,13 @@
+import {
+  createFileRoute,
+  notFound,
+  useNavigate,
+  useRouter,
+} from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { Activity, useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 import Card from "@/components/Card";
 import DecorationCard from "@/components/DecorationCard";
 import Empty from "@/components/Empty";
@@ -20,41 +30,34 @@ import type { TProgress, TStatusCard } from "@/types/global";
 import { createLearnerHead, formatDate } from "@/utils";
 import { courseQueryOptions } from "@/utils/courses";
 import { logger } from "@/utils/logger";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import {
-  createFileRoute,
-  notFound,
-  useNavigate,
-  useRouter,
-} from "@tanstack/react-router";
-import { Activity, useEffect, useMemo, useState } from "react";
-import { toast } from "sonner";
 import CommentForm from "./-components/CommentForm";
 import CommentItem from "./-components/CommentItem";
 import "./courseId.scss";
 
 function CourseErrorComponent() {
   const router = useRouter();
+  const { t } = useTranslation();
   return (
     <ErrorScene>
       <ErrorScene.Header>
-        <ErrorScene.Title errorCode={500}>Server Error</ErrorScene.Title>
+        <ErrorScene.Title errorCode={500}>
+          {t("course_detail.server_error")}
+        </ErrorScene.Title>
         <ErrorScene.Description>
-          Something went wrong while loading this course. The server encountered
-          an issue. Please try again or come back later.
+          {t("course_detail.load_error")}
         </ErrorScene.Description>
       </ErrorScene.Header>
       <ErrorScene.Content>
         <div className="error-scene__control">
           <TextButton
-            text="Try Again"
+            text={t("errors.try_again")}
             onClick={() => router.invalidate()}
             className="error-scene__btn"
             size="medium"
             icon="refresh"
           />
           <TextButton
-            text="Go Back"
+            text={t("errors.go_back")}
             onClick={() => window.history.back()}
             className="error-scene__btn error-scene__btn--secondary"
             size="medium"
@@ -87,6 +90,7 @@ export const Route = createFileRoute("/learner/courses/$courseId")({
 function CourseComponent() {
   const navigate = useNavigate();
   const { courseId } = Route.useParams();
+  const { t } = useTranslation();
 
   const currentUser = useAuthStore((state) => state.user);
   const userId = currentUser?.id;
@@ -162,7 +166,7 @@ function CourseComponent() {
           id: lesson.id,
           typeSpecial: "lesson" as const,
           title: lesson.lessonName,
-          description: lesson.abstract ?? "No description",
+          description: lesson.abstract ?? t("course_detail.no_description"),
           duration: "45 mins",
           status,
           percentage,
@@ -170,7 +174,7 @@ function CourseComponent() {
       });
     }
     return null;
-  }, [getLessonsByCourseId, isEnrolled, progressData]);
+  }, [getLessonsByCourseId, isEnrolled, progressData, t]);
 
   const commentDisplay = useMemo(() => {
     if (getReviewsByCourse?.isSuccess) {
@@ -179,12 +183,12 @@ function CourseComponent() {
         userName: review.user.username,
         time: formatDate(review.createdAt),
         rating: review.rating,
-        content: review.content || "No description",
+        content: review.content || t("course_detail.no_description"),
         isOptimistic: review.id.startsWith("optimistic-"),
       }));
     }
     return MOCK_COMMENT;
-  }, [getReviewsByCourse]);
+  }, [getReviewsByCourse, t]);
 
   const courseDisplay = useMemo(() => {
     if (!getCourseById?.id) return null;
@@ -211,7 +215,7 @@ function CourseComponent() {
 
   const handleEnrollCourse = () => {
     if (!userId) {
-      toast.error("Please log in to enroll in this course");
+      toast.error(t("course_detail.toast_login_enroll"));
       return;
     }
     enrollCourseMutation.mutate({ courseId, userId });
@@ -219,13 +223,11 @@ function CourseComponent() {
 
   const handleLessonClick = (lessonId: string, isLocked: boolean) => {
     if (!isEnrolled) {
-      toast.warning(
-        "You need to enroll in the course before accessing lessons!"
-      );
+      toast.warning(t("course_detail.toast_enroll_first"));
       return;
     }
     if (isLocked) {
-      toast.warning("Complete the previous lesson to unlock this one!");
+      toast.warning(t("course_detail.toast_unlock_lesson"));
       return;
     }
     navigate({
@@ -243,12 +245,14 @@ function CourseComponent() {
           <Empty.Media variant="icon">
             <Icon name="sell" />
           </Empty.Media>
-          <Empty.Title>No products found</Empty.Title>
-          <Empty.Description>No products match your search</Empty.Description>
+          <Empty.Title>{t("course_detail.empty_title")}</Empty.Title>
+          <Empty.Description>
+            {t("course_detail.empty_description")}
+          </Empty.Description>
         </Empty.Header>
         <Empty.Content>
           <TextButton
-            text="Create a course"
+            text={t("course_detail.empty_create")}
             icon="add"
             size="medium"
             onClick={() => {}}
@@ -263,7 +267,7 @@ function CourseComponent() {
         <DecorationCard
           listBadge={
             <TextButton
-              text="text"
+              text={t("course_detail.badge_text")}
               size="tiny"
               type="special"
               typeSpecial="course"
@@ -286,8 +290,8 @@ function CourseComponent() {
             <TextButton
               text={
                 enrollCourseMutation.isPending
-                  ? "Processing..."
-                  : "Enroll Course"
+                  ? t("course_detail.processing")
+                  : t("course_detail.enroll")
               }
               size="small"
               icon="school"
@@ -299,7 +303,7 @@ function CourseComponent() {
           )}
 
           <TextButton
-            text="Show feedback"
+            text={t("course_detail.show_feedback")}
             size="small"
             icon="feedback"
             type="outlined"
@@ -328,7 +332,7 @@ function CourseComponent() {
       <Activity mode={showComment ? "visible" : "hidden"}>
         <div className="course__comment">
           <TextButton
-            text="Send feedback"
+            text={t("course_detail.send_feedback")}
             size="small"
             icon="add"
             type="outlined"
@@ -336,7 +340,7 @@ function CourseComponent() {
             className="course__send-btn"
             onClick={() => {
               if (!currentUser) {
-                toast.warning("Please log in to leave feedback");
+                toast.warning(t("course_detail.toast_login_feedback"));
                 return;
               }
               setShowCommentForm((prev) => !prev);

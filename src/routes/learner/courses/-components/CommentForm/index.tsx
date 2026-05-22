@@ -1,9 +1,10 @@
 import classnames from "classnames";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import TextButton from "@/components/TextButton";
 import Icon from "@/components/Icon";
 import TetrisLoader from "@/components/TetrisLoader";
+import TextButton from "@/components/TextButton";
 import "./style.scss";
 
 type CommentFormProps = {
@@ -21,16 +22,17 @@ const CommentForm = ({
 }: CommentFormProps) => {
   const [rating, setRating] = useState(0);
   const [content, setContent] = useState("");
+  const { t } = useTranslation();
   const cls = classnames("comment-form", className);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (rating === 0) {
-      toast.error("Please select a rating!");
+      toast.error(t("comment_form.toast_no_rating"));
       return;
     }
     if (!content.trim()) {
-      toast.error("Please enter your review!");
+      toast.error(t("comment_form.toast_no_review"));
       return;
     }
     onSubmit(rating, content);
@@ -39,7 +41,7 @@ const CommentForm = ({
   return (
     <form className={cls} onSubmit={handleSubmit}>
       <div className="comment-form-head">
-        <h4 id="comment-form-rating-label">Rate this course</h4>
+        <h4 id="comment-form-rating-label">{t("comment_form.rating_label")}</h4>
         <div
           className="stars"
           role="radiogroup"
@@ -51,7 +53,11 @@ const CommentForm = ({
               type="button"
               role="radio"
               aria-checked={star <= rating}
-              aria-label={`${star} star${star > 1 ? "s" : ""}`}
+              aria-label={
+                star === 1
+                  ? t("comment_form.star_aria", { star })
+                  : t("comment_form.star_aria_plural", { star })
+              }
               onClick={() => setRating(star)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
@@ -78,11 +84,11 @@ const CommentForm = ({
       </div>
       <div className="comment-form-body">
         <label htmlFor="comment-form-textarea" className="sr-only">
-          Your review
+          {t("comment_form.review_label")}
         </label>
         <textarea
           id="comment-form-textarea"
-          placeholder="Share your thoughts about this course..."
+          placeholder={t("comment_form.placeholder")}
           value={content}
           onChange={(e) => setContent(e.target.value)}
           rows={3}
@@ -91,7 +97,7 @@ const CommentForm = ({
       </div>
       <div className="comment-form-footer">
         <TextButton
-          text="Cancel"
+          text={t("comment_form.cancel")}
           type="outlined"
           icon="close"
           size="small"
@@ -102,7 +108,7 @@ const CommentForm = ({
         <div className="submit-btn-wrapper">
           {isLoading && <TetrisLoader size="sm" />}
           <TextButton
-            text="Submit Review"
+            text={t("comment_form.submit")}
             type="primary"
             icon="send"
             size="small"

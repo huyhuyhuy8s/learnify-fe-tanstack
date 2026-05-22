@@ -39,7 +39,7 @@
   &,
   &-top,
   &-bot,
-  .item-list {
+  &-top__items {
     display: flex;
     flex-direction: column;
     place-items: center;
@@ -47,14 +47,14 @@
 
   &-top {
     row-gap: toRem(40);
+
+    &__items {
+      row-gap: toRem(20);
+    }
   }
 
   &-bot {
     row-gap: toRem(24);
-  }
-
-  .item-list {
-    row-gap: toRem(20);
   }
 
   .hidden {

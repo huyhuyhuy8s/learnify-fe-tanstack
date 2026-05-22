@@ -12,7 +12,7 @@
   padding: toRem(30);
   background-color: $green-100;
 
-  &-button {
+  &__button {
     display: flex;
     place-items: center;
     justify-content: center;
@@ -30,7 +30,7 @@
     }
   }
 
-  &-logo {
+  &__logo {
     display: flex;
     place-items: center;
     gap: toRem(10);
@@ -43,7 +43,7 @@
     }
   }
 
-  &-card {
+  &__card {
     display: grid;
     grid-template-columns: 1fr 1px 1fr;
     background-image: url("@/assets/images/sign-up-shape.svg");
@@ -63,7 +63,7 @@
     min-height: 60dvh;
   }
 
-  &-shape {
+  &__shape {
     position: absolute;
     right: -5%;
     top: -30%;
@@ -72,7 +72,7 @@
     pointer-events: none;
   }
 
-  &-left {
+  &__left {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -80,7 +80,7 @@
     align-self: stretch;
   }
 
-  &-google-container {
+  &__google-container {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -118,7 +118,7 @@
     }
   }
 
-  &-google {
+  &__google {
     display: flex;
     place-items: center;
     justify-content: center;
@@ -146,7 +146,7 @@
     }
   }
 
-  &-divider {
+  &__divider {
     display: flex;
     place-items: center;
     gap: toRem(10);
@@ -166,13 +166,13 @@
     }
   }
 
-  &-form {
+  &__form {
     display: flex;
     flex-direction: column;
     gap: toRem(20);
   }
 
-  &-input {
+  &__input {
     padding: toRem(15) toRem(30);
     background-color: $neutral-100;
     border: toRem(2) solid $neutral-400;
@@ -193,7 +193,7 @@
       border-radius: $br-sm;
     }
 
-    &-error {
+    &--error {
       border-color: $orange-500;
 
       &:focus {
@@ -202,18 +202,18 @@
     }
   }
 
-  &-error {
+  &__error {
     color: $orange-500;
     font-size: toRem(12);
     margin-top: toRem(4);
     padding-left: toRem(4);
   }
 
-  &-api-error {
+  &__api-error {
     text-align: center;
   }
 
-  &-back {
+  &__back {
     display: flex;
     place-items: center;
     gap: toRem(10);
@@ -230,7 +230,7 @@
     }
   }
 
-  &-submit {
+  &__submit {
     background-color: $green-600;
 
     &:hover {
@@ -242,19 +242,19 @@
     }
   }
 
-  &-signin-link {
+  &__signin-link {
     color: $mode-neutral;
     text-align: center;
   }
 
-  &-separator {
+  &__separator {
     width: 1px;
     align-self: stretch;
     background-color: $neutral-200;
     flex-shrink: 0;
   }
 
-  &-right {
+  &__right {
     display: flex;
     height: 100%;
     flex-direction: column;
@@ -263,49 +263,49 @@
     gap: toRem(25);
   }
 
-  &-quote {
+  &__quote {
     display: flex;
     flex-direction: column;
     align-self: stretch;
     position: relative;
-
-    &-icon {
-      position: absolute;
-      top: toRem(-30);
-      left: toRem(-25);
-      width: toRem(50);
-      aspect-ratio: 1;
-      opacity: 0.25;
-    }
-
-    &-text {
-      color: $black;
-      line-height: 1.5;
-    }
   }
 
-  &-person {
+  &__quote-icon {
+    position: absolute;
+    top: toRem(-30);
+    left: toRem(-25);
+    width: toRem(50);
+    aspect-ratio: 1;
+    opacity: 0.25;
+  }
+
+  &__quote-text {
+    color: $black;
+    line-height: 1.5;
+  }
+
+  &__person {
     display: flex;
     place-items: center;
     align-self: stretch;
     gap: toRem(20);
-
-    &-context {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-
-    &-name {
-      color: $black;
-    }
-
-    &-title {
-      color: $black;
-    }
   }
 
-  &-avatar {
+  &__person-context {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  &__person-name {
+    color: $black;
+  }
+
+  &__person-title {
+    color: $black;
+  }
+
+  &__avatar {
     width: toRem(80);
     aspect-ratio: 1;
     border-radius: 50%;
@@ -320,36 +320,36 @@
     }
   }
 
-  &-slide {
+  &__slide {
     display: flex;
     gap: toRem(10);
   }
 
   @include break(md) {
-    &-card {
+    &__card {
       flex-direction: column;
       padding: toRem(40);
       background-position-x: 37.5dvw;
     }
 
-    &-separator {
+    &__separator {
       width: 100%;
       height: 1px;
       align-self: auto;
     }
 
-    &-right {
+    &__right {
       align-items: center;
     }
   }
 
   @include break(s) {
-    &-card {
+    &__card {
       background-image: none;
       display: flex;
     }
 
-    &-logo {
+    &__logo {
       position: relative;
       top: auto;
       left: auto;
@@ -360,7 +360,7 @@
       left: toRem(30);
     }
 
-    &-right {
+    &__right {
       display: none !important;
     }
   }

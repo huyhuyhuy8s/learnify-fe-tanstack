@@ -12,7 +12,7 @@
   padding: toRem(30);
   background-color: $green-100;
 
-  &-button {
+  &__button {
     display: flex;
     place-items: center;
     justify-content: center;
@@ -30,7 +30,7 @@
     }
   }
 
-  &-logo {
+  &__logo {
     display: flex;
     place-items: center;
     gap: toRem(10);
@@ -49,7 +49,7 @@
     }
   }
 
-  &-card {
+  &__card {
     background-color: $white;
     background-image: url("@/assets/images/log-in-shape.svg");
     background-size: 60%;
@@ -67,18 +67,18 @@
     min-height: 60dvh;
   }
 
-  &-left {
+  &__left {
     display: flex;
     flex-direction: column;
     gap: toRem(40);
   }
 
-  &-title {
+  &__title {
     color: $black;
     text-align: center;
   }
 
-  &-google-container {
+  &__google-container {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -116,7 +116,7 @@
     }
   }
 
-  &-google {
+  &__google {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -143,7 +143,7 @@
     }
   }
 
-  &-divider {
+  &__divider {
     display: flex;
     align-items: center;
     gap: toRem(10);
@@ -162,23 +162,23 @@
     }
   }
 
-  &-signup-link {
+  &__signup-link {
     text-align: center;
   }
 
-  &-forgot-link {
+  &__forgot-link {
     text-align: center;
     margin-top: toRem(-20);
   }
 
-  &-separator {
+  &__separator {
     width: toRem(1);
     align-self: stretch;
     background-color: $neutral-300;
     flex-shrink: 0;
   }
 
-  &-right {
+  &__right {
     height: 100%;
     display: flex;
     justify-content: center;
@@ -192,34 +192,34 @@
   }
 
   @include break(md) {
-    &-card {
+    &__card {
       flex-direction: column;
       padding: toRem(40);
       background-position-x: 37.5dvw;
     }
 
-    &-separator {
+    &__separator {
       width: 100%;
       height: 1px;
       align-self: auto;
     }
 
-    &-right {
+    &__right {
       align-items: center;
     }
   }
 
   @include break(s) {
-    &-card {
+    &__card {
       background-image: none;
       display: flex;
     }
 
-    &-name-row {
+    &__name-row {
       flex-direction: column;
     }
 
-    &-logo {
+    &__logo {
       position: relative;
       top: auto;
       left: auto;
@@ -230,7 +230,7 @@
       left: toRem(30);
     }
 
-    &-right {
+    &__right {
       display: none !important;
     }
   }

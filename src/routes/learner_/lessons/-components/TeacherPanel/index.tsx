@@ -1,4 +1,6 @@
 import { Suspense, lazy } from "react";
+import { useTranslation } from "react-i18next";
+
 import type { TTeacherAnimation } from "../TeacherAnimation/type";
 import type { TTeacherStatus } from "../TeacherStatusIndicator/type";
 import TeacherAvatar2D from "../TeacherAvatar2D";
@@ -6,13 +8,6 @@ import TeacherStatusIndicator from "../TeacherStatusIndicator";
 import TeacherController from "../TeacherController";
 
 const TeacherContainer = lazy(() => import("../TeacherContainer"));
-
-const LOADING_MESSAGES = [
-  "Loading 3D environment...",
-  "Loading teacher model...",
-  "Initializing animations...",
-  "Ready!",
-];
 
 type TTeacherPanelProps = {
   state: string;
@@ -40,6 +35,13 @@ type TTeacherPanelProps = {
 };
 
 const TeacherPanel = (props: TTeacherPanelProps) => {
+  const { t } = useTranslation();
+  const LOADING_MESSAGES = [
+    t("teacher_panel.loading_env"),
+    t("teacher_panel.loading_model"),
+    t("teacher_panel.loading_animations"),
+    t("teacher_panel.ready"),
+  ];
   const {
     state,
     is3DMode,
@@ -95,7 +97,7 @@ const TeacherPanel = (props: TTeacherPanelProps) => {
           isLoading={!modelsReady}
           loadingMessage={
             state === "initial"
-              ? "Enriching your 3D lessons"
+              ? t("teacher_panel.enriching")
               : LOADING_MESSAGES[loadingMessageIndex]
           }
         >

@@ -1,9 +1,10 @@
 import classNames from "classnames";
 import { useState } from "react";
-import "./style.scss";
+import { useTranslation } from "react-i18next";
 import { COLORS } from "@/styles/colors";
 import Icon from "@/components/Icon";
 import IconButton from "@/components/IconButton";
+import "./style.scss";
 
 type TDropdownMenuOption = {
   value: string;
@@ -24,6 +25,7 @@ export type TDropdownMenuProps = {
 };
 
 const DropdownMenu = (props: TDropdownMenuProps) => {
+  const { t } = useTranslation();
   const {
     icon,
     title,
@@ -82,7 +84,7 @@ const DropdownMenu = (props: TDropdownMenuProps) => {
                 icon="more_vert"
                 type="secondary"
                 size="tiny"
-                tooltip="more"
+                tooltip={t("dropdown_menu.more")}
               />
             </div>
           ))}

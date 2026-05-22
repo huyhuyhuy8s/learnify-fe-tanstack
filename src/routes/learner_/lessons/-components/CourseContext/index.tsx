@@ -1,13 +1,14 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { COLORS } from "@/styles/colors";
 import {
   MOCK_REFERENCES,
   MOCK_DOCUMENTS,
   MOCK_NOTES,
 } from "@/mock/course-context";
+import { logger } from "@/utils/logger";
 import DropdownMenu from "../DropdownMenu";
 import "./style.scss";
-import { logger } from "@/utils/logger";
 
 type TCourseContextSection = { value: string; label: string };
 
@@ -18,6 +19,7 @@ type TCourseContextProps = {
 };
 
 const CourseContext = (props: TCourseContextProps) => {
+  const { t } = useTranslation();
   const {
     references = MOCK_REFERENCES,
     documents = MOCK_DOCUMENTS,
@@ -36,7 +38,7 @@ const CourseContext = (props: TCourseContextProps) => {
     <div className="course-context">
       <DropdownMenu
         icon="quick_reference"
-        title="References"
+        title={t("course_context.references")}
         iconOption="description"
         buttonBackgroundColor={COLORS.greenPastel100}
         isOpen={openDropdown === "References"}
@@ -45,7 +47,7 @@ const CourseContext = (props: TCourseContextProps) => {
       />
       <DropdownMenu
         icon="docs"
-        title="Documents"
+        title={t("course_context.documents")}
         iconOption="docs"
         buttonBackgroundColor={COLORS.navyPastel100}
         isOpen={openDropdown === "Documents"}
@@ -54,7 +56,7 @@ const CourseContext = (props: TCourseContextProps) => {
       />
       <DropdownMenu
         icon="note_stack"
-        title="Notes"
+        title={t("course_context.notes")}
         iconOption="sticky_note_2"
         buttonBackgroundColor={COLORS.yellow300}
         isOpen={openDropdown === "Notes"}

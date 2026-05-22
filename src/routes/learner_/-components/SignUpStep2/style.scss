@@ -4,7 +4,7 @@
 @use "@styles/functions" as *;
 
 .sign-up {
-  &-back {
+  &__back {
     display: flex;
     place-items: center;
     gap: toRem(5);
@@ -23,14 +23,14 @@
     }
   }
 
-  &-error {
+  &__error {
     color: $orange-500;
     font-size: toRem(12);
     margin-top: toRem(4);
     padding-left: toRem(4);
   }
 
-  &-api-error {
+  &__api-error {
     text-align: center;
   }
 }

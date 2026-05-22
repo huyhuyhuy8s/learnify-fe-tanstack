@@ -1,8 +1,8 @@
+import { useTranslation, Trans } from "react-i18next";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import Search from "@/components/Search";
 import TextButton from "@/components/TextButton";
-import { SEARCH_SUGGESTIONS } from "@/mock";
 import { getCurrentUserFn } from "@/server/auth";
-import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import DecorationShapes from "./-components/DecorationShapes";
 import "./home.scss";
 
@@ -20,23 +20,28 @@ export const Route = createFileRoute("/learner/")({
 });
 
 function Home() {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const suggestions = t("home.search_suggestions", {
+    returnObjects: true,
+  }) as string[];
+
   return (
     <div className="home">
       <DecorationShapes />
       <div className="home__title">
         <h1 className="home__title-main semibold">
-          Unlock your <span className="beauty">Potential</span> for tomorrow,
-          today
+          <Trans
+            key={i18n.language}
+            i18nKey="home.title"
+            components={{ Beauty: <span className="beauty" /> }}
+          />
         </h1>
-        <p className="home__title-sub regular">
-          Discover expert-led course with personalized guidance from our
-          interactive 3D AI Teachers
-        </p>
+        <p className="home__title-sub regular">{t("home.subtitle")}</p>
       </div>
       <Search />
       <div className="search-suggestions">
-        {SEARCH_SUGGESTIONS.map((item) => (
+        {suggestions.map((item) => (
           <TextButton
             key={item}
             text={item}

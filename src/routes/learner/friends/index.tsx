@@ -1,3 +1,7 @@
+import { useTranslation } from "react-i18next";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
+import classNames from "classnames";
+import { Suspense, useMemo, useState } from "react";
 import ErrorScene from "@/components/ErrorScene";
 import TetrisLoader from "@/components/TetrisLoader";
 import TextButton from "@/components/TextButton";
@@ -12,9 +16,6 @@ import {
 import type { TBackendUser } from "@/hooks/useProfile";
 import { getCurrentUserFn } from "@/server/auth";
 import { createLearnerHead } from "@/utils";
-import { createFileRoute, useRouter } from "@tanstack/react-router";
-import classNames from "classnames";
-import { Suspense, useMemo, useState } from "react";
 import FriendDetail from "./-components/FriendDetail";
 import FriendEmptyState from "./-components/FriendEmptyState";
 import type { TFriendDetail } from "./-components/FriendDetail/type";
@@ -26,27 +27,29 @@ import type {
 import "./style.scss";
 
 function FriendsErrorComponent() {
+  const { t } = useTranslation();
   const router = useRouter();
   return (
     <ErrorScene>
       <ErrorScene.Header>
-        <ErrorScene.Title errorCode={500}>Server Error</ErrorScene.Title>
+        <ErrorScene.Title errorCode={500}>
+          {t("errors.server_error")}
+        </ErrorScene.Title>
         <ErrorScene.Description>
-          Unable to load friends at this time. This could be a network issue or
-          a server problem. Please try again.
+          {t("errors.load_friends")}
         </ErrorScene.Description>
       </ErrorScene.Header>
       <ErrorScene.Content>
         <div className="error-scene__control">
           <TextButton
-            text="Try Again"
+            text={t("errors.try_again")}
             onClick={() => router.invalidate()}
             className="error-scene__btn"
             size="medium"
             icon="refresh"
           />
           <TextButton
-            text="Go Back"
+            text={t("errors.go_back")}
             onClick={() => window.history.back()}
             className="error-scene__btn error-scene__btn--secondary"
             size="medium"
@@ -77,6 +80,7 @@ type TDisplayFriend = Omit<TFriendItem, "id" | "onClick"> & {
 };
 
 function FriendsPage() {
+  const { t } = useTranslation();
   const [typeFriend, setTypeFriend] = useState<TTypeFriendItem>("leaderboard");
   const [selectedIndex, setSelectedIndex] = useState<string | null>(null);
 
@@ -92,9 +96,9 @@ function FriendsPage() {
   const sendRequestMutation = useSendFriendRequest();
 
   const tabs: { value: TTypeFriendItem; label: string; icon?: string }[] = [
-    { value: "leaderboard", label: "Leaderboard" },
-    { value: "friends", label: "Friends" },
-    { value: "request", label: "Requests" },
+    { value: "leaderboard", label: t("friends.tabs.leaderboard") },
+    { value: "friends", label: t("friends.tabs.friends") },
+    { value: "request", label: t("friends.tabs.requests") },
   ];
 
   const displayList: TDisplayFriend[] = useMemo(() => {
@@ -176,7 +180,9 @@ function FriendsPage() {
         onSuccess: (res) => {
           if (res.respondFriendRequest.isSuccess) {
             alert(
-              isAccepted ? "Accepted successfully!" : "Declined successfully!"
+              isAccepted
+                ? t("friends.alerts.accepted")
+                : t("friends.alerts.declined")
             );
             if (selectedIndex === requesterId) setSelectedIndex(null);
           } else {
@@ -193,7 +199,7 @@ function FriendsPage() {
       {
         onSuccess: (res) => {
           if (res.sendFriendRequest.isSuccess) {
-            alert("Friend request sent successfully!");
+            alert(t("friends.alerts.sent"));
           } else {
             alert(res.sendFriendRequest.message);
           }
@@ -214,7 +220,7 @@ function FriendsPage() {
   return (
     <Suspense fallback={<TetrisLoader />}>
       <div className="friend-page">
-        <div className="friend-page-header">
+        <div className="friend-page__header">
           {tabs.map((tab) => (
             <button
               key={tab.value}
@@ -222,8 +228,8 @@ function FriendsPage() {
                 setTypeFriend(tab.value);
                 setSelectedIndex(null);
               }}
-              className={classNames("friend-page-header-tab", {
-                "friend-page-header-tab--active": typeFriend === tab.value,
+              className={classNames("friend-page__header-tab", {
+                "friend-page__header-tab--active": typeFriend === tab.value,
               })}
             >
               <p className="regular">{tab.label}</p>
@@ -231,8 +237,8 @@ function FriendsPage() {
           ))}
         </div>
 
-        <div className="friend-page-body">
-          <div className="friend-page-body-left">
+        <div className="friend-page__body">
+          <div className="friend-page__body-left">
             {isLoading ? (
               <TetrisLoader size="md" speed="fast" />
             ) : displayList.length > 0 ? (
@@ -256,11 +262,13 @@ function FriendsPage() {
                 />
               ))
             ) : (
-              <p className="friend-page-body-left-empty">No items found.</p>
+              <p className="friend-page__body-left-empty">
+                {t("friends.no_items")}
+              </p>
             )}
           </div>
 
-          <div className="friend-page-body-right">
+          <div className="friend-page__body-right">
             {friendDetailData && selectedFriend ? (
               <FriendDetail
                 {...friendDetailData}
@@ -271,9 +279,9 @@ function FriendsPage() {
                 }
               />
             ) : (
-              <div className="placeholder-profile">
-                <h5>It's empty here</h5>
-                <p>Click on any user to have a quick peak profile</p>
+              <div className="friend-page__placeholder-profile">
+                <h5>{t("friends.placeholder_heading")}</h5>
+                <p>{t("friends.placeholder_text")}</p>
               </div>
             )}
           </div>

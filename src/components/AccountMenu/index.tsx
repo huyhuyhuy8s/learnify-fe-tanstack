@@ -1,8 +1,9 @@
+import { Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import TextButton from "@/components/TextButton";
+import type { TSubscription } from "@/types/global";
 import AccountMenuItem from "./components/AccountMenuItem";
 import "./style.scss";
-import type { TSubscription } from "@/types/global";
-import { Link } from "@tanstack/react-router";
 
 type TAccountMenuProps = {
   username: string;
@@ -14,6 +15,7 @@ type TAccountMenuProps = {
 };
 
 const AccountMenu = (props: TAccountMenuProps) => {
+  const { t } = useTranslation();
   const { username, uid, subscription, className, id, onLogout } = props;
   const userProfileLink = `/learner/user/${id}`;
 
@@ -39,18 +41,26 @@ const AccountMenu = (props: TAccountMenuProps) => {
       </div>
       <div className="separator"></div>
       <div className="item-holder">
-        <AccountMenuItem icon="person" text="Profile" to={userProfileLink} />
+        <AccountMenuItem
+          icon="person"
+          text={t("account_menu.profile")}
+          to={userProfileLink}
+        />
         <AccountMenuItem
           icon="subscriptions"
-          text="Subscription"
+          text={t("account_menu.subscription")}
           to="/learner/subscription"
         />
         <AccountMenuItem
           icon="settings"
-          text="Settings"
+          text={t("account_menu.settings")}
           to="/learner/settings"
         />
-        <AccountMenuItem icon="logout" text="Logout" onClick={onLogout} />
+        <AccountMenuItem
+          icon="logout"
+          text={t("account_menu.logout")}
+          onClick={onLogout}
+        />
       </div>
     </div>
   );

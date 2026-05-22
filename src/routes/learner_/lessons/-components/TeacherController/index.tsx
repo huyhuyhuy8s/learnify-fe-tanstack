@@ -1,13 +1,15 @@
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import IconButton from "@/components/IconButton";
 import { COLORS } from "@/styles/colors";
 import VoiceSettingsPopup from "../VoiceSettingsPopup";
-import type { TTeacherControllerProps } from "./type.d";
+import type { TTeacherControllerProps } from "./type";
 
 import "./style.scss";
 
 const TeacherController = (props: TTeacherControllerProps) => {
+  const { t } = useTranslation();
   const {
     status,
     isMuted,
@@ -15,7 +17,7 @@ const TeacherController = (props: TTeacherControllerProps) => {
     selectedVoiceId,
     is3DMode,
     isLoading = false,
-    loadingMessage = "Loading...",
+    loadingMessage = t("teacher_controller.loading"),
     onPause,
     onResume,
     onStop,
@@ -50,7 +52,11 @@ const TeacherController = (props: TTeacherControllerProps) => {
           onClick={isPaused ? onResume : onPause}
           disabled={!isSpeaking && !isPaused}
           loading={isLoading}
-          tooltip={isPaused ? "Resume" : "Pause"}
+          tooltip={
+            isPaused
+              ? t("teacher_controller.resume")
+              : t("teacher_controller.pause")
+          }
           size="tiny"
           type="secondary"
           color={COLORS.white}
@@ -62,7 +68,7 @@ const TeacherController = (props: TTeacherControllerProps) => {
           onClick={onStop}
           disabled={isIdle || isThinking}
           loading={isLoading}
-          tooltip="Stop"
+          tooltip={t("teacher_controller.stop")}
           size="tiny"
           type="secondary"
           color={COLORS.white}
@@ -72,7 +78,11 @@ const TeacherController = (props: TTeacherControllerProps) => {
         <IconButton
           icon={isMuted ? "volume_off" : "volume_up"}
           onClick={isMuted ? onUnmute : onMute}
-          tooltip={isMuted ? "Unmute" : "Mute"}
+          tooltip={
+            isMuted
+              ? t("teacher_controller.unmute")
+              : t("teacher_controller.mute")
+          }
           loading={isLoading}
           size="tiny"
           type="secondary"
@@ -83,7 +93,7 @@ const TeacherController = (props: TTeacherControllerProps) => {
         <IconButton
           icon="settings"
           onClick={isSettingsOpen ? onCloseSettings : onOpenSettings}
-          tooltip="Settings"
+          tooltip={t("teacher_controller.settings")}
           loading={isLoading}
           size="tiny"
           type="secondary"
@@ -96,7 +106,11 @@ const TeacherController = (props: TTeacherControllerProps) => {
         <IconButton
           icon={is3DMode ? "image" : "view_in_ar"}
           onClick={() => onToggle3DMode(!is3DMode)}
-          tooltip={is3DMode ? "Switch to 2D" : "Switch to 3D"}
+          tooltip={
+            is3DMode
+              ? t("teacher_controller.switch_2d")
+              : t("teacher_controller.switch_3d")
+          }
           loading={isLoading}
           size="tiny"
           type="secondary"

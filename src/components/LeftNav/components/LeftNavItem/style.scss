@@ -3,7 +3,7 @@
 @use "@styles/mixins" as *;
 @use "@styles/functions" as *;
 
-.left-nav-top-item {
+.left-nav-top__item {
   width: toRem(67.5);
 
   .link-box {

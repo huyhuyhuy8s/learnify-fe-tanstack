@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import classnames from "classnames";
 import { useNavigate } from "@tanstack/react-router";
 import TextButton from "@/components/TextButton";
@@ -9,19 +10,17 @@ type TFriendEmptyStateProps = {
 };
 
 const FriendEmptyState = ({ className }: TFriendEmptyStateProps) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const cls = classnames("friend-empty-state", className);
 
   return (
     <div className={cls}>
       <Icon name="group" className="friend-empty-state__icon" />
-      <h4 className="semibold">Sign in to see your friends</h4>
-      <p>
-        Connect with classmates and track their progress together. Sign in to
-        start building your learning community.
-      </p>
+      <h4 className="semibold">{t("friends.empty_state.heading")}</h4>
+      <p>{t("friends.empty_state.description")}</p>
       <TextButton
-        text="Log in"
+        text={t("friends.empty_state.login")}
         size="medium"
         type="primary"
         icon="login"

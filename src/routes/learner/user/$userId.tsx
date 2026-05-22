@@ -1,3 +1,7 @@
+import { Suspense, useEffect } from "react";
+import { createFileRoute, notFound, useRouter } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
+import i18n from "@/i18n";
 import ErrorScene from "@/components/ErrorScene";
 import NotFound from "@/components/NotFound";
 import TetrisLoader from "@/components/TetrisLoader";
@@ -13,33 +17,33 @@ import { graphqlClient } from "@/lib/graphql";
 import { MOCK_USER_PROFILE } from "@/mock/user";
 import { createLearnerHead } from "@/utils";
 import { logger } from "@/utils/logger";
-import { createFileRoute, notFound, useRouter } from "@tanstack/react-router";
-import { Suspense, useEffect } from "react";
 import EditableField from "./-components/EditableField";
 import "./userId.scss";
 
 function UserErrorComponent() {
+  const { t } = useTranslation();
   const router = useRouter();
   return (
     <ErrorScene>
       <ErrorScene.Header>
-        <ErrorScene.Title errorCode={500}>Server Error</ErrorScene.Title>
+        <ErrorScene.Title errorCode={500}>
+          {t("profile.server_error")}
+        </ErrorScene.Title>
         <ErrorScene.Description>
-          Something went wrong while loading this profile. Please try again or
-          come back later.
+          {t("profile.load_error")}
         </ErrorScene.Description>
       </ErrorScene.Header>
       <ErrorScene.Content>
         <div className="error-scene__control">
           <TextButton
-            text="Try Again"
+            text={t("errors.try_again")}
             onClick={() => router.invalidate()}
             className="error-scene__btn"
             size="medium"
             icon="refresh"
           />
           <TextButton
-            text="Go Back"
+            text={t("errors.go_back")}
             onClick={() => window.history.back()}
             className="error-scene__btn error-scene__btn--secondary"
             size="medium"
@@ -63,7 +67,7 @@ export const Route = createFileRoute("/learner/user/$userId")({
             { userId }
           );
         } catch {
-          throw new Error("Failed to fetch user profile");
+          throw new Error(i18n.t("profile.failed_fetch"));
         }
       },
     });
@@ -71,7 +75,7 @@ export const Route = createFileRoute("/learner/user/$userId")({
     return { title: data.currentUser.users[0]?.username };
   },
   head: ({ loaderData }) =>
-    createLearnerHead(loaderData?.title ?? "User Profile"),
+    createLearnerHead(loaderData?.title ?? i18n.t("profile.head_title")),
   errorComponent: UserErrorComponent,
   pendingComponent: TetrisLoader,
   notFoundComponent: NotFound,
@@ -79,6 +83,7 @@ export const Route = createFileRoute("/learner/user/$userId")({
 });
 
 function UserProfile() {
+  const { t } = useTranslation();
   const { user } = Route.useRouteContext();
   const { setLayoutConfigState } = useLayout();
   const currentUserId = user?.id || "mock-id";
@@ -133,7 +138,7 @@ function UserProfile() {
           <div className="profile-info-avatar">
             <img
               src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${userDisplay.username}`}
-              alt="Avatar"
+              alt={t("profile.avatar_alt")}
             />
           </div>
 
@@ -150,15 +155,17 @@ function UserProfile() {
               </span>
               <span className="profile-info-content-stats-dot">•</span>
               <span className="profile-info-content-stats-item">
-                <strong>{userDisplay.diamond}</strong> Diamonds
+                <strong>{userDisplay.diamond}</strong> {t("profile.diamonds")}
               </span>
               <span className="profile-info-content-stats-dot">•</span>
               <span className="profile-info-content-stats-item">
-                <strong>{userDisplay.followers}</strong> Followers
+                <strong>{userDisplay.followers}</strong>{" "}
+                {t("profile.followers")}
               </span>
               <span className="profile-info-content-stats-dot">•</span>
               <span className="profile-info-content-stats-item">
-                <strong>{userDisplay.currentSteak}</strong> Streak
+                <strong>{userDisplay.currentSteak}</strong>{" "}
+                {t("profile.streak")}
               </span>
             </div>
 
@@ -171,10 +178,12 @@ function UserProfile() {
         </div>
 
         <div className="profile-personal-info-card">
-          <h2 className="profile-personal-info-title">Thông tin cá nhân</h2>
+          <h2 className="profile-personal-info-title">
+            {t("profile.personal_info")}
+          </h2>
 
           <EditableField
-            label="Tên người dùng"
+            label={t("profile.username_label")}
             value={userDisplay.username}
             fieldName="username"
             onSave={handleUpdateUser}
@@ -182,7 +191,7 @@ function UserProfile() {
           />
 
           <EditableField
-            label="Email"
+            label={t("profile.email_label")}
             value={userDisplay.email}
             fieldName="email"
             onSave={handleUpdateUser}
@@ -190,7 +199,7 @@ function UserProfile() {
           />
 
           <EditableField
-            label="Số điện thoại"
+            label={t("profile.phone_label")}
             value={userDisplay.phoneNumber}
             fieldName="phoneNumber"
             onSave={handleUpdateUser}
@@ -199,7 +208,7 @@ function UserProfile() {
         </div>
 
         <div className="profile-courses">
-          <h2 className="profile-courses-title">My Courses</h2>
+          <h2 className="profile-courses-title">{t("profile.my_courses")}</h2>
           <div className="profile-courses-list">
             {userDisplay.enrollment.map((item) => (
               <div key={item.course.id} className="profile-courses-list-card">
@@ -213,7 +222,9 @@ function UserProfile() {
                   {item.course.abstract}
                 </p>
                 <div className="profile-courses-list-card-status">
-                  {item.course.isDone ? "Completed" : "In Progress"}
+                  {item.course.isDone
+                    ? t("profile.completed")
+                    : t("profile.in_progress")}
                 </div>
               </div>
             ))}

@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import type { TEditableFieldProps } from "./type";
 import "./style.scss";
 
 const EditableField = (props: TEditableFieldProps) => {
+  const { t } = useTranslation();
   const { label, value, fieldName, onSave, isLoading } = props;
   const [isEditing, setIsEditing] = useState(false);
   const [currentValue, setCurrentValue] = useState(value);
@@ -58,7 +60,7 @@ const EditableField = (props: TEditableFieldProps) => {
           onClick={() => setIsEditing((prev) => !prev)}
           disabled={isLoading}
           type="button"
-          aria-label={`Edit ${fieldName}`}
+          aria-label={t("editable_field.edit", { fieldName })}
         >
           <svg
             width="16"
