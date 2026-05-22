@@ -92,14 +92,3 @@ export const GOOGLE_LOGIN_MUTATION = `
     }
   }
 `;
-
-export const REFRESH_TOKEN_MUTATION = `
-  mutation RefreshToken($refreshToken: String!) {
-    refreshToken(refreshToken: $refreshToken) {
-      success
-      accessToken
-      refreshToken
-      message
-    }
-  }
-`;

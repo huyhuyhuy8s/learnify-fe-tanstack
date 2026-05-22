@@ -30,6 +30,7 @@ import { Route as LearnerLogInIndexRouteImport } from "./routes/learner_/log-in/
 import { Route as LearnerLessonsIndexRouteImport } from "./routes/learner_/lessons/index";
 import { Route as LearnerForgotPasswordIndexRouteImport } from "./routes/learner_/forgot-password/index";
 import { Route as LearnerUserIndexRouteImport } from "./routes/learner/user/index";
+import { Route as LearnerSubscriptionsIndexRouteImport } from "./routes/learner/subscriptions/index";
 import { Route as LearnerSearchIndexRouteImport } from "./routes/learner/search/index";
 import { Route as LearnerRoadmapsIndexRouteImport } from "./routes/learner/roadmaps/index";
 import { Route as LearnerFriendsIndexRouteImport } from "./routes/learner/friends/index";
@@ -147,6 +148,12 @@ const LearnerUserIndexRoute = LearnerUserIndexRouteImport.update({
   path: "/",
   getParentRoute: () => LearnerUserRouteRoute,
 } as any);
+const LearnerSubscriptionsIndexRoute =
+  LearnerSubscriptionsIndexRouteImport.update({
+    id: "/subscriptions/",
+    path: "/subscriptions/",
+    getParentRoute: () => LearnerRouteRoute,
+  } as any);
 const LearnerSearchIndexRoute = LearnerSearchIndexRouteImport.update({
   id: "/search/",
   path: "/search/",
@@ -225,6 +232,7 @@ export interface FileRoutesByFullPath {
   "/learner/friends/": typeof LearnerFriendsIndexRoute;
   "/learner/roadmaps/": typeof LearnerRoadmapsIndexRoute;
   "/learner/search/": typeof LearnerSearchIndexRoute;
+  "/learner/subscriptions/": typeof LearnerSubscriptionsIndexRoute;
   "/learner/user/": typeof LearnerUserIndexRoute;
   "/learner/forgot-password/": typeof LearnerForgotPasswordIndexRoute;
   "/learner/lessons/": typeof LearnerLessonsIndexRoute;
@@ -249,6 +257,7 @@ export interface FileRoutesByTo {
   "/learner/friends": typeof LearnerFriendsIndexRoute;
   "/learner/roadmaps": typeof LearnerRoadmapsIndexRoute;
   "/learner/search": typeof LearnerSearchIndexRoute;
+  "/learner/subscriptions": typeof LearnerSubscriptionsIndexRoute;
   "/learner/user": typeof LearnerUserIndexRoute;
   "/learner/forgot-password": typeof LearnerForgotPasswordIndexRoute;
   "/learner/lessons": typeof LearnerLessonsIndexRoute;
@@ -283,6 +292,7 @@ export interface FileRoutesById {
   "/learner/friends/": typeof LearnerFriendsIndexRoute;
   "/learner/roadmaps/": typeof LearnerRoadmapsIndexRoute;
   "/learner/search/": typeof LearnerSearchIndexRoute;
+  "/learner/subscriptions/": typeof LearnerSubscriptionsIndexRoute;
   "/learner/user/": typeof LearnerUserIndexRoute;
   "/learner_/forgot-password/": typeof LearnerForgotPasswordIndexRoute;
   "/learner_/lessons/": typeof LearnerLessonsIndexRoute;
@@ -318,6 +328,7 @@ export interface FileRouteTypes {
     | "/learner/friends/"
     | "/learner/roadmaps/"
     | "/learner/search/"
+    | "/learner/subscriptions/"
     | "/learner/user/"
     | "/learner/forgot-password/"
     | "/learner/lessons/"
@@ -342,6 +353,7 @@ export interface FileRouteTypes {
     | "/learner/friends"
     | "/learner/roadmaps"
     | "/learner/search"
+    | "/learner/subscriptions"
     | "/learner/user"
     | "/learner/forgot-password"
     | "/learner/lessons"
@@ -375,6 +387,7 @@ export interface FileRouteTypes {
     | "/learner/friends/"
     | "/learner/roadmaps/"
     | "/learner/search/"
+    | "/learner/subscriptions/"
     | "/learner/user/"
     | "/learner_/forgot-password/"
     | "/learner_/lessons/"
@@ -545,6 +558,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof LearnerUserIndexRouteImport;
       parentRoute: typeof LearnerUserRouteRoute;
     };
+    "/learner/subscriptions/": {
+      id: "/learner/subscriptions/";
+      path: "/subscriptions";
+      fullPath: "/learner/subscriptions/";
+      preLoaderRoute: typeof LearnerSubscriptionsIndexRouteImport;
+      parentRoute: typeof LearnerRouteRoute;
+    };
     "/learner/search/": {
       id: "/learner/search/";
       path: "/search";
@@ -665,6 +685,7 @@ interface LearnerRouteRouteChildren {
   LearnerCoursesIndexRoute: typeof LearnerCoursesIndexRoute;
   LearnerFriendsIndexRoute: typeof LearnerFriendsIndexRoute;
   LearnerSearchIndexRoute: typeof LearnerSearchIndexRoute;
+  LearnerSubscriptionsIndexRoute: typeof LearnerSubscriptionsIndexRoute;
 }
 
 const LearnerRouteRouteChildren: LearnerRouteRouteChildren = {
@@ -677,6 +698,7 @@ const LearnerRouteRouteChildren: LearnerRouteRouteChildren = {
   LearnerCoursesIndexRoute: LearnerCoursesIndexRoute,
   LearnerFriendsIndexRoute: LearnerFriendsIndexRoute,
   LearnerSearchIndexRoute: LearnerSearchIndexRoute,
+  LearnerSubscriptionsIndexRoute: LearnerSubscriptionsIndexRoute,
 };
 
 const LearnerRouteRouteWithChildren = LearnerRouteRoute._addFileChildren(

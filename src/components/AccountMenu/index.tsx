@@ -1,15 +1,15 @@
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import TextButton from "@/components/TextButton";
-import type { TSubscription } from "@/types/global";
 import AccountMenuItem from "./components/AccountMenuItem";
 import "./style.scss";
+import type { TSubscription } from "@/routes/learner/subscriptions/-types/type";
 
 type TAccountMenuProps = {
   username: string;
   uid: string;
   id: string;
-  subscription: TSubscription;
+  subscription: TSubscription["type"];
   className?: string;
   onLogout?: () => void;
 };
