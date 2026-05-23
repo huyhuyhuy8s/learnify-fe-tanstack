@@ -143,7 +143,7 @@
   }
 }
 
-@include break(s) {
+@include break(sm) {
   .about-page {
     &__head {
       svg {

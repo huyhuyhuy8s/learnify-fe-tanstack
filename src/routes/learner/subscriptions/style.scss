@@ -26,4 +26,19 @@
     grid-template-columns: repeat(auto-fit, minmax(toRem(300), 1fr));
     gap: toRem(30);
   }
+
+  @include break(md) {
+    padding: 0;
+
+    &__heading,
+    &__subtitle {
+      padding: 0;
+    }
+  }
+
+  @include break(sm) {
+    &__cards {
+      grid-template-columns: 1fr;
+    }
+  }
 }

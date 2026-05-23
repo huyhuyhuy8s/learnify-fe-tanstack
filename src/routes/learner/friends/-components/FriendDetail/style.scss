@@ -118,7 +118,7 @@
   }
 }
 
-@include break(s) {
+@include break(sm) {
   .friend-detail__bg {
     height: toRem(180);
   }

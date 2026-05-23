@@ -4,6 +4,7 @@ import TextButton from "@/components/TextButton";
 import AccountMenuItem from "./components/AccountMenuItem";
 import "./style.scss";
 import type { TSubscription } from "@/routes/learner/subscriptions/-types/type";
+import { SUBSCRIPTIONS } from "@/routes/learner/subscriptions/-constants";
 
 type TAccountMenuProps = {
   username: string;
@@ -18,6 +19,7 @@ const AccountMenu = (props: TAccountMenuProps) => {
   const { t } = useTranslation();
   const { username, uid, subscription, className, id, onLogout } = props;
   const userProfileLink = `/learner/user/${id}`;
+  const userSubscription = SUBSCRIPTIONS.find((s) => s.type === subscription);
 
   return (
     <div className={`account-menu ${className}`}>
@@ -31,9 +33,11 @@ const AccountMenu = (props: TAccountMenuProps) => {
           </p>
           <small title={uid}>{uid}</small>
           <TextButton
-            type="special"
+            type="secondary"
             size="tiny"
             text={subscription}
+            typeSecondary="pastelGreen"
+            icon={userSubscription?.icon}
             typeSpecial={subscription}
             onClick={() => {}}
           />

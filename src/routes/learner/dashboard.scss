@@ -61,7 +61,7 @@
   }
 }
 
-@include break(s) {
+@include break(sm) {
   .dashboard {
     padding: toRem(15);
 

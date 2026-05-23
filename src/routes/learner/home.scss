@@ -48,7 +48,7 @@
   }
 }
 
-@include break(s) {
+@include break(sm) {
   .home {
     margin-top: -5dvh;
     height: 85dvh;

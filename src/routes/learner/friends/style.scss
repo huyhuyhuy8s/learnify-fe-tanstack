@@ -118,7 +118,7 @@
   }
 }
 
-@include break(s) {
+@include break(sm) {
   .friend-page__header-tab {
     font-size: toRem(16);
     padding: toRem(12) 0;

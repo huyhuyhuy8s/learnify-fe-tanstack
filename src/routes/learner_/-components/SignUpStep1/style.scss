@@ -17,7 +17,7 @@
     padding-left: toRem(4);
   }
 
-  @include break(s) {
+  @include break(sm) {
     &__name-row {
       flex-direction: column;
     }

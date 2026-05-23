@@ -27,7 +27,7 @@
   }
 }
 
-@include break(s) {
+@include break(sm) {
   .left-nav-controller {
     display: flex;
   }

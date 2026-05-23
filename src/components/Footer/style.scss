@@ -100,7 +100,7 @@ footer {
   }
 }
 
-@include break(s) {
+@include break(sm) {
   .footer-content {
     grid-template-columns: 1fr;
     gap: toRem(75);

@@ -48,7 +48,7 @@
   }
 }
 
-@include break(s) {
+@include break(sm) {
   .progress-widget__grid {
     grid-template-columns: 1fr;
   }

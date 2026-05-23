@@ -185,7 +185,7 @@
   }
 }
 
-@include break(s) {
+@include break(sm) {
   .profile {
     padding: toRem(12);
 

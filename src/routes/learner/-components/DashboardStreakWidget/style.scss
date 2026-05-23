@@ -73,7 +73,7 @@
   }
 }
 
-@include break(s) {
+@include break(sm) {
   .streak-widget__top-number {
     font-size: toRem(60);
   }
