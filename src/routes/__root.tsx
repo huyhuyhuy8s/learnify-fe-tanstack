@@ -99,7 +99,7 @@ const Root = createRootRouteWithContext<RouterContext>()({
 function RootComponent() {
   useTheme();
   const setAuth = useAuthStore((state) => state.setAuth);
-  const { auth, theme } = Root.useLoaderData();
+  const { auth } = Root.useLoaderData();
   const [phase1Done, setPhase1Done] = useState(false);
   const [pageLoaded, setPageLoaded] = useState(false);
   const [phase2Done, setPhase2Done] = useState(false);

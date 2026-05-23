@@ -7,6 +7,11 @@
   @include flex-gap(10);
   width: 100%;
   border-radius: $br-xl;
+  @include transition;
+
+  &:hover {
+    border-radius: $br-sm;
+  }
 
   &.disabled {
     background-color: $neutral-200;
@@ -17,5 +22,15 @@
   &-select {
     background-color: $green-300;
     color: $white;
+  }
+
+  &-learn-more {
+    border-width: toRem(2);
+    border-style: solid;
+    border-color: transparent;
+
+    &:hover {
+      border-color: $black;
+    }
   }
 }

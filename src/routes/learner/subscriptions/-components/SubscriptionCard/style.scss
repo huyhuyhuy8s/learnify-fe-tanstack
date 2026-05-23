@@ -8,7 +8,9 @@
   background-color: $neutral-100;
   border-radius: $br-xl;
   padding: toRem(30);
-  @include flex-gap(30);
+  display: grid;
+  grid-template-rows: 1fr auto auto;
+  gap: toRem(20);
 
   &__content {
     @include flex-gap(30);

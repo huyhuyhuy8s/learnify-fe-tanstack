@@ -204,7 +204,7 @@
     );
 
     @each $name, $bg, $color in $type-secondary-variants {
-      &-#{$name} {
+      &-#{"" + $name} {
         background-color: $bg;
 
         @if $color {
