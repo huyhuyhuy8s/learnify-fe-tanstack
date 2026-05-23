@@ -1,10 +1,10 @@
 import { useAuthStore } from "@/store";
+import { createLearnerHead } from "@/utils";
 import { createFileRoute } from "@tanstack/react-router";
 import { Trans, useTranslation } from "react-i18next";
 import SubscriptionCard from "./-components/SubscriptionCard";
 import { SUBSCRIPTIONS } from "./-constants";
 import "./style.scss";
-import { createLearnerHead } from "@/utils";
 
 export const Route = createFileRoute("/learner/subscriptions/")({
   head: () => createLearnerHead("Subscriptions"),
@@ -19,6 +19,7 @@ function SubscriptionComponent() {
         (subscription) => subscription.type === user.subscription
       )
     : null;
+
   return (
     <div className="subscriptions">
       <h2 className="subscriptions__heading">
@@ -35,7 +36,7 @@ function SubscriptionComponent() {
             key={subscription.type}
             type={subscription.type}
             icon={subscription.icon}
-            disabled={!userSubscription}
+            disabled={userSubscription?.type === subscription.type || false}
             trial={subscription.type === "Pro"}
           />
         ))}
