@@ -9,6 +9,7 @@ import { mockQuizQuestions } from "@/mock/quiz";
 import type { TTeacherAnimation } from "../TeacherAnimation/type";
 import type { TTeacherStatus } from "../TeacherStatusIndicator/type";
 import type { TChatMessageRef } from "../ChatMessages";
+import type { TStopFn } from "../../-hooks/useTeacher";
 
 type TSectionItem = {
   id: string;
@@ -26,6 +27,7 @@ type TChatAreaProps = {
   sectionCount?: number;
   sections: TSectionItem[];
   chatRef: React.RefObject<TChatMessageRef | null>;
+  stopRef: React.MutableRefObject<TStopFn | null>;
   isMuted: boolean;
   isModelReady: boolean;
   modelsReady: boolean;
@@ -47,6 +49,7 @@ const ChatArea = (props: TChatAreaProps) => {
     sectionCount,
     sections,
     chatRef,
+    stopRef,
     isMuted,
     isModelReady,
     modelsReady,
@@ -93,6 +96,7 @@ const ChatArea = (props: TChatAreaProps) => {
           onStatusChange={setStatus}
           isMuted={isMuted}
           isModelReady={isModelReady}
+          stopRef={stopRef}
         />
       )}
 
@@ -103,6 +107,7 @@ const ChatArea = (props: TChatAreaProps) => {
           onAnimationChange={setAnimation}
           onStatusChange={setStatus}
           isMuted={isMuted}
+          stopRef={stopRef}
         />
       )}
 

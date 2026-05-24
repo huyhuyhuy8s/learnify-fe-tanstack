@@ -87,6 +87,14 @@ function TeacherContainer(props: TTeacherContainerProps) {
 
   const showOverlay = isLoading || !isLoaded;
 
+  useEffect(() => {
+    return () => {
+      useGLTF.clear("/models/teacher_animation.glb");
+      useGLTF.clear("/models/teacher.glb");
+      useGLTF.clear("/models/classroom_default.glb");
+    };
+  }, []);
+
   return (
     <div className="teacher-container">
       {showOverlay && (
@@ -102,35 +110,37 @@ function TeacherContainer(props: TTeacherContainerProps) {
 
       {children}
 
-      {teacherScene && (
-        <Canvas
-          camera={{ position: [1, 1.425, 1], fov: 15 }}
-          gl={{
-            antialias: true,
-            premultipliedAlpha: false,
-          }}
-          style={{
-            background: "#1a1a1a",
-            opacity: showOverlay ? 0 : 1,
-            transition: "opacity 0.3s ease",
-          }}
-        >
-          <ambientLight intensity={0.4} />
-          <directionalLight position={[5, 5, 5]} intensity={1} />
-          <Environment preset="city" background={false} />
-          <Classroom scene={classroomScene} />
-          <TeacherAnimation
-            ref={teacherAnimationRef}
-            animation={animation}
-            animationModel={animationModel}
-            teacherModel={{ scene: teacherScene }}
-            rotation={[0, Math.PI, 0]}
-            position={[1, 0.25, -2]}
-          />
-          <CameraController target={[1, 1.425, 1]} />
-          <Preload all />
-        </Canvas>
-      )}
+      <Canvas
+        camera={{ position: [1, 1.425, 1], fov: 15 }}
+        gl={{
+          antialias: true,
+          premultipliedAlpha: false,
+        }}
+        style={{
+          background: "#1a1a1a",
+          opacity: showOverlay ? 0 : 1,
+          transition: "opacity 0.3s ease",
+        }}
+      >
+        {teacherScene && (
+          <>
+            <ambientLight intensity={0.4} />
+            <directionalLight position={[5, 5, 5]} intensity={1} />
+            <Environment preset="city" background={false} />
+            <Classroom scene={classroomScene} />
+            <TeacherAnimation
+              ref={teacherAnimationRef}
+              animation={animation}
+              animationModel={animationModel}
+              teacherModel={{ scene: teacherScene }}
+              rotation={[0, Math.PI, 0]}
+              position={[1, 0.25, -2]}
+            />
+            <CameraController target={[1, 1.425, 1]} />
+          </>
+        )}
+        <Preload all />
+      </Canvas>
     </div>
   );
 }

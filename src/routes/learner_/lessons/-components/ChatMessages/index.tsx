@@ -2,6 +2,7 @@ import {
   useCallback,
   useEffect,
   useImperativeHandle,
+  useLayoutEffect,
   useRef,
   useState,
   forwardRef,
@@ -12,10 +13,10 @@ import { useTranslation } from "react-i18next";
 import Icon from "@/components/Icon";
 import useChat from "@/hooks/useChat";
 import useLessonPlayback from "@/hooks/useLessonPlayback";
-import { logger } from "@/utils/logger";
 
 import ChatMessage from "../ChatMessage";
 import type { TMessage } from "../ChatMessage/type";
+import type { TStopFn } from "../../-hooks/useTeacher";
 import ChatInput from "../ChatInput";
 import type { TTeacherAnimation } from "../TeacherAnimation/type";
 import type { TTeacherStatus } from "../TeacherStatusIndicator/type";
@@ -25,6 +26,7 @@ export type TChatMessageRef = {
   pause: () => void;
   resume: () => void;
   stop: () => void;
+  resetAndClear: () => void;
 };
 
 type SectionItem = {
@@ -44,6 +46,7 @@ type TChatMessagesProps = {
   sections?: SectionItem[];
   onLessonComplete?: () => void;
   isModelReady?: boolean;
+  stopRef?: React.MutableRefObject<TStopFn | null>;
 };
 
 const ChatMessages = forwardRef<TChatMessageRef, TChatMessagesProps>(
@@ -57,6 +60,7 @@ const ChatMessages = forwardRef<TChatMessageRef, TChatMessagesProps>(
       sections = [],
       onLessonComplete,
       isModelReady = false,
+      stopRef,
     } = props;
     const { t } = useTranslation();
     const [messages, setMessages] = useState<TMessage[]>([]);
@@ -124,7 +128,6 @@ const ChatMessages = forwardRef<TChatMessageRef, TChatMessagesProps>(
         isModelReadyRef.current
       ) {
         playbackStartedRef.current = true;
-        logger.debug("[ChatMessages] calling playbackStart()");
         playbackStart();
       }
       if (mode !== "lesson") {
@@ -138,24 +141,31 @@ const ChatMessages = forwardRef<TChatMessageRef, TChatMessagesProps>(
           pause: playbackPause,
           resume: playbackResume,
           stop: playbackStop,
+          resetAndClear: () => {
+            playbackStop();
+            setMessages([]);
+          },
         };
       }
       return {
         pause: chat.pause,
         resume: chat.resume,
         stop: chat.stop,
+        resetAndClear: () => {
+          chat.stop();
+          setMessages([]);
+        },
       };
-    }, [
-      mode,
-      playbackPause,
-      playbackResume,
-      playbackStop,
-      chat.pause,
-      chat.resume,
-      chat.stop,
-    ]);
+    }, [mode, playbackPause, playbackResume, playbackStop, chat, setMessages]);
 
     const displayMessages = mode === "lesson" ? playbackMessages : messages;
+
+    useLayoutEffect(() => {
+      if (stopRef) {
+        const stopFn = mode === "lesson" ? playbackStop : chat.stop;
+        stopRef.current = stopFn;
+      }
+    }, [mode, playbackStop, chat.stop, stopRef]);
 
     useEffect(() => {
       scrollToBottom();

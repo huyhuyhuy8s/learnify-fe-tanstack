@@ -2,13 +2,14 @@
 @use "@styles/colors" as *;
 @use "@styles/mixins" as *;
 @use "@styles/functions" as *;
+@use "sass:math";
 
 .teacher-avatar-2d {
   display: flex;
   align-items: center;
   justify-content: center;
   aspect-ratio: 4 / 3;
-  height: 25dvw * 3 / 4;
+  height: math.div(25dvw * 3, 4);
   background-color: $green-100;
 
   &_image {
