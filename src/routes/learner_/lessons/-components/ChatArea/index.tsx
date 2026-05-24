@@ -28,6 +28,7 @@ type TChatAreaProps = {
   sections: TSectionItem[];
   chatRef: React.RefObject<TChatMessageRef | null>;
   stopRef: React.MutableRefObject<TStopFn | null>;
+  lessonId?: string;
   isMuted: boolean;
   isModelReady: boolean;
   modelsReady: boolean;
@@ -50,6 +51,7 @@ const ChatArea = (props: TChatAreaProps) => {
     sections,
     chatRef,
     stopRef,
+    lessonId,
     isMuted,
     isModelReady,
     modelsReady,
@@ -97,6 +99,7 @@ const ChatArea = (props: TChatAreaProps) => {
           isMuted={isMuted}
           isModelReady={isModelReady}
           stopRef={stopRef}
+          lessonId={lessonId}
         />
       )}
 
@@ -108,6 +111,7 @@ const ChatArea = (props: TChatAreaProps) => {
           onStatusChange={setStatus}
           isMuted={isMuted}
           stopRef={stopRef}
+          lessonId={lessonId}
         />
       )}
 

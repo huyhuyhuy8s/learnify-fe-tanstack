@@ -120,6 +120,7 @@ function LessonDetail() {
         sections={data?.sections || []}
         chatRef={chatRef}
         stopRef={stopRef}
+        lessonId={lessonId}
         isMuted={isMuted}
         isModelReady={isModelReady}
         modelsReady={modelsReady}

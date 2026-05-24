@@ -399,5 +399,14 @@
     "select": "Chọn",
     "free-trial": "Thử miễn phí",
     "learn_more": "Tìm hiểu thêm"
+  },
+  "chat": {
+    "thinking": {
+      "the_teacher_is_thinking": "Trợ giảng đang suy nghĩ...",
+      "processing_your_question": "Đang xử lý câu hỏi của bạn...",
+      "let_me_check": "Để tôi kiểm tra...",
+      "searching_knowledge_base": "Đang tìm kiếm kiến thức...",
+      "analyzing_your_query": "Đang phân tích câu hỏi..."
+    }
   }
 }

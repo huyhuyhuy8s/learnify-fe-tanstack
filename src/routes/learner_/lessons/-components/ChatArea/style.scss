@@ -5,6 +5,7 @@
 
 .chat-area {
   grid-row: 1 / 3;
+  max-height: calc(100dvh - toRem(40) - toRem(77));
   display: flex;
   flex-direction: column;
   background-color: $green-100;

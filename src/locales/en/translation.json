@@ -399,5 +399,14 @@
     "select": "Select",
     "free-trial": "Start free trial",
     "learn_more": "Learn more"
+  },
+  "chat": {
+    "thinking": {
+      "the_teacher_is_thinking": "The teacher is thinking...",
+      "processing_your_question": "Processing your question...",
+      "let_me_check": "Let me check...",
+      "searching_knowledge_base": "Searching knowledge base...",
+      "analyzing_your_query": "Analyzing your query..."
+    }
   }
 }

@@ -47,6 +47,7 @@ type TChatMessagesProps = {
   onLessonComplete?: () => void;
   isModelReady?: boolean;
   stopRef?: React.MutableRefObject<TStopFn | null>;
+  lessonId?: string;
 };
 
 const ChatMessages = forwardRef<TChatMessageRef, TChatMessagesProps>(
@@ -61,6 +62,7 @@ const ChatMessages = forwardRef<TChatMessageRef, TChatMessagesProps>(
       onLessonComplete,
       isModelReady = false,
       stopRef,
+      lessonId,
     } = props;
     const { t } = useTranslation();
     const [messages, setMessages] = useState<TMessage[]>([]);
@@ -104,6 +106,7 @@ const ChatMessages = forwardRef<TChatMessageRef, TChatMessagesProps>(
       onAnimationChange,
       onStatusChange,
       isMuted,
+      lessonId: lessonId || "",
     });
 
     const {
