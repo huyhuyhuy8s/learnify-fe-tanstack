@@ -95,7 +95,7 @@ const TopNavRight = () => {
           username={user.username || "User"}
           uid={user.email || ""}
           id={user.id || ""}
-          subscription={"starter"}
+          subscription={user.subscription || "Starter"}
           className={accountMenuClassName}
           onLogout={handleLogout}
         />

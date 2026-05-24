@@ -40,26 +40,26 @@ const ChatMessage = (props: TMessageProps) => {
     setBubbleHeight(Math.max(height + BUBBLE_PAD, MIN_BUBBLE_HEIGHT));
   }, [content]);
 
-  const cls = classnames("message", `message-${sender}`, className);
+  const cls = classnames("chat-message", `chat-message--${sender}`, className);
 
   return (
     <div className={cls}>
-      <div className="message-avatar">
+      <div className="chat-message__avatar">
         <Icon name={sender === "teacher" ? "smart_toy" : "person"} />
       </div>
       <div
-        className="message-body"
+        className="chat-message__body"
         ref={bodyRef}
         style={bubbleHeight ? { minHeight: bubbleHeight } : undefined}
       >
-        <div className="message-bubble">
+        <div className="chat-message__bubble">
           {type === "image" && imageUrl ? (
-            <img className="message-image" src={imageUrl} alt={content} />
+            <img className="chat-message__image" src={imageUrl} alt={content} />
           ) : (
-            <p className="message-text">{content}</p>
+            <p className="chat-message__text">{content}</p>
           )}
         </div>
-        <span className="message-time">{formattedTime}</span>
+        <span className="chat-message__time">{formattedTime}</span>
       </div>
     </div>
   );

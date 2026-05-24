@@ -2,7 +2,9 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import useSpeechSynthesis from "@/hooks/useSpeechSynthesis";
 import type { TTeacherAnimation } from "../-components/TeacherAnimation/type";
 import type { TTeacherStatus } from "../-components/TeacherStatusIndicator/type";
-import type { TChatMessageRef } from "../-components/ChatMessageWrapper";
+import type { TChatMessageRef } from "../-components/ChatMessages";
+
+export type TStopFn = () => void;
 
 const DEFAULT_VOICE_ID =
   import.meta.env.VITE_EDGETTS_VOICE_ID || "vi-VN-HoaiMyNeural";
@@ -25,6 +27,7 @@ export type TTeacher = {
   modelsReady: boolean;
   loadingMessageIndex: number;
   chatRef: React.RefObject<TChatMessageRef | null>;
+  stopRef: React.MutableRefObject<TStopFn | null>;
   stopChat: () => void;
   handleModelReady: () => void;
   handleModelsReady: () => void;
@@ -38,6 +41,7 @@ export type TTeacher = {
   setIsMuted: (muted: boolean) => void;
   setIsSettingsOpen: (open: boolean) => void;
   toggle3DMode: (enabled: boolean) => void;
+  resetTeacher: () => void;
 };
 
 const useTeacher = (): TTeacher => {
@@ -56,6 +60,7 @@ const useTeacher = (): TTeacher => {
   const [modelsReady, setModelsReady] = useState(false);
   const [loadingMessageIndex, setLoadingMessageIndex] = useState(0);
   const chatRef = useRef<TChatMessageRef>(null);
+  const stopRef = useRef<TStopFn | null>(null);
 
   useEffect(() => {
     if (!isModelReady) {
@@ -105,6 +110,17 @@ const useTeacher = (): TTeacher => {
     localStorage.setItem("learnify_3d_mode", String(enabled));
   }, []);
 
+  const resetTeacher = useCallback(() => {
+    stopRef.current?.();
+    setAnimation("Idle");
+    setStatus("idle");
+    setIsMuted(false);
+    setIsSettingsOpen(false);
+    setIsModelReady(false);
+    setModelsReady(false);
+    setLoadingMessageIndex(0);
+  }, []);
+
   return {
     animation,
     status,
@@ -116,6 +132,7 @@ const useTeacher = (): TTeacher => {
     modelsReady,
     loadingMessageIndex,
     chatRef,
+    stopRef,
     stopChat,
     handleModelReady,
     handleModelsReady,
@@ -129,6 +146,7 @@ const useTeacher = (): TTeacher => {
     setIsMuted,
     setIsSettingsOpen,
     toggle3DMode,
+    resetTeacher,
   };
 };
 

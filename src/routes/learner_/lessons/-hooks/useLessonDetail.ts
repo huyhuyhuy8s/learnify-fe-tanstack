@@ -17,11 +17,12 @@ export type TLessonDetail = {
   skipToQA: () => void;
   skipToQuiz: () => void;
   completeLesson: () => void;
+  reset: () => void;
 };
 
 const useLessonDetail = (lessonId: string): TLessonDetail => {
   const { data, isLoading } = useLesson(lessonId);
-  const { state, startLesson, skipToQA, skipToQuiz, completeLesson } =
+  const { state, startLesson, skipToQA, skipToQuiz, completeLesson, reset } =
     useLessonFlow();
   const { setLayoutConfigState } = useLayout();
 
@@ -56,6 +57,7 @@ const useLessonDetail = (lessonId: string): TLessonDetail => {
     skipToQA,
     skipToQuiz,
     completeLesson,
+    reset,
   };
 };
 

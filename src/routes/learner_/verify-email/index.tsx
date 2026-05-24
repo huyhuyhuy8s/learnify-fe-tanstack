@@ -90,15 +90,15 @@ function VerifyEmailPage() {
 
   return (
     <div className="verify-email" id="verify-email-page">
-      <div className="verify-email-container">
+      <div className="verify-email__container">
         {status === "loading" && (
-          <div className="verify-email-loading">
-            <div className="verify-email-spinner" />
+          <div className="verify-email__loading">
+            <div className="verify-email__spinner" />
             <h3 className="semibold">{message}</h3>
           </div>
         )}
         {status === "success" && (
-          <div className="verify-email-success">
+          <div className="verify-email__success">
             <Icon name="check_circle" />
             <h3 className="semibold">{message}</h3>
             <p className="regular">
@@ -107,12 +107,12 @@ function VerifyEmailPage() {
           </div>
         )}
         {status === "error" && (
-          <div className="verify-email-error">
+          <div className="verify-email__error">
             <Icon name="error" />
             <h3 className="semibold">Verification Failed</h3>
             <p className="regular">{message}</p>
             <button
-              className="verify-email-retry-btn"
+              className="verify-email__retry-btn"
               type="button"
               onClick={() => navigate({ to: "/learner/log-in" })}
             >

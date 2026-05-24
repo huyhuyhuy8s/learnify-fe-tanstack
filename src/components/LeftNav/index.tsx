@@ -50,7 +50,7 @@ const LeftNav = (props: TLeftNavProps) => {
   if (compact) {
     return (
       <nav className={navClassNames}>
-        <button>
+        <button aria-label="Toggle navigation menu">
           <Icon name="menu" />
         </button>
       </nav>

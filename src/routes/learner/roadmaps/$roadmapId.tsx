@@ -1,3 +1,5 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import Card from "@/components/Card";
 import DecorationCard from "@/components/DecorationCard";
 import NotFound from "@/components/NotFound";
@@ -5,7 +7,6 @@ import TextButton from "@/components/TextButton";
 import { MOCK_COMMENT, MOCK_COURSES, MOCK_ROADMAP } from "@/mock";
 import { COLORS } from "@/styles/colors";
 import { postQueryOptions } from "@/utils/posts";
-import { createFileRoute } from "@tanstack/react-router";
 import CommentItem from "./-components/CommentItem";
 import "./roadmapId.scss";
 
@@ -26,6 +27,7 @@ export const Route = createFileRoute("/learner/roadmaps/$roadmapId")({
 });
 
 function RoadmapItem() {
+  const { t } = useTranslation();
   const { roadmapId } = Route.useParams();
   const roadmap = MOCK_ROADMAP.find(
     (roadmap) => roadmap.id === Number(roadmapId)
@@ -41,7 +43,7 @@ function RoadmapItem() {
         <DecorationCard
           listBadge={
             <TextButton
-              text="text"
+              text={t("course_detail.badge_text")}
               size="tiny"
               type="special"
               typeSpecial="roadmap"
@@ -59,7 +61,7 @@ function RoadmapItem() {
         />
         <div className="roadmap__content">
           <TextButton
-            text="Send feedback"
+            text={t("course_detail.send_feedback")}
             size="small"
             icon="feedback"
             type="outlined"

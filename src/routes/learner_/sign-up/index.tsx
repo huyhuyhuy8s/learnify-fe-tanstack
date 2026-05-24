@@ -1,6 +1,7 @@
+import { useTranslation } from "react-i18next";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import CustomLink from "@/components/CustomLink";
-import Icon from "@/components/Icon";
+import Logo from "@/components/Logo";
 import { GoogleLogin } from "@react-oauth/google";
 import { useSignUpForm } from "../-hooks/useSignUpForm";
 import { useGoogleLogin } from "@/hooks/useGoogleLogin";
@@ -24,6 +25,7 @@ export const Route = createFileRoute("/learner_/sign-up/")({
 });
 
 function SignUpPage() {
+  const { t } = useTranslation();
   const {
     step,
     step1Data,
@@ -46,16 +48,13 @@ function SignUpPage() {
 
   return (
     <div className="sign-up" id="sign-up-page">
-      <CustomLink className="sign-up-logo" to="/learner">
-        <Icon name="local_library" />
-        <h2 className="semibold">Learnify</h2>
-      </CustomLink>
+      <Logo size="medium" className="sign-up__logo" />
 
-      <div className="sign-up-card">
-        <div className="sign-up-left">
-          <h3 className="semibold">Sign up to Learnify</h3>
+      <div className="sign-up__card">
+        <div className="sign-up__left">
+          <h3 className="semibold">{t("auth.signup.title")}</h3>
 
-          <div className="sign-up-google-container">
+          <div className="sign-up__google-container">
             <GoogleLogin
               onSuccess={(credentialResponse) => {
                 if (!credentialResponse?.credential) {
@@ -79,8 +78,8 @@ function SignUpPage() {
             />
           </div>
 
-          <div className="sign-up-divider">
-            <p className="regular">or sign up with</p>
+          <div className="sign-up__divider">
+            <p className="regular">{t("auth.signup.or")}</p>
           </div>
 
           {step === 1 && (
@@ -115,13 +114,15 @@ function SignUpPage() {
             />
           )}
 
-          <p className="sign-up-signin-link regular">
-            Already using Learnify?{" "}
-            <CustomLink to="/learner/log-in">Log in</CustomLink>
+          <p className="sign-up__signin-link regular">
+            {t("auth.signup.already_using")}{" "}
+            <CustomLink to="/learner/log-in">
+              {t("auth.signup.log_in")}
+            </CustomLink>
           </p>
         </div>
 
-        <div className="sign-up-separator" />
+        <div className="sign-up__separator" />
 
         <SignUpRight />
       </div>

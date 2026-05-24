@@ -41,7 +41,7 @@ main {
   }
 }
 
-@include break(s) {
+@include break(sm) {
   .body {
     .inner {
       padding: toRem(75) toRem(50);

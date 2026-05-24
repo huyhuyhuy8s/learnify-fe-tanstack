@@ -1,4 +1,6 @@
+import { useTranslation } from "react-i18next";
 import IconButton from "@/components/IconButton";
+import { useLayout } from "@/contexts/LayoutContext";
 import LeftNavItem from "../LeftNavItem";
 import { topItems } from "../../constants";
 
@@ -8,16 +10,28 @@ type TLeftNavTopProps = {
 
 const LeftNavTop = (props: TLeftNavTopProps) => {
   const { pathname } = props;
+  const { t } = useTranslation();
+  const { setLayoutConfigState } = useLayout();
 
   return (
     <div className="left-nav-top">
-      <IconButton icon="search" size="small" ariaLabel="Search" />
-      <div className="item-list">
+      <IconButton
+        icon="search"
+        size="small"
+        ariaLabel={t("sidebar.search")}
+        onClick={() =>
+          setLayoutConfigState((prev) => ({
+            ...prev,
+            showSearch: !prev.showSearch,
+          }))
+        }
+      />
+      <div className="left-nav-top__items">
         {topItems.map((item) => (
           <LeftNavItem
-            key={item.label}
+            key={item.labelKey}
             iconName={item.iconName}
-            label={item.label}
+            label={t(item.labelKey)}
             href={item.href}
             active={pathname === item.href}
           />

@@ -3,8 +3,9 @@ import Loader from "@/components/Loader";
 import NotFound from "@/components/NotFound";
 import { LayoutProvider } from "@/contexts/LayoutContext";
 import { useTheme } from "@/hooks/useTheme";
+import { initI18n } from "@/i18n";
 import type { RouterContext } from "@/router";
-import { getCurrentUserFn } from "@/server/auth";
+import { getCurrentUserFn, getServerCookiesFn } from "@/server/auth";
 import { useAuthStore } from "@/store/authStore";
 import { seo } from "@/utils/seo";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -20,7 +21,7 @@ import CustomEase from "gsap/CustomEase";
 import { SplitText } from "gsap/SplitText";
 import * as React from "react";
 import { Suspense, lazy, useEffect, useState } from "react";
-import { toast } from "sonner";
+import { Toaster, toast } from "sonner";
 import "./root.scss";
 
 gsap.registerPlugin(SplitText, CustomEase);
@@ -33,8 +34,13 @@ const DevTools = import.meta.env.DEV
 
 const Root = createRootRouteWithContext<RouterContext>()({
   loader: async () => {
+    const cookies = await getServerCookiesFn();
+    if (cookies.language) initI18n(cookies.language);
     const { user, expired } = await getCurrentUserFn();
-    return { auth: { user, isAuthenticated: !!user, expired } };
+    return {
+      auth: { user, isAuthenticated: !!user, expired },
+      theme: cookies.theme,
+    };
   },
   head: () => ({
     meta: [
@@ -53,6 +59,12 @@ const Root = createRootRouteWithContext<RouterContext>()({
       }),
     ],
     links: [
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
+      },
       { rel: "image/x-icon", href: "/favicon.ico" },
       {
         rel: "icon",
@@ -76,7 +88,11 @@ const Root = createRootRouteWithContext<RouterContext>()({
       </RootDocument>
     );
   },
-  notFoundComponent: () => <NotFound />,
+  notFoundComponent: () => (
+    <RootDocument>
+      <NotFound />
+    </RootDocument>
+  ),
   component: RootComponent,
 });
 
@@ -92,8 +108,16 @@ function RootComponent() {
   const phase2Ready = phase1Done && pageLoaded;
 
   useEffect(() => {
-    if (auth?.expired) toast.error("Session expired. Please log in again.");
-    setAuth(auth?.user || null);
+    if (auth.expired) {
+      import("@/i18n").then(({ default: i18nInstance }) =>
+        toast.error(i18nInstance.t("errors.session_expired"))
+      );
+    }
+    setAuth(
+      auth.user
+        ? { ...auth.user, subscription: auth.user.subscription || "Starter" }
+        : null
+    );
   }, [setAuth, auth]);
 
   useEffect(() => {
@@ -126,11 +150,31 @@ function RootComponent() {
 
 export const Route = Root;
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+function RootDocument({
+  children,
+  theme,
+}: {
+  children: React.ReactNode;
+  theme?: string;
+}) {
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
+  const [lang, setLang] = useState(() => {
+    if (typeof document !== "undefined") {
+      const match = document.cookie.match(/(?:^|;\s*)app-language=([^;]*)/);
+      return match?.[1] || "en";
+    }
+    return "en";
+  });
+
+  useEffect(() => {
+    import("@/i18n").then(({ default: i18nInstance }) => {
+      setLang(i18nInstance.language);
+      i18nInstance.on("languageChanged", setLang);
+    });
+  }, []);
 
   return (
-    <html lang="en">
+    <html lang={lang} data-theme={theme || "light"} suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
@@ -142,6 +186,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           <Suspense fallback={null}>
             <DevTools />
           </Suspense>
+          <Toaster position="bottom-right" richColors />
           <Scripts />
         </GoogleOAuthProvider>
       </body>

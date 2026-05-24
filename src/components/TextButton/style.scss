@@ -3,10 +3,32 @@
 @use "@styles/mixins" as *;
 @use "@styles/functions" as *;
 
+@mixin btn-secondary-states {
+  &:hover {
+    border-color: $neutral-900;
+    color: $neutral-900;
+  }
+
+  &:active {
+    border-color: $neutral-900;
+    background-color: $neutral-250;
+    color: $neutral-900;
+  }
+}
+
+@mixin btn-corner($base, $corners) {
+  border-radius: $base;
+
+  @each $property, $value in $corners {
+    border-#{$property}-radius: $value;
+  }
+}
+
 .text-button {
   display: flex;
   place-items: center;
   justify-content: center;
+  color: $neutral-100;
   @include transition;
   transition-property:
     color, background-color, border-color, border-radius,
@@ -25,31 +47,24 @@
   }
 
   span {
-    color: $neutral-100;
-
     &::first-letter {
       text-transform: uppercase;
     }
   }
 
+  &.disabled,
+  &.loading {
+    color: $white;
+  }
+
   &.disabled {
     background-color: $neutral-400;
-
-    span,
-    svg {
-      color: $white;
-    }
   }
 
   &.loading {
     cursor: not-allowed;
     opacity: 0.8;
     animation: pulse 1.5s ease-in-out infinite;
-
-    span,
-    svg {
-      color: $white;
-    }
   }
 
   .text-button_spinner {
@@ -126,120 +141,75 @@
 
   &.primary {
     background-color: $mode-green;
-
-    span,
-    svg {
-      color: $neutral-100;
-    }
+    color: $neutral-100;
 
     &:hover {
       background-color: $green-600;
-
-      span,
-      svg {
-        color: $neutral-200;
-      }
+      color: $neutral-200;
     }
 
     &:active {
       background-color: $green-400;
-
-      span,
-      svg {
-        color: $neutral-900;
-      }
+      color: $neutral-900;
     }
   }
 
   &.secondary {
-    span,
-    svg {
-      color: $neutral-800;
-    }
-
-    &:hover {
-      border-color: $neutral-900;
-
-      span,
-      svg {
-        color: $neutral-900;
-      }
-    }
-
-    &:active {
-      border-color: $neutral-900;
-      background-color: $neutral-250;
-
-      span,
-      svg {
-        color: $neutral-900;
-      }
-    }
+    color: $neutral-800;
+    @include btn-secondary-states;
   }
 
   &.outlined {
     background-color: transparent;
     border-color: $neutral-800;
-    border-style: solid;
+    color: $neutral-800;
+    @include btn-secondary-states;
+  }
 
-    span,
-    svg {
-      color: $neutral-800;
-    }
+  &.special.typeSpecial {
+    $special-groups: (
+      (lesson roadmap lab course check certificate) $navy-250 $neutral-800,
+      (private public) $mode-neutral $white,
+      (starter pro career) $orange-pastel-200 $neutral-800
+    );
 
-    &:hover {
-      border-color: $neutral-900;
-
-      span,
-      svg {
-        color: $neutral-900;
-      }
-    }
-
-    &:active {
-      border-color: $neutral-900;
-      background-color: $neutral-250;
-
-      span,
-      svg {
-        color: $neutral-900;
+    @each $subtypes, $bg, $color in $special-groups {
+      @each $subtype in $subtypes {
+        &-#{$subtype} {
+          background-color: $bg;
+          color: $color;
+        }
       }
     }
   }
 
-  &.special.typeSpecial {
-    &-lesson,
-    &-roadmap,
-    &-lab,
-    &-course,
-    &-check,
-    &-certificate {
-      background-color: $navy-250;
+  &.typeSecondary {
+    $type-secondary-variants: (
+      (neutral, $mode-neutral, null),
+      (yellow, $mode-yellow, $neutral-100),
+      (orange, $mode-orange, $neutral-100),
+      (salmon, $mode-salmon, $neutral-100),
+      (darkGreen, $mode-dark-green, null),
+      (navy, $mode-navy, null),
+      (brown, $mode-brown, null),
+      (green, $mode-green, null),
+      (pastelNeutral, $neutral-pastel-200, null),
+      (pastelYellow, $yellow-pastel-200, $neutral-100),
+      (pastelOrange, $orange-pastel-200, $neutral-100),
+      (pastelSalmon, $salmon-pastel-200, $neutral-100),
+      (pastelDarkGreen, $dark-green-pastel-200, null),
+      (pastelNavy, $navy-pastel-200, null),
+      (pastelBrown, $brown-pastel-200, null),
+      (pastelGreen, $green-pastel-200, null)
+    );
 
-      span,
-      svg {
-        color: $neutral-800;
-      }
-    }
+    @each $name, $bg, $color in $type-secondary-variants {
+      &-#{"" + $name} {
+        background-color: $bg;
 
-    &-private,
-    &-public {
-      background-color: $mode-neutral;
-
-      span,
-      svg {
-        color: $white;
-      }
-    }
-
-    &-starter,
-    &-pro,
-    &-career {
-      background-color: $orange-pastel-200;
-
-      span,
-      svg {
-        color: $neutral-800;
+        @if $color {
+          color: $color;
+        }
       }
     }
   }
@@ -247,71 +217,119 @@
 
 .corner {
   &-exceptLowerLeft {
-    border-radius: $br-rounded;
-    border-top-left-radius: $br-xtl;
-    border-bottom-left-radius: $br-lg;
+    @include btn-corner(
+      $br-rounded,
+      (
+        top-left: $br-xtl,
+        bottom-left: $br-lg,
+      )
+    );
   }
 
   &-exceptLowerRight {
-    border-radius: $br-rounded;
-    border-top-right-radius: $br-xtl;
-    border-bottom-right-radius: $br-lg;
+    @include btn-corner(
+      $br-rounded,
+      (
+        top-right: $br-xtl,
+        bottom-right: $br-lg,
+      )
+    );
   }
 
   &-exceptUpperLeft {
-    border-radius: $br-rounded;
-    border-bottom-left-radius: $br-xtl;
-    border-top-left-radius: $br-lg;
+    @include btn-corner(
+      $br-rounded,
+      (
+        bottom-left: $br-xtl,
+        top-left: $br-lg,
+      )
+    );
   }
 
   &-exceptUpperRight {
-    border-radius: $br-rounded;
-    border-bottom-right-radius: $br-xtl;
-    border-top-right-radius: $br-lg;
+    @include btn-corner(
+      $br-rounded,
+      (
+        bottom-right: $br-xtl,
+        top-right: $br-lg,
+      )
+    );
   }
 
   &-exceptLeft {
-    border-radius: $br-xtl;
-    border-top-left-radius: $br-lg;
-    border-bottom-left-radius: $br-lg;
+    @include btn-corner(
+      $br-xtl,
+      (
+        top-left: $br-lg,
+        bottom-left: $br-lg,
+      )
+    );
   }
 
   &-exceptRight {
-    border-radius: $br-xtl;
-    border-top-right-radius: $br-lg;
-    border-bottom-right-radius: $br-lg;
+    @include btn-corner(
+      $br-xtl,
+      (
+        top-right: $br-lg,
+        bottom-right: $br-lg,
+      )
+    );
   }
 
   &-exceptUpper {
-    border-radius: $br-xtl;
-    border-top-left-radius: $br-lg;
-    border-top-right-radius: $br-lg;
+    @include btn-corner(
+      $br-xtl,
+      (
+        top-left: $br-lg,
+        top-right: $br-lg,
+      )
+    );
   }
 
   &-exceptLower {
-    border-radius: $br-xtl;
-    border-bottom-left-radius: $br-lg;
-    border-bottom-right-radius: $br-lg;
+    @include btn-corner(
+      $br-xtl,
+      (
+        bottom-left: $br-lg,
+        bottom-right: $br-lg,
+      )
+    );
   }
 
   &-onlyUpperLeft {
-    border-radius: $br-lg;
-    border-top-left-radius: $br-xtl;
+    @include btn-corner(
+      $br-lg,
+      (
+        top-left: $br-xtl,
+      )
+    );
   }
 
   &-onlyUpperRight {
-    border-radius: $br-lg;
-    border-top-right-radius: $br-xtl;
+    @include btn-corner(
+      $br-lg,
+      (
+        top-right: $br-xtl,
+      )
+    );
   }
 
   &-onlyLowerLeft {
-    border-radius: $br-lg;
-    border-bottom-left-radius: $br-xtl;
+    @include btn-corner(
+      $br-lg,
+      (
+        bottom-left: $br-xtl,
+      )
+    );
   }
 
   &-onlyLowerRight {
-    border-radius: $br-lg;
-    border-bottom-right-radius: $br-xtl;
+    @include btn-corner(
+      $br-lg,
+      (
+        bottom-right: $br-xtl,
+      )
+    );
   }
 
   &-rounded {

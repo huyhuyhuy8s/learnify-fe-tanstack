@@ -1,3 +1,4 @@
+import { useState } from "react";
 import classnames from "classnames";
 import type { TTeacherAnimation } from "../TeacherAnimation/type";
 import "./style.scss";
@@ -7,7 +8,7 @@ type TTeacherAvatar2DProps = {
   className?: string;
 };
 
-const IMAGE_MAP: Record<TTeacherAnimation, string> = {
+const IMAGE_MAP: Record<string, string> = {
   Idle: "/images/teacher/idle.png",
   Thinking: "/images/teacher/thinking.png",
   Talking_1: "/images/teacher/talking_1.png",
@@ -23,26 +24,21 @@ const IMAGE_MAP: Record<TTeacherAnimation, string> = {
 
 const TeacherAvatar2D = (props: TTeacherAvatar2DProps) => {
   const { animation = "Idle", className } = props;
+  const [hasError, setHasError] = useState(false);
 
   const imageSrc = IMAGE_MAP[animation] ?? IMAGE_MAP.Idle;
 
   return (
     <div className={classnames("teacher-avatar-2d", className)}>
-      <img
-        src={imageSrc}
-        alt={`Teacher avatar - ${animation}`}
-        className="teacher-avatar-2d_image"
-        onError={(e) => {
-          const target = e.currentTarget;
-          target.style.display = "none";
-          const placeholder = target.nextElementSibling as HTMLElement;
-          if (placeholder) placeholder.style.display = "flex";
-        }}
-      />
-      <div
-        className="teacher-avatar-2d_placeholder"
-        style={{ display: "none" }}
-      />
+      {!hasError && (
+        <img
+          src={imageSrc}
+          alt={`Teacher avatar - ${animation}`}
+          className="teacher-avatar-2d_image"
+          onError={() => setHasError(true)}
+        />
+      )}
+      {hasError && <div className="teacher-avatar-2d_placeholder" />}
     </div>
   );
 };

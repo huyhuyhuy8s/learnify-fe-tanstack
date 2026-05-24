@@ -17,6 +17,12 @@
     gap: toRem(50);
   }
 
+  &__abstract {
+    color: $mode-neutral;
+    line-height: 1.6;
+    max-width: toRem(680);
+  }
+
   &__controller {
     display: flex;
     gap: toRem(12);
@@ -49,6 +55,12 @@
 
     &__list {
       width: 100%;
+    }
+
+    &__send-btn {
+      width: 100%;
+      justify-content: center;
+      margin-bottom: toRem(12);
     }
 
     &__comment {
