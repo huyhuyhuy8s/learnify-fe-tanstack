@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import TextButton from "@/components/TextButton";
+import "./style.scss";
 
 type TLessonWelcomeProps = {
   lessonName?: string;
@@ -14,12 +15,12 @@ const LessonWelcome = (props: TLessonWelcomeProps) => {
   const { lessonName, abstract, sectionCount, modelsReady, onStart } = props;
 
   return (
-    <div className="lesson-detail-welcome">
-      <h2 className="lesson-detail-welcome-title">
+    <div className="lesson-welcome">
+      <h2 className="lesson-welcome__title">
         {lessonName || t("lesson_welcome.lesson_fallback")}
       </h2>
-      {abstract && <p className="lesson-detail-welcome-abstract">{abstract}</p>}
-      <p className="lesson-detail-welcome-sections">
+      {abstract && <p className="lesson-welcome__abstract">{abstract}</p>}
+      <p className="lesson-welcome__sections">
         {t("lesson_welcome.sections_to_cover", { count: sectionCount || 0 })}
       </p>
       <TextButton

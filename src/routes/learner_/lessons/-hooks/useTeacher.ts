@@ -2,7 +2,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import useSpeechSynthesis from "@/hooks/useSpeechSynthesis";
 import type { TTeacherAnimation } from "../-components/TeacherAnimation/type";
 import type { TTeacherStatus } from "../-components/TeacherStatusIndicator/type";
-import type { TChatMessageRef } from "../-components/ChatMessageWrapper";
+import type { TChatMessageRef } from "../-components/ChatMessages";
 
 const DEFAULT_VOICE_ID =
   import.meta.env.VITE_EDGETTS_VOICE_ID || "vi-VN-HoaiMyNeural";

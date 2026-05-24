@@ -286,7 +286,8 @@
     "mute": "Mute",
     "settings": "Settings",
     "switch_2d": "Switch to 2D",
-    "switch_3d": "Switch to 3D"
+    "switch_3d": "Switch to 3D",
+    "menu": "Controls"
   },
   "voice_settings": {
     "title": "Voice Settings",

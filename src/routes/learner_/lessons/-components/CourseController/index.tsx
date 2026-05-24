@@ -1,21 +1,19 @@
-import { useState } from "react";
-import classnames from "classnames";
-import { useTranslation } from "react-i18next";
-import { useNavigate, useRouterState } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
-
 import Icon from "@/components/Icon";
 import IconButton from "@/components/IconButton";
-import { COLORS } from "@/styles/colors";
-import { graphqlClient } from "@/lib/graphql";
 import {
+  GET_COURSE_BY_ID,
   GET_LESSON_BY_ID,
   GET_LESSONS_BY_COURSE_ID_QUERY,
-  GET_COURSE_BY_ID,
 } from "@/graphql/course";
-import type { TCourseControllerProps } from "./type";
-
+import { graphqlClient } from "@/lib/graphql";
+import { COLORS } from "@/styles/colors";
+import { useQuery } from "@tanstack/react-query";
+import { useNavigate, useRouterState } from "@tanstack/react-router";
+import classnames from "classnames";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import "./style.scss";
+import type { TCourseControllerProps } from "./type";
 
 type LessonMeta = { id: string; lessonName: string; courseId: string };
 type LessonList = { id: string; lessonName: string }[];
@@ -32,6 +30,16 @@ const CourseController = ({ className }: TCourseControllerProps) => {
     },
   });
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 1280px)");
+    const handler = (e: MediaQueryListEvent | MediaQueryList) => {
+      if (e.matches) setIsExpanded(false);
+    };
+    handler(mediaQuery);
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
+  }, []);
 
   const { data: lessonData, isLoading: loadingLesson } = useQuery({
     queryKey: ["lesson-meta", lessonId],

@@ -33,7 +33,7 @@ const ChatHeader = (props: TChatHeaderProps) => {
   return (
     <form className={cls} onSubmit={handleSubmit}>
       <div className="chat-header-context" ref={wrapperRef}>
-        <Icon name="chat" style={{ pointerEvents: "none" }} />
+        <Icon name="chat" style={{ pointerEvents: "none" }} size="25px" />
         <div>
           <input
             id="chat-header-input"

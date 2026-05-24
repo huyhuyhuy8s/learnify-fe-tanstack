@@ -6,6 +6,7 @@ import type { TTeacherStatus } from "../TeacherStatusIndicator/type";
 import TeacherAvatar2D from "../TeacherAvatar2D";
 import TeacherStatusIndicator from "../TeacherStatusIndicator";
 import TeacherController from "../TeacherController";
+import "./style.scss";
 
 const TeacherContainer = lazy(() => import("../TeacherContainer"));
 
@@ -113,7 +114,7 @@ const TeacherPanel = (props: TTeacherPanelProps) => {
   }
 
   return (
-    <div className="tutor-container tutor-container_2d-mode">
+    <div className="teacher-panel teacher-panel--2d-mode">
       <TeacherAvatar2D animation={animation} />
       <TeacherStatusIndicator status={status} />
       <TeacherController {...commonControllerProps} />

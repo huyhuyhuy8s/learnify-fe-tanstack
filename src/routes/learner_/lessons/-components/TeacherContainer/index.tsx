@@ -88,12 +88,12 @@ function TeacherContainer(props: TTeacherContainerProps) {
   const showOverlay = isLoading || !isLoaded;
 
   return (
-    <div className="tutor-container">
+    <div className="teacher-container">
       {showOverlay && (
-        <div className="tutor-container_loader-overlay">
+        <div className="teacher-container__loader-overlay">
           <CubeLoader />
           {loadingMessage && (
-            <span className="tutor-container_loading-text">
+            <span className="teacher-container__loading-text">
               {loadingMessage}
             </span>
           )}
