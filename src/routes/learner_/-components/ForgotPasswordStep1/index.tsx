@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import classnames from "classnames";
 import CustomLink from "@/components/CustomLink";
 import type { TForgotPasswordStep1Props } from "./type.d";
@@ -10,45 +11,55 @@ const ForgotPasswordStep1 = ({
   onChange,
   onSubmit,
 }: TForgotPasswordStep1Props) => {
+  const { t } = useTranslation();
+
   return (
     <div className="forgot-password-step1">
-      <div className="forgot-password-step1-container">
-        <div className="forgot-password-step1-content">
-          <h3 className="semibold">Forgot your password?</h3>
-          <p className="regular">
-            No worries, we'll send you reset instructions. Enter your email
-            address below.
-          </p>
+      <div className="forgot-password-step1__container">
+        <div className="forgot-password-step1__content">
+          <h3 className="semibold">{t("auth.forgot_password.title")}</h3>
+          <p className="regular">{t("auth.forgot_password.description")}</p>
 
-          <div className="forgot-password-step1-form">
+          <form
+            className="forgot-password-step1__form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              onSubmit();
+            }}
+          >
             <div>
+              <label htmlFor="forgot-email" className="sr-only">
+                {t("auth.forgot_password.email_label")}
+              </label>
               <input
-                className={classnames("forgot-password-step1-input", {
-                  "forgot-password-step1-input-error": errors.email,
+                id="forgot-email"
+                className={classnames("forgot-password-step1__input", {
+                  "forgot-password-step1__input--error": errors.email,
                 })}
                 type="email"
-                placeholder="Enter your email"
+                placeholder={t("auth.forgot_password.email_placeholder")}
                 value={data.email}
                 onChange={(e) => onChange("email", e.target.value)}
               />
               {errors.email && (
-                <p className="forgot-password-step1-error">{errors.email}</p>
+                <p className="forgot-password-step1__error">{errors.email}</p>
               )}
             </div>
 
             <button
-              className="forgot-password-step1-submit-btn"
-              type="button"
+              className="forgot-password-step1__submit-btn"
+              type="submit"
               disabled={isPending}
-              onClick={onSubmit}
             >
-              <h6 className="semibold">Send reset code</h6>
+              <h6 className="semibold">{t("auth.forgot_password.submit")}</h6>
             </button>
-          </div>
+          </form>
 
           <p className="forgot-password-step1-back-link regular">
-            Remember your password?{" "}
-            <CustomLink to="/learner/log-in">Log in</CustomLink>
+            {t("auth.forgot_password.remember_password")}{" "}
+            <CustomLink to="/learner/log-in">
+              {t("auth.forgot_password.log_in")}
+            </CustomLink>
           </p>
         </div>
       </div>

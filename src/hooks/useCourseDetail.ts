@@ -9,6 +9,7 @@ import {
   GET_PROGRESS_QUERY,
 } from "@/graphql/course";
 import { CREATE_COMMENT_MUTATION } from "@/graphql/comment";
+import { useAuthStore } from "@/store/authStore";
 import type { TStatusCard } from "@/types/global";
 
 export type TBackendCourseDetail = {
@@ -118,7 +119,7 @@ export function useCreateReview() {
           response.createReview &&
           !(response.createReview as { isSuccess: boolean }).isSuccess
         ) {
-          toast.error("Failed to submit review:");
+          toast.error("Failed to submit review");
           return;
         }
 
@@ -135,7 +136,58 @@ export function useCreateReview() {
         return;
       }
     },
-    onSuccess: (_, variables) => {
+    onMutate: async (variables) => {
+      await queryClient.cancelQueries({
+        queryKey: ["course-detail", variables.courseId],
+      });
+      const previousData = queryClient.getQueryData<CourseDetailResponse>([
+        "course-detail",
+        variables.courseId,
+      ]);
+
+      if (previousData?.getReviewsByCourse) {
+        const currentUser = useAuthStore.getState().user;
+        const optimisticReview: TBackendReview = {
+          id: `optimistic-${Date.now()}`,
+          content: variables.content,
+          rating: variables.rating,
+          createdAt: new Date().toISOString(),
+          user: {
+            id: currentUser?.id || "pending",
+            email: currentUser?.email || "",
+            diamond: 0,
+            currentSteak: 0,
+            role: "",
+            username: currentUser?.username || "You",
+          },
+        };
+
+        queryClient.setQueryData<CourseDetailResponse>(
+          ["course-detail", variables.courseId],
+          {
+            ...previousData,
+            getReviewsByCourse: {
+              ...previousData.getReviewsByCourse,
+              reviews: [
+                optimisticReview,
+                ...previousData.getReviewsByCourse.reviews,
+              ],
+            },
+          }
+        );
+      }
+
+      return { previousData };
+    },
+    onError: (_error, variables, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData(
+          ["course-detail", variables.courseId],
+          context.previousData
+        );
+      }
+    },
+    onSettled: (_data, _error, variables) => {
       queryClient.invalidateQueries({
         queryKey: ["course-detail", variables.courseId],
       });

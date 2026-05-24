@@ -162,3 +162,9 @@ export const GET_PROGRESS_QUERY = `
     }
   }
 `;
+
+export const ASK_LESSON_QUESTION_QUERY = `
+  query AskLessonQuestion($lessonId: String!, $question: String!) {
+    askLessonQuestion(lessonId: $lessonId, question: $question)
+  }
+`;

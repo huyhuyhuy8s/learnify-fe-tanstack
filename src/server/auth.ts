@@ -49,3 +49,13 @@ export const logoutFn = createServerFn({ method: "POST" }).handler(async () => {
   await session.clear();
   return { success: true };
 });
+
+export const getServerCookiesFn = createServerFn({ method: "GET" }).handler(
+  async () => {
+    const { getCookie } = await import("@tanstack/react-start/server");
+    return {
+      language: getCookie("app-language") || null,
+      theme: getCookie("app-theme") || null,
+    };
+  }
+);

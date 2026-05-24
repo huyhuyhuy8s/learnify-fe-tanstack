@@ -5,7 +5,6 @@ import TopNav from "@/components/TopNav";
 import { createLearnerHead } from "@/utils";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { Suspense } from "react";
-import { Toaster } from "sonner";
 import "./style.scss";
 
 export const Route = createFileRoute("/learner")({
@@ -26,7 +25,6 @@ function LearnerLayout() {
             <Suspense fallback={<TetrisLoader />}>
               <Outlet />
             </Suspense>
-            <Toaster position="bottom-right" richColors />
           </div>
           <Footer />
         </div>

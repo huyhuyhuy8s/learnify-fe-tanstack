@@ -1,16 +1,14 @@
+import { Suspense, lazy } from "react";
+import { useTranslation } from "react-i18next";
+
 import type { TTeacherAnimation } from "../TeacherAnimation/type";
 import type { TTeacherStatus } from "../TeacherStatusIndicator/type";
-import TeacherContainer from "../TeacherContainer";
 import TeacherAvatar2D from "../TeacherAvatar2D";
 import TeacherStatusIndicator from "../TeacherStatusIndicator";
 import TeacherController from "../TeacherController";
+import "./style.scss";
 
-const LOADING_MESSAGES = [
-  "Loading 3D environment...",
-  "Loading teacher model...",
-  "Initializing animations...",
-  "Ready!",
-];
+const TeacherContainer = lazy(() => import("../TeacherContainer"));
 
 type TTeacherPanelProps = {
   state: string;
@@ -38,6 +36,13 @@ type TTeacherPanelProps = {
 };
 
 const TeacherPanel = (props: TTeacherPanelProps) => {
+  const { t } = useTranslation();
+  const LOADING_MESSAGES = [
+    t("teacher_panel.loading_env"),
+    t("teacher_panel.loading_model"),
+    t("teacher_panel.loading_animations"),
+    t("teacher_panel.ready"),
+  ];
   const {
     state,
     is3DMode,
@@ -85,29 +90,31 @@ const TeacherPanel = (props: TTeacherPanelProps) => {
 
   if (is3DMode) {
     return (
-      <TeacherContainer
-        animation={animation}
-        onModelReady={onModelReady}
-        onModelsReady={onModelsReady}
-        isLoading={!modelsReady}
-        loadingMessage={
-          state === "initial"
-            ? "Enriching your 3D lessons"
-            : LOADING_MESSAGES[loadingMessageIndex]
-        }
-      >
-        {isModelReady && <TeacherStatusIndicator status={status} />}
-        <TeacherController
-          {...commonControllerProps}
-          isLoading={!isModelReady}
-          loadingMessage={LOADING_MESSAGES[loadingMessageIndex]}
-        />
-      </TeacherContainer>
+      <Suspense fallback={null}>
+        <TeacherContainer
+          animation={animation}
+          onModelReady={onModelReady}
+          onModelsReady={onModelsReady}
+          isLoading={!modelsReady}
+          loadingMessage={
+            state === "initial"
+              ? t("teacher_panel.enriching")
+              : LOADING_MESSAGES[loadingMessageIndex]
+          }
+        >
+          {isModelReady && <TeacherStatusIndicator status={status} />}
+          <TeacherController
+            {...commonControllerProps}
+            isLoading={!isModelReady}
+            loadingMessage={LOADING_MESSAGES[loadingMessageIndex]}
+          />
+        </TeacherContainer>
+      </Suspense>
     );
   }
 
   return (
-    <div className="tutor-container tutor-container_2d-mode">
+    <div className="teacher-panel teacher-panel--2d-mode">
       <TeacherAvatar2D animation={animation} />
       <TeacherStatusIndicator status={status} />
       <TeacherController {...commonControllerProps} />

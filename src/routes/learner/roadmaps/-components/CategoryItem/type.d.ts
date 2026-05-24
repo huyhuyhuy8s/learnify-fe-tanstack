@@ -1,6 +1,6 @@
 export type TCategoryItem = {
   icon: string;
-  label: string;
+  labelKey: string;
   onClick: () => void;
 };
 

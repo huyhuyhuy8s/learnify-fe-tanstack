@@ -1,3 +1,10 @@
+import {
+  createFileRoute,
+  useNavigate,
+  useRouter,
+} from "@tanstack/react-router";
+import { Suspense } from "react";
+import { Trans, useTranslation } from "react-i18next";
 import Card from "@/components/Card";
 import ErrorScene from "@/components/ErrorScene";
 import Search from "@/components/Search";
@@ -9,36 +16,32 @@ import {
 } from "@/hooks/useCourses";
 import { MOCK_COURSES } from "@/mock";
 import { createLearnerHead } from "@/utils";
-import {
-  createFileRoute,
-  useNavigate,
-  useRouter,
-} from "@tanstack/react-router";
-import { Suspense } from "react";
 import "./style.scss";
 
 function CoursesErrorComponent() {
   const router = useRouter();
+  const { t } = useTranslation();
   return (
     <ErrorScene>
       <ErrorScene.Header>
-        <ErrorScene.Title errorCode={500}>Server Error</ErrorScene.Title>
+        <ErrorScene.Title errorCode={500}>
+          {t("errors.server_error")}
+        </ErrorScene.Title>
         <ErrorScene.Description>
-          Unable to load courses at this time. This could be a network issue or
-          a server problem. Please try again.
+          {t("errors.load_courses")}
         </ErrorScene.Description>
       </ErrorScene.Header>
       <ErrorScene.Content>
         <div className="error-scene__control">
           <TextButton
-            text="Try Again"
+            text={t("errors.try_again")}
             onClick={() => router.invalidate()}
             className="error-scene__btn"
             size="medium"
             icon="refresh"
           />
           <TextButton
-            text="Go Back"
+            text={t("errors.go_back")}
             onClick={() => window.history.back()}
             className="error-scene__btn error-scene__btn--secondary"
             size="medium"
@@ -59,6 +62,7 @@ export const Route = createFileRoute("/learner/courses/")({
 
 function CoursesPage() {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
   const { data } = useSuspenseGetAllCourses(0);
   const isBackendSuccess = data?.isSuccess && data.courses.length > 0;
 
@@ -79,15 +83,14 @@ function CoursesPage() {
       <div className="courses-container">
         <div className="courses-container__title">
           <h2 className="courses-container__title-context medium">
-            Explore our <span className="beauty">Best courses</span> only for
-            you
+            <Trans
+              key={i18n.language}
+              i18nKey="courses.title"
+              components={{ Beauty: <span className="beauty" /> }}
+            />
           </h2>
           <p className="courses-container__title-description regular">
-            We offer a wide range of courses designed to help you achieve your
-            learning goals. Whether you're looking to develop new skills,
-            advance your career, or explore new interests, our courses are
-            tailored to meet your needs. Browse through our course catalog and
-            find the perfect course for you today!
+            {t("courses.description")}
           </p>
         </div>
         <div className="courses-content">
@@ -99,7 +102,7 @@ function CoursesPage() {
           <div className="controls">
             <div className="filter">
               <TextButton
-                text="course"
+                text={t("courses.filter_course")}
                 roundedCorner="roundedSquare"
                 size="tiny"
                 type="outlined"
@@ -109,7 +112,7 @@ function CoursesPage() {
                 onClick={() => navigate({ to: "/learner/courses" })}
               />
               <TextButton
-                text="duration"
+                text={t("courses.filter_duration")}
                 roundedCorner="roundedSquare"
                 size="tiny"
                 type="outlined"
@@ -119,7 +122,9 @@ function CoursesPage() {
                 onClick={() => navigate({ to: "/learner/courses" })}
               />
             </div>
-            <p className="result">{displayCourses.length} results</p>
+            <p className="result">
+              {t("courses.results", { count: displayCourses.length })}
+            </p>
           </div>
           <div className="courses-list">
             {displayCourses.map((course) => (

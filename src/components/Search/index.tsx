@@ -1,7 +1,8 @@
-import "./style.scss";
-import { useNavigate } from "@tanstack/react-router";
 import trim from "lodash/trim";
+import { useNavigate } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import Icon from "@/components/Icon";
+import "./style.scss";
 
 type TSearchProps = {
   style?: React.CSSProperties;
@@ -10,7 +11,9 @@ type TSearchProps = {
 };
 
 const Search = (props: TSearchProps) => {
-  const { style, placeholder = "Search for courses...", onSearch } = props;
+  const { t } = useTranslation();
+  const { style, onSearch } = props;
+  const placeholder = props.placeholder ?? t("search.placeholder");
   const navigate = useNavigate();
 
   const handleSubmit: React.EventHandler<
@@ -26,13 +29,16 @@ const Search = (props: TSearchProps) => {
 
   return (
     <form
-      aria-label="Search"
+      aria-label={t("search.aria_label")}
       className="search"
       style={style}
       onSubmit={handleSubmit}
     >
+      <label htmlFor="search" className="sr-only">
+        {t("search.label")}
+      </label>
       <input type="text" placeholder={placeholder} id="search" name="q" />
-      <button type="submit" aria-label="Search">
+      <button type="submit" aria-label={t("search.submit_aria")}>
         <Icon name="search" size={30} />
       </button>
     </form>

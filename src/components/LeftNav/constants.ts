@@ -1,27 +1,27 @@
 export const topItems = [
   {
     iconName: "local_library",
-    label: "Learnify",
+    labelKey: "sidebar.learnify",
     href: "/learner/",
   },
   {
     iconName: "book",
-    label: "Courses",
+    labelKey: "sidebar.courses",
     href: "/learner/courses",
   },
   {
     iconName: "conversion_path",
-    label: "Roadmaps",
+    labelKey: "sidebar.roadmaps",
     href: "/learner/roadmaps",
   },
   {
     iconName: "group",
-    label: "Friends",
+    labelKey: "sidebar.friends",
     href: "/learner/friends",
   },
   {
     iconName: "info",
-    label: "About",
+    labelKey: "sidebar.about",
     href: "/learner/about",
-  }
-]
+  },
+];

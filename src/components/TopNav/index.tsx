@@ -21,7 +21,7 @@ const TopNav = (props: TTopNavProps) => {
     pathnames,
   });
   const isTop = useScrollTop();
-  const { customTitle } = useLayout();
+  const { customTitle, showSearch, setLayoutConfigState } = useLayout();
 
   const navClassNames = classnames(
     "top-nav",
@@ -38,6 +38,10 @@ const TopNav = (props: TTopNavProps) => {
         lastPathname={lastPathname}
         pathnameWithoutLast={pathnameWithoutLast}
         customTitle={customTitle}
+        showSearch={showSearch}
+        onSearchClose={() =>
+          setLayoutConfigState((prev) => ({ ...prev, showSearch: false }))
+        }
       />
       <TopNavRight />
     </nav>

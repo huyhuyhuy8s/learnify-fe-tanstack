@@ -1,13 +1,16 @@
 import classnames from "classnames";
+import "./style.scss";
 import ChatHeader from "../ChatHeader";
 import LessonWelcome from "../LessonWelcome";
-import ChatMessageWrapper from "../ChatMessageWrapper";
+import ChatMessages from "../ChatMessages";
 import QuizPanel from "../QuizPanel";
 import LessonComplete from "../LessonComplete";
 import { mockQuizQuestions } from "@/mock/quiz";
 import type { TTeacherAnimation } from "../TeacherAnimation/type";
 import type { TTeacherStatus } from "../TeacherStatusIndicator/type";
-import type { TChatMessageRef } from "../ChatMessageWrapper";
+import type { TChatMessageRef } from "../ChatMessages";
+import type { TStopFn } from "../../-hooks/useTeacher";
+
 type TSectionItem = {
   id: string;
   urlPdf: string;
@@ -24,6 +27,8 @@ type TChatAreaProps = {
   sectionCount?: number;
   sections: TSectionItem[];
   chatRef: React.RefObject<TChatMessageRef | null>;
+  stopRef: React.MutableRefObject<TStopFn | null>;
+  lessonId?: string;
   isMuted: boolean;
   isModelReady: boolean;
   modelsReady: boolean;
@@ -45,6 +50,8 @@ const ChatArea = (props: TChatAreaProps) => {
     sectionCount,
     sections,
     chatRef,
+    stopRef,
+    lessonId,
     isMuted,
     isModelReady,
     modelsReady,
@@ -60,7 +67,7 @@ const ChatArea = (props: TChatAreaProps) => {
   const showChatArea = state !== "initial" && state !== "complete";
 
   return (
-    <div className={classnames("chat-container", className)}>
+    <div className={classnames("chat-area", className)}>
       {showChatArea && (
         <ChatHeader
           initialValue={lessonName}
@@ -82,7 +89,7 @@ const ChatArea = (props: TChatAreaProps) => {
       )}
 
       {state === "lesson" && (
-        <ChatMessageWrapper
+        <ChatMessages
           ref={chatRef}
           mode="lesson"
           sections={sections}
@@ -91,16 +98,20 @@ const ChatArea = (props: TChatAreaProps) => {
           onStatusChange={setStatus}
           isMuted={isMuted}
           isModelReady={isModelReady}
+          stopRef={stopRef}
+          lessonId={lessonId}
         />
       )}
 
       {state === "qa" && (
-        <ChatMessageWrapper
+        <ChatMessages
           ref={chatRef}
           mode="qa"
           onAnimationChange={setAnimation}
           onStatusChange={setStatus}
           isMuted={isMuted}
+          stopRef={stopRef}
+          lessonId={lessonId}
         />
       )}
 

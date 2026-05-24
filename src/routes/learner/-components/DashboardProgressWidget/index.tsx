@@ -1,16 +1,19 @@
-import "./style.scss";
+import { useTranslation } from "react-i18next";
 import TextButton from "@/components/TextButton";
 import { MOCK_PROGRESS } from "@/mock";
+import "./style.scss";
 
 const DashboardProgressWidget = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="progress-widget">
-      <div className="progress-widget-header">
-        <h3>Progress</h3>
+      <div className="progress-widget__header">
+        <h3>{t("dashboard.progress")}</h3>
       </div>
       <div className="progress-widget-grid">
         {MOCK_PROGRESS.map((progress, index) => (
-          <div key={index} className="progress-widget-grid-pill">
+          <div key={index} className="progress-widget__grid-pill">
             <TextButton
               onClick={() => {}}
               text="text"

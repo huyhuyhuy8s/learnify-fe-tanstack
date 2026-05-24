@@ -39,11 +39,6 @@ export default defineConfig({
           )
             return "vendor-util";
           if (id.includes("node_modules/@tanstack")) return "vendor-tanstack";
-          if (
-            id.includes("node_modules/@react-three") ||
-            id.includes("node_modules/three")
-          )
-            return "vendor-3d";
         },
       },
     },

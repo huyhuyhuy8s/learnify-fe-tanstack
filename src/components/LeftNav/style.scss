@@ -25,9 +25,9 @@
     margin-left: toRem(-(67.5 + 30));
   }
 
-  @include break(s) {
+  @include break(sm) {
     position: fixed;
-    z-index: 100;
+    z-index: 1;
   }
 
   &.compact {
@@ -39,7 +39,7 @@
   &,
   &-top,
   &-bot,
-  .item-list {
+  &-top__items {
     display: flex;
     flex-direction: column;
     place-items: center;
@@ -47,14 +47,14 @@
 
   &-top {
     row-gap: toRem(40);
+
+    &__items {
+      row-gap: toRem(20);
+    }
   }
 
   &-bot {
     row-gap: toRem(24);
-  }
-
-  .item-list {
-    row-gap: toRem(20);
   }
 
   .hidden {
@@ -67,7 +67,7 @@
   border-color: transparent;
 }
 
-@include break(s) {
+@include break(sm) {
   .left-nav.top {
     background-color: $white;
   }

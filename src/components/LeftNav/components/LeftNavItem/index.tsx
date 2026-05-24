@@ -14,7 +14,7 @@ const LeftNavItem = (props: TLeftNavItemProps) => {
   const { iconName, label, href, className = "" } = props;
 
   return (
-    <div className="left-nav-top-item">
+    <div className="left-nav-top__item">
       <Link
         className="link-box"
         to={href}

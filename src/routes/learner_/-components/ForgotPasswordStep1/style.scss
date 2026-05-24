@@ -9,7 +9,7 @@
   min-height: 100dvh;
   background-color: $green-100;
 
-  &-container {
+  &__container {
     display: flex;
     padding: 50px;
     background-color: $white;
@@ -17,7 +17,7 @@
     width: 500px;
   }
 
-  &-content {
+  &__content {
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -26,14 +26,14 @@
     width: 100%;
   }
 
-  &-form {
+  &__form {
     display: flex;
     flex-direction: column;
     gap: 20px;
     width: 100%;
   }
 
-  &-input {
+  &__input {
     width: 100%;
     padding: 15px 20px;
     border: 2px solid $neutral-400;
@@ -49,17 +49,17 @@
       border-radius: $br-sm;
     }
 
-    &-error {
+    &--error {
       border-color: $orange-500;
     }
   }
 
-  &-error {
+  &__error {
     color: $orange-500;
     font-size: 14px;
   }
 
-  &-submit-btn {
+  &__submit-btn {
     background-color: $green-600;
     color: $white;
     padding: 20px;
@@ -90,7 +90,7 @@
     }
   }
 
-  &-back-link {
+  &__back-link {
     text-align: center;
     font-size: 16px;
     color: $neutral-500;

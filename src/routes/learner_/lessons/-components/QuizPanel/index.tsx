@@ -1,5 +1,6 @@
 import { useState, useCallback, useMemo } from "react";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 import Icon from "@/components/Icon";
 import type { TQuizQuestion, TQuizAnswer } from "./type";
 import "./style.scss";
@@ -11,6 +12,7 @@ type TQuizPanelProps = {
 };
 
 const QuizPanel = ({ questions, onComplete, className }: TQuizPanelProps) => {
+  const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<TQuizAnswer[]>([]);
   const [showResults, setShowResults] = useState(false);
@@ -125,7 +127,9 @@ const QuizPanel = ({ questions, onComplete, className }: TQuizPanelProps) => {
     return (
       <div className={classnames("quiz-panel", className)}>
         <div className="quiz-panel-results">
-          <div className="quiz-panel-results-header">Quiz Results</div>
+          <div className="quiz-panel-results-header">
+            {t("quiz_panel.results_header")}
+          </div>
           <div className="quiz-panel-results-score">
             <span className="quiz-panel-results-fraction">
               {score.correct}/{score.total}
@@ -157,11 +161,14 @@ const QuizPanel = ({ questions, onComplete, className }: TQuizPanelProps) => {
                     className="quiz-panel-results-item-icon"
                   />
                   <span className="quiz-panel-results-item-label">
-                    Q{i + 1}. {q.question}
+                    {t("quiz_panel.question_label", {
+                      number: i + 1,
+                      question: q.question,
+                    })}
                   </span>
                   {a?.submitted && !correct && (
                     <span className="quiz-panel-results-item-hint">
-                      Correct answer:{" "}
+                      {t("quiz_panel.correct_answer")}{" "}
                       {q.correctAnswer.map((idx) => q.options[idx]).join(", ")}
                     </span>
                   )}
@@ -170,7 +177,7 @@ const QuizPanel = ({ questions, onComplete, className }: TQuizPanelProps) => {
             })}
           </div>
           <button className="quiz-panel-results-complete" onClick={onComplete}>
-            Complete
+            {t("quiz_panel.complete")}
           </button>
         </div>
       </div>
@@ -182,17 +189,20 @@ const QuizPanel = ({ questions, onComplete, className }: TQuizPanelProps) => {
   return (
     <div className={classnames("quiz-panel", className)}>
       <div className="quiz-panel-progress">
-        Question {currentIndex + 1} of {questions.length}
+        {t("quiz_panel.progress", {
+          current: currentIndex + 1,
+          total: questions.length,
+        })}
       </div>
       <div className="quiz-panel-question">
         <div className="quiz-panel-question-type">
           {currentQuestion.type === "multiple-choice"
-            ? "Multiple Choice"
+            ? t("quiz_panel.type_multiple_choice")
             : currentQuestion.type === "multiple-answer"
-              ? "Multiple Answer"
+              ? t("quiz_panel.type_multiple_answer")
               : currentQuestion.type === "true-false"
-                ? "True or False"
-                : "Matching"}
+                ? t("quiz_panel.type_true_false")
+                : t("quiz_panel.type_matching")}
         </div>
         <p className="quiz-panel-question-text">{currentQuestion.question}</p>
 
@@ -244,7 +254,7 @@ const QuizPanel = ({ questions, onComplete, className }: TQuizPanelProps) => {
                     disabled={currentAnswer?.submitted}
                   >
                     <option value={-1} disabled>
-                      Select a description
+                      {t("quiz_panel.select_description")}
                     </option>
                     {currentQuestion.options.map((opt, oi) => (
                       <option key={oi} value={oi}>
@@ -262,8 +272,13 @@ const QuizPanel = ({ questions, onComplete, className }: TQuizPanelProps) => {
                       )}
                     >
                       {selected === currentQuestion!.correctAnswer[i]
-                        ? "✓"
-                        : `✗ (${currentQuestion!.options[currentQuestion!.correctAnswer[i]!]!})`}
+                        ? t("quiz_panel.correct_indicator")
+                        : t("quiz_panel.wrong_indicator", {
+                            correct:
+                              currentQuestion!.options[
+                                currentQuestion!.correctAnswer[i]!
+                              ]!,
+                          })}
                     </span>
                   )}
                 </div>
@@ -274,7 +289,9 @@ const QuizPanel = ({ questions, onComplete, className }: TQuizPanelProps) => {
 
         {currentAnswer?.submitted && (
           <div className="quiz-panel-explanation">
-            <span className="quiz-panel-explanation-label">Explanation:</span>
+            <span className="quiz-panel-explanation-label">
+              {t("quiz_panel.explanation")}
+            </span>
             <p className="quiz-panel-explanation-text">
               {currentQuestion.explanation}
             </p>
@@ -294,11 +311,13 @@ const QuizPanel = ({ questions, onComplete, className }: TQuizPanelProps) => {
                   : currentAnswer.selected.length === 0)
               }
             >
-              Submit Answer
+              {t("quiz_panel.submit_answer")}
             </button>
           ) : (
             <button className="quiz-panel-next" onClick={handleNext}>
-              {isLast ? "See Results" : "Next Question"}
+              {isLast
+                ? t("quiz_panel.see_results")
+                : t("quiz_panel.next_question")}
             </button>
           )}
         </div>

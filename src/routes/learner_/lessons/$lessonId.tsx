@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useCallback } from "react";
+import { useCallback, useRef, useEffect, useEffectEvent } from "react";
 import LessonError from "./-components/LessonError";
-import CourseContext from "./-components/CourseContext";
+import CourseContext, {
+  type TCourseContextRef,
+} from "./-components/CourseContext";
 import TeacherPanel from "./-components/TeacherPanel";
 import ChatArea from "./-components/ChatArea";
 import useLessonDetail from "./-hooks/useLessonDetail";
@@ -29,9 +31,11 @@ function LessonDetail() {
     skipToQA,
     skipToQuiz,
     completeLesson,
+    reset,
   } = useLessonDetail(lessonId);
   const {
     chatRef,
+    stopRef,
     isMuted,
     isModelReady,
     modelsReady,
@@ -54,7 +58,31 @@ function LessonDetail() {
     setIsMuted,
     setIsSettingsOpen,
     toggle3DMode,
+    resetTeacher,
   } = useTeacher();
+  const courseContextRef = useRef<TCourseContextRef>(null);
+  const isInitialMount = useRef(true);
+
+  const onLessonChange = useEffectEvent(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    chatRef.current?.resetAndClear?.();
+    reset();
+    resetTeacher();
+    courseContextRef.current?.reset();
+  });
+
+  useEffect(() => {
+    onLessonChange();
+  }, [lessonId]);
+
+  useEffect(() => {
+    return () => {
+      stopRef.current?.();
+    };
+  }, []);
 
   const handleSkipLesson = useCallback(() => {
     stopChat();
@@ -91,6 +119,8 @@ function LessonDetail() {
         sectionCount={data?.sections?.length}
         sections={data?.sections || []}
         chatRef={chatRef}
+        stopRef={stopRef}
+        lessonId={lessonId}
         isMuted={isMuted}
         isModelReady={isModelReady}
         modelsReady={modelsReady}
@@ -105,6 +135,7 @@ function LessonDetail() {
 
       {showChatArea && (
         <CourseContext
+          ref={courseContextRef}
           references={sections?.references}
           documents={sections?.documents}
         />

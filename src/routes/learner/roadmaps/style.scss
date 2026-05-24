@@ -10,12 +10,12 @@
   align-items: center;
   gap: toRem(50);
 
-  > .title {
+  &__title {
     display: flex;
     flex-direction: column;
     gap: toRem(20);
 
-    h3,
+    h2,
     p {
       text-align: center;
     }
@@ -25,28 +25,21 @@
     }
   }
 
+  &__categories-list {
+    display: flex;
+    gap: toRem(50);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
   .roadmaps-content {
     display: flex;
     flex-direction: column;
     gap: toRem(25);
     width: 100%;
-
-    > .controls {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      padding: toRem(20) 0;
-
-      .categories-list {
-        display: flex;
-        gap: toRem(50);
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-    }
   }
 
-  .roadmaps-list {
+  &__list {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(toRem(300), 1fr));
