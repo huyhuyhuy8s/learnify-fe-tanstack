@@ -1,0 +1,30 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
+.deferred {
+  padding: toRem(8);
+
+  &__count {
+    margin: toRem(8) 0;
+  }
+
+  &__button {
+    margin-top: toRem(8);
+  }
+}
+
+.deferred-query {
+  margin-top: toRem(16);
+
+  h1 {
+    margin-bottom: toRem(8);
+  }
+
+  &__status,
+  &__message,
+  &__time {
+    margin: toRem(4) 0;
+  }
+}

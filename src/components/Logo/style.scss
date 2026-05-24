@@ -1,0 +1,46 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
+.logo {
+  display: flex;
+  place-items: center;
+  justify-content: center;
+  gap: toRem(10);
+  color: $black;
+  text-decoration: none;
+
+  > .icon {
+    color: $black;
+  }
+
+  &-text {
+    font-weight: $fw-semibold;
+    white-space: nowrap;
+  }
+
+  &.medium {
+    .icon {
+      font-size: toRem(30);
+    }
+
+    .logo-text {
+      font-size: $fs-heading4;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &.small {
+    .icon {
+      font-size: $fs-heading5;
+    }
+
+    .logo-text {
+      font-size: $fs-heading5;
+    }
+  }
+}

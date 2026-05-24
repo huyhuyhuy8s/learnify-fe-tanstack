@@ -1,0 +1,51 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
+.default-catch-boundary {
+  min-width: 0;
+  flex: 1;
+  padding: toRem(16);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: toRem(24);
+
+  &__actions {
+    display: flex;
+    gap: toRem(8);
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  &__btn {
+    padding: toRem(8) toRem(12);
+    background-color: $neutral-600;
+    border-radius: $br-xs;
+    color: $white;
+    text-transform: uppercase;
+    font-weight: $fw-extrabold;
+    border: none;
+    cursor: pointer;
+
+    &--dark {
+      background-color: $neutral-700;
+    }
+  }
+
+  &__link {
+    padding: toRem(8) toRem(12);
+    background-color: $neutral-600;
+    border-radius: $br-xs;
+    color: $white;
+    text-transform: uppercase;
+    font-weight: $fw-extrabold;
+    text-decoration: none;
+
+    &--dark {
+      background-color: $neutral-700;
+    }
+  }
+}

@@ -1,0 +1,109 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
+.dropdown-menu {
+  display: flex;
+  flex-direction: column;
+
+  &-control-button {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    padding: toRem(15) toRem(15);
+    padding-left: toRem(20);
+    border-radius: $br-md;
+    @include transition;
+    transition-property: border-radius filter;
+
+    &:hover {
+      filter: brightness(0.9);
+    }
+
+    &.visible {
+      border-radius: $br-md $br-md 0 0;
+    }
+
+    &-context {
+      display: flex;
+      align-items: center;
+      gap: toRem(10);
+
+      h6 {
+        font-size: calc($fs-heading6 - toRem(2.5));
+        color: inherit;
+      }
+    }
+
+    .arrow {
+      transform: rotate(0);
+      transition-property: transform;
+      @include transition;
+
+      &.visible {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &-options {
+    display: grid;
+    grid-template-rows: 0fr;
+    @include transition;
+
+    &.visible {
+      grid-template-rows: 1fr;
+    }
+
+    &-inner {
+      width: 100%;
+      overflow: hidden;
+      display: grid;
+    }
+
+    * {
+      overflow: hidden;
+    }
+  }
+
+  &-option {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: toRem(10);
+    align-items: center;
+    padding: toRem(15) toRem(20);
+    padding-left: toRem(25);
+    background-color: $neutral-150;
+    @include transition;
+    transition-property: background-color;
+
+    &:hover {
+      background-color: $neutral-200;
+    }
+
+    &-context {
+      display: grid;
+      align-items: center;
+      grid-template-columns: auto 1fr;
+      gap: toRem(20);
+
+      span,
+      svg,
+      h6 {
+        color: $neutral-600;
+      }
+
+      h6 {
+        font-size: calc($fs-heading6 - toRem(2.5));
+        text-align: left;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    &:last-child {
+      border-radius: 0 0 $br-md $br-md;
+    }
+  }
+}

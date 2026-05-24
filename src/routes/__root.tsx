@@ -1,59 +1,72 @@
-/// <reference types="vite/client" />
+import DefaultCatchBoundary from "@/components/DefaultCatchBoundary";
+import Loader from "@/components/Loader";
+import NotFound from "@/components/NotFound";
+import { LayoutProvider } from "@/contexts/LayoutContext";
+import { useTheme } from "@/hooks/useTheme";
+import type { RouterContext } from "@/router";
+import { getCurrentUserFn } from "@/server/auth";
+import { useAuthStore } from "@/store/authStore";
+import { seo } from "@/utils/seo";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import "@styles/_global.scss";
 import {
   HeadContent,
-  Link,
   Outlet,
   Scripts,
   createRootRouteWithContext,
-} from '@tanstack/react-router'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
-import * as React from 'react'
-import type { QueryClient } from '@tanstack/react-query'
-import DefaultCatchBoundary from '~/components/DefaultCatchBoundary'
-import NotFound from '~/components/NotFound'
-import appCss from '~/styles/app.css?url'
-import { seo } from '~/utils/seo'
+} from "@tanstack/react-router";
+import gsap from "gsap";
+import CustomEase from "gsap/CustomEase";
+import { SplitText } from "gsap/SplitText";
+import * as React from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
+import { toast } from "sonner";
+import "./root.scss";
 
-export const Route = createRootRouteWithContext<{
-  queryClient: QueryClient
-}>()({
+gsap.registerPlugin(SplitText, CustomEase);
+CustomEase.create("hop", "0.9, 0, 0.1, 1");
+CustomEase.create("glide", "0.8, 0, 0.2, 1");
+
+const DevTools = import.meta.env.DEV
+  ? lazy(() => import("@/components/DevTools"))
+  : () => null;
+
+const Root = createRootRouteWithContext<RouterContext>()({
+  loader: async () => {
+    const { user, expired } = await getCurrentUserFn();
+    return { auth: { user, isAuthenticated: !!user, expired } };
+  },
   head: () => ({
     meta: [
       {
-        charSet: 'utf-8',
+        charSet: "utf-8",
+        lang: "en-US",
       },
       {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
+        name: "viewport",
+        content: "width=device-width, initial-scale=1",
       },
       ...seo({
-        title:
-          'TanStack Start | Type-Safe, Client-First, Full-Stack React Framework',
-        description: `TanStack Start is a type-safe, client-first, full-stack React framework. `,
+        title: "Learnify | Smart learning. Real skills. Ready careers.",
+        description:
+          "Learnify is an educational platform that highlights the future and craft of learning—from foundational concepts to hands-on practice to career-ready mastery. By showcasing the innovative technology and the 3D AI Lecturers behind our courses, we hope to demystify how modern education is built and deepen your connection with your own potential. Our approach begins with curiosity: we want to give you a window into the way interactive learning actually works.",
       }),
     ],
     links: [
-      { rel: 'stylesheet', href: appCss },
+      { rel: "image/x-icon", href: "/favicon.ico" },
       {
-        rel: 'apple-touch-icon',
-        sizes: '180x180',
-        href: '/apple-touch-icon.png',
+        rel: "icon",
+        type: "image/png",
+        sizes: "32x32",
+        href: "/favicon-32x32.svg",
       },
       {
-        rel: 'icon',
-        type: 'image/png',
-        sizes: '32x32',
-        href: '/favicon-32x32.png',
+        rel: "icon",
+        type: "image/png",
+        sizes: "16x16",
+        href: "/favicon-16x16.svg",
       },
-      {
-        rel: 'icon',
-        type: 'image/png',
-        sizes: '16x16',
-        href: '/favicon-16x16.png',
-      },
-      { rel: 'manifest', href: '/site.webmanifest', color: '#fffff' },
-      { rel: 'icon', href: '/favicon.ico' },
+      { rel: "icon", href: "/favicon.ico" },
     ],
   }),
   errorComponent: (props) => {
@@ -61,85 +74,77 @@ export const Route = createRootRouteWithContext<{
       <RootDocument>
         <DefaultCatchBoundary {...props} />
       </RootDocument>
-    )
+    );
   },
   notFoundComponent: () => <NotFound />,
   component: RootComponent,
-})
+});
 
 function RootComponent() {
+  useTheme();
+  const setAuth = useAuthStore((state) => state.setAuth);
+  const { auth } = Root.useLoaderData();
+  const [phase1Done, setPhase1Done] = useState(false);
+  const [pageLoaded, setPageLoaded] = useState(false);
+  const [phase2Done, setPhase2Done] = useState(false);
+  const [showApp, setShowApp] = useState(false);
+
+  const phase2Ready = phase1Done && pageLoaded;
+
+  useEffect(() => {
+    if (auth?.expired) toast.error("Session expired. Please log in again.");
+    setAuth(auth?.user || null);
+  }, [setAuth, auth]);
+
+  useEffect(() => {
+    const onLoad = () => setPageLoaded(true);
+    window.addEventListener("load", onLoad);
+    if (document.readyState === "complete") setTimeout(onLoad, 0);
+    return () => window.removeEventListener("load", onLoad);
+  }, []);
+
+  useEffect(() => {
+    if (!phase2Done) return;
+    const timer = setTimeout(() => setShowApp(true), 600);
+    return () => clearTimeout(timer);
+  }, [phase2Done]);
+
   return (
     <RootDocument>
       <Outlet />
+      {!showApp && (
+        <Loader
+          onPhase1Complete={() => setPhase1Done(true)}
+          ready={phase2Ready}
+          onPhase2Complete={() => setPhase2Done(true)}
+          disabled={import.meta.env.DEV}
+        />
+      )}
     </RootDocument>
-  )
+  );
 }
 
+export const Route = Root;
+
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
+
   return (
-    <html>
+    <html lang="en">
       <head>
         <HeadContent />
       </head>
       <body>
-        <div className="p-2 flex gap-2 text-lg">
-          <Link
-            to="/"
-            activeProps={{
-              className: 'font-bold',
-            }}
-            activeOptions={{ exact: true }}
-          >
-            Home
-          </Link>{' '}
-          <Link
-            to="/posts"
-            activeProps={{
-              className: 'font-bold',
-            }}
-          >
-            Posts
-          </Link>{' '}
-          <Link
-            to="/users"
-            activeProps={{
-              className: 'font-bold',
-            }}
-          >
-            Users
-          </Link>{' '}
-          <Link
-            to="/route-a"
-            activeProps={{
-              className: 'font-bold',
-            }}
-          >
-            Pathless Layout
-          </Link>{' '}
-          <Link
-            to="/deferred"
-            activeProps={{
-              className: 'font-bold',
-            }}
-          >
-            Deferred
-          </Link>{' '}
-          <Link
-            // @ts-expect-error
-            to="/this-route-does-not-exist"
-            activeProps={{
-              className: 'font-bold',
-            }}
-          >
-            This Route Does Not Exist
-          </Link>
-        </div>
-        <hr />
-        {children}
-        <TanStackRouterDevtools position="bottom-right" />
-        <ReactQueryDevtools buttonPosition="bottom-left" />
-        <Scripts />
+        <GoogleOAuthProvider clientId={googleClientId}>
+          <LayoutProvider>
+            <main>{children}</main>
+          </LayoutProvider>
+          <Suspense fallback={null}>
+            <DevTools />
+          </Suspense>
+          <Scripts />
+        </GoogleOAuthProvider>
       </body>
     </html>
-  )
+  );
 }

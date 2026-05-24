@@ -1,16 +1,23 @@
-import { createFileRoute } from '@tanstack/react-router'
-import IconButton from '../components/IconButton/'
-import '@styles/_global.scss';
+import { MOCK_COURSES, MOCK_USER } from "@/mock";
+import "@/styles/_global.scss";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/')({
-  component: Home,
-})
+export const Route = createFileRoute("/")({
+  beforeLoad: async () => {
+    throw redirect({
+      to: "/learner",
+    });
+  },
+  component: HomePage,
+});
 
-function Home() {
-  return (
-    <div className="p-2">
-      <h3>Welcome Home!!!</h3>
-      <IconButton name="home" fill={true}/>
-    </div>
-  )
+function HomePage() {
+  const featuredCourses = MOCK_COURSES.slice(0, 3);
+  const streak = MOCK_USER.streak;
+  const achievements = MOCK_USER.achievements;
+  const achievementCount = achievements.length;
+  const achievementTotal = MOCK_USER.achievementTotal;
+  const activeDays = MOCK_USER.activeDays;
+
+  return <div className=""></div>;
 }

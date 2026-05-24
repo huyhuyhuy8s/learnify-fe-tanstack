@@ -1,0 +1,9 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
+.left-nav-bot-theme-placeholder {
+  width: toRem(56);
+  height: toRem(56);
+}

@@ -1,0 +1,28 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/functions" as *;
+
+.top-nav-left {
+  gap: toRem(20);
+
+  &-context {
+    gap: toRem(10);
+    display: flex;
+  }
+
+  button,
+  a {
+    color: $black;
+  }
+
+  a::first-letter,
+  button::first-letter {
+    text-transform: uppercase;
+  }
+
+  .divider {
+    height: toRem(25);
+    width: toRem(1);
+    background-color: $navy-pastel-200;
+  }
+}

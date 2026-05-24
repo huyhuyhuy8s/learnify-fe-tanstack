@@ -1,6 +1,32 @@
-@use 'reset' as *;
-@use 'variables' as *;
-@use 'mixins' as *;
-@use 'colors' as *;
-@use 'typography' as *;
-@use 'functions' as *;
+@use "functions" as *;
+@use "variables" as *;
+@use "colors" as *;
+@use "mixins" as *;
+@use "reset" as *;
+@use "theme" as *;
+@use "typography" as *;
+
+.separator {
+  width: 100%;
+  height: toRem(1);
+  background-color: $neutral-400;
+  border-radius: $br-xl;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.beauty {
+  background: linear-gradient(to right, $accent-minty, $accent-blue-celeste);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  display: inline-block;
+}
+
+.disabled,
+.disable {
+  cursor: not-allowed;
+}

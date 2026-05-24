@@ -1,0 +1,34 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
+.left-nav-controller {
+  position: absolute;
+  top: toRem(100);
+  right: toRem(-38);
+  aspect-ratio: 1 / 1;
+  place-content: center;
+  cursor: pointer;
+  z-index: 10;
+  @include transition;
+  display: none;
+
+  .icon {
+    font-size: toRem(36);
+    color: inherit;
+    filter: invert(1);
+  }
+
+  &:hover {
+    .icon {
+      filter: invert(0.8);
+    }
+  }
+}
+
+@include break(s) {
+  .left-nav-controller {
+    display: flex;
+  }
+}
