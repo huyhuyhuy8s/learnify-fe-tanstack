@@ -83,3 +83,4 @@ src/gql
 /opencode.json
 /ssh-vps.sh
 /knowledge
+/.env.production
