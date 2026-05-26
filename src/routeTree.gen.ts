@@ -14,6 +14,9 @@ import { Route as DeferredRouteImport } from "./routes/deferred";
 import { Route as LearnerRouteRouteImport } from "./routes/learner/route";
 import { Route as IndexRouteImport } from "./routes/index";
 import { Route as LearnerIndexRouteImport } from "./routes/learner/index";
+import { Route as ContactIndexRouteImport } from "./routes/contact/index";
+import { Route as BlogsIndexRouteImport } from "./routes/blogs/index";
+import { Route as AboutUsIndexRouteImport } from "./routes/about-us/index";
 import { Route as LearnerDashboardRouteImport } from "./routes/learner/dashboard";
 import { Route as ApiUsersRouteImport } from "./routes/api/users";
 import { Route as LearnerLessonsRouteRouteImport } from "./routes/learner_/lessons/route";
@@ -63,6 +66,25 @@ const LearnerIndexRoute = LearnerIndexRouteImport.update({
   path: "/",
   getParentRoute: () => LearnerRouteRoute,
 } as any);
+const ContactIndexRoute = ContactIndexRouteImport.update({
+  id: "/contact/",
+  path: "/contact/",
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() =>
+  import("./routes/contact/index.lazy").then((d) => d.Route),
+);
+const BlogsIndexRoute = BlogsIndexRouteImport.update({
+  id: "/blogs/",
+  path: "/blogs/",
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() => import("./routes/blogs/index.lazy").then((d) => d.Route));
+const AboutUsIndexRoute = AboutUsIndexRouteImport.update({
+  id: "/about-us/",
+  path: "/about-us/",
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() =>
+  import("./routes/about-us/index.lazy").then((d) => d.Route),
+);
 const LearnerDashboardRoute = LearnerDashboardRouteImport.update({
   id: "/dashboard",
   path: "/dashboard",
@@ -193,6 +215,9 @@ export interface FileRoutesByFullPath {
   "/learner/lessons": typeof LearnerLessonsRouteRouteWithChildren;
   "/api/users": typeof ApiUsersRouteWithChildren;
   "/learner/dashboard": typeof LearnerDashboardRoute;
+  "/about-us/": typeof AboutUsIndexRoute;
+  "/blogs/": typeof BlogsIndexRoute;
+  "/contact/": typeof ContactIndexRoute;
   "/learner/": typeof LearnerIndexRoute;
   "/api/users/$id": typeof ApiUsersIdRoute;
   "/learner/courses/$courseId": typeof LearnerCoursesCourseIdRoute;
@@ -218,6 +243,9 @@ export interface FileRoutesByTo {
   "/redirect": typeof RedirectRoute;
   "/api/users": typeof ApiUsersRouteWithChildren;
   "/learner/dashboard": typeof LearnerDashboardRoute;
+  "/about-us": typeof AboutUsIndexRoute;
+  "/blogs": typeof BlogsIndexRoute;
+  "/contact": typeof ContactIndexRoute;
   "/learner": typeof LearnerIndexRoute;
   "/api/users/$id": typeof ApiUsersIdRoute;
   "/learner/courses/$courseId": typeof LearnerCoursesCourseIdRoute;
@@ -249,6 +277,9 @@ export interface FileRoutesById {
   "/learner_/lessons": typeof LearnerLessonsRouteRouteWithChildren;
   "/api/users": typeof ApiUsersRouteWithChildren;
   "/learner/dashboard": typeof LearnerDashboardRoute;
+  "/about-us/": typeof AboutUsIndexRoute;
+  "/blogs/": typeof BlogsIndexRoute;
+  "/contact/": typeof ContactIndexRoute;
   "/learner/": typeof LearnerIndexRoute;
   "/api/users/$id": typeof ApiUsersIdRoute;
   "/learner/courses/$courseId": typeof LearnerCoursesCourseIdRoute;
@@ -281,6 +312,9 @@ export interface FileRouteTypes {
     | "/learner/lessons"
     | "/api/users"
     | "/learner/dashboard"
+    | "/about-us/"
+    | "/blogs/"
+    | "/contact/"
     | "/learner/"
     | "/api/users/$id"
     | "/learner/courses/$courseId"
@@ -306,6 +340,9 @@ export interface FileRouteTypes {
     | "/redirect"
     | "/api/users"
     | "/learner/dashboard"
+    | "/about-us"
+    | "/blogs"
+    | "/contact"
     | "/learner"
     | "/api/users/$id"
     | "/learner/courses/$courseId"
@@ -336,6 +373,9 @@ export interface FileRouteTypes {
     | "/learner_/lessons"
     | "/api/users"
     | "/learner/dashboard"
+    | "/about-us/"
+    | "/blogs/"
+    | "/contact/"
     | "/learner/"
     | "/api/users/$id"
     | "/learner/courses/$courseId"
@@ -363,6 +403,9 @@ export interface RootRouteChildren {
   RedirectRoute: typeof RedirectRoute;
   LearnerLessonsRouteRoute: typeof LearnerLessonsRouteRouteWithChildren;
   ApiUsersRoute: typeof ApiUsersRouteWithChildren;
+  AboutUsIndexRoute: typeof AboutUsIndexRoute;
+  BlogsIndexRoute: typeof BlogsIndexRoute;
+  ContactIndexRoute: typeof ContactIndexRoute;
   LearnerForgotPasswordIndexRoute: typeof LearnerForgotPasswordIndexRoute;
   LearnerLogInIndexRoute: typeof LearnerLogInIndexRoute;
   LearnerSignUpIndexRoute: typeof LearnerSignUpIndexRoute;
@@ -405,6 +448,27 @@ declare module "@tanstack/react-router" {
       fullPath: "/learner/";
       preLoaderRoute: typeof LearnerIndexRouteImport;
       parentRoute: typeof LearnerRouteRoute;
+    };
+    "/contact/": {
+      id: "/contact/";
+      path: "/contact";
+      fullPath: "/contact/";
+      preLoaderRoute: typeof ContactIndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/blogs/": {
+      id: "/blogs/";
+      path: "/blogs";
+      fullPath: "/blogs/";
+      preLoaderRoute: typeof BlogsIndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/about-us/": {
+      id: "/about-us/";
+      path: "/about-us";
+      fullPath: "/about-us/";
+      preLoaderRoute: typeof AboutUsIndexRouteImport;
+      parentRoute: typeof rootRouteImport;
     };
     "/learner/dashboard": {
       id: "/learner/dashboard";
@@ -669,6 +733,9 @@ const rootRouteChildren: RootRouteChildren = {
   RedirectRoute: RedirectRoute,
   LearnerLessonsRouteRoute: LearnerLessonsRouteRouteWithChildren,
   ApiUsersRoute: ApiUsersRouteWithChildren,
+  AboutUsIndexRoute: AboutUsIndexRoute,
+  BlogsIndexRoute: BlogsIndexRoute,
+  ContactIndexRoute: ContactIndexRoute,
   LearnerForgotPasswordIndexRoute: LearnerForgotPasswordIndexRoute,
   LearnerLogInIndexRoute: LearnerLogInIndexRoute,
   LearnerSignUpIndexRoute: LearnerSignUpIndexRoute,
