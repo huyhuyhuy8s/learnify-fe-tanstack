@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import Card from "@/components/Card";
 import DecorationCard from "@/components/DecorationCard";
@@ -6,23 +6,9 @@ import NotFound from "@/components/NotFound";
 import TextButton from "@/components/TextButton";
 import { MOCK_COMMENT, MOCK_COURSES, MOCK_ROADMAP } from "@/mock";
 import { COLORS } from "@/styles/colors";
-import { postQueryOptions } from "@/utils/posts";
-import CommentItem from "./-components/CommentItem";
-import "./roadmapId.scss";
+import CommentItem from "../-components/CommentItem";
 
-export const Route = createFileRoute("/learner/roadmaps/$roadmapId")({
-  loader: async ({ params: { roadmapId }, context }) => {
-    const data = await context.queryClient.ensureQueryData(
-      postQueryOptions(roadmapId)
-    );
-
-    return {
-      title: data.title,
-    };
-  },
-  head: ({ loaderData }) => ({
-    meta: loaderData ? [{ title: loaderData.title }] : undefined,
-  }),
+export const Route = createLazyFileRoute("/learner/roadmaps/$roadmapId/")({
   component: RoadmapItem,
 });
 

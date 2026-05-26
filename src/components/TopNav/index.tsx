@@ -5,6 +5,7 @@ import usePathname from "./hooks/usePathname";
 import { useScrollTop } from "@/hooks/useScrollTop";
 import { useLayout } from "@/contexts/LayoutContext";
 import classnames from "classnames";
+import { useCallback } from "react";
 import "./style.scss";
 
 export type TTopNavProps = {
@@ -23,6 +24,10 @@ const TopNav = (props: TTopNavProps) => {
   const isTop = useScrollTop();
   const { customTitle, showSearch, setLayoutConfigState } = useLayout();
 
+  const handleSearchClose = useCallback(() => {
+    setLayoutConfigState((prev) => ({ ...prev, showSearch: false }));
+  }, [setLayoutConfigState]);
+
   const navClassNames = classnames(
     "top-nav",
     { top: isTop && !fullWidth },
@@ -39,9 +44,7 @@ const TopNav = (props: TTopNavProps) => {
         pathnameWithoutLast={pathnameWithoutLast}
         customTitle={customTitle}
         showSearch={showSearch}
-        onSearchClose={() =>
-          setLayoutConfigState((prev) => ({ ...prev, showSearch: false }))
-        }
+        onSearchClose={handleSearchClose}
       />
       <TopNavRight />
     </nav>
