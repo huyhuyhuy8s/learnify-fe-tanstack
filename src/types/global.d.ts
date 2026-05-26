@@ -56,3 +56,5 @@ export type TTypeSecondary =
 export type TProgress = Enumerate<101>;
 
 export type TStatusCard = "default" | "inProgress" | "completed" | "locked";
+
+export type TRole = "learner" | "teacher" | "reviewer" | "admin";

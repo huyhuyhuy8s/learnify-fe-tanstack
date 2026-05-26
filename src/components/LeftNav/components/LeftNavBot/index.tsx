@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from "react";
 import { useTranslation } from "react-i18next";
+import { useRouterState, useNavigate } from "@tanstack/react-router";
 import IconButton from "@/components/IconButton";
 import { useTheme } from "@/hooks/useTheme";
 import "./style.scss";
@@ -15,6 +16,9 @@ const LeftNavBot = () => {
   const { t, i18n } = useTranslation();
   const { theme, toggleTheme } = useTheme();
   const hydrated = useHydrated();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+  const isTeacher = pathname.startsWith("/teacher");
 
   const toggleLanguage = () => {
     const next = i18n.language === "en" ? "vi" : "en";
@@ -24,12 +28,30 @@ const LeftNavBot = () => {
   return (
     <div className="left-nav-bot">
       <IconButton
+        icon={isTeacher ? "school" : "local_library"}
+        shape="circle"
+        type="outlined"
+        size="small"
+        onClick={() => navigate({ to: isTeacher ? "/learner" : "/teacher" })}
+        tooltip={
+          isTeacher
+            ? t("common.switch_to_learner")
+            : t("common.switch_to_teacher")
+        }
+        ariaLabel={
+          isTeacher
+            ? t("common.switch_to_learner")
+            : t("common.switch_to_teacher")
+        }
+      />
+      <IconButton
         icon="language"
         specialIcon="globe_asia"
         shape="circle"
         type="outlined"
         size="small"
         onClick={toggleLanguage}
+        tooltip={t("common.language")}
         ariaLabel={t("common.language")}
       />
       {!hydrated ? (
@@ -42,6 +64,7 @@ const LeftNavBot = () => {
           type="outlined"
           size="small"
           onClick={toggleTheme}
+          tooltip={t("common.toggle_dark_mode")}
           ariaLabel={t("common.toggle_dark_mode")}
         />
       )}
