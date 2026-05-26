@@ -1,24 +1,26 @@
-import "./friends.scss";
+import "./courseId.scss";
 
-import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { createFileRoute, notFound, useRouter } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import ErrorScene from "@/components/ErrorScene";
+import NotFound from "@/components/NotFound";
 import TetrisLoader from "@/components/TetrisLoader";
 import TextButton from "@/components/TextButton";
-import { getCurrentUserFn } from "@/server/auth";
 import { createLearnerHead } from "@/utils";
+import { courseQueryOptions } from "@/utils/courses";
+import { logger } from "@/utils/logger";
 
-function FriendsErrorComponent() {
-  const { t } = useTranslation();
+function CourseErrorComponent() {
   const router = useRouter();
+  const { t } = useTranslation();
   return (
     <ErrorScene>
       <ErrorScene.Header>
         <ErrorScene.Title errorCode={500}>
-          {t("errors.server_error")}
+          {t("course_detail.server_error")}
         </ErrorScene.Title>
         <ErrorScene.Description>
-          {t("errors.load_friends")}
+          {t("course_detail.load_error")}
         </ErrorScene.Description>
       </ErrorScene.Header>
       <ErrorScene.Content>
@@ -44,12 +46,18 @@ function FriendsErrorComponent() {
   );
 }
 
-export const Route = createFileRoute("/learner/friends/")({
-  beforeLoad: async () => {
-    const { user } = await getCurrentUserFn();
-    return { user };
+export const Route = createFileRoute("/learner/courses/$courseId")({
+  loader: async ({ params: { courseId }, context }) => {
+    const data = await context.queryClient.ensureQueryData(
+      courseQueryOptions(courseId)
+    );
+    logger.debug("data", data);
+    if (!data.getCourseById) throw notFound();
+    return { title: data.getCourseById?.courseName };
   },
-  head: () => createLearnerHead("Friends"),
-  errorComponent: FriendsErrorComponent,
+  head: ({ loaderData }) =>
+    createLearnerHead(loaderData?.title ?? "Course Details"),
+  errorComponent: CourseErrorComponent,
   pendingComponent: TetrisLoader,
+  notFoundComponent: NotFound,
 }).lazy(() => import("./index.lazy").then((m) => m.Route));

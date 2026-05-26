@@ -1,9 +1,4 @@
-import {
-  createFileRoute,
-  notFound,
-  useNavigate,
-  useRouter,
-} from "@tanstack/react-router";
+import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Activity, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -11,10 +6,8 @@ import { toast } from "sonner";
 import Card from "@/components/Card";
 import DecorationCard from "@/components/DecorationCard";
 import Empty from "@/components/Empty";
-import ErrorScene from "@/components/ErrorScene";
 import Icon from "@/components/Icon";
 import NotFound from "@/components/NotFound";
-import TetrisLoader from "@/components/TetrisLoader";
 import TextButton from "@/components/TextButton";
 import {
   useCourseProgress,
@@ -27,63 +20,12 @@ import { useAuthStore } from "@/store/authStore";
 import { useLayout } from "@/contexts/LayoutContext";
 import { COLORS } from "@/styles/colors";
 import type { TProgress, TStatusCard } from "@/types/global";
-import { createLearnerHead, formatDate } from "@/utils";
+import { formatDate } from "@/utils";
 import { courseQueryOptions } from "@/utils/courses";
-import { logger } from "@/utils/logger";
-import CommentForm from "./-components/CommentForm";
-import CommentItem from "./-components/CommentItem";
-import "./courseId.scss";
+import CommentForm from "../-components/CommentForm";
+import CommentItem from "../-components/CommentItem";
 
-function CourseErrorComponent() {
-  const router = useRouter();
-  const { t } = useTranslation();
-  return (
-    <ErrorScene>
-      <ErrorScene.Header>
-        <ErrorScene.Title errorCode={500}>
-          {t("course_detail.server_error")}
-        </ErrorScene.Title>
-        <ErrorScene.Description>
-          {t("course_detail.load_error")}
-        </ErrorScene.Description>
-      </ErrorScene.Header>
-      <ErrorScene.Content>
-        <div className="error-scene__control">
-          <TextButton
-            text={t("errors.try_again")}
-            onClick={() => router.invalidate()}
-            className="error-scene__btn"
-            size="medium"
-            icon="refresh"
-          />
-          <TextButton
-            text={t("errors.go_back")}
-            onClick={() => window.history.back()}
-            className="error-scene__btn error-scene__btn--secondary"
-            size="medium"
-            icon="arrow_back"
-            type="outlined"
-          />
-        </div>
-      </ErrorScene.Content>
-    </ErrorScene>
-  );
-}
-
-export const Route = createFileRoute("/learner/courses/$courseId")({
-  loader: async ({ params: { courseId }, context }) => {
-    const data = await context.queryClient.ensureQueryData(
-      courseQueryOptions(courseId)
-    );
-    logger.debug("data", data);
-    if (!data.getCourseById) throw notFound();
-    return { title: data.getCourseById?.courseName };
-  },
-  head: ({ loaderData }) =>
-    createLearnerHead(loaderData?.title ?? "Course Details"),
-  errorComponent: CourseErrorComponent,
-  pendingComponent: TetrisLoader,
-  notFoundComponent: NotFound,
+export const Route = createLazyFileRoute("/learner/courses/$courseId/")({
   component: CourseComponent,
 });
 
