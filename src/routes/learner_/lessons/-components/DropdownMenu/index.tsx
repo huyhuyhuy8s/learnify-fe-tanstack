@@ -1,28 +1,12 @@
+import "./dropdown-menu.scss";
+
+import Icon from "@/components/Icon";
+import IconButton from "@/components/IconButton";
+import { COLORS } from "@/styles/colors";
 import classNames from "classnames";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { COLORS } from "@/styles/colors";
-import Icon from "@/components/Icon";
-import IconButton from "@/components/IconButton";
-import "./style.scss";
-
-type TDropdownMenuOption = {
-  value: string;
-  label: string;
-};
-
-export type TDropdownMenuProps = {
-  icon: string;
-  title: string;
-  options: TDropdownMenuOption[];
-  iconOption: string;
-  className?: string;
-  style?: React.CSSProperties;
-  buttonBackgroundColor: string;
-  buttonColor?: string;
-  isOpen?: boolean;
-  onToggle?: (isOpen: boolean) => void;
-};
+import type { TDropdownMenuProps } from "./type";
 
 const DropdownMenu = (props: TDropdownMenuProps) => {
   const { t } = useTranslation();

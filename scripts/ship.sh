@@ -23,7 +23,7 @@ for Var in VITE_GRAPHQL_ENDPOINT VITE_GOOGLE_CLIENT_ID VITE_ELEVENLABS_API_KEY V
     BUILD_ARGS="$BUILD_ARGS --build-arg ${Var}=${!Var:-}"
 done
 
-docker build $BUILD_ARGS -t "$IMAGE_NAME" .
+docker build --no-cache $BUILD_ARGS -t "$IMAGE_NAME" .
 
 log "Compressing image..."
 IMAGE_FILE="/tmp/learnify-deploy-$(date +%s).tar.gz"

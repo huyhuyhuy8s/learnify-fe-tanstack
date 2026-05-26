@@ -1,0 +1,26 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
+.lesson-detail-page {
+  display: grid;
+  grid-template-columns: 1fr 25dvw;
+  grid-template-rows:
+    calc(100dvh - toRem(77) - toRem(40) - 25dvw / 4 * 3 - toRem(20))
+    1fr;
+  padding: toRem(20);
+  gap: toRem(20);
+
+  @include break(sm) {
+    grid-template-columns: 1fr;
+    padding: toRem(10);
+    gap: toRem(10);
+  }
+}
+
+.lesson-detail-page_loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

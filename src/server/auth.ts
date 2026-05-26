@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { useAppSession } from "@/utils/session";
 import { z } from "zod";
+import { getLanguageCookie, getThemeCookie } from "./cookies.server";
 
 const SESSION_TTL = 7 * 24 * 60 * 60 * 1000;
 
@@ -8,6 +9,7 @@ type UserData = {
   id: string | number;
   email: string;
   username?: string;
+  role?: string;
 };
 
 const sessionSchema = z.object({
@@ -17,6 +19,7 @@ const sessionSchema = z.object({
       /^(?!\.)(?!.*\.\.)([a-z0-9_'+\-.]*)[a-z0-9_+-]@([a-z0-9][a-z0-9-]*\.)+[a-z]{2,}$/i,
   }),
   username: z.string().optional(),
+  role: z.string().optional(),
 });
 
 export const getCurrentUserFn = createServerFn({ method: "GET" }).handler(
@@ -51,11 +54,8 @@ export const logoutFn = createServerFn({ method: "POST" }).handler(async () => {
 });
 
 export const getServerCookiesFn = createServerFn({ method: "GET" }).handler(
-  async () => {
-    const { getCookie } = await import("@tanstack/react-start/server");
-    return {
-      language: getCookie("app-language") || null,
-      theme: getCookie("app-theme") || null,
-    };
-  }
+  async () => ({
+    language: getLanguageCookie(),
+    theme: getThemeCookie(),
+  })
 );

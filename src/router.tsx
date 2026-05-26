@@ -8,6 +8,7 @@ export type TSessionUser = {
   id: string;
   email: string;
   username?: string;
+  role?: string;
   diamond?: number;
   currentSteak?: number;
   subscription?: TSubscription["type"];

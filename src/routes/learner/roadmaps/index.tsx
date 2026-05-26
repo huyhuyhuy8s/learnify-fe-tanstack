@@ -1,24 +1,39 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Suspense } from "react";
+import { Suspense, useMemo } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import Card from "@/components/Card";
 import Search from "@/components/Search";
 import TetrisLoader from "@/components/TetrisLoader";
-import { MOCK_ROADMAP } from "@/mock";
 import CategoryItem from "./-components/CategoryItem";
 import { CATEGORIES } from "./-constants";
+import { useSuspenseAllRoadmaps } from "@/hooks/useRoadmap";
+import { createLearnerHead } from "@/utils";
 import "./style.scss";
 
 export const Route = createFileRoute("/learner/roadmaps/")({
-  head: () => ({
-    meta: [{ title: "Roadmaps | Learnify for Learner" }],
-  }),
+  head: () => createLearnerHead("Roadmaps"),
   component: RoadmapsPage,
 });
 
 function RoadmapsPage() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+
+  const { data: roadmapData } = useSuspenseAllRoadmaps();
+
+  const displayRoadmaps = useMemo(() => {
+    if (!roadmapData?.roadmap) return [];
+
+    return roadmapData.roadmap.map((item) => ({
+      id: item.id,
+      typeSpecial: "roadmap" as const,
+      title: item.roadMapName,
+      description: item.abstract,
+      duration: "--",
+      status: "default" as const,
+      percentage: 0,
+    }));
+  }, [roadmapData]);
 
   return (
     <div className="roadmaps-container">
@@ -49,8 +64,9 @@ function RoadmapsPage() {
               />
             ))}
           </div>
+
           <div className="roadmaps-container__list">
-            {MOCK_ROADMAP.map((roadmap) => (
+            {displayRoadmaps.map((roadmap) => (
               <Card
                 key={roadmap.id}
                 typeSpecial={roadmap.typeSpecial}

@@ -1,7 +1,11 @@
+import "@styles/_global.scss";
+import "./root.scss";
+
 import DefaultCatchBoundary from "@/components/DefaultCatchBoundary";
 import Loader from "@/components/Loader";
 import NotFound from "@/components/NotFound";
 import { LayoutProvider } from "@/contexts/LayoutContext";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 import { useTheme } from "@/hooks/useTheme";
 import { initI18n } from "@/i18n";
 import type { RouterContext } from "@/router";
@@ -18,13 +22,15 @@ import {
 } from "@tanstack/react-router";
 import gsap from "gsap";
 import CustomEase from "gsap/CustomEase";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
+import type LocomotiveScroll from "locomotive-scroll";
+import "locomotive-scroll/dist/locomotive-scroll.css";
 import * as React from "react";
 import { Suspense, lazy, useEffect, useState } from "react";
 import { Toaster, toast } from "sonner";
-import "./root.scss";
 
-gsap.registerPlugin(SplitText, CustomEase);
+gsap.registerPlugin(SplitText, CustomEase, ScrollTrigger);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
 CustomEase.create("glide", "0.8, 0, 0.2, 1");
 
@@ -65,6 +71,16 @@ const Root = createRootRouteWithContext<RouterContext>()({
         href: "https://fonts.gstatic.com",
         crossOrigin: "anonymous",
       },
+      {
+        rel: "preload",
+        href: "https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap",
+        as: "style",
+      },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap",
+        media: "print",
+      },
       { rel: "image/x-icon", href: "/favicon.ico" },
       {
         rel: "icon",
@@ -99,7 +115,7 @@ const Root = createRootRouteWithContext<RouterContext>()({
 function RootComponent() {
   useTheme();
   const setAuth = useAuthStore((state) => state.setAuth);
-  const { auth } = Root.useLoaderData();
+  const { auth, theme } = Root.useLoaderData();
   const [phase1Done, setPhase1Done] = useState(false);
   const [pageLoaded, setPageLoaded] = useState(false);
   const [phase2Done, setPhase2Done] = useState(false);
@@ -133,8 +149,50 @@ function RootComponent() {
     return () => clearTimeout(timer);
   }, [phase2Done]);
 
+  useEffect(() => {
+    let scroll: InstanceType<typeof LocomotiveScroll> | null = null;
+
+    async function init() {
+      const { default: LS } = await import("locomotive-scroll");
+
+      scroll = new LS({
+        lenisOptions: {
+          wrapper: window,
+          content: document.documentElement,
+          lerp: 0.08,
+          smoothWheel: true,
+        },
+      });
+
+      scroll.lenisInstance?.on("scroll", () => ScrollTrigger.update());
+      ScrollTrigger.scrollerProxy(document.body, {
+        scrollTop(value?: number) {
+          if (value !== undefined) {
+            scroll?.lenisInstance?.scrollTo(value, { immediate: true });
+          }
+          return scroll?.lenisInstance?.scroll ?? 0;
+        },
+        getBoundingClientRect() {
+          return {
+            top: 0,
+            left: 0,
+            width: window.innerWidth,
+            height: window.innerHeight,
+          };
+        },
+      });
+      ScrollTrigger.refresh();
+    }
+
+    init();
+
+    return () => {
+      scroll?.destroy();
+    };
+  }, []);
+
   return (
-    <RootDocument>
+    <RootDocument theme={theme || undefined}>
       <Outlet />
       {!showApp && (
         <Loader
@@ -180,9 +238,11 @@ function RootDocument({
       </head>
       <body>
         <GoogleOAuthProvider clientId={googleClientId}>
-          <LayoutProvider>
-            <main>{children}</main>
-          </LayoutProvider>
+          <ThemeProvider value={theme as "light" | "dark" | undefined}>
+            <LayoutProvider>
+              <main className="main-app">{children}</main>
+            </LayoutProvider>
+          </ThemeProvider>
           <Suspense fallback={null}>
             <DevTools />
           </Suspense>

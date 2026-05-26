@@ -1,0 +1,7 @@
+@use "@styles/page-marketing" as *;
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
+@include page-marketing("about-us");

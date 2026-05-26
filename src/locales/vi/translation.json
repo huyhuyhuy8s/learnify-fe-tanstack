@@ -10,7 +10,9 @@
   "common": {
     "change_language": "Đổi ngôn ngữ",
     "toggle_dark_mode": "Chuyển giao diện",
-    "language": "Ngôn ngữ"
+    "language": "Ngôn ngữ",
+    "switch_to_learner": "Chuyển sang Học viên",
+    "switch_to_teacher": "Chuyển sang Giảng viên"
   },
   "home": {
     "title": "Khai phá <Beauty>Tiềm năng</Beauty> cho tương lai, ngay hôm nay",
@@ -70,6 +72,7 @@
     "server_error": "Lỗi máy chủ",
     "load_courses": "Không thể tải khóa học lúc này. Đây có thể là sự cố mạng hoặc máy chủ. Vui lòng thử lại.",
     "load_friends": "Không thể tải danh sách bạn bè lúc này. Đây có thể là sự cố mạng hoặc máy chủ. Vui lòng thử lại.",
+    "load_roadmap": "Không thể tải lộ trình học lúc này. Đây có thể là sự cố mạng hoặc máy chủ. Vui lòng thử lại.",
     "try_again": "Thử lại",
     "go_back": "Quay lại",
     "session_expired": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại."
@@ -408,5 +411,239 @@
       "searching_knowledge_base": "Đang tìm kiếm kiến thức...",
       "analyzing_your_query": "Đang phân tích câu hỏi..."
     }
+  },
+  "landing": {
+    "hero": {
+      "headline_line1": "Học tập Thông minh.",
+      "headline_line2": "Kỹ năng Thực tế.",
+      "headline_line3": "Sẵn sàng Nghề nghiệp.",
+      "subtitle": "Trợ giảng 3D AI hướng dẫn bạn qua các bài thực hành. Dành cho học viên, giảng viên và các tổ chức giáo dục sẵn sàng chuyển đổi.",
+      "learner_cta": "Tôi là Học viên",
+      "teacher_cta": "Tôi là Giảng viên"
+    },
+    "stats": {
+      "title": "Được tin dùng bởi <Beauty>Hàng nghìn</Beauty>"
+    },
+    "how": {
+      "title": "Cách thức <Beauty>Hoạt động</Beauty>",
+      "steps": {
+        "browse": {
+          "title": "Khám phá Khóa học",
+          "desc": "Khám phá hàng nghìn khóa học trên mọi lĩnh vực — từ AI đến thiết kế."
+        },
+        "enroll": {
+          "title": "Đăng ký & Bắt đầu",
+          "desc": "Chọn một khóa học, đăng ký một cú nhấp và bắt đầu bài học đầu tiên."
+        },
+        "learn": {
+          "title": "Học với 3D AI",
+          "desc": "Trợ giảng 3D AI tương tác hướng dẫn bạn qua các bài thực hành."
+        },
+        "certificate": {
+          "title": "Nhận Chứng chỉ",
+          "desc": "Hoàn thành khóa học, nhận chứng chỉ và thể hiện kỹ năng của bạn."
+        }
+      }
+    },
+    "audience": {
+      "title": "Xây dựng cho <Beauty>Tất cả</Beauty>",
+      "learners": {
+        "title": "Dành cho Học viên",
+        "desc": "Thành thạo kỹ năng qua các bài giảng 3D do AI hướng dẫn và bài thực hành tương tác. Học theo tốc độ của riêng bạn với phản hồi cá nhân hóa.",
+        "cta": "Bắt đầu Học"
+      },
+      "teachers": {
+        "title": "Dành cho Giảng viên",
+        "desc": "Tạo khóa học, quản lý học viên và theo dõi tiến độ với phân tích mạnh mẽ. Đưa chương trình giảng dạy của bạn vào cuộc sống với nội dung 3D.",
+        "cta": "Bắt đầu Giảng dạy"
+      },
+      "institutions": {
+        "title": "Dành cho Tổ chức",
+        "desc": "Triển khai Learnify tại trường đại học, trường học hoặc trung tâm đào tạo của bạn. Thương hiệu tùy chỉnh, hỗ trợ chuyên dụng và giá số lượng lớn.",
+        "cta": "Tìm hiểu Thêm"
+      }
+    },
+    "subs": {
+      "title": "Chọn <Beauty>Gói</Beauty> của bạn",
+      "select": "Chọn",
+      "starter": {
+        "title": "Starter",
+        "subtitle": "Bắt đầu học với quyền truy cập cơ bản vào các phòng thí nghiệm thực hành và nhận huy hiệu kỹ năng đầu tiên.",
+        "price": "<strong>Miễn phí</strong>",
+        "desc0": "<strong>35 tín chỉ</strong> miễn phí mỗi tháng",
+        "desc1": "<strong>10 câu hỏi</strong> cho Giảng viên AI 3D mỗi tháng",
+        "desc2": "Truy cập vào các khóa học nền tảng và phòng thí nghiệm giới hạn"
+      },
+      "pro": {
+        "title": "Pro",
+        "subtitle": "Mở khóa quyền truy cập không giới hạn vào học tập thực hành từ cơ bản đến nâng cao.",
+        "price": "<strong>$49</strong> / tháng",
+        "desc0": "Quyền truy cập <strong>không giới hạn</strong> vào hàng nghìn khóa học và phòng thí nghiệm",
+        "desc1": "Quyền truy cập đầy đủ vào thư viện nội dung Learnify",
+        "desc2": "<strong>Bao gồm mọi thứ trong gói Free</strong>"
+      },
+      "career": {
+        "title": "Career",
+        "subtitle": "Phát triển sự nghiệp của bạn trong các lĩnh vực lương cao với các kỹ năng mà nhà tuyển dụng đang tìm kiếm.",
+        "price": "<strong>$99</strong> / tháng",
+        "desc0": "Được xác nhận bởi <strong>các nhà tuyển dụng hàng đầu</strong>",
+        "desc1": "<strong>Câu hỏi không giới hạn</strong> cho Giảng viên AI 3D",
+        "desc2": "Truy cập vào <strong>các chương trình chứng chỉ chuyên nghiệp</strong>"
+      }
+    },
+    "values": {
+      "title": "<Beauty>Giá trị</Beauty> của chúng tôi"
+    }
+  },
+  "about_us": {
+    "title": "Về <Beauty>Learnify</Beauty>",
+    "description": "Nền tảng giáo dục làm nổi bật tương lai và nghệ thuật của việc học — từ kiến thức nền tảng đến thực hành đến thành thạo nghề nghiệp.",
+    "mission_title": "Sứ mệnh",
+    "vision_title": "Tầm nhìn",
+    "values_title": "<Beauty>Giá trị</Beauty> của chúng tôi",
+    "team_title": "Gặp gỡ <Beauty>Đội ngũ</Beauty>",
+    "mission_text": "Dân chủ hóa giáo dục bằng cách kết hợp công nghệ AI tiên tiến với trải nghiệm học tập 3D sống động, giúp giáo dục đẳng cấp thế giới dễ tiếp cận cho mọi người, mọi nơi.",
+    "vision_text": "Một thế giới nơi bất kỳ ai cũng có thể học bất kỳ kỹ năng nào thông qua hướng dẫn AI cá nhân hóa — phá vỡ rào cản về chi phí, vị trí và hạn chế của giảng dạy truyền thống.",
+    "values": {
+      "learner_first": {
+        "title": "Ưu tiên Học viên",
+        "desc": "Mọi quyết định chúng tôi đưa ra đều bắt đầu từ trải nghiệm của học viên."
+      },
+      "innovation": {
+        "title": "Đổi mới",
+        "desc": "Chúng tôi áp dụng AI và công nghệ hiện đại để giáo dục hiệu quả hơn."
+      },
+      "accessibility": {
+        "title": "Tiếp cận",
+        "desc": "Học tập chất lượng nên có sẵn cho mọi người, mọi nơi."
+      },
+      "community": {
+        "title": "Cộng đồng",
+        "desc": "Cùng nhau phát triển thông qua hợp tác, chia sẻ và hỗ trợ."
+      }
+    },
+    "stats": {
+      "trusted_learners": {
+        "label": "Học viên Tin cậy"
+      },
+      "courses": {
+        "label": "Khóa học"
+      },
+      "members": {
+        "label": "Thành viên"
+      },
+      "trusted_partners": {
+        "label": "Đối tác Tin cậy"
+      }
+    },
+    "team": {
+      "sarah": {
+        "role": "CEO & Đồng Sáng lập",
+        "bio": "Cựu giáo viên trở thành doanh nhân. Đam mê dân chủ hóa tiếp cận giáo dục đẳng cấp thế giới."
+      },
+      "marcus": {
+        "role": "CTO & Đồng Sáng lập",
+        "bio": "Nhà nghiên cứu AI và kỹ sư full-stack. Xây dựng tương lai của trải nghiệm học tập tương tác."
+      },
+      "aisha": {
+        "role": "Trưởng phòng Sản phẩm",
+        "bio": "Lãnh đạo sản phẩm với nền tảng thiết kế giảng dạy. Tập trung vào thiết kế lấy học viên làm trung tâm."
+      },
+      "david": {
+        "role": "Kỹ sư 3D Chính",
+        "bio": "Lập trình viên đồ họa và chuyên gia Three.js. Tạo ra môi trường giáo dục sống động."
+      }
+    }
+  },
+  "contact_info": {
+    "general": {
+      "label": "Yêu cầu Chung",
+      "value": "hello@learnify.com"
+    },
+    "support": {
+      "label": "Hỗ trợ",
+      "value": "support@learnify.com"
+    },
+    "partnerships": {
+      "label": "Hợp tác",
+      "value": "partners@learnify.com"
+    },
+    "office": {
+      "label": "Văn phòng",
+      "value": "123 Education Lane, Tech City, TC 90210"
+    }
+  },
+  "social_links": {
+    "twitter": "Twitter",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "youtube": "YouTube"
+  },
+  "blogs": {
+    "title": "Learnify <Beauty>Blogs</Beauty>",
+    "description": "Thông tin, hướng dẫn và cập nhật từ đội ngũ Learnify về giáo dục AI, học tập 3D và phát triển nghề nghiệp.",
+    "posts": {
+      "future-of-ai-education": {
+        "title": "Tương lai của AI trong Giáo dục",
+        "excerpt": "Cách trợ giảng 3D AI đang thay đổi cách chúng ta học và ghi nhớ kiến thức thông qua trải nghiệm tương tác và sống động.",
+        "category": "AI & Công nghệ",
+        "readTime": "5 phút đọc"
+      },
+      "career-ready-skills": {
+        "title": "Xây dựng Kỹ năng Sẵn sàng Nghề nghiệp",
+        "excerpt": "Tại sao bài thực hành và học tập tương tác dẫn đến kết quả công việc tốt hơn và tiếp thu kỹ năng nhanh hơn.",
+        "category": "Nghề nghiệp",
+        "readTime": "4 phút đọc"
+      },
+      "introducing-learnify-pro": {
+        "title": "Giới thiệu Learnify Pro",
+        "excerpt": "Khóa học, bài thực hành và hướng dẫn AI không giới hạn cho học viên nghiêm túc sẵn sàng tăng tốc phát triển.",
+        "category": "Sản phẩm",
+        "readTime": "3 phút đọc"
+      },
+      "3d-learning-science": {
+        "title": "Khoa học đằng sau Học tập 3D",
+        "excerpt": "Nghiên cứu cho thấy môi trường học tập không gian và tương tác cải thiện khả năng ghi nhớ lên đến 40%.",
+        "category": "Nghiên cứu",
+        "readTime": "6 phút đọc"
+      },
+      "teacher-toolkit": {
+        "title": "Bộ công cụ của Giảng viên Hiện đại",
+        "excerpt": "Cách giáo viên đang tận dụng phân tích AI và nội dung 3D để tạo ra lớp học hấp dẫn hơn.",
+        "category": "Giảng dạy",
+        "readTime": "5 phút đọc"
+      },
+      "institution-partnerships": {
+        "title": "Mở rộng Giáo dục cho Tổ chức",
+        "excerpt": "Cách các trường đại học và trung tâm đào tạo đang triển khai Learnify để tiếp cận nhiều học viên hơn với chi phí thấp hơn.",
+        "category": "Tổ chức",
+        "readTime": "4 phút đọc"
+      }
+    }
+  },
+  "contact": {
+    "title": "Liên hệ với <Beauty>Chúng tôi</Beauty>",
+    "description": "Có câu hỏi, phản hồi hoặc yêu cầu hợp tác? Chúng tôi rất mong được lắng nghe từ bạn.",
+    "follow_us": "Theo dõi"
+  },
+  "pill_top_nav": {
+    "home": "Trang chủ",
+    "resources": "Tài nguyên",
+    "about_us": "Về chúng tôi",
+    "contact": "Liên hệ",
+    "blogs": {
+      "title": "Blogs",
+      "desc": "Thông tin, hướng dẫn và cập nhật từ đội ngũ Learnify."
+    },
+    "courses": {
+      "title": "Khóa học",
+      "desc": "Khám phá hàng nghìn khóa học do chuyên gia dẫn dắt trên mọi lĩnh vực."
+    },
+    "roadmaps": {
+      "title": "Lộ trình",
+      "desc": "Lộ trình học tập có cấu trúc từ người mới đến sẵn sàng nghề nghiệp."
+    },
+    "log_in": "Đăng nhập",
+    "sign_up": "Đăng ký"
   }
 }
