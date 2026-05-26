@@ -1,28 +1,18 @@
-import { useState, forwardRef, useImperativeHandle } from "react";
-import { useTranslation } from "react-i18next";
-import classnames from "classnames";
-import { COLORS } from "@/styles/colors";
+import "./course-context.scss";
+
+import IconButton from "@/components/IconButton";
 import {
-  MOCK_REFERENCES,
   MOCK_DOCUMENTS,
   MOCK_NOTES,
+  MOCK_REFERENCES,
 } from "@/mock/course-context";
+import { COLORS } from "@/styles/colors";
 import { logger } from "@/utils/logger";
+import classnames from "classnames";
+import { forwardRef, useImperativeHandle, useState } from "react";
+import { useTranslation } from "react-i18next";
 import DropdownMenu from "../DropdownMenu";
-import IconButton from "@/components/IconButton";
-import "./style.scss";
-
-type TCourseContextSection = { value: string; label: string };
-
-type TCourseContextProps = {
-  references?: TCourseContextSection[];
-  documents?: TCourseContextSection[];
-  notes?: TCourseContextSection[];
-};
-
-export type TCourseContextRef = {
-  reset: () => void;
-};
+import type { TCourseContextProps, TCourseContextRef } from "./type";
 
 const CourseContext = forwardRef<TCourseContextRef, TCourseContextProps>(
   (props, ref) => {
