@@ -136,7 +136,7 @@ export default function PillTopNav({
             onClick={toggleLanguage}
             title={t("common.change_language")}
           >
-            <Icon name="globe_asia" size="1.2em" />
+            {lang.toUpperCase()}
           </button>
 
           <button
