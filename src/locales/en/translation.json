@@ -72,6 +72,7 @@
     "server_error": "Server Error",
     "load_courses": "Unable to load courses at this time. This could be a network issue or a server problem. Please try again.",
     "load_friends": "Unable to load friends at this time. This could be a network issue or a server problem. Please try again.",
+    "load_roadmap": "Unable to load roadmap at this time. This could be a network issue or a server problem. Please try again.",
     "try_again": "Try Again",
     "go_back": "Go Back",
     "session_expired": "Session expired. Please log in again."
@@ -464,7 +465,31 @@
     },
     "subs": {
       "title": "Choose Your <Beauty>Plan</Beauty>",
-      "select": "Select"
+      "select": "Select",
+      "starter": {
+        "title": "Starter",
+        "subtitle": "Start learning with basic access to hands-on labs and earn your first skill badges.",
+        "price": "<strong>Free</strong>",
+        "desc0": "<strong>35 free</strong> credits every month",
+        "desc1": "<strong>10 questions</strong> for 3D AI Lecturers per month",
+        "desc2": "Access to foundational courses and limited labs"
+      },
+      "pro": {
+        "title": "Pro",
+        "subtitle": "Unlock unlimited hands-on learning from beginner to advanced levels.",
+        "price": "<strong>$49</strong> / month",
+        "desc0": "<strong>Unlimited</strong> access to thousands of courses and labs",
+        "desc1": "Full access to the Learnify content library",
+        "desc2": "<strong>Included everything in Free plan</strong>"
+      },
+      "career": {
+        "title": "Career",
+        "subtitle": "Launch your career in high-paying fields with the skills employers are looking for.",
+        "price": "<strong>$99</strong> / month",
+        "desc0": "Validated by <strong>top employers</strong>",
+        "desc1": "<strong>Unlimited questions</strong> for 3D AI Lecturers",
+        "desc2": "Access to <strong>professional certification programs</strong>"
+      }
     },
     "values": {
       "title": "Our <Beauty>Values</Beauty>"

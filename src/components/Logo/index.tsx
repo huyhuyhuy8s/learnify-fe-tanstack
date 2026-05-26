@@ -11,11 +11,7 @@ const Logo = (props: TLogoProps) => {
   const logoClassNames = classnames("logo", size.toLowerCase(), className);
 
   return (
-    <CustomLink
-      to="/learner"
-      className={logoClassNames}
-      title={t("logo.tooltip")}
-    >
+    <CustomLink to="/" className={logoClassNames} title={t("logo.tooltip")}>
       <Icon name="local_library" />
       <span className="logo-text">{t("logo.text")}</span>
     </CustomLink>

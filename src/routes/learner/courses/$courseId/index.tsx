@@ -46,7 +46,7 @@ function CourseErrorComponent() {
   );
 }
 
-export const Route = createFileRoute("/learner/courses/$courseId")({
+export const Route = createFileRoute("/learner/courses/$courseId/")({
   loader: async ({ params: { courseId }, context }) => {
     const data = await context.queryClient.ensureQueryData(
       courseQueryOptions(courseId)

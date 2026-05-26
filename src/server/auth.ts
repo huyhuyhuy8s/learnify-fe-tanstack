@@ -9,6 +9,7 @@ type UserData = {
   id: string | number;
   email: string;
   username?: string;
+  role?: string;
 };
 
 const sessionSchema = z.object({
@@ -18,6 +19,7 @@ const sessionSchema = z.object({
       /^(?!\.)(?!.*\.\.)([a-z0-9_'+\-.]*)[a-z0-9_+-]@([a-z0-9][a-z0-9-]*\.)+[a-z]{2,}$/i,
   }),
   username: z.string().optional(),
+  role: z.string().optional(),
 });
 
 export const getCurrentUserFn = createServerFn({ method: "GET" }).handler(

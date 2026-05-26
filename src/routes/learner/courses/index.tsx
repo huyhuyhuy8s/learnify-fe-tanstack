@@ -14,7 +14,6 @@ import {
   useSuspenseGetAllCourses,
   type TBackendCourse,
 } from "@/hooks/useCourses";
-import { MOCK_COURSES } from "@/mock";
 import { createLearnerHead } from "@/utils";
 import "./style.scss";
 
@@ -76,7 +75,15 @@ function CoursesPage() {
         status: "default" as const,
         percentage: 0,
       }))
-    : MOCK_COURSES;
+    : ([] as {
+        id: string;
+        typeSpecial: "course";
+        title: string;
+        description: string;
+        duration: string;
+        status: "default";
+        percentage: number;
+      }[]);
 
   return (
     <Suspense fallback={<TetrisLoader />}>

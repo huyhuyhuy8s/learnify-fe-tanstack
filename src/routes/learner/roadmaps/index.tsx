@@ -4,16 +4,14 @@ import { Trans, useTranslation } from "react-i18next";
 import Card from "@/components/Card";
 import Search from "@/components/Search";
 import TetrisLoader from "@/components/TetrisLoader";
-import { MOCK_ROADMAP } from "@/mock";
 import CategoryItem from "./-components/CategoryItem";
 import { CATEGORIES } from "./-constants";
-import { useAllRoadmaps } from "@/hooks/useRoadmap";
+import { useSuspenseAllRoadmaps } from "@/hooks/useRoadmap";
+import { createLearnerHead } from "@/utils";
 import "./style.scss";
 
 export const Route = createFileRoute("/learner/roadmaps/")({
-  head: () => ({
-    meta: [{ title: "Roadmaps | Learnify for Learner" }],
-  }),
+  head: () => createLearnerHead("Roadmaps"),
   component: RoadmapsPage,
 });
 
@@ -21,12 +19,10 @@ function RoadmapsPage() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
-  const { data: roadmapData, isLoading } = useAllRoadmaps();
+  const { data: roadmapData } = useSuspenseAllRoadmaps();
 
   const displayRoadmaps = useMemo(() => {
-    if (isLoading || !roadmapData?.roadmap) {
-      return MOCK_ROADMAP;
-    }
+    if (!roadmapData?.roadmap) return [];
 
     return roadmapData.roadmap.map((item) => ({
       id: item.id,
@@ -37,7 +33,7 @@ function RoadmapsPage() {
       status: "default" as const,
       percentage: 0,
     }));
-  }, [roadmapData, isLoading]);
+  }, [roadmapData]);
 
   return (
     <div className="roadmaps-container">

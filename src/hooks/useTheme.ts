@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useServerTheme } from "@/contexts/ThemeContext";
 
 export type TTheme = "light" | "dark";
 
@@ -6,8 +7,6 @@ const readTheme = (): TTheme => {
   if (typeof document !== "undefined") {
     const match = document.cookie.match(/(?:^|;\s*)app-theme=([^;]*)/);
     if (match?.[1]) return match[1] as TTheme;
-  }
-  if (typeof window !== "undefined") {
     return window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
       : "light";
@@ -16,7 +15,8 @@ const readTheme = (): TTheme => {
 };
 
 export const useTheme = () => {
-  const [theme, setTheme] = useState<TTheme>(readTheme);
+  const serverTheme = useServerTheme();
+  const [theme, setTheme] = useState<TTheme>(serverTheme ?? readTheme);
 
   useEffect(() => {
     const root = document.documentElement;

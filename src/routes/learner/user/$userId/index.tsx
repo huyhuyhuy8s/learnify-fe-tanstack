@@ -49,7 +49,7 @@ function UserErrorComponent() {
   );
 }
 
-export const Route = createFileRoute("/learner/user/$userId")({
+export const Route = createFileRoute("/learner/user/$userId/")({
   loader: async ({ params: { userId }, context }) => {
     const data = await context.queryClient.ensureQueryData({
       queryKey: ["user", "profile", userId],

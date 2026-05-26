@@ -1,9 +1,10 @@
-import { useSyncExternalStore } from "react";
-import { useTranslation } from "react-i18next";
-import { useRouterState, useNavigate } from "@tanstack/react-router";
+import "./style.scss";
+
 import IconButton from "@/components/IconButton";
 import { useTheme } from "@/hooks/useTheme";
-import "./style.scss";
+import { useNavigate, useRouterState } from "@tanstack/react-router";
+import { useSyncExternalStore } from "react";
+import { useTranslation } from "react-i18next";
 
 const useHydrated = () =>
   useSyncExternalStore(
@@ -45,8 +46,7 @@ const LeftNavBot = () => {
         }
       />
       <IconButton
-        icon="language"
-        specialIcon="globe_asia"
+        icon={i18n.language === "en" ? "globe_asia" : "language"}
         shape="circle"
         type="outlined"
         size="small"

@@ -5,7 +5,7 @@ import NotFound from "@/components/NotFound";
 import { createFileRoute } from "@tanstack/react-router";
 import LessonError from "../-components/LessonError";
 
-export const Route = createFileRoute("/learner_/lessons/$lessonId")({
+export const Route = createFileRoute("/learner_/lessons/$lessonId/")({
   errorComponent: LessonError,
   pendingComponent: CubeLoader,
   notFoundComponent: NotFound,

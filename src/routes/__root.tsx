@@ -5,6 +5,7 @@ import DefaultCatchBoundary from "@/components/DefaultCatchBoundary";
 import Loader from "@/components/Loader";
 import NotFound from "@/components/NotFound";
 import { LayoutProvider } from "@/contexts/LayoutContext";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 import { useTheme } from "@/hooks/useTheme";
 import { initI18n } from "@/i18n";
 import type { RouterContext } from "@/router";
@@ -114,7 +115,7 @@ const Root = createRootRouteWithContext<RouterContext>()({
 function RootComponent() {
   useTheme();
   const setAuth = useAuthStore((state) => state.setAuth);
-  const { auth } = Root.useLoaderData();
+  const { auth, theme } = Root.useLoaderData();
   const [phase1Done, setPhase1Done] = useState(false);
   const [pageLoaded, setPageLoaded] = useState(false);
   const [phase2Done, setPhase2Done] = useState(false);
@@ -191,7 +192,7 @@ function RootComponent() {
   }, []);
 
   return (
-    <RootDocument>
+    <RootDocument theme={theme || undefined}>
       <Outlet />
       {!showApp && (
         <Loader
@@ -237,9 +238,11 @@ function RootDocument({
       </head>
       <body>
         <GoogleOAuthProvider clientId={googleClientId}>
-          <LayoutProvider>
-            <main className="main-app">{children}</main>
-          </LayoutProvider>
+          <ThemeProvider value={theme as "light" | "dark" | undefined}>
+            <LayoutProvider>
+              <main className="main-app">{children}</main>
+            </LayoutProvider>
+          </ThemeProvider>
           <Suspense fallback={null}>
             <DevTools />
           </Suspense>

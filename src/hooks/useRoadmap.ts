@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql";
 import {
   GET_ALL_ROADMAPS_QUERY,
@@ -44,6 +44,18 @@ type GetRoadmapByIdResponse = {
 
 export function useAllRoadmaps() {
   return useQuery({
+    queryKey: ["all-roadmaps"],
+    queryFn: async () => {
+      const response = await graphqlClient.request<GetAllRoadmapResponse>(
+        GET_ALL_ROADMAPS_QUERY
+      );
+      return response.getAllRoadmap;
+    },
+  });
+}
+
+export function useSuspenseAllRoadmaps() {
+  return useSuspenseQuery({
     queryKey: ["all-roadmaps"],
     queryFn: async () => {
       const response = await graphqlClient.request<GetAllRoadmapResponse>(

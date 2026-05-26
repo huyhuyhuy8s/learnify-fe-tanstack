@@ -3,7 +3,7 @@ import "./contact.scss";
 import { seo } from "@/utils/seo";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/contact")({
+export const Route = createFileRoute("/contact/")({
   head: () => ({
     meta: [
       ...seo({

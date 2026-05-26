@@ -24,11 +24,7 @@ import { Route as LearnerLessonsRouteRouteImport } from "./routes/learner_/lesso
 import { Route as LearnerUserRouteRouteImport } from "./routes/learner/user/route";
 import { Route as LearnerRoadmapsRouteRouteImport } from "./routes/learner/roadmaps/route";
 import { Route as LearnerAboutRouteRouteImport } from "./routes/learner/about/route";
-import { Route as LearnerVerifyEmailIndexRouteImport } from "./routes/learner_/verify-email/index";
-import { Route as LearnerSignUpIndexRouteImport } from "./routes/learner_/sign-up/index";
-import { Route as LearnerLogInIndexRouteImport } from "./routes/learner_/log-in/index";
 import { Route as LearnerLessonsIndexRouteImport } from "./routes/learner_/lessons/index";
-import { Route as LearnerForgotPasswordIndexRouteImport } from "./routes/learner_/forgot-password/index";
 import { Route as LearnerUserIndexRouteImport } from "./routes/learner/user/index";
 import { Route as LearnerSubscriptionsIndexRouteImport } from "./routes/learner/subscriptions/index";
 import { Route as LearnerSearchIndexRouteImport } from "./routes/learner/search/index";
@@ -128,32 +124,11 @@ const LearnerAboutRouteRoute = LearnerAboutRouteRouteImport.update({
   path: "/about",
   getParentRoute: () => LearnerRouteRoute,
 } as any);
-const LearnerVerifyEmailIndexRoute = LearnerVerifyEmailIndexRouteImport.update({
-  id: "/learner_/verify-email/",
-  path: "/learner/verify-email/",
-  getParentRoute: () => rootRouteImport,
-} as any);
-const LearnerSignUpIndexRoute = LearnerSignUpIndexRouteImport.update({
-  id: "/learner_/sign-up/",
-  path: "/learner/sign-up/",
-  getParentRoute: () => rootRouteImport,
-} as any);
-const LearnerLogInIndexRoute = LearnerLogInIndexRouteImport.update({
-  id: "/learner_/log-in/",
-  path: "/learner/log-in/",
-  getParentRoute: () => rootRouteImport,
-} as any);
 const LearnerLessonsIndexRoute = LearnerLessonsIndexRouteImport.update({
   id: "/",
   path: "/",
   getParentRoute: () => LearnerLessonsRouteRoute,
 } as any);
-const LearnerForgotPasswordIndexRoute =
-  LearnerForgotPasswordIndexRouteImport.update({
-    id: "/learner_/forgot-password/",
-    path: "/learner/forgot-password/",
-    getParentRoute: () => rootRouteImport,
-  } as any);
 const LearnerUserIndexRoute = LearnerUserIndexRouteImport.update({
   id: "/",
   path: "/",
@@ -299,11 +274,7 @@ export interface FileRoutesByFullPath {
   "/learner/search/": typeof LearnerSearchIndexRoute;
   "/learner/subscriptions/": typeof LearnerSubscriptionsIndexRoute;
   "/learner/user/": typeof LearnerUserIndexRoute;
-  "/learner/forgot-password/": typeof LearnerForgotPasswordIndexRoute;
   "/learner/lessons/": typeof LearnerLessonsIndexRoute;
-  "/learner/log-in/": typeof LearnerLogInIndexRoute;
-  "/learner/sign-up/": typeof LearnerSignUpIndexRoute;
-  "/learner/verify-email/": typeof LearnerVerifyEmailIndexRoute;
   "/learner/courses/$courseId/": typeof LearnerCoursesCourseIdIndexRoute;
   "/learner/roadmaps/$roadmapId/": typeof LearnerRoadmapsRoadmapIdIndexRoute;
   "/learner/user/$userId/": typeof LearnerUserUserIdIndexRoute;
@@ -332,11 +303,7 @@ export interface FileRoutesByTo {
   "/learner/search": typeof LearnerSearchIndexRoute;
   "/learner/subscriptions": typeof LearnerSubscriptionsIndexRoute;
   "/learner/user": typeof LearnerUserIndexRoute;
-  "/learner/forgot-password": typeof LearnerForgotPasswordIndexRoute;
   "/learner/lessons": typeof LearnerLessonsIndexRoute;
-  "/learner/log-in": typeof LearnerLogInIndexRoute;
-  "/learner/sign-up": typeof LearnerSignUpIndexRoute;
-  "/learner/verify-email": typeof LearnerVerifyEmailIndexRoute;
   "/learner/courses/$courseId": typeof LearnerCoursesCourseIdIndexRoute;
   "/learner/roadmaps/$roadmapId": typeof LearnerRoadmapsRoadmapIdIndexRoute;
   "/learner/user/$userId": typeof LearnerUserUserIdIndexRoute;
@@ -372,11 +339,7 @@ export interface FileRoutesById {
   "/learner/search/": typeof LearnerSearchIndexRoute;
   "/learner/subscriptions/": typeof LearnerSubscriptionsIndexRoute;
   "/learner/user/": typeof LearnerUserIndexRoute;
-  "/learner_/forgot-password/": typeof LearnerForgotPasswordIndexRoute;
   "/learner_/lessons/": typeof LearnerLessonsIndexRoute;
-  "/learner_/log-in/": typeof LearnerLogInIndexRoute;
-  "/learner_/sign-up/": typeof LearnerSignUpIndexRoute;
-  "/learner_/verify-email/": typeof LearnerVerifyEmailIndexRoute;
   "/learner/courses/$courseId/": typeof LearnerCoursesCourseIdIndexRoute;
   "/learner/roadmaps/$roadmapId/": typeof LearnerRoadmapsRoadmapIdIndexRoute;
   "/learner/user/$userId/": typeof LearnerUserUserIdIndexRoute;
@@ -413,11 +376,7 @@ export interface FileRouteTypes {
     | "/learner/search/"
     | "/learner/subscriptions/"
     | "/learner/user/"
-    | "/learner/forgot-password/"
     | "/learner/lessons/"
-    | "/learner/log-in/"
-    | "/learner/sign-up/"
-    | "/learner/verify-email/"
     | "/learner/courses/$courseId/"
     | "/learner/roadmaps/$roadmapId/"
     | "/learner/user/$userId/"
@@ -446,11 +405,7 @@ export interface FileRouteTypes {
     | "/learner/search"
     | "/learner/subscriptions"
     | "/learner/user"
-    | "/learner/forgot-password"
     | "/learner/lessons"
-    | "/learner/log-in"
-    | "/learner/sign-up"
-    | "/learner/verify-email"
     | "/learner/courses/$courseId"
     | "/learner/roadmaps/$roadmapId"
     | "/learner/user/$userId"
@@ -485,11 +440,7 @@ export interface FileRouteTypes {
     | "/learner/search/"
     | "/learner/subscriptions/"
     | "/learner/user/"
-    | "/learner_/forgot-password/"
     | "/learner_/lessons/"
-    | "/learner_/log-in/"
-    | "/learner_/sign-up/"
-    | "/learner_/verify-email/"
     | "/learner/courses/$courseId/"
     | "/learner/roadmaps/$roadmapId/"
     | "/learner/user/$userId/"
@@ -511,10 +462,6 @@ export interface RootRouteChildren {
   AuthLogInIndexRoute: typeof AuthLogInIndexRoute;
   AuthSignUpIndexRoute: typeof AuthSignUpIndexRoute;
   AuthVerifyEmailIndexRoute: typeof AuthVerifyEmailIndexRoute;
-  LearnerForgotPasswordIndexRoute: typeof LearnerForgotPasswordIndexRoute;
-  LearnerLogInIndexRoute: typeof LearnerLogInIndexRoute;
-  LearnerSignUpIndexRoute: typeof LearnerSignUpIndexRoute;
-  LearnerVerifyEmailIndexRoute: typeof LearnerVerifyEmailIndexRoute;
 }
 
 declare module "@tanstack/react-router" {
@@ -624,40 +571,12 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof LearnerAboutRouteRouteImport;
       parentRoute: typeof LearnerRouteRoute;
     };
-    "/learner_/verify-email/": {
-      id: "/learner_/verify-email/";
-      path: "/learner/verify-email";
-      fullPath: "/learner/verify-email/";
-      preLoaderRoute: typeof LearnerVerifyEmailIndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/learner_/sign-up/": {
-      id: "/learner_/sign-up/";
-      path: "/learner/sign-up";
-      fullPath: "/learner/sign-up/";
-      preLoaderRoute: typeof LearnerSignUpIndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/learner_/log-in/": {
-      id: "/learner_/log-in/";
-      path: "/learner/log-in";
-      fullPath: "/learner/log-in/";
-      preLoaderRoute: typeof LearnerLogInIndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
     "/learner_/lessons/": {
       id: "/learner_/lessons/";
       path: "/";
       fullPath: "/learner/lessons/";
       preLoaderRoute: typeof LearnerLessonsIndexRouteImport;
       parentRoute: typeof LearnerLessonsRouteRoute;
-    };
-    "/learner_/forgot-password/": {
-      id: "/learner_/forgot-password/";
-      path: "/learner/forgot-password";
-      fullPath: "/learner/forgot-password/";
-      preLoaderRoute: typeof LearnerForgotPasswordIndexRouteImport;
-      parentRoute: typeof rootRouteImport;
     };
     "/learner/user/": {
       id: "/learner/user/";
@@ -900,10 +819,6 @@ const rootRouteChildren: RootRouteChildren = {
   AuthLogInIndexRoute: AuthLogInIndexRoute,
   AuthSignUpIndexRoute: AuthSignUpIndexRoute,
   AuthVerifyEmailIndexRoute: AuthVerifyEmailIndexRoute,
-  LearnerForgotPasswordIndexRoute: LearnerForgotPasswordIndexRoute,
-  LearnerLogInIndexRoute: LearnerLogInIndexRoute,
-  LearnerSignUpIndexRoute: LearnerSignUpIndexRoute,
-  LearnerVerifyEmailIndexRoute: LearnerVerifyEmailIndexRoute,
 };
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

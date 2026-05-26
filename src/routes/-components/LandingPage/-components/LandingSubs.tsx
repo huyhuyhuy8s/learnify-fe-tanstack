@@ -47,35 +47,46 @@ export default function LandingSubs({ subscriptions }: LandingSubsProps) {
           />
         </h2>
         <div className="landing-subs__grid">
-          {subscriptions.map((sub) => (
-            <div key={sub.type} className="landing-subs__card">
-              <div className="landing-subs__card-header">
-                <Icon name={sub.icon} size="2em" />
-                <h4 className="semibold">{sub.title}</h4>
+          {subscriptions.map((sub) => {
+            const type = sub.type.toLowerCase();
+            return (
+              <div key={sub.type} className="landing-subs__card">
+                <div className="landing-subs__card-header">
+                  <Icon name={sub.icon} size="2em" />
+                  <h4 className="semibold">
+                    {t(`landing.subs.${type}.title`)}
+                  </h4>
+                </div>
+                <p
+                  className="landing-subs__card-price"
+                  dangerouslySetInnerHTML={{
+                    __html: t(`landing.subs.${type}.price`),
+                  }}
+                />
+                <p className="landing-subs__card-subtitle regular">
+                  {t(`landing.subs.${type}.subtitle`)}
+                </p>
+                <ul className="landing-subs__card-features">
+                  {[0, 1, 2].map((i) => (
+                    <li key={i}>
+                      <Icon name="check" size="1.2em" />
+                      <span
+                        dangerouslySetInnerHTML={{
+                          __html: t(`landing.subs.${type}.desc${i}`),
+                        }}
+                      />
+                    </li>
+                  ))}
+                </ul>
+                <TextButton
+                  text={t("landing.subs.select")}
+                  size="small"
+                  icon="arrow_forward"
+                  onClick={() => navigate({ to: "/auth/sign-up" })}
+                />
               </div>
-              <p
-                className="landing-subs__card-price"
-                dangerouslySetInnerHTML={{ __html: sub.price }}
-              />
-              <p className="landing-subs__card-subtitle regular">
-                {sub.subtitle}
-              </p>
-              <ul className="landing-subs__card-features">
-                {sub.descriptions.map((desc, i) => (
-                  <li key={i}>
-                    <Icon name="check" size="1.2em" />
-                    <span dangerouslySetInnerHTML={{ __html: desc }} />
-                  </li>
-                ))}
-              </ul>
-              <TextButton
-                text={t("landing.subs.select")}
-                size="small"
-                icon="arrow_forward"
-                onClick={() => navigate({ to: "/auth/sign-up" })}
-              />
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

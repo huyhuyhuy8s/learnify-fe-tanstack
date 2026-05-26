@@ -3,6 +3,7 @@ import IconButton from "@/components/IconButton";
 import Icon from "@/components/Icon";
 import classNames from "classnames";
 import { useMemo, useState, useRef, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { logoutFn } from "@/server/auth";
 import useOnClickOutside from "@/hooks/useOnClickOutside";
 import { useAuthStore } from "@/store/authStore";
@@ -13,6 +14,7 @@ import { useShallow } from "zustand/react/shallow";
 import "./style.scss";
 
 const TopNavRight = () => {
+  const { t } = useTranslation();
   const [accountMenuVisible, setAccountMenuVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -32,7 +34,7 @@ const TopNavRight = () => {
   const handleLogout = useCallback(async () => {
     await logoutFn();
     onLogout();
-    navigate({ to: "/learner/log-in" });
+    navigate({ to: "/auth/log-in" });
   }, [onLogout, navigate]);
 
   const accountMenuClassName = useMemo(() => {
@@ -44,20 +46,20 @@ const TopNavRight = () => {
       return (
         <>
           <TextButton
-            text="Sign up"
+            text={t("pill_top_nav.sign_up")}
             icon="person_add"
             type="secondary"
             size="small"
-            onClick={() => navigate({ to: "/learner/sign-up" })}
+            onClick={() => navigate({ to: "/auth/sign-up" })}
           />
           <TextButton
-            text="Log in"
+            text={t("pill_top_nav.log_in")}
             icon="login"
             type="secondary"
             backgroundColor={COLORS.modeGreen}
             size="small"
             color={COLORS.white}
-            onClick={() => navigate({ to: "/learner/log-in" })}
+            onClick={() => navigate({ to: "/auth/log-in" })}
           />
         </>
       );

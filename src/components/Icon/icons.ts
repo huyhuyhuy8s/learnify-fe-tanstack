@@ -169,6 +169,18 @@ import view_in_arSvg from "@material-symbols/svg-400/rounded/view_in_ar.svg?raw"
 import view_in_arFillSvg from "@material-symbols/svg-400/rounded/view_in_ar-fill.svg?raw";
 import imageSvg from "@material-symbols/svg-400/rounded/image.svg?raw";
 import imageFillSvg from "@material-symbols/svg-400/rounded/image-fill.svg?raw";
+import mailSvg from "@material-symbols/svg-400/rounded/mail.svg?raw";
+import mailFillSvg from "@material-symbols/svg-400/rounded/mail-fill.svg?raw";
+import headset_micSvg from "@material-symbols/svg-400/rounded/headset_mic.svg?raw";
+import headset_micFillSvg from "@material-symbols/svg-400/rounded/headset_mic-fill.svg?raw";
+import handshakeSvg from "@material-symbols/svg-400/rounded/handshake.svg?raw";
+import handshakeFillSvg from "@material-symbols/svg-400/rounded/handshake-fill.svg?raw";
+import location_onSvg from "@material-symbols/svg-400/rounded/location_on.svg?raw";
+import location_onFillSvg from "@material-symbols/svg-400/rounded/location_on-fill.svg?raw";
+import account_circleSvg from "@material-symbols/svg-400/rounded/account_circle.svg?raw";
+import account_circleFillSvg from "@material-symbols/svg-400/rounded/account_circle-fill.svg?raw";
+import lightbulbSvg from "@material-symbols/svg-400/rounded/lightbulb.svg?raw";
+import lightbulbFillSvg from "@material-symbols/svg-400/rounded/lightbulb-fill.svg?raw";
 
 function extractPath(raw: string) {
   const match = raw.match(/<path d="([^"]+)"/);
@@ -425,5 +437,26 @@ export const iconPaths: Record<string, { regular: string; fill: string }> = {
   image: {
     regular: extractPath(imageSvg),
     fill: extractPath(imageFillSvg),
+  },
+  mail: { regular: extractPath(mailSvg), fill: extractPath(mailFillSvg) },
+  headset_mic: {
+    regular: extractPath(headset_micSvg),
+    fill: extractPath(headset_micFillSvg),
+  },
+  handshake: {
+    regular: extractPath(handshakeSvg),
+    fill: extractPath(handshakeFillSvg),
+  },
+  location_on: {
+    regular: extractPath(location_onSvg),
+    fill: extractPath(location_onFillSvg),
+  },
+  account_circle: {
+    regular: extractPath(account_circleSvg),
+    fill: extractPath(account_circleFillSvg),
+  },
+  lightbulb: {
+    regular: extractPath(lightbulbSvg),
+    fill: extractPath(lightbulbFillSvg),
   },
 } as const;

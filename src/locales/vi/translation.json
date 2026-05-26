@@ -72,6 +72,7 @@
     "server_error": "Lỗi máy chủ",
     "load_courses": "Không thể tải khóa học lúc này. Đây có thể là sự cố mạng hoặc máy chủ. Vui lòng thử lại.",
     "load_friends": "Không thể tải danh sách bạn bè lúc này. Đây có thể là sự cố mạng hoặc máy chủ. Vui lòng thử lại.",
+    "load_roadmap": "Không thể tải lộ trình học lúc này. Đây có thể là sự cố mạng hoặc máy chủ. Vui lòng thử lại.",
     "try_again": "Thử lại",
     "go_back": "Quay lại",
     "session_expired": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại."
@@ -464,7 +465,31 @@
     },
     "subs": {
       "title": "Chọn <Beauty>Gói</Beauty> của bạn",
-      "select": "Chọn"
+      "select": "Chọn",
+      "starter": {
+        "title": "Starter",
+        "subtitle": "Bắt đầu học với quyền truy cập cơ bản vào các phòng thí nghiệm thực hành và nhận huy hiệu kỹ năng đầu tiên.",
+        "price": "<strong>Miễn phí</strong>",
+        "desc0": "<strong>35 tín chỉ</strong> miễn phí mỗi tháng",
+        "desc1": "<strong>10 câu hỏi</strong> cho Giảng viên AI 3D mỗi tháng",
+        "desc2": "Truy cập vào các khóa học nền tảng và phòng thí nghiệm giới hạn"
+      },
+      "pro": {
+        "title": "Pro",
+        "subtitle": "Mở khóa quyền truy cập không giới hạn vào học tập thực hành từ cơ bản đến nâng cao.",
+        "price": "<strong>$49</strong> / tháng",
+        "desc0": "Quyền truy cập <strong>không giới hạn</strong> vào hàng nghìn khóa học và phòng thí nghiệm",
+        "desc1": "Quyền truy cập đầy đủ vào thư viện nội dung Learnify",
+        "desc2": "<strong>Bao gồm mọi thứ trong gói Free</strong>"
+      },
+      "career": {
+        "title": "Career",
+        "subtitle": "Phát triển sự nghiệp của bạn trong các lĩnh vực lương cao với các kỹ năng mà nhà tuyển dụng đang tìm kiếm.",
+        "price": "<strong>$99</strong> / tháng",
+        "desc0": "Được xác nhận bởi <strong>các nhà tuyển dụng hàng đầu</strong>",
+        "desc1": "<strong>Câu hỏi không giới hạn</strong> cho Giảng viên AI 3D",
+        "desc2": "Truy cập vào <strong>các chương trình chứng chỉ chuyên nghiệp</strong>"
+      }
     },
     "values": {
       "title": "<Beauty>Giá trị</Beauty> của chúng tôi"

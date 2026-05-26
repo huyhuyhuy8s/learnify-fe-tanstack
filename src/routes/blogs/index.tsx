@@ -3,7 +3,7 @@ import "./blogs.scss";
 import { seo } from "@/utils/seo";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/blogs")({
+export const Route = createFileRoute("/blogs/")({
   head: () => ({
     meta: [
       ...seo({

@@ -2,7 +2,10 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import AboutStat from "@/routes/learner/about/-components/AboutStat";
-import type { TAboutStatProps } from "@/routes/learner/about/-types/about";
+import type {
+  TAboutStatProps,
+  TLabel,
+} from "@/routes/learner/about/-types/about";
 import { Trans, useTranslation } from "react-i18next";
 
 import "./LandingStats.scss";
@@ -49,10 +52,12 @@ export default function LandingStats({ stats }: LandingStatsProps) {
               <AboutStat
                 index={index + 1}
                 color={stat.color}
-                label={t(
-                  `about_us.stats.${(stat as unknown as { key: string }).key}.label`,
-                  stat.label
-                )}
+                label={
+                  t(
+                    `about_us.stats.${(stat as unknown as { key: string }).key}.label`,
+                    stat.label
+                  ) as TLabel
+                }
                 value={stat.value}
               />
             </div>

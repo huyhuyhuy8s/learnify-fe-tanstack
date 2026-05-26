@@ -24,7 +24,7 @@ const CourseController = ({ className }: TCourseControllerProps) => {
   const lessonId = useRouterState({
     select: (s) => {
       const m = s.matches.find(
-        (m) => m.routeId === "/learner_/lessons/$lessonId"
+        (m) => m.routeId === "/learner_/lessons/$lessonId/"
       );
       return (m?.params as { lessonId?: string })?.lessonId;
     },

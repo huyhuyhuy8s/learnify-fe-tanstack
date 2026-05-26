@@ -26,7 +26,7 @@ const FriendEmptyState = ({ className }: TFriendEmptyStateProps) => {
         icon="login"
         onClick={() =>
           navigate({
-            to: "/learner/log-in",
+            to: "/auth/log-in",
             search: { redirect: "/learner/friends" },
           })
         }
