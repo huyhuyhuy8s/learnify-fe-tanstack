@@ -1,15 +1,7 @@
+import "./dashboard.scss";
+
 import Card from "@/components/Card";
-import { useTranslation } from "react-i18next";
-import {
-  createFileRoute,
-  redirect,
-  useNavigate,
-  useRouter,
-} from "@tanstack/react-router";
-import React, { Suspense } from "react";
-import ErrorScene from "@/components/ErrorScene";
 import TetrisLoader from "@/components/TetrisLoader";
-import TextButton from "@/components/TextButton";
 import {
   useSuspenseGetAllCourses,
   type TBackendCourse,
@@ -17,61 +9,25 @@ import {
 import { MOCK_COURSES } from "@/mock";
 import { getCurrentUserFn } from "@/server/auth";
 import { createLearnerHead } from "@/utils";
-import DashboardAchievementsWidget from "./-components/DashboardAchievementsWidget";
-import DashboardBanner from "./-components/DashboardBanner";
-import DashboardProgressWidget from "./-components/DashboardProgressWidget";
-import DashboardStreakWidget from "./-components/DashboardStreakWidget";
-import "./dashboard.scss";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
+import React, { Suspense } from "react";
+import DashboardAchievementsWidget from "../-components/DashboardAchievementsWidget";
+import DashboardBanner from "../-components/DashboardBanner";
+import DashboardProgressWidget from "../-components/DashboardProgressWidget";
+import DashboardStreakWidget from "../-components/DashboardStreakWidget";
 
-function CoursesErrorComponent() {
-  const { t } = useTranslation();
-  const router = useRouter();
-  return (
-    <ErrorScene>
-      <ErrorScene.Header>
-        <ErrorScene.Title errorCode={500}>
-          {t("errors.server_error")}
-        </ErrorScene.Title>
-        <ErrorScene.Description>
-          {t("errors.load_courses")}
-        </ErrorScene.Description>
-      </ErrorScene.Header>
-      <ErrorScene.Content>
-        <div className="error-scene__control">
-          <TextButton
-            text={t("errors.try_again")}
-            onClick={() => router.invalidate()}
-            className="error-scene__btn"
-            size="medium"
-            icon="refresh"
-          />
-          <TextButton
-            text={t("errors.go_back")}
-            onClick={() => window.history.back()}
-            className="error-scene__btn error-scene__btn--secondary"
-            size="medium"
-            icon="arrow_back"
-            type="outlined"
-          />
-        </div>
-      </ErrorScene.Content>
-    </ErrorScene>
-  );
-}
-
-export const Route = createFileRoute("/learner/dashboard")({
+export const Route = createFileRoute("/learner/dashboard/")({
   beforeLoad: async ({ location }) => {
     const { user } = await getCurrentUserFn();
     if (!user)
       throw redirect({
-        to: "/learner/log-in",
+        to: "/auth/log-in",
         search: { redirect: location.pathname },
       });
   },
   head: () => ({
     ...createLearnerHead("Dashboard"),
   }),
-  errorComponent: CoursesErrorComponent,
   component: Dashboard,
 });
 

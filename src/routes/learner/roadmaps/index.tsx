@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Suspense } from "react";
+import { Suspense, useMemo } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import Card from "@/components/Card";
 import Search from "@/components/Search";
@@ -7,6 +7,7 @@ import TetrisLoader from "@/components/TetrisLoader";
 import { MOCK_ROADMAP } from "@/mock";
 import CategoryItem from "./-components/CategoryItem";
 import { CATEGORIES } from "./-constants";
+import { useAllRoadmaps } from "@/hooks/useRoadmap";
 import "./style.scss";
 
 export const Route = createFileRoute("/learner/roadmaps/")({
@@ -19,6 +20,24 @@ export const Route = createFileRoute("/learner/roadmaps/")({
 function RoadmapsPage() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+
+  const { data: roadmapData, isLoading } = useAllRoadmaps();
+
+  const displayRoadmaps = useMemo(() => {
+    if (isLoading || !roadmapData?.roadmap) {
+      return MOCK_ROADMAP;
+    }
+
+    return roadmapData.roadmap.map((item) => ({
+      id: item.id,
+      typeSpecial: "roadmap" as const,
+      title: item.roadMapName,
+      description: item.abstract,
+      duration: "--",
+      status: "default" as const,
+      percentage: 0,
+    }));
+  }, [roadmapData, isLoading]);
 
   return (
     <div className="roadmaps-container">
@@ -49,8 +68,9 @@ function RoadmapsPage() {
               />
             ))}
           </div>
+
           <div className="roadmaps-container__list">
-            {MOCK_ROADMAP.map((roadmap) => (
+            {displayRoadmaps.map((roadmap) => (
               <Card
                 key={roadmap.id}
                 typeSpecial={roadmap.typeSpecial}
