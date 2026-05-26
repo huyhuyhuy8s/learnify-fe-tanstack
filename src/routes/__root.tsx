@@ -1,3 +1,6 @@
+import "@styles/_global.scss";
+import "./root.scss";
+
 import DefaultCatchBoundary from "@/components/DefaultCatchBoundary";
 import Loader from "@/components/Loader";
 import NotFound from "@/components/NotFound";
@@ -18,13 +21,15 @@ import {
 } from "@tanstack/react-router";
 import gsap from "gsap";
 import CustomEase from "gsap/CustomEase";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
+import type LocomotiveScroll from "locomotive-scroll";
+import "locomotive-scroll/dist/locomotive-scroll.css";
 import * as React from "react";
 import { Suspense, lazy, useEffect, useState } from "react";
 import { Toaster, toast } from "sonner";
-import "./root.scss";
 
-gsap.registerPlugin(SplitText, CustomEase);
+gsap.registerPlugin(SplitText, CustomEase, ScrollTrigger);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
 CustomEase.create("glide", "0.8, 0, 0.2, 1");
 
@@ -64,6 +69,16 @@ const Root = createRootRouteWithContext<RouterContext>()({
         rel: "preconnect",
         href: "https://fonts.gstatic.com",
         crossOrigin: "anonymous",
+      },
+      {
+        rel: "preload",
+        href: "https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap",
+        as: "style",
+      },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap",
+        media: "print",
       },
       { rel: "image/x-icon", href: "/favicon.ico" },
       {
@@ -133,6 +148,48 @@ function RootComponent() {
     return () => clearTimeout(timer);
   }, [phase2Done]);
 
+  useEffect(() => {
+    let scroll: InstanceType<typeof LocomotiveScroll> | null = null;
+
+    async function init() {
+      const { default: LS } = await import("locomotive-scroll");
+
+      scroll = new LS({
+        lenisOptions: {
+          wrapper: window,
+          content: document.documentElement,
+          lerp: 0.08,
+          smoothWheel: true,
+        },
+      });
+
+      scroll.lenisInstance?.on("scroll", () => ScrollTrigger.update());
+      ScrollTrigger.scrollerProxy(document.body, {
+        scrollTop(value?: number) {
+          if (value !== undefined) {
+            scroll?.lenisInstance?.scrollTo(value, { immediate: true });
+          }
+          return scroll?.lenisInstance?.scroll ?? 0;
+        },
+        getBoundingClientRect() {
+          return {
+            top: 0,
+            left: 0,
+            width: window.innerWidth,
+            height: window.innerHeight,
+          };
+        },
+      });
+      ScrollTrigger.refresh();
+    }
+
+    init();
+
+    return () => {
+      scroll?.destroy();
+    };
+  }, []);
+
   return (
     <RootDocument>
       <Outlet />
@@ -181,7 +238,7 @@ function RootDocument({
       <body>
         <GoogleOAuthProvider clientId={googleClientId}>
           <LayoutProvider>
-            <main>{children}</main>
+            <main className="main-app">{children}</main>
           </LayoutProvider>
           <Suspense fallback={null}>
             <DevTools />
