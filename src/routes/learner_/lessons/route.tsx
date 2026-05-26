@@ -10,7 +10,7 @@ export const Route = createFileRoute("/learner_/lessons")({
     const { user } = await getCurrentUserFn();
     if (!user)
       throw redirect({
-        to: "/learner/log-in",
+        to: "/auth/log-in",
         search: { redirect: location.pathname },
       });
     return { user };

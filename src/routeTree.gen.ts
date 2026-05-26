@@ -41,8 +41,8 @@ import { Route as AuthVerifyEmailIndexRouteImport } from "./routes/auth/verify-e
 import { Route as AuthSignUpIndexRouteImport } from "./routes/auth/sign-up/index";
 import { Route as AuthLogInIndexRouteImport } from "./routes/auth/log-in/index";
 import { Route as AuthForgotPasswordIndexRouteImport } from "./routes/auth/forgot-password/index";
-import { Route as LearnerLessonsLessonIdRouteImport } from "./routes/learner_/lessons/$lessonId";
 import { Route as ApiUsersIdRouteImport } from "./routes/api/users.$id";
+import { Route as LearnerLessonsLessonIdIndexRouteImport } from "./routes/learner_/lessons/$lessonId/index";
 import { Route as LearnerUserUserIdIndexRouteImport } from "./routes/learner/user/$userId/index";
 import { Route as LearnerRoadmapsRoadmapIdIndexRouteImport } from "./routes/learner/roadmaps/$roadmapId/index";
 import { Route as LearnerCoursesCourseIdIndexRouteImport } from "./routes/learner/courses/$courseId/index";
@@ -227,16 +227,21 @@ const AuthForgotPasswordIndexRoute = AuthForgotPasswordIndexRouteImport.update({
 } as any).lazy(() =>
   import("./routes/auth/forgot-password/index.lazy").then((d) => d.Route),
 );
-const LearnerLessonsLessonIdRoute = LearnerLessonsLessonIdRouteImport.update({
-  id: "/$lessonId",
-  path: "/$lessonId",
-  getParentRoute: () => LearnerLessonsRouteRoute,
-} as any);
 const ApiUsersIdRoute = ApiUsersIdRouteImport.update({
   id: "/$id",
   path: "/$id",
   getParentRoute: () => ApiUsersRoute,
 } as any);
+const LearnerLessonsLessonIdIndexRoute =
+  LearnerLessonsLessonIdIndexRouteImport.update({
+    id: "/$lessonId/",
+    path: "/$lessonId/",
+    getParentRoute: () => LearnerLessonsRouteRoute,
+  } as any).lazy(() =>
+    import("./routes/learner_/lessons/$lessonId/index.lazy").then(
+      (d) => d.Route,
+    ),
+  );
 const LearnerUserUserIdIndexRoute = LearnerUserUserIdIndexRouteImport.update({
   id: "/$userId/",
   path: "/$userId/",
@@ -282,7 +287,6 @@ export interface FileRoutesByFullPath {
   "/learner/": typeof LearnerIndexRoute;
   "/teacher/": typeof TeacherIndexRoute;
   "/api/users/$id": typeof ApiUsersIdRoute;
-  "/learner/lessons/$lessonId": typeof LearnerLessonsLessonIdRoute;
   "/auth/forgot-password/": typeof AuthForgotPasswordIndexRoute;
   "/auth/log-in/": typeof AuthLogInIndexRoute;
   "/auth/sign-up/": typeof AuthSignUpIndexRoute;
@@ -303,6 +307,7 @@ export interface FileRoutesByFullPath {
   "/learner/courses/$courseId/": typeof LearnerCoursesCourseIdIndexRoute;
   "/learner/roadmaps/$roadmapId/": typeof LearnerRoadmapsRoadmapIdIndexRoute;
   "/learner/user/$userId/": typeof LearnerUserUserIdIndexRoute;
+  "/learner/lessons/$lessonId/": typeof LearnerLessonsLessonIdIndexRoute;
 }
 export interface FileRoutesByTo {
   "/": typeof IndexRoute;
@@ -315,7 +320,6 @@ export interface FileRoutesByTo {
   "/learner": typeof LearnerIndexRoute;
   "/teacher": typeof TeacherIndexRoute;
   "/api/users/$id": typeof ApiUsersIdRoute;
-  "/learner/lessons/$lessonId": typeof LearnerLessonsLessonIdRoute;
   "/auth/forgot-password": typeof AuthForgotPasswordIndexRoute;
   "/auth/log-in": typeof AuthLogInIndexRoute;
   "/auth/sign-up": typeof AuthSignUpIndexRoute;
@@ -336,6 +340,7 @@ export interface FileRoutesByTo {
   "/learner/courses/$courseId": typeof LearnerCoursesCourseIdIndexRoute;
   "/learner/roadmaps/$roadmapId": typeof LearnerRoadmapsRoadmapIdIndexRoute;
   "/learner/user/$userId": typeof LearnerUserUserIdIndexRoute;
+  "/learner/lessons/$lessonId": typeof LearnerLessonsLessonIdIndexRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
@@ -355,7 +360,6 @@ export interface FileRoutesById {
   "/learner/": typeof LearnerIndexRoute;
   "/teacher/": typeof TeacherIndexRoute;
   "/api/users/$id": typeof ApiUsersIdRoute;
-  "/learner_/lessons/$lessonId": typeof LearnerLessonsLessonIdRoute;
   "/auth/forgot-password/": typeof AuthForgotPasswordIndexRoute;
   "/auth/log-in/": typeof AuthLogInIndexRoute;
   "/auth/sign-up/": typeof AuthSignUpIndexRoute;
@@ -376,6 +380,7 @@ export interface FileRoutesById {
   "/learner/courses/$courseId/": typeof LearnerCoursesCourseIdIndexRoute;
   "/learner/roadmaps/$roadmapId/": typeof LearnerRoadmapsRoadmapIdIndexRoute;
   "/learner/user/$userId/": typeof LearnerUserUserIdIndexRoute;
+  "/learner_/lessons/$lessonId/": typeof LearnerLessonsLessonIdIndexRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
@@ -396,7 +401,6 @@ export interface FileRouteTypes {
     | "/learner/"
     | "/teacher/"
     | "/api/users/$id"
-    | "/learner/lessons/$lessonId"
     | "/auth/forgot-password/"
     | "/auth/log-in/"
     | "/auth/sign-up/"
@@ -416,7 +420,8 @@ export interface FileRouteTypes {
     | "/learner/verify-email/"
     | "/learner/courses/$courseId/"
     | "/learner/roadmaps/$roadmapId/"
-    | "/learner/user/$userId/";
+    | "/learner/user/$userId/"
+    | "/learner/lessons/$lessonId/";
   fileRoutesByTo: FileRoutesByTo;
   to:
     | "/"
@@ -429,7 +434,6 @@ export interface FileRouteTypes {
     | "/learner"
     | "/teacher"
     | "/api/users/$id"
-    | "/learner/lessons/$lessonId"
     | "/auth/forgot-password"
     | "/auth/log-in"
     | "/auth/sign-up"
@@ -449,7 +453,8 @@ export interface FileRouteTypes {
     | "/learner/verify-email"
     | "/learner/courses/$courseId"
     | "/learner/roadmaps/$roadmapId"
-    | "/learner/user/$userId";
+    | "/learner/user/$userId"
+    | "/learner/lessons/$lessonId";
   id:
     | "__root__"
     | "/"
@@ -468,7 +473,6 @@ export interface FileRouteTypes {
     | "/learner/"
     | "/teacher/"
     | "/api/users/$id"
-    | "/learner_/lessons/$lessonId"
     | "/auth/forgot-password/"
     | "/auth/log-in/"
     | "/auth/sign-up/"
@@ -488,7 +492,8 @@ export interface FileRouteTypes {
     | "/learner_/verify-email/"
     | "/learner/courses/$courseId/"
     | "/learner/roadmaps/$roadmapId/"
-    | "/learner/user/$userId/";
+    | "/learner/user/$userId/"
+    | "/learner_/lessons/$lessonId/";
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
@@ -738,19 +743,19 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AuthForgotPasswordIndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };
-    "/learner_/lessons/$lessonId": {
-      id: "/learner_/lessons/$lessonId";
-      path: "/$lessonId";
-      fullPath: "/learner/lessons/$lessonId";
-      preLoaderRoute: typeof LearnerLessonsLessonIdRouteImport;
-      parentRoute: typeof LearnerLessonsRouteRoute;
-    };
     "/api/users/$id": {
       id: "/api/users/$id";
       path: "/$id";
       fullPath: "/api/users/$id";
       preLoaderRoute: typeof ApiUsersIdRouteImport;
       parentRoute: typeof ApiUsersRoute;
+    };
+    "/learner_/lessons/$lessonId/": {
+      id: "/learner_/lessons/$lessonId/";
+      path: "/$lessonId";
+      fullPath: "/learner/lessons/$lessonId/";
+      preLoaderRoute: typeof LearnerLessonsLessonIdIndexRouteImport;
+      parentRoute: typeof LearnerLessonsRouteRoute;
     };
     "/learner/user/$userId/": {
       id: "/learner/user/$userId/";
@@ -856,13 +861,13 @@ const TeacherRouteRouteWithChildren = TeacherRouteRoute._addFileChildren(
 );
 
 interface LearnerLessonsRouteRouteChildren {
-  LearnerLessonsLessonIdRoute: typeof LearnerLessonsLessonIdRoute;
   LearnerLessonsIndexRoute: typeof LearnerLessonsIndexRoute;
+  LearnerLessonsLessonIdIndexRoute: typeof LearnerLessonsLessonIdIndexRoute;
 }
 
 const LearnerLessonsRouteRouteChildren: LearnerLessonsRouteRouteChildren = {
-  LearnerLessonsLessonIdRoute: LearnerLessonsLessonIdRoute,
   LearnerLessonsIndexRoute: LearnerLessonsIndexRoute,
+  LearnerLessonsLessonIdIndexRoute: LearnerLessonsLessonIdIndexRoute,
 };
 
 const LearnerLessonsRouteRouteWithChildren =

@@ -1,22 +1,14 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useCallback, useRef, useEffect, useEffectEvent } from "react";
-import LessonError from "./-components/LessonError";
-import CourseContext, {
-  type TCourseContextRef,
-} from "./-components/CourseContext";
-import TeacherPanel from "./-components/TeacherPanel";
-import ChatArea from "./-components/ChatArea";
-import useLessonDetail from "./-hooks/useLessonDetail";
-import useTeacher from "./-hooks/useTeacher";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import TetrisLoader from "@/components/TetrisLoader";
-import CubeLoader from "@/components/CubeLoader";
-import NotFound from "@/components/NotFound";
-import "./lessonId.scss";
+import { useCallback, useEffect, useEffectEvent, useRef } from "react";
+import ChatArea from "../-components/ChatArea";
+import CourseContext from "../-components/CourseContext";
+import type { TCourseContextRef } from "../-components/CourseContext/type";
+import TeacherPanel from "../-components/TeacherPanel";
+import useLessonDetail from "../-hooks/useLessonDetail";
+import useTeacher from "../-hooks/useTeacher";
 
-export const Route = createFileRoute("/learner_/lessons/$lessonId")({
-  errorComponent: LessonError,
-  pendingComponent: CubeLoader,
-  notFoundComponent: NotFound,
+export const Route = createLazyFileRoute("/learner_/lessons/$lessonId/")({
   component: LessonDetail,
 });
 
