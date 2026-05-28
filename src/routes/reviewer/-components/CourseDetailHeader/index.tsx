@@ -1,0 +1,65 @@
+import type { MockCourseDetail, TReviewStatus } from "@/mock/reviewer-courses";
+import "./style.scss";
+
+type TCourseDetailHeaderProps = {
+  course: MockCourseDetail;
+};
+
+const STATUS_LABEL: Record<TReviewStatus, string> = {
+  Pending: "Pending Review",
+  Approved: "Approved",
+  Rejected: "Rejected",
+};
+
+const CourseDetailHeader = ({ course }: TCourseDetailHeaderProps) => {
+  const { title, creatorName, dateSubmitted, status, abstract, keyLearnings } =
+    course;
+
+  return (
+    <div className="course-detail-header">
+      <div className="course-detail-header__top">
+        <div className="course-detail-header__meta">
+          <h1 className="course-detail-header__title">{title}</h1>
+          <div className="course-detail-header__byline">
+            <span className="course-detail-header__creator">
+              By <strong>{creatorName}</strong>
+            </span>
+            <span className="course-detail-header__separator" aria-hidden>
+              ·
+            </span>
+            <span className="course-detail-header__date">
+              Submitted {dateSubmitted}
+            </span>
+          </div>
+        </div>
+
+        <span
+          className={`course-detail-header__badge course-detail-header__badge--${status.toLowerCase()}`}
+          aria-label={`Course status: ${status}`}
+        >
+          {STATUS_LABEL[status]}
+        </span>
+      </div>
+
+      <p className="course-detail-header__abstract">{abstract}</p>
+
+      <div className="course-detail-header__learnings">
+        <h2 className="course-detail-header__learnings-title">
+          What students will learn
+        </h2>
+        <ul className="course-detail-header__learnings-list">
+          {keyLearnings.map((point) => (
+            <li key={point} className="course-detail-header__learning-item">
+              <span className="course-detail-header__check" aria-hidden>
+                ✓
+              </span>
+              {point}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export default CourseDetailHeader;

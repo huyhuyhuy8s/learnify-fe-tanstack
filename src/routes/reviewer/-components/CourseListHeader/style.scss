@@ -1,0 +1,82 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
+.reviewer-header {
+  display: flex;
+  flex-direction: column;
+  gap: toRem(16);
+  width: 100%;
+  padding-bottom: toRem(20);
+  border-bottom: toRem(1) solid $neutral-200;
+  margin-bottom: toRem(20);
+
+  &__title {
+    font-size: $fs-heading4;
+    font-weight: $fw-bold;
+    color: $neutral-900;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  &__toolbar {
+    display: flex;
+    align-items: center;
+    gap: toRem(10);
+  }
+
+  &__search-wrapper {
+    flex: 1;
+    max-width: toRem(360);
+  }
+
+  &__search-input {
+    width: 100%;
+    padding: toRem(9) toRem(14);
+    border: toRem(1) solid $neutral-300;
+    border-radius: $br-xs;
+    font-size: $fs-paragraph;
+    color: $neutral-800;
+    background-color: $white;
+    outline: none;
+    @include transition;
+    transition-property: border-color, box-shadow;
+
+    &::placeholder {
+      color: $neutral-400;
+    }
+
+    &:focus {
+      border-color: $navy-500;
+      box-shadow: 0 0 0 toRem(3) rgba(67, 97, 238, 0.15);
+    }
+  }
+
+  &__filter-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: toRem(9) toRem(20);
+    background-color: $navy-600;
+    color: $white;
+    font-size: $fs-paragraph;
+    font-weight: $fw-semibold;
+    border: none;
+    border-radius: $br-xs;
+    cursor: pointer;
+    white-space: nowrap;
+    @include transition;
+    transition-property: background-color, transform;
+
+    &:hover {
+      background-color: $navy-700;
+      transform: translateY(toRem(-1));
+    }
+
+    &:active {
+      transform: translateY(0);
+      background-color: $navy-800;
+    }
+  }
+}
