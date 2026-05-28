@@ -3,7 +3,7 @@ import type { TReviewStatus } from "@/mock/reviewer-courses";
 import "./style.scss";
 
 type TReviewActionPanelProps = {
-  courseId: number;
+  courseId: string;
   status: TReviewStatus;
   onApprove: () => void;
   onReject: () => void;

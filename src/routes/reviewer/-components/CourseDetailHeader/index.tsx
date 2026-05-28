@@ -7,8 +7,8 @@ type TCourseDetailHeaderProps = {
 
 const STATUS_LABEL: Record<TReviewStatus, string> = {
   Pending: "Pending Review",
-  Approved: "Approved",
   Rejected: "Rejected",
+  Published: "Published",
 };
 
 const CourseDetailHeader = ({ course }: TCourseDetailHeaderProps) => {

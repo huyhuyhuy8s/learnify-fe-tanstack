@@ -1,6 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { MOCK_REVIEWER_COURSES } from "@/mock/reviewer-courses";
+import {
+  type TReviewerCourse,
+  type TReviewStatus,
+} from "@/mock/reviewer-courses";
 import ReviewerTable from "../-components/CourseTable";
+import { useGetCoursesStatus } from "@/hooks/useCourses";
+import TetrisLoader from "@/components/TetrisLoader";
 
 export const Route = createFileRoute("/reviewer/rejected/")({
   head: () => ({
@@ -9,12 +14,25 @@ export const Route = createFileRoute("/reviewer/rejected/")({
   component: ReviewerRejectedPage,
 });
 
-const REJECTED_COURSES = MOCK_REVIEWER_COURSES.filter(
-  (c) => c.status === "Rejected"
-);
-
 function ReviewerRejectedPage() {
+  const { data, isLoading } = useGetCoursesStatus("Rejected");
+
+  if (isLoading) return <TetrisLoader />;
+
+  const isBackendSuccess = data?.isSuccess && Array.isArray(data.courses);
+
+  const displayCourses: TReviewerCourse[] = isBackendSuccess
+    ? data.courses.map((course) => ({
+        id: course.id,
+        title: course.courseName,
+        instructorName: "Unknown Instructor",
+        dateSubmitted: new Date(course.createdAt).toLocaleDateString(),
+        status: "Rejected" as TReviewStatus,
+        thumbnail: "https://placehold.co/40x40/dc2626/ffffff?text=RJ",
+      }))
+    : [];
+
   return (
-    <ReviewerTable title="Rejected Course Reviews" courses={REJECTED_COURSES} />
+    <ReviewerTable title="Rejected Course Reviews" courses={displayCourses} />
   );
 }

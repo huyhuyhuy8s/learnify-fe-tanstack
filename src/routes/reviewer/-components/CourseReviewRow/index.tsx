@@ -8,8 +8,8 @@ type TCourseReviewRowProps = {
 
 const ACTION_LABEL: Record<TReviewStatus, string> = {
   Pending: "Review Course",
-  Approved: "View Details",
   Rejected: "View Details",
+  Published: "View Details",
 };
 
 const CourseReviewRow = ({ course }: TCourseReviewRowProps) => {

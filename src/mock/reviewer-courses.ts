@@ -1,7 +1,7 @@
-export type TReviewStatus = "Pending" | "Approved" | "Rejected";
+export type TReviewStatus = "Pending" | "Published" | "Rejected";
 
 export type TReviewerCourse = {
-  id: number;
+  id: string | number;
   title: string;
   instructorName: string;
   dateSubmitted: string;
@@ -54,7 +54,7 @@ export const MOCK_REVIEWER_COURSES: TReviewerCourse[] = [
     title: "PostgreSQL & Database Design Essentials",
     instructorName: "David Kim",
     dateSubmitted: "Oct 18, 2024",
-    status: "Approved",
+    status: "Published",
     thumbnail: "https://placehold.co/40x40/16a34a/ffffff?text=DB",
   },
   {
@@ -62,7 +62,7 @@ export const MOCK_REVIEWER_COURSES: TReviewerCourse[] = [
     title: "GraphQL with TypeScript — End-to-End",
     instructorName: "Eva Nguyen",
     dateSubmitted: "Oct 15, 2024",
-    status: "Approved",
+    status: "Published",
     thumbnail: "https://placehold.co/40x40/9333ea/ffffff?text=GQ",
   },
   {
@@ -70,7 +70,7 @@ export const MOCK_REVIEWER_COURSES: TReviewerCourse[] = [
     title: "Docker & Kubernetes for Full-Stack Devs",
     instructorName: "Frank Lee",
     dateSubmitted: "Oct 10, 2024",
-    status: "Approved",
+    status: "Published",
     thumbnail: "https://placehold.co/40x40/0369a1/ffffff?text=DK",
   },
 
@@ -278,7 +278,7 @@ export const MOCK_COURSE_DETAILS: MockCourseDetail[] = [
     instructorName: "David Kim",
     creatorName: "David Kim",
     dateSubmitted: "Oct 18, 2024",
-    status: "Approved",
+    status: "Published",
     thumbnail: "https://placehold.co/40x40/16a34a/ffffff?text=DB",
     abstract:
       "Solid relational database fundamentals using PostgreSQL. From data modelling and normalisation through to indexing strategies, transactions, and performance tuning.",
@@ -318,7 +318,7 @@ export const MOCK_COURSE_DETAILS: MockCourseDetail[] = [
     instructorName: "Eva Nguyen",
     creatorName: "Eva Nguyen",
     dateSubmitted: "Oct 15, 2024",
-    status: "Approved",
+    status: "Published",
     thumbnail: "https://placehold.co/40x40/9333ea/ffffff?text=GQ",
     abstract:
       "Build a fully type-safe GraphQL API with TypeGraphQL and Apollo Server, then consume it from a React client with Apollo Client and generated hooks.",
@@ -357,7 +357,7 @@ export const MOCK_COURSE_DETAILS: MockCourseDetail[] = [
     instructorName: "Frank Lee",
     creatorName: "Frank Lee",
     dateSubmitted: "Oct 10, 2024",
-    status: "Approved",
+    status: "Published",
     thumbnail: "https://placehold.co/40x40/0369a1/ffffff?text=DK",
     abstract:
       "Practical containerisation and orchestration for developers who want to ship confidently. Covers Docker fundamentals, multi-service compose setups, Kubernetes deployments, and cloud-native patterns.",

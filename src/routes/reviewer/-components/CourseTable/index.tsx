@@ -33,9 +33,25 @@ const ReviewerTable = ({ title, courses }: TReviewerTableProps) => {
             </tr>
           </thead>
           <tbody>
-            {courses.map((course) => (
-              <CourseReviewRow key={course.id} course={course} />
-            ))}
+            {courses.length > 0 ? (
+              courses.map((course) => (
+                <CourseReviewRow key={course.id} course={course} />
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan={TABLE_COLUMNS.length}
+                  style={{
+                    textAlign: "center",
+                    padding: "3rem",
+                    color: "#6b7280",
+                    fontWeight: 500,
+                  }}
+                >
+                  No data
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
