@@ -1,7 +1,7 @@
 export const topItems = [
   {
     iconName: "local_library",
-    labelKey: "sidebar.learnify",
+    labelKey: "sidebar.dashboard",
     href: "/learner/",
   },
   {

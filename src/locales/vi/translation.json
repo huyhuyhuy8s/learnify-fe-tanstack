@@ -2,6 +2,7 @@
   "sidebar": {
     "search": "Tìm kiếm",
     "learnify": "Learnify",
+    "dashboard": "Bảng điều khiển",
     "courses": "Khóa học",
     "roadmaps": "Lộ trình",
     "friends": "Bạn bè",
@@ -12,7 +13,7 @@
     "toggle_dark_mode": "Chuyển giao diện",
     "language": "Ngôn ngữ",
     "switch_to_learner": "Chuyển sang Học viên",
-    "switch_to_teacher": "Chuyển sang Giảng viên",
+    "switch_to_instructor": "Chuyển sang Giảng viên",
     "switch_to_reviewer": "Chuyển sang Người đánh giá",
     "switch_to_admin": "Chuyển sang Quản trị viên",
     "switch_portal": "Chuyển cổng",
@@ -425,7 +426,7 @@
       "headline_line3": "Sẵn sàng Nghề nghiệp.",
       "subtitle": "Trợ giảng 3D AI hướng dẫn bạn qua các bài thực hành. Dành cho học viên, giảng viên và các tổ chức giáo dục sẵn sàng chuyển đổi.",
       "learner_cta": "Tôi là Học viên",
-      "teacher_cta": "Tôi là Giảng viên"
+      "instructor_cta": "Tôi là Giảng viên"
     },
     "stats": {
       "title": "Được tin dùng bởi <Beauty>Hàng nghìn</Beauty>"
@@ -458,7 +459,7 @@
         "desc": "Thành thạo kỹ năng qua các bài giảng 3D do AI hướng dẫn và bài thực hành tương tác. Học theo tốc độ của riêng bạn với phản hồi cá nhân hóa.",
         "cta": "Bắt đầu Học"
       },
-      "teachers": {
+      "instructors": {
         "title": "Dành cho Giảng viên",
         "desc": "Tạo khóa học, quản lý học viên và theo dõi tiến độ với phân tích mạnh mẽ. Đưa chương trình giảng dạy của bạn vào cuộc sống với nội dung 3D.",
         "cta": "Bắt đầu Giảng dạy"
@@ -613,7 +614,7 @@
         "category": "Nghiên cứu",
         "readTime": "6 phút đọc"
       },
-      "teacher-toolkit": {
+      "instructor-toolkit": {
         "title": "Bộ công cụ của Giảng viên Hiện đại",
         "excerpt": "Cách giáo viên đang tận dụng phân tích AI và nội dung 3D để tạo ra lớp học hấp dẫn hơn.",
         "category": "Giảng dạy",
