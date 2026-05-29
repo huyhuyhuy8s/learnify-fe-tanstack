@@ -22,8 +22,8 @@ function LearnerComponentHolder(props: TLearnerComponentHolder) {
     <div
       className={classNames("learner-loader", props.className)}
       style={{
-        height: "100dvh",
-        width: "100dvw",
+        height: "100%",
+        width: "100%",
         display: "flex",
         placeContent: "center",
         ...props.style,
