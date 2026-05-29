@@ -15,6 +15,7 @@ import { fetchCurrentUser } from "@/apis/auth";
 import { normalizeRole } from "@/utils/role";
 import { logger } from "@/utils/logger";
 import LogInForm from "../-components/LogInForm";
+import AuthControls from "../-components/AuthControls";
 
 export const Route = createLazyFileRoute("/auth/log-in/")({
   component: LogInPage,
@@ -46,7 +47,8 @@ function LogInPage() {
 
   return (
     <div className="log-in" id="log-in-page">
-      <Logo size="medium" className="log-in__logo" />
+      <Logo size="medium" className="log-in__logo" to="/" />
+      <AuthControls className="log-in__auth-controls" />
 
       <div className="log-in__card">
         <div className="log-in__left">
@@ -80,24 +82,26 @@ function LogInPage() {
 
           <LogInForm redirect={redirect} />
 
-          <p className="log-in__signup-link regular">
-            {t("auth.login.new_to_learnify")}{" "}
-            <CustomLink to="/auth/sign-up">
-              {t("auth.login.sign_up")}
-            </CustomLink>
-          </p>
-          <p className="log-in__signup-link regular">
-            {t("auth.login.forgot_password")}{" "}
-            <CustomLink to="/auth/forgot-password">
-              {t("auth.login.recovery_here")}
-            </CustomLink>
-          </p>
+          <div className="log-in__links">
+            <p className="log-in__signup-link regular">
+              {t("auth.login.new_to_learnify")}{" "}
+              <CustomLink to="/auth/sign-up">
+                {t("auth.login.sign_up")}
+              </CustomLink>
+            </p>
+            <p className="log-in__signup-link regular">
+              {t("auth.login.forgot_password")}{" "}
+              <CustomLink to="/auth/forgot-password">
+                {t("auth.login.recovery_here")}
+              </CustomLink>
+            </p>
+          </div>
         </div>
 
         <div className="log-in__separator" />
 
         <div className="log-in__right">
-          <Icon name="local_library" />
+          <Icon name="local_library" size={75} />
         </div>
       </div>
     </div>

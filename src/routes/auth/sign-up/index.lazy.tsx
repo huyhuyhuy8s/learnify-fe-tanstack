@@ -9,6 +9,7 @@ import SignUpStep1 from "../-components/SignUpStep1";
 import SignUpStep2 from "../-components/SignUpStep2";
 import SignUpVerification from "../-components/SignUpVerification";
 import SignUpRight from "../-components/SignUpRight";
+import AuthControls from "../-components/AuthControls";
 import { logger } from "@/utils/logger";
 
 export const Route = createLazyFileRoute("/auth/sign-up/")({
@@ -39,7 +40,8 @@ function SignUpPage() {
 
   return (
     <div className="sign-up" id="sign-up-page">
-      <Logo size="medium" className="sign-up__logo" />
+      <Logo size="medium" className="sign-up__logo" to="/" />
+      <AuthControls className="sign-up__auth-controls" />
 
       <div className="sign-up__card">
         <div className="sign-up__left">
