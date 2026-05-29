@@ -7,7 +7,9 @@
     "roadmaps": "Roadmaps",
     "friends": "Friends",
     "about": "About",
-    "manage_courses": "Manage Courses"
+    "manage_courses": "Manage Courses",
+    "add_course": "Add Course",
+    "add_lesson": "Add Lesson"
   },
   "common": {
     "change_language": "Change language",
@@ -19,7 +21,10 @@
     "switch_to_admin": "Switch to Admin",
     "switch_portal": "Switch Portal",
     "menu": "Menu",
-    "close_menu": "Close menu"
+    "close_menu": "Close menu",
+    "cancel": "Cancel",
+    "create": "Create",
+    "delete": "Delete"
   },
   "home": {
     "title": "Unlock your <Beauty>Potential</Beauty> for tomorrow, today",
@@ -145,7 +150,28 @@
     "description": "We offer a wide range of courses designed to help you achieve your learning goals. Whether you're looking to develop new skills, advance your career, or explore new interests, our courses are tailored to meet your needs. Browse through our course catalog and find the perfect course for you today!",
     "filter_course": "course",
     "filter_duration": "duration",
-    "results": "{{count}} results"
+    "results": "{{count}} results",
+    "name": "Course Name",
+    "name_placeholder": "Enter course name",
+    "name_required": "Course name is required",
+    "description": "Course Description",
+    "description_placeholder": "Enter course description",
+    "description_required": "Course description is required",
+    "delete_title": "Delete Course",
+    "delete_confirm": "Are you sure you want to delete this course?",
+    "lesson_title": "Lesson Title",
+    "lesson_title_placeholder": "Enter lesson title",
+    "lesson_title_required": "Lesson title is required",
+    "lesson_description": "Lesson Description",
+    "lesson_desc_placeholder": "Enter lesson description",
+    "lesson_desc_required": "Lesson description is required",
+    "files": "Files",
+    "files_click": "Click to upload files",
+    "files_hint": "{{maxFiles}} files max, {{maxSize}} each (.pdf, .ppt, .pptx)",
+    "files_required": "Please upload at least one file",
+    "files_max_count": "Maximum {{count}} files allowed",
+    "files_type_error": "Only .pdf, .ppt, .pptx files are allowed",
+    "files_size_error": "{{name}} exceeds {{size}} limit"
   },
   "course_detail": {
     "enroll": "Enroll Course",

@@ -13,11 +13,13 @@ const SplitPanel = <T extends { id: string }, S extends { id: string }>(
     onTabChange,
     items,
     selectedId,
+    renderListHeader,
     renderItem,
     renderDetail,
     subItems,
     selectedSubId,
     onSelectSub,
+    renderSubListHeader,
     renderSubItem,
     renderSubDetail,
     isLoading,
@@ -61,6 +63,7 @@ const SplitPanel = <T extends { id: string }, S extends { id: string }>(
       >
         {/* Level 1 — list */}
         <div className={classnames("split-panel__list", listClassName)}>
+          {renderListHeader?.()}
           {isLoading
             ? (loader ?? <TetrisLoader size="md" speed="fast" />)
             : items.length > 0
@@ -100,32 +103,37 @@ const SplitPanel = <T extends { id: string }, S extends { id: string }>(
                 subListClassName
               )}
             >
-              {!selectedItem
-                ? (placeholder ?? (
-                    <div className="split-panel__placeholder">
-                      <p>Select a course</p>
-                    </div>
-                  ))
-                : isSubLoading
-                  ? (loader ?? <TetrisLoader size="md" speed="fast" />)
-                  : subItems && subItems.length > 0
-                    ? subItems.map((item, idx) => (
-                        <div
-                          key={item.id}
-                          onClick={() => onSelectSub?.(item.id)}
-                        >
-                          {renderSubItem?.(
-                            item,
-                            idx,
-                            selectedSubId === item.id
-                          )}
-                        </div>
-                      ))
-                    : (placeholder ?? (
-                        <div className="split-panel__placeholder">
-                          <p>No sub-items</p>
-                        </div>
-                      ))}
+              {!selectedItem ? (
+                (placeholder ?? (
+                  <div className="split-panel__placeholder">
+                    <p>Select a course</p>
+                  </div>
+                ))
+              ) : (
+                <>
+                  {renderSubListHeader?.()}
+                  {isSubLoading
+                    ? (loader ?? <TetrisLoader size="md" speed="fast" />)
+                    : subItems && subItems.length > 0
+                      ? subItems.map((item, idx) => (
+                          <div
+                            key={item.id}
+                            onClick={() => onSelectSub?.(item.id)}
+                          >
+                            {renderSubItem?.(
+                              item,
+                              idx,
+                              selectedSubId === item.id
+                            )}
+                          </div>
+                        ))
+                      : (placeholder ?? (
+                          <div className="split-panel__placeholder">
+                            <p>No sub-items</p>
+                          </div>
+                        ))}
+                </>
+              )}
             </div>
 
             <div

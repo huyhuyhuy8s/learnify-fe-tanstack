@@ -138,3 +138,30 @@ export const UPDATE_PROGRESS_MUTATION = `
     }
   }
 `;
+
+export const CREATE_LESSON_FROM_AI_MUTATION = `
+  mutation CreateLessonFromAi($data: CreateLessonFromAiInput!, $pdfFile: Upload!) {
+    createLessonFromAi(data: $data, pdfFile: $pdfFile) {
+      lesson_id
+      content {
+        url_pdf
+        content
+      }
+    }
+  }
+`;
+
+export const UPLOAD_DOCUMENT_MUTATION = `
+  mutation UploadDocument($file: Upload!, $uploadedBy: String) {
+    uploadDocument(file: $file, uploadedBy: $uploadedBy) {
+      success
+      document {
+        id
+        fileName
+        fileUrl
+        fileType
+        fileSize
+      }
+    }
+  }
+`;

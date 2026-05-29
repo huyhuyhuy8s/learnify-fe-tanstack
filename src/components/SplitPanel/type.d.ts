@@ -17,6 +17,7 @@ export type TSplitPanelProps<
   // Level 1 — always visible
   items: T[];
   selectedId: string | null;
+  renderListHeader?: () => ReactNode;
   renderItem: (item: T, index: number, isActive: boolean) => ReactNode;
 
   // Level 2 — detail (2-level) OR sub-list (3-level)
@@ -26,6 +27,7 @@ export type TSplitPanelProps<
   subItems?: S[];
   selectedSubId?: string | null;
   onSelectSub?: (id: string) => void;
+  renderSubListHeader?: () => ReactNode;
   renderSubItem?: (item: S, index: number, isActive: boolean) => ReactNode;
   renderSubDetail?: (item: S) => ReactNode;
 

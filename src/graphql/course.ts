@@ -294,3 +294,22 @@ export const CREATE_COURSE_MUTATION = `
     }
   }
 `;
+
+export const DELETE_COURSE_MUTATION = `
+  mutation DeleteCourse($id: String!) {
+    deleteCourse(id: $id) {
+      isSuccess
+      message
+      count
+      courses {
+        id
+        courseName
+        abstract
+        keyLearnings
+        status
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;

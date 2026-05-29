@@ -7,7 +7,9 @@
     "roadmaps": "Lộ trình",
     "friends": "Bạn bè",
     "about": "Giới thiệu",
-    "manage_courses": "Quản lý khóa học"
+    "manage_courses": "Quản lý khóa học",
+    "add_course": "Thêm khóa học",
+    "add_lesson": "Thêm bài học"
   },
   "common": {
     "change_language": "Đổi ngôn ngữ",
@@ -19,7 +21,10 @@
     "switch_to_admin": "Chuyển sang Quản trị viên",
     "switch_portal": "Chuyển cổng",
     "menu": "Menu",
-    "close_menu": "Đóng menu"
+    "close_menu": "Đóng menu",
+    "cancel": "Hủy",
+    "create": "Tạo",
+    "delete": "Xóa"
   },
   "home": {
     "title": "Khai phá <Beauty>Tiềm năng</Beauty> cho tương lai, ngay hôm nay",
@@ -145,7 +150,28 @@
     "description": "Chúng tôi cung cấp nhiều khóa học được thiết kế để giúp bạn đạt được mục tiêu học tập của mình. Dù bạn muốn phát triển kỹ năng mới, thăng tiến sự nghiệp hay khám phá sở thích mới, các khóa học của chúng tôi đều được điều chỉnh để đáp ứng nhu cầu của bạn. Hãy duyệt qua danh mục khóa học và tìm khóa học phù hợp nhất cho bạn ngay hôm nay!",
     "filter_course": "khóa học",
     "filter_duration": "thời lượng",
-    "results": "{{count}} kết quả"
+    "results": "{{count}} kết quả",
+    "name": "Tên khóa học",
+    "name_placeholder": "Nhập tên khóa học",
+    "name_required": "Vui lòng nhập tên khóa học",
+    "description": "Mô tả khóa học",
+    "description_placeholder": "Nhập mô tả khóa học",
+    "description_required": "Vui lòng nhập mô tả khóa học",
+    "delete_title": "Xóa khóa học",
+    "delete_confirm": "Bạn có chắc chắn muốn xóa khóa học này?",
+    "lesson_title": "Tiêu đề bài học",
+    "lesson_title_placeholder": "Nhập tiêu đề bài học",
+    "lesson_title_required": "Vui lòng nhập tiêu đề bài học",
+    "lesson_description": "Mô tả bài học",
+    "lesson_desc_placeholder": "Nhập mô tả bài học",
+    "lesson_desc_required": "Vui lòng nhập mô tả bài học",
+    "files": "Tệp tin",
+    "files_click": "Nhấp để tải lên tệp",
+    "files_hint": "Tối đa {{maxFiles}} tệp, mỗi tệp {{maxSize}} (.pdf, .ppt, .pptx)",
+    "files_required": "Vui lòng tải lên ít nhất một tệp",
+    "files_max_count": "Chỉ được phép tối đa {{count}} tệp",
+    "files_type_error": "Chỉ chấp nhận tệp .pdf, .ppt, .pptx",
+    "files_size_error": "{{name}} vượt quá giới hạn {{size}}"
   },
   "course_detail": {
     "enroll": "Đăng ký khóa học",

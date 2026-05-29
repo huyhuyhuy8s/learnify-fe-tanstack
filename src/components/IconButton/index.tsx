@@ -72,11 +72,13 @@ const IconButton = (props: TconButtonProp) => {
     <button
       {...rest}
       className={buttonClassName}
-      style={{
-        ...style,
-        backgroundColor,
-        color,
-      }}
+      style={
+        {
+          ...style,
+          "--ib-bg": backgroundColor,
+          "--ib-color": color,
+        } as React.CSSProperties
+      }
       onClick={handleClick}
       title={tooltip}
       aria-label={ariaLabel || tooltip}
@@ -86,7 +88,7 @@ const IconButton = (props: TconButtonProp) => {
       {loading ? (
         <div className="icon-button_spinner" />
       ) : (
-        <Icon name={iconVal} fill={fill} style={{ color }} />
+        <Icon name={iconVal} fill={fill} />
       )}
     </button>
   );

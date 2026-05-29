@@ -158,6 +158,8 @@ import volume_upSvg from "@material-symbols/svg-400/rounded/volume_up.svg?raw";
 import volume_upFillSvg from "@material-symbols/svg-400/rounded/volume_up-fill.svg?raw";
 import cancelSvg from "@material-symbols/svg-400/rounded/cancel.svg?raw";
 import cancelFillSvg from "@material-symbols/svg-400/rounded/cancel-fill.svg?raw";
+import deleteSvg from "@material-symbols/svg-400/rounded/delete.svg?raw";
+import deleteFillSvg from "@material-symbols/svg-400/rounded/delete-fill.svg?raw";
 import voice_over_offSvg from "@material-symbols/svg-400/rounded/voice_over_off.svg?raw";
 import voice_over_offFillSvg from "@material-symbols/svg-400/rounded/voice_over_off-fill.svg?raw";
 import cognitionSvg from "@material-symbols/svg-400/rounded/cognition.svg?raw";
@@ -422,6 +424,7 @@ export const iconPaths: Record<string, { regular: string; fill: string }> = {
     fill: extractPath(volume_upFillSvg),
   },
   cancel: { regular: extractPath(cancelSvg), fill: extractPath(cancelFillSvg) },
+  delete: { regular: extractPath(deleteSvg), fill: extractPath(deleteFillSvg) },
   voice_over_off: {
     regular: extractPath(voice_over_offSvg),
     fill: extractPath(voice_over_offFillSvg),

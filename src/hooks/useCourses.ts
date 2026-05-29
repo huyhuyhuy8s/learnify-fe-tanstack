@@ -13,7 +13,12 @@ import {
   PUBLISH_COURSE_MUTATION,
   REJECT_COURSE_MUTATION,
   CREATE_COURSE_MUTATION,
+  DELETE_COURSE_MUTATION,
 } from "@/graphql/course";
+import {
+  CREATE_LESSON_FROM_AI_MUTATION,
+  UPLOAD_DOCUMENT_MUTATION,
+} from "@/graphql/mutations";
 import { toast } from "sonner";
 
 export type TBackendCourse = {
@@ -169,6 +174,57 @@ export function useCreateCourse() {
     },
     onError: (error) => {
       toast.error(`Failed to create course: ${(error as Error).message}`);
+    },
+  });
+}
+
+export function useDeleteCourse() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (id: string) => {
+      return await graphqlClient.request(DELETE_COURSE_MUTATION, { id });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["courses"] });
+      toast.success("Course deleted successfully!");
+    },
+    onError: (error) => {
+      toast.error(`Failed to delete course: ${(error as Error).message}`);
+    },
+  });
+}
+
+export function useCreateLessonFromAi() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (variables: {
+      data: { course_id: string; lessonName: string; abstract: string };
+      pdfFile: File;
+    }) => {
+      return await graphqlClient.request(
+        CREATE_LESSON_FROM_AI_MUTATION,
+        variables
+      );
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["courses"] });
+      toast.success("Lesson created successfully!");
+    },
+    onError: (error) => {
+      toast.error(`Failed to create lesson: ${(error as Error).message}`);
+    },
+  });
+}
+
+export function useUploadDocument() {
+  return useMutation({
+    mutationFn: async (variables: { file: File; uploadedBy?: string }) => {
+      return await graphqlClient.request(UPLOAD_DOCUMENT_MUTATION, variables);
+    },
+    onError: (error) => {
+      toast.error(`Failed to upload file: ${(error as Error).message}`);
     },
   });
 }
