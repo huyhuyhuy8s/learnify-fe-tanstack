@@ -3,6 +3,13 @@
 @use "@styles/mixins" as *;
 @use "@styles/functions" as *;
 
+.left-nav-bot {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  row-gap: toRem(24);
+}
+
 .left-nav-bot__theme-placeholder {
   width: toRem(56);
   height: toRem(56);
