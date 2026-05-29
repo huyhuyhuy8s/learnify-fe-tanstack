@@ -33,6 +33,7 @@ RUN corepack enable && corepack prepare pnpm@latest --activate && \
 
 COPY . .
 RUN pnpm codegen && pnpm build
+RUN pnpm compress-models; exit 0
 
 FROM node:22-slim AS production
 
