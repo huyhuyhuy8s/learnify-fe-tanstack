@@ -180,6 +180,38 @@
     gap: toRem(20);
   }
 
+  &__password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .sign-up__input {
+      padding-right: toRem(50);
+    }
+  }
+
+  &__password-toggle {
+    position: absolute;
+    right: toRem(12);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    place-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: $neutral-500;
+    cursor: pointer;
+    padding: toRem(6);
+    border-radius: 50%;
+    @include transition;
+    transition-property: color;
+
+    &:hover {
+      color: $neutral-700;
+    }
+  }
+
   &__input {
     padding: toRem(15) toRem(30);
     background-color: $neutral-100;

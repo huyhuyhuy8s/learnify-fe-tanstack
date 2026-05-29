@@ -181,6 +181,10 @@ import account_circleSvg from "@material-symbols/svg-400/rounded/account_circle.
 import account_circleFillSvg from "@material-symbols/svg-400/rounded/account_circle-fill.svg?raw";
 import lightbulbSvg from "@material-symbols/svg-400/rounded/lightbulb.svg?raw";
 import lightbulbFillSvg from "@material-symbols/svg-400/rounded/lightbulb-fill.svg?raw";
+import visibilitySvg from "@material-symbols/svg-400/rounded/visibility.svg?raw";
+import visibilityFillSvg from "@material-symbols/svg-400/rounded/visibility-fill.svg?raw";
+import visibility_offSvg from "@material-symbols/svg-400/rounded/visibility_off.svg?raw";
+import visibility_offFillSvg from "@material-symbols/svg-400/rounded/visibility_off-fill.svg?raw";
 
 function extractPath(raw: string) {
   const match = raw.match(/<path d="([^"]+)"/);
@@ -458,5 +462,13 @@ export const iconPaths: Record<string, { regular: string; fill: string }> = {
   lightbulb: {
     regular: extractPath(lightbulbSvg),
     fill: extractPath(lightbulbFillSvg),
+  },
+  visibility: {
+    regular: extractPath(visibilitySvg),
+    fill: extractPath(visibilityFillSvg),
+  },
+  visibility_off: {
+    regular: extractPath(visibility_offSvg),
+    fill: extractPath(visibility_offFillSvg),
   },
 } as const;

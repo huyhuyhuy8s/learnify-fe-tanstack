@@ -1,7 +1,8 @@
 import { useTranslation } from "react-i18next";
 import classnames from "classnames";
-import { memo } from "react";
+import { memo, useState } from "react";
 import "./style.scss";
+import Icon from "@/components/Icon";
 import { useLogInForm } from "../../-hooks/useLogInForm";
 
 type TLogInFormProps = {
@@ -14,6 +15,7 @@ const LogInForm = memo(function LogInForm(props: TLogInFormProps) {
   const { data, errors, isPending, onChange, onSubmit } = useLogInForm({
     redirect,
   });
+  const [showPassword, setShowPassword] = useState(false);
   return (
     <form
       className="log-in__form"
@@ -43,19 +45,26 @@ const LogInForm = memo(function LogInForm(props: TLogInFormProps) {
         <label htmlFor="log-in-password" className="sr-only">
           {t("auth.login.password_label")}
         </label>
-        <label htmlFor="log-in-password" className="sr-only">
-          {t("auth.login.password_label")}
-        </label>
-        <input
-          className={classnames("log-in__form-input", {
-            "log-in__form-input--error": errors.password,
-          })}
-          type="password"
-          placeholder={t("auth.login.password_placeholder")}
-          id="log-in-password"
-          value={data.password}
-          onChange={(e) => onChange("password", e.target.value)}
-        />
+        <div className="log-in__password-wrapper">
+          <input
+            className={classnames("log-in__form-input", {
+              "log-in__form-input--error": errors.password,
+            })}
+            type={showPassword ? "text" : "password"}
+            placeholder={t("auth.login.password_placeholder")}
+            id="log-in-password"
+            value={data.password}
+            onChange={(e) => onChange("password", e.target.value)}
+          />
+          <button
+            type="button"
+            className="log-in__password-toggle"
+            onClick={() => setShowPassword(!showPassword)}
+            aria-label={showPassword ? "Hide password" : "Show password"}
+          >
+            <Icon name={showPassword ? "visibility" : "visibility_off"} />
+          </button>
+        </div>
         {errors.password && <p className="log-in__error">{errors.password}</p>}
       </div>
 
