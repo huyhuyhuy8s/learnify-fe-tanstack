@@ -96,6 +96,14 @@
       .icon-button {
         background-color: $navy-pastel-200;
         border-color: transparent;
+
+        svg {
+          color: $black;
+
+          [data-theme="dark"] & {
+            color: $white;
+          }
+        }
       }
     }
 
