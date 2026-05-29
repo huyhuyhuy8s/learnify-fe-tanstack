@@ -4,7 +4,7 @@ import "./style.scss";
 
 const SignUpRight = () => {
   return (
-    <div className="sign-up-right">
+    <div className="sign-up__right">
       <div className="sign-up-quote">
         <img
           className="sign-up-quote-icon"

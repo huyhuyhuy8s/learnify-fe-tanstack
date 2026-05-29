@@ -12,7 +12,9 @@
     "toggle_dark_mode": "Chuyển giao diện",
     "language": "Ngôn ngữ",
     "switch_to_learner": "Chuyển sang Học viên",
-    "switch_to_teacher": "Chuyển sang Giảng viên"
+    "switch_to_teacher": "Chuyển sang Giảng viên",
+    "menu": "Menu",
+    "close_menu": "Đóng menu"
   },
   "home": {
     "title": "Khai phá <Beauty>Tiềm năng</Beauty> cho tương lai, ngay hôm nay",
@@ -70,6 +72,7 @@
   },
   "errors": {
     "server_error": "Lỗi máy chủ",
+    "load_generic": "Đã xảy ra lỗi khi tải trang này. Vui lòng thử lại.",
     "load_courses": "Không thể tải khóa học lúc này. Đây có thể là sự cố mạng hoặc máy chủ. Vui lòng thử lại.",
     "load_friends": "Không thể tải danh sách bạn bè lúc này. Đây có thể là sự cố mạng hoặc máy chủ. Vui lòng thử lại.",
     "load_roadmap": "Không thể tải lộ trình học lúc này. Đây có thể là sự cố mạng hoặc máy chủ. Vui lòng thử lại.",
