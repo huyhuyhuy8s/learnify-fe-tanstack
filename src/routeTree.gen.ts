@@ -27,6 +27,7 @@ import { Route as ApiUsersRouteImport } from "./routes/api/users";
 import { Route as LearnerLessonsRouteRouteImport } from "./routes/learner_/lessons/route";
 import { Route as LearnerUserRouteRouteImport } from "./routes/learner/user/route";
 import { Route as LearnerAboutRouteRouteImport } from "./routes/learner/about/route";
+import { Route as InstructorCoursesRouteRouteImport } from "./routes/instructor/courses/route";
 import { Route as LearnerLessonsIndexRouteImport } from "./routes/learner_/lessons/index";
 import { Route as LearnerUserIndexRouteImport } from "./routes/learner/user/index";
 import { Route as LearnerSubscriptionsIndexRouteImport } from "./routes/learner/subscriptions/index";
@@ -36,6 +37,7 @@ import { Route as LearnerFriendsIndexRouteImport } from "./routes/learner/friend
 import { Route as LearnerDashboardIndexRouteImport } from "./routes/learner/dashboard/index";
 import { Route as LearnerCoursesIndexRouteImport } from "./routes/learner/courses/index";
 import { Route as LearnerAboutIndexRouteImport } from "./routes/learner/about/index";
+import { Route as InstructorCoursesIndexRouteImport } from "./routes/instructor/courses/index";
 import { Route as AuthVerifyEmailIndexRouteImport } from "./routes/auth/verify-email/index";
 import { Route as AuthSignUpIndexRouteImport } from "./routes/auth/sign-up/index";
 import { Route as AuthLogInIndexRouteImport } from "./routes/auth/log-in/index";
@@ -45,6 +47,7 @@ import { Route as LearnerLessonsLessonIdIndexRouteImport } from "./routes/learne
 import { Route as LearnerUserUserIdIndexRouteImport } from "./routes/learner/user/$userId/index";
 import { Route as LearnerRoadmapsRoadmapIdIndexRouteImport } from "./routes/learner/roadmaps/$roadmapId/index";
 import { Route as LearnerCoursesCourseIdIndexRouteImport } from "./routes/learner/courses/$courseId/index";
+import { Route as InstructorCoursesCreateIndexRouteImport } from "./routes/instructor/courses/create/index";
 
 const RedirectRoute = RedirectRouteImport.update({
   id: "/redirect",
@@ -142,6 +145,11 @@ const LearnerAboutRouteRoute = LearnerAboutRouteRouteImport.update({
   path: "/about",
   getParentRoute: () => LearnerRouteRoute,
 } as any);
+const InstructorCoursesRouteRoute = InstructorCoursesRouteRouteImport.update({
+  id: "/courses",
+  path: "/courses",
+  getParentRoute: () => InstructorRouteRoute,
+} as any);
 const LearnerLessonsIndexRoute = LearnerLessonsIndexRouteImport.update({
   id: "/",
   path: "/",
@@ -191,6 +199,11 @@ const LearnerAboutIndexRoute = LearnerAboutIndexRouteImport.update({
   id: "/",
   path: "/",
   getParentRoute: () => LearnerAboutRouteRoute,
+} as any);
+const InstructorCoursesIndexRoute = InstructorCoursesIndexRouteImport.update({
+  id: "/",
+  path: "/",
+  getParentRoute: () => InstructorCoursesRouteRoute,
 } as any);
 const AuthVerifyEmailIndexRoute = AuthVerifyEmailIndexRouteImport.update({
   id: "/auth/verify-email/",
@@ -262,6 +275,12 @@ const LearnerCoursesCourseIdIndexRoute =
       (d) => d.Route,
     ),
   );
+const InstructorCoursesCreateIndexRoute =
+  InstructorCoursesCreateIndexRouteImport.update({
+    id: "/create/",
+    path: "/create/",
+    getParentRoute: () => InstructorCoursesRouteRoute,
+  } as any);
 
 export interface FileRoutesByFullPath {
   "/": typeof IndexRoute;
@@ -271,6 +290,7 @@ export interface FileRoutesByFullPath {
   "/reviewer": typeof ReviewerRouteRouteWithChildren;
   "/deferred": typeof DeferredRoute;
   "/redirect": typeof RedirectRoute;
+  "/instructor/courses": typeof InstructorCoursesRouteRouteWithChildren;
   "/learner/about": typeof LearnerAboutRouteRouteWithChildren;
   "/learner/user": typeof LearnerUserRouteRouteWithChildren;
   "/learner/lessons": typeof LearnerLessonsRouteRouteWithChildren;
@@ -287,6 +307,7 @@ export interface FileRoutesByFullPath {
   "/auth/log-in/": typeof AuthLogInIndexRoute;
   "/auth/sign-up/": typeof AuthSignUpIndexRoute;
   "/auth/verify-email/": typeof AuthVerifyEmailIndexRoute;
+  "/instructor/courses/": typeof InstructorCoursesIndexRoute;
   "/learner/about/": typeof LearnerAboutIndexRoute;
   "/learner/courses/": typeof LearnerCoursesIndexRoute;
   "/learner/dashboard/": typeof LearnerDashboardIndexRoute;
@@ -296,6 +317,7 @@ export interface FileRoutesByFullPath {
   "/learner/subscriptions/": typeof LearnerSubscriptionsIndexRoute;
   "/learner/user/": typeof LearnerUserIndexRoute;
   "/learner/lessons/": typeof LearnerLessonsIndexRoute;
+  "/instructor/courses/create/": typeof InstructorCoursesCreateIndexRoute;
   "/learner/courses/$courseId/": typeof LearnerCoursesCourseIdIndexRoute;
   "/learner/roadmaps/$roadmapId/": typeof LearnerRoadmapsRoadmapIdIndexRoute;
   "/learner/user/$userId/": typeof LearnerUserUserIdIndexRoute;
@@ -318,6 +340,7 @@ export interface FileRoutesByTo {
   "/auth/log-in": typeof AuthLogInIndexRoute;
   "/auth/sign-up": typeof AuthSignUpIndexRoute;
   "/auth/verify-email": typeof AuthVerifyEmailIndexRoute;
+  "/instructor/courses": typeof InstructorCoursesIndexRoute;
   "/learner/about": typeof LearnerAboutIndexRoute;
   "/learner/courses": typeof LearnerCoursesIndexRoute;
   "/learner/dashboard": typeof LearnerDashboardIndexRoute;
@@ -327,6 +350,7 @@ export interface FileRoutesByTo {
   "/learner/subscriptions": typeof LearnerSubscriptionsIndexRoute;
   "/learner/user": typeof LearnerUserIndexRoute;
   "/learner/lessons": typeof LearnerLessonsIndexRoute;
+  "/instructor/courses/create": typeof InstructorCoursesCreateIndexRoute;
   "/learner/courses/$courseId": typeof LearnerCoursesCourseIdIndexRoute;
   "/learner/roadmaps/$roadmapId": typeof LearnerRoadmapsRoadmapIdIndexRoute;
   "/learner/user/$userId": typeof LearnerUserUserIdIndexRoute;
@@ -341,6 +365,7 @@ export interface FileRoutesById {
   "/reviewer": typeof ReviewerRouteRouteWithChildren;
   "/deferred": typeof DeferredRoute;
   "/redirect": typeof RedirectRoute;
+  "/instructor/courses": typeof InstructorCoursesRouteRouteWithChildren;
   "/learner/about": typeof LearnerAboutRouteRouteWithChildren;
   "/learner/user": typeof LearnerUserRouteRouteWithChildren;
   "/learner_/lessons": typeof LearnerLessonsRouteRouteWithChildren;
@@ -357,6 +382,7 @@ export interface FileRoutesById {
   "/auth/log-in/": typeof AuthLogInIndexRoute;
   "/auth/sign-up/": typeof AuthSignUpIndexRoute;
   "/auth/verify-email/": typeof AuthVerifyEmailIndexRoute;
+  "/instructor/courses/": typeof InstructorCoursesIndexRoute;
   "/learner/about/": typeof LearnerAboutIndexRoute;
   "/learner/courses/": typeof LearnerCoursesIndexRoute;
   "/learner/dashboard/": typeof LearnerDashboardIndexRoute;
@@ -366,6 +392,7 @@ export interface FileRoutesById {
   "/learner/subscriptions/": typeof LearnerSubscriptionsIndexRoute;
   "/learner/user/": typeof LearnerUserIndexRoute;
   "/learner_/lessons/": typeof LearnerLessonsIndexRoute;
+  "/instructor/courses/create/": typeof InstructorCoursesCreateIndexRoute;
   "/learner/courses/$courseId/": typeof LearnerCoursesCourseIdIndexRoute;
   "/learner/roadmaps/$roadmapId/": typeof LearnerRoadmapsRoadmapIdIndexRoute;
   "/learner/user/$userId/": typeof LearnerUserUserIdIndexRoute;
@@ -381,6 +408,7 @@ export interface FileRouteTypes {
     | "/reviewer"
     | "/deferred"
     | "/redirect"
+    | "/instructor/courses"
     | "/learner/about"
     | "/learner/user"
     | "/learner/lessons"
@@ -397,6 +425,7 @@ export interface FileRouteTypes {
     | "/auth/log-in/"
     | "/auth/sign-up/"
     | "/auth/verify-email/"
+    | "/instructor/courses/"
     | "/learner/about/"
     | "/learner/courses/"
     | "/learner/dashboard/"
@@ -406,6 +435,7 @@ export interface FileRouteTypes {
     | "/learner/subscriptions/"
     | "/learner/user/"
     | "/learner/lessons/"
+    | "/instructor/courses/create/"
     | "/learner/courses/$courseId/"
     | "/learner/roadmaps/$roadmapId/"
     | "/learner/user/$userId/"
@@ -428,6 +458,7 @@ export interface FileRouteTypes {
     | "/auth/log-in"
     | "/auth/sign-up"
     | "/auth/verify-email"
+    | "/instructor/courses"
     | "/learner/about"
     | "/learner/courses"
     | "/learner/dashboard"
@@ -437,6 +468,7 @@ export interface FileRouteTypes {
     | "/learner/subscriptions"
     | "/learner/user"
     | "/learner/lessons"
+    | "/instructor/courses/create"
     | "/learner/courses/$courseId"
     | "/learner/roadmaps/$roadmapId"
     | "/learner/user/$userId"
@@ -450,6 +482,7 @@ export interface FileRouteTypes {
     | "/reviewer"
     | "/deferred"
     | "/redirect"
+    | "/instructor/courses"
     | "/learner/about"
     | "/learner/user"
     | "/learner_/lessons"
@@ -466,6 +499,7 @@ export interface FileRouteTypes {
     | "/auth/log-in/"
     | "/auth/sign-up/"
     | "/auth/verify-email/"
+    | "/instructor/courses/"
     | "/learner/about/"
     | "/learner/courses/"
     | "/learner/dashboard/"
@@ -475,6 +509,7 @@ export interface FileRouteTypes {
     | "/learner/subscriptions/"
     | "/learner/user/"
     | "/learner_/lessons/"
+    | "/instructor/courses/create/"
     | "/learner/courses/$courseId/"
     | "/learner/roadmaps/$roadmapId/"
     | "/learner/user/$userId/"
@@ -628,6 +663,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof LearnerAboutRouteRouteImport;
       parentRoute: typeof LearnerRouteRoute;
     };
+    "/instructor/courses": {
+      id: "/instructor/courses";
+      path: "/courses";
+      fullPath: "/instructor/courses";
+      preLoaderRoute: typeof InstructorCoursesRouteRouteImport;
+      parentRoute: typeof InstructorRouteRoute;
+    };
     "/learner_/lessons/": {
       id: "/learner_/lessons/";
       path: "/";
@@ -690,6 +732,13 @@ declare module "@tanstack/react-router" {
       fullPath: "/learner/about/";
       preLoaderRoute: typeof LearnerAboutIndexRouteImport;
       parentRoute: typeof LearnerAboutRouteRoute;
+    };
+    "/instructor/courses/": {
+      id: "/instructor/courses/";
+      path: "/";
+      fullPath: "/instructor/courses/";
+      preLoaderRoute: typeof InstructorCoursesIndexRouteImport;
+      parentRoute: typeof InstructorCoursesRouteRoute;
     };
     "/auth/verify-email/": {
       id: "/auth/verify-email/";
@@ -754,6 +803,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof LearnerCoursesCourseIdIndexRouteImport;
       parentRoute: typeof LearnerRouteRoute;
     };
+    "/instructor/courses/create/": {
+      id: "/instructor/courses/create/";
+      path: "/create";
+      fullPath: "/instructor/courses/create/";
+      preLoaderRoute: typeof InstructorCoursesCreateIndexRouteImport;
+      parentRoute: typeof InstructorCoursesRouteRoute;
+    };
   }
 }
 
@@ -769,11 +825,29 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
   AdminRouteRouteChildren,
 );
 
+interface InstructorCoursesRouteRouteChildren {
+  InstructorCoursesIndexRoute: typeof InstructorCoursesIndexRoute;
+  InstructorCoursesCreateIndexRoute: typeof InstructorCoursesCreateIndexRoute;
+}
+
+const InstructorCoursesRouteRouteChildren: InstructorCoursesRouteRouteChildren =
+  {
+    InstructorCoursesIndexRoute: InstructorCoursesIndexRoute,
+    InstructorCoursesCreateIndexRoute: InstructorCoursesCreateIndexRoute,
+  };
+
+const InstructorCoursesRouteRouteWithChildren =
+  InstructorCoursesRouteRoute._addFileChildren(
+    InstructorCoursesRouteRouteChildren,
+  );
+
 interface InstructorRouteRouteChildren {
+  InstructorCoursesRouteRoute: typeof InstructorCoursesRouteRouteWithChildren;
   InstructorIndexRoute: typeof InstructorIndexRoute;
 }
 
 const InstructorRouteRouteChildren: InstructorRouteRouteChildren = {
+  InstructorCoursesRouteRoute: InstructorCoursesRouteRouteWithChildren,
   InstructorIndexRoute: InstructorIndexRoute,
 };
 

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import IconButton from "@/components/IconButton";
 import { useLayout } from "@/contexts/LayoutContext";
 import LeftNavItem from "../LeftNavItem";
-import { topItems } from "../../constants";
+import { getTopItemsByPathname } from "../../constants";
 
 type TLeftNavTopProps = {
   pathname: string;
@@ -13,6 +13,8 @@ const LeftNavTop = (props: TLeftNavTopProps) => {
   const { pathname } = props;
   const { t } = useTranslation();
   const { setLayoutConfigState } = useLayout();
+
+  const topItems = getTopItemsByPathname(pathname);
 
   return (
     <div className="left-nav-top">

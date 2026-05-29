@@ -178,3 +178,119 @@ export const ASK_LESSON_QUESTION_QUERY = `
     askLessonQuestion(lessonId: $lessonId, question: $question)
   }
 `;
+
+export const GET_COURSE_BY_STATUS_QUERY = `
+  query Query($status: StatusCourse!, $skip: Float!) {
+  getCoursesByStatus(status: $status, skip: $skip) {
+    isSuccess
+    message
+    count
+    courses {
+      id
+      courseName
+      abstract
+      createdAt
+      keyLearnings
+      status
+      updatedAt
+    }
+  }
+}
+`;
+
+export const PUBLISH_COURSE_MUTATION = `
+mutation Mutation($courseId: String!) {
+  publishCourse(courseId: $courseId) {
+    isSuccess
+    count
+    message
+    courses {
+      id
+      courseName
+      abstract
+      keyLearnings
+      status
+      updatedAt
+      createdAt
+    }
+  }
+}
+`;
+
+export const REJECT_COURSE_MUTATION = `
+mutation Mutation($courseId: String!) {
+  rejectCourse(courseId: $courseId) {
+    isSuccess
+    message
+    count
+    courses {
+      id
+      courseName
+      abstract
+      createdAt
+      keyLearnings
+      status
+      updatedAt
+    }
+  }
+}
+`;
+
+export const GET_COURSE_LESSONS_BY_ID_QUERY = `
+  query GetCourseLessonsById($getCourseByIdId: String!) {
+  getCourseById(id: $getCourseByIdId) {
+    id
+    courseName
+    abstract
+    createdAt
+    keyLearnings
+    status
+    updatedAt
+  }
+  getLessonsByCourseId(id: $getCourseByIdId) {
+    isSuccess
+    count
+    lessons {
+      id
+      abstract
+      lessonName
+      courseId
+      createdAt
+    }
+    message
+  }
+}
+`;
+
+export const GET_COURSE_BY_USER_ID_QUERY = `
+  query GetCourseByUserId($userId: String!) {
+    getCourseByUserId(userId: $userId) {
+      id
+      courseName
+      abstract
+      keyLearnings
+      status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const CREATE_COURSE_MUTATION = `
+  mutation CreateCourse($data: CreateCourseDto!) {
+    createCourse(data: $data) {
+      isSuccess
+      message
+      count
+      courses {
+        id
+        courseName
+        abstract
+        keyLearnings
+        status
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;

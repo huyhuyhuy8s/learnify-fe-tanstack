@@ -82,7 +82,7 @@ function ManageCoursesPage() {
               setSelectedLessonId(null);
             }}
           >
-            <Icon name="folder" />
+            <Icon name="menu_book" />
             <div className="manage-courses__item-info">
               <span className="manage-courses__item-name">
                 {course.courseName}
