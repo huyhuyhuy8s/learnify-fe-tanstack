@@ -13,6 +13,9 @@
     "language": "Ngôn ngữ",
     "switch_to_learner": "Chuyển sang Học viên",
     "switch_to_teacher": "Chuyển sang Giảng viên",
+    "switch_to_reviewer": "Chuyển sang Người đánh giá",
+    "switch_to_admin": "Chuyển sang Quản trị viên",
+    "switch_portal": "Chuyển cổng",
     "menu": "Menu",
     "close_menu": "Đóng menu"
   },

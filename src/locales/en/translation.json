@@ -13,6 +13,9 @@
     "language": "Language",
     "switch_to_learner": "Switch to Learner",
     "switch_to_teacher": "Switch to Teacher",
+    "switch_to_reviewer": "Switch to Reviewer",
+    "switch_to_admin": "Switch to Admin",
+    "switch_portal": "Switch Portal",
     "menu": "Menu",
     "close_menu": "Close menu"
   },
