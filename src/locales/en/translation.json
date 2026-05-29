@@ -12,7 +12,9 @@
     "toggle_dark_mode": "Toggle dark mode",
     "language": "Language",
     "switch_to_learner": "Switch to Learner",
-    "switch_to_teacher": "Switch to Teacher"
+    "switch_to_teacher": "Switch to Teacher",
+    "menu": "Menu",
+    "close_menu": "Close menu"
   },
   "home": {
     "title": "Unlock your <Beauty>Potential</Beauty> for tomorrow, today",
@@ -70,6 +72,7 @@
   },
   "errors": {
     "server_error": "Server Error",
+    "load_generic": "Something went wrong while loading this page. Please try again.",
     "load_courses": "Unable to load courses at this time. This could be a network issue or a server problem. Please try again.",
     "load_friends": "Unable to load friends at this time. This could be a network issue or a server problem. Please try again.",
     "load_roadmap": "Unable to load roadmap at this time. This could be a network issue or a server problem. Please try again.",
