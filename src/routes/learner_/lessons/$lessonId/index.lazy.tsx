@@ -1,12 +1,18 @@
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import TetrisLoader from "@/components/TetrisLoader";
 import { useCallback, useEffect, useEffectEvent, useRef } from "react";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 import ChatArea from "../-components/ChatArea";
 import CourseContext from "../-components/CourseContext";
 import type { TCourseContextRef } from "../-components/CourseContext/type";
 import TeacherPanel from "../-components/TeacherPanel";
 import useLessonDetail from "../-hooks/useLessonDetail";
 import useTeacher from "../-hooks/useTeacher";
+import { graphqlClient } from "@/lib/graphql";
+import { FIND_ENROLLMENT_QUERY } from "@/graphql/course";
+import { useAuthStore } from "@/store";
 
 export const Route = createLazyFileRoute("/learner_/lessons/$lessonId/")({
   component: LessonDetail,
@@ -24,6 +30,7 @@ function LessonDetail() {
     skipToQuiz,
     completeLesson,
     reset,
+    handleComplete,
   } = useLessonDetail(lessonId);
   const {
     chatRef,
@@ -87,12 +94,42 @@ function LessonDetail() {
   const handleSkipQuiz = useCallback(() => {
     stopChat();
     completeLesson();
-  }, [stopChat, completeLesson]);
+    handleComplete();
+  }, [stopChat, completeLesson, handleComplete]);
   const handleLessonComplete = useCallback(() => {
     skipToQA();
   }, [skipToQA]);
 
-  if (isLoading && !data) {
+  const courseId = data?.lesson?.courseId;
+  const userId = useAuthStore((s) => s.user?.id);
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const { data: enrollmentData, isLoading: isCheckingEnrollment } = useQuery({
+    queryKey: ["enrollment", courseId, userId],
+    queryFn: async () => {
+      if (!courseId || !userId) return null;
+      return graphqlClient.request<{
+        findEnrollment: { id: string } | null;
+      }>(FIND_ENROLLMENT_QUERY, { courseId });
+    },
+    enabled: !!courseId && !!userId && !!data?.lesson,
+  });
+
+  useEffect(() => {
+    if (isCheckingEnrollment || !courseId) return;
+    if (!enrollmentData?.findEnrollment) {
+      toast.error(t("toast_enroll_first"));
+      navigate({ to: "/learner/courses/$courseId", params: { courseId } });
+    }
+  }, [enrollmentData, isCheckingEnrollment, courseId, navigate, t]);
+
+  const hasCourseId = !!courseId;
+  const enrollmentChecked = !hasCourseId || !!enrollmentData;
+  const isNotEnrolled =
+    enrollmentChecked && hasCourseId && !enrollmentData?.findEnrollment;
+
+  if (isLoading || isCheckingEnrollment || isNotEnrolled) {
     return (
       <div className="lesson-detail-page lesson-detail-page_loading">
         <TetrisLoader />

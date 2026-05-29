@@ -93,6 +93,7 @@ const CourseController = ({ className }: TCourseControllerProps) => {
         { expanded: isExpanded },
         className
       )}
+      data-lenis-prevent
     >
       {isExpanded ? (
         <div className="course-controller_expanded">

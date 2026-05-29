@@ -1,6 +1,7 @@
 import { Suspense, lazy } from "react";
 import { useTranslation } from "react-i18next";
 
+import CubeLoader from "@/components/CubeLoader";
 import type { TTeacherAnimation } from "../TeacherAnimation/type";
 import type { TTeacherStatus } from "../TeacherStatusIndicator/type";
 import TeacherAvatar2D from "../TeacherAvatar2D";
@@ -90,7 +91,13 @@ const TeacherPanel = (props: TTeacherPanelProps) => {
 
   if (is3DMode) {
     return (
-      <Suspense fallback={null}>
+      <Suspense
+        fallback={
+          <div className="teacher-panel teacher-panel--fallback">
+            <CubeLoader />
+          </div>
+        }
+      >
         <TeacherContainer
           animation={animation}
           onModelReady={onModelReady}

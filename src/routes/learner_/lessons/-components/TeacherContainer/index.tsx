@@ -8,6 +8,10 @@ import { Vector3, type Group } from "three";
 import CubeLoader from "@/components/CubeLoader";
 import type { TTeacherAnimation } from "../TeacherAnimation/type";
 
+useGLTF.setDecoderPath(
+  "https://www.gstatic.com/draco/versioned/decoders/1.5.6/"
+);
+
 type TTeacherContainerProps = {
   animation?: TTeacherAnimation;
   children?: React.ReactNode;
