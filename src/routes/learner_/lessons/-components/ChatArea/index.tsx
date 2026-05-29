@@ -5,7 +5,7 @@ import LessonWelcome from "../LessonWelcome";
 import ChatMessages from "../ChatMessages";
 import QuizPanel from "../QuizPanel";
 import LessonComplete from "../LessonComplete";
-import { mockQuizQuestions } from "@/mock/quiz";
+import { useQuiz } from "@/hooks/useQuiz";
 import type { TTeacherAnimation } from "../TeacherAnimation/type";
 import type { TTeacherStatus } from "../TeacherStatusIndicator/type";
 import type { TChatMessageRef } from "../ChatMessages";
@@ -39,6 +39,8 @@ type TChatAreaProps = {
   handleLessonComplete: () => void;
   setAnimation: (animation: TTeacherAnimation) => void;
   setStatus: (status: TTeacherStatus) => void;
+  courseId?: string;
+  nextLessonId?: string;
 };
 
 const ChatArea = (props: TChatAreaProps) => {
@@ -62,8 +64,11 @@ const ChatArea = (props: TChatAreaProps) => {
     handleLessonComplete,
     setAnimation,
     setStatus,
+    courseId,
+    nextLessonId,
   } = props;
 
+  const { data: quizQuestions } = useQuiz(lessonId);
   const showChatArea = state !== "initial" && state !== "complete";
 
   return (
@@ -115,11 +120,13 @@ const ChatArea = (props: TChatAreaProps) => {
         />
       )}
 
-      {state === "quiz" && (
-        <QuizPanel questions={mockQuizQuestions} onComplete={onSkipQuiz} />
+      {state === "quiz" && quizQuestions && (
+        <QuizPanel questions={quizQuestions} onComplete={onSkipQuiz} />
       )}
 
-      {state === "complete" && <LessonComplete />}
+      {state === "complete" && (
+        <LessonComplete courseId={courseId} nextLessonId={nextLessonId} />
+      )}
     </div>
   );
 };

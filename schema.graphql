@@ -701,6 +701,29 @@ input CreateReviewInput {
   content: String
 }
 
+type QuizOption {
+  id: String!
+  text: String!
+  isCorrect: Boolean!
+}
+
+type QuizQuestion {
+  id: String!
+  text: String!
+  options: [QuizOption!]!
+}
+
+type QuizResponse {
+  id: String!
+  lessonId: String!
+  name: String!
+  questions: [QuizQuestion!]!
+}
+
+type Mutation {
+  generateAutoQuiz(lessonId: String!): QuizResponse!
+}
+
 type Subscription {
   messageAdded(conversationId: String!): MessageResponse!
 }
