@@ -34,7 +34,7 @@ export const fetchCurrentUser = async (
       throw new Error("Failed to load user data");
     }
     const user = data.currentUser.users[0];
-    logger.info("[auth] success - user:", user?.id);
+    logger.info("[auth] success - user:", user?.id, user);
     return user;
   } catch (error) {
     logger.error("[auth] fetch error:", error);

@@ -1,6 +1,5 @@
 import { getCurrentUserFn } from "@/server/auth";
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { normalizeRole } from "@/utils/role";
 import LandingPage from "@/routes/-components/LandingPage";
 import {
   MarketingErrorComponent,
@@ -13,8 +12,7 @@ export const Route = createFileRoute("/")({
   beforeLoad: async () => {
     const { user } = await getCurrentUserFn();
     if (user) {
-      const target =
-        normalizeRole(user.role) === "teacher" ? "/teacher" : "/learner";
+      const target = user.role === "instructor" ? "/instructor" : "/learner";
       throw redirect({ to: target });
     }
   },
@@ -26,7 +24,7 @@ export const Route = createFileRoute("/")({
       ...seo({
         title: "Learnify | Smart Learning. Real Skills. Ready Careers.",
         description:
-          "Learnify is an educational platform that combines AI-powered 3D lecturers with hands-on labs. Built for learners, teachers, and academic institutions.",
+          "Learnify is an educational platform that combines AI-powered 3D lecturers with hands-on labs. Built for learners, instructors, and academic institutions.",
       }),
     ],
   }),

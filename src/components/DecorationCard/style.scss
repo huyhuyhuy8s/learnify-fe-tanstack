@@ -46,7 +46,7 @@
         gap: toRem(10);
 
         .feature-name {
-          background-color: $navy-600;
+          background-color: $black;
           color: $white;
           padding: toRem(5) toRem(15);
           border-radius: $br-sm;
@@ -70,7 +70,7 @@
 
       .tracker {
         border-radius: $br-rounded;
-        background-color: $mode-navy;
+        background-color: $white;
         position: relative;
         height: 100%;
       }

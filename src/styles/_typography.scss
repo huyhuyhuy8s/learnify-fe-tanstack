@@ -54,7 +54,8 @@ h6 {
 
 p,
 small,
-.smaller {
+.smaller,
+a {
   color: $black;
   font-weight: $fw-regular;
   line-height: 1.25;
@@ -64,7 +65,8 @@ small,
   }
 }
 
-p {
+p,
+a {
   font-size: $fs-paragraph;
 }
 
@@ -94,6 +96,10 @@ small {
 
 .black {
   font-weight: $fw-black;
+}
+
+*:visited {
+  color: $black;
 }
 
 a.link {
