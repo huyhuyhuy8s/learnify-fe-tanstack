@@ -163,6 +163,16 @@ export const GET_PROGRESS_QUERY = `
   }
 `;
 
+export const FIND_ENROLLMENT_QUERY = `
+  query FindEnrollment($courseId: String!) {
+    findEnrollment(courseId: $courseId) {
+      id
+      courseId
+      userId
+    }
+  }
+`;
+
 export const ASK_LESSON_QUESTION_QUERY = `
   query AskLessonQuestion($lessonId: String!, $question: String!) {
     askLessonQuestion(lessonId: $lessonId, question: $question)
