@@ -200,5 +200,18 @@
     &__menu {
       display: none;
     }
+
+    &__toggle--menu {
+      display: flex;
+    }
+  }
+}
+
+@include break(xs) {
+  .pill-top-nav {
+    &__action-link,
+    &__action-btn {
+      display: none;
+    }
   }
 }
