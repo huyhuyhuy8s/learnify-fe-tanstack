@@ -272,7 +272,9 @@
   "lesson_complete": {
     "title": "Hoàn thành bài học!",
     "description": "Bạn đã hoàn thành bài học này. Làm tốt lắm!",
-    "back_to_dashboard": "Quay lại Dashboard"
+    "back_to_dashboard": "Quay lại Dashboard",
+    "back_to_course": "Quay lại Khóa học",
+    "next_lesson": "Bài học tiếp theo"
   },
   "chat_message_wrapper": {
     "preparing_lesson": "Đang chuẩn bị bài học của bạn...",

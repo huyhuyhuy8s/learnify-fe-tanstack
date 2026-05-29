@@ -272,7 +272,9 @@
   "lesson_complete": {
     "title": "Lesson Complete!",
     "description": "You have finished this lesson. Great work!",
-    "back_to_dashboard": "Back to Dashboard"
+    "back_to_dashboard": "Back to Dashboard",
+    "back_to_course": "Back to Course",
+    "next_lesson": "Next Lesson"
   },
   "chat_message_wrapper": {
     "preparing_lesson": "Preparing your lesson...",
