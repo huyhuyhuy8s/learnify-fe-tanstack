@@ -16,7 +16,7 @@ interface LandingSubsProps {
 export default function LandingSubs({ subscriptions }: LandingSubsProps) {
   const ref = useRef<HTMLElement>(null);
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useGSAP(
     () => {
@@ -41,7 +41,6 @@ export default function LandingSubs({ subscriptions }: LandingSubsProps) {
       <div className="landing-section__inner">
         <h2 className="landing-section__title">
           <Trans
-            key={i18n.language}
             i18nKey="landing.subs.title"
             components={{ Beauty: <span className="beauty" /> }}
           />
@@ -67,14 +66,10 @@ export default function LandingSubs({ subscriptions }: LandingSubsProps) {
                   {t(`landing.subs.${type}.subtitle`)}
                 </p>
                 <ul className="landing-subs__card-features">
-                  {[0, 1, 2].map((i) => (
+                  {sub.descriptions.map((desc, i) => (
                     <li key={i}>
                       <Icon name="check" size="1.2em" />
-                      <span
-                        dangerouslySetInnerHTML={{
-                          __html: t(`landing.subs.${type}.desc${i}`),
-                        }}
-                      />
+                      <span dangerouslySetInnerHTML={{ __html: desc }} />
                     </li>
                   ))}
                 </ul>

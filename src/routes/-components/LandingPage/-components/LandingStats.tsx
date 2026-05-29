@@ -10,13 +10,15 @@ import { Trans, useTranslation } from "react-i18next";
 
 import "./LandingStats.scss";
 
+type TLandingStat = Omit<TAboutStatProps, "index"> & { key: string };
+
 interface LandingStatsProps {
-  stats: Omit<TAboutStatProps, "index">[];
+  stats: TLandingStat[];
 }
 
 export default function LandingStats({ stats }: LandingStatsProps) {
   const ref = useRef<HTMLElement>(null);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useGSAP(
     () => {
@@ -41,7 +43,6 @@ export default function LandingStats({ stats }: LandingStatsProps) {
       <div className="landing-section__inner">
         <h2 className="landing-section__title">
           <Trans
-            key={i18n.language}
             i18nKey="landing.stats.title"
             components={{ Beauty: <span className="beauty" /> }}
           />
@@ -53,10 +54,7 @@ export default function LandingStats({ stats }: LandingStatsProps) {
                 index={index + 1}
                 color={stat.color}
                 label={
-                  t(
-                    `about_us.stats.${(stat as unknown as { key: string }).key}.label`,
-                    stat.label
-                  ) as TLabel
+                  t(`about_us.stats.${stat.key}.label`, stat.label) as TLabel
                 }
                 value={stat.value}
               />

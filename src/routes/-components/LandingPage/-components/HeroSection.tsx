@@ -60,11 +60,9 @@ export default function HeroSection({
       />
       <div className="landing-hero__content">
         <h1 className="landing-hero__headline">
-          {t("landing.hero.headline_line1")}
-          <br />
+          <span>{t("landing.hero.headline_line1")}</span>
           <span className="beauty">{t("landing.hero.headline_line2")}</span>
-          <br />
-          {t("landing.hero.headline_line3")}
+          <span>{t("landing.hero.headline_line3")}</span>
         </h1>
         <p className="landing-hero__subtitle regular">
           {t("landing.hero.subtitle")}

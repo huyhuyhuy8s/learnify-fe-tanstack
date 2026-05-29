@@ -21,7 +21,7 @@ interface LandingAudienceProps {
 export default function LandingAudience({ audiences }: LandingAudienceProps) {
   const ref = useRef<HTMLElement>(null);
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useGSAP(
     () => {
@@ -46,7 +46,6 @@ export default function LandingAudience({ audiences }: LandingAudienceProps) {
       <div className="landing-section__inner">
         <h2 className="landing-section__title">
           <Trans
-            key={i18n.language}
             i18nKey="landing.audience.title"
             components={{ Beauty: <span className="beauty" /> }}
           />
