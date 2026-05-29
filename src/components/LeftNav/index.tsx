@@ -2,7 +2,7 @@ import LeftNavTop from "./components/LeftNavTop";
 import LeftNavBot from "./components/LeftNavBot";
 import Controller from "./components/Controller";
 import classnames from "classnames";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouterState } from "@tanstack/react-router";
 import { useScrollTop } from "@/hooks/useScrollTop";
 import Icon from "@/components/Icon";
@@ -16,6 +16,8 @@ type TLeftNavProps = {
 const LeftNav = (props: TLeftNavProps) => {
   const { className, compact = false } = props;
   const [active, setActive] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const overlayRef = useRef<HTMLDivElement>(null);
   const pathnames = useRouterState({
     select: (state) => state.location.pathname,
   });
@@ -33,7 +35,9 @@ const LeftNav = (props: TLeftNavProps) => {
     const handleMediaQueryChange = (
       e: MediaQueryListEvent | MediaQueryList
     ) => {
-      if (e.matches) {
+      const matches = e.matches;
+      setIsMobile(matches);
+      if (matches) {
         setActive(false);
       } else {
         setActive(true);
@@ -47,6 +51,10 @@ const LeftNav = (props: TLeftNavProps) => {
       mediaQuery.removeEventListener("change", handleMediaQueryChange);
   }, []);
 
+  const handleOverlayClick = () => {
+    setActive(false);
+  };
+
   if (compact) {
     return (
       <nav className={navClassNames}>
@@ -58,11 +66,21 @@ const LeftNav = (props: TLeftNavProps) => {
   }
 
   return (
-    <nav className={navClassNames}>
-      <LeftNavTop pathname={pathnames} />
-      <LeftNavBot />
-      <Controller active={active} onClick={() => setActive(!active)} />
-    </nav>
+    <>
+      {active && isMobile && (
+        <div
+          ref={overlayRef}
+          className="left-nav__overlay"
+          onClick={handleOverlayClick}
+          data-lenis-prevent
+        />
+      )}
+      <nav className={navClassNames} data-lenis-prevent>
+        <LeftNavTop pathname={pathnames} />
+        <LeftNavBot />
+        <Controller active={active} onClick={() => setActive(!active)} />
+      </nav>
+    </>
   );
 };
 
