@@ -1,0 +1,121 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
+.reviewer-sidebar {
+  width: toRem(88);
+  min-height: 100%;
+  flex-shrink: 0;
+  background-color: $white;
+  border-radius: 0 $br-lg $br-lg 0;
+  @include box-shadow(2, 0, 20, 0);
+  padding: toRem(24) toRem(8);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: toRem(8);
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: toRem(44);
+    height: toRem(44);
+    border-radius: $br-sm;
+    background-color: $green-pastel-200;
+    color: $green-700;
+    margin-bottom: toRem(16);
+    flex-shrink: 0;
+  }
+
+  &__nav {
+    width: 100%;
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: toRem(4);
+  }
+
+  &__item {
+    width: 100%;
+  }
+
+  &__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: toRem(5);
+    padding: toRem(10) toRem(6);
+    border-radius: $br-sm;
+    text-decoration: none;
+    @include transition;
+    transition-property: background-color, color;
+
+    .reviewer-sidebar__icon-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: toRem(40);
+      height: toRem(36);
+      border-radius: $br-xs;
+      color: $neutral-500;
+      @include transition;
+      transition-property: background-color, color;
+    }
+
+    .reviewer-sidebar__label {
+      font-size: $fs-smaller;
+      font-weight: $fw-medium;
+      color: $neutral-500;
+      text-align: center;
+      line-height: 1.2;
+      @include transition;
+      transition-property: color, font-weight;
+    }
+
+    &:hover {
+      .reviewer-sidebar__icon-wrap {
+        background-color: $neutral-200;
+        color: $neutral-800;
+      }
+
+      .reviewer-sidebar__label {
+        color: $neutral-800;
+      }
+    }
+
+    &--active {
+      .reviewer-sidebar__icon-wrap {
+        background-color: $green-pastel-200;
+        color: $green-700;
+      }
+
+      .reviewer-sidebar__label {
+        color: $green-700;
+        font-weight: $fw-semibold;
+      }
+
+      position: relative;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: toRem(-8);
+        top: 50%;
+        transform: translateY(-50%);
+        width: toRem(3);
+        height: 60%;
+        border-radius: 0 $br-xs $br-xs 0;
+        background-color: $green-600;
+      }
+    }
+  }
+}
