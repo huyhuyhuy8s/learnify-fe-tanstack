@@ -1,6 +1,11 @@
 import { getCurrentUserFn } from "@/server/auth";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import LandingPage from "@/routes/-components/LandingPage";
+import {
+  MarketingErrorComponent,
+  MarketingNotFoundComponent,
+  MarketingPendingComponent,
+} from "@/utils/marketing";
 import { seo } from "@/utils/seo";
 
 export const Route = createFileRoute("/")({
@@ -11,6 +16,9 @@ export const Route = createFileRoute("/")({
       throw redirect({ to: target });
     }
   },
+  errorComponent: MarketingErrorComponent,
+  pendingComponent: MarketingPendingComponent,
+  notFoundComponent: MarketingNotFoundComponent,
   head: () => ({
     meta: [
       ...seo({

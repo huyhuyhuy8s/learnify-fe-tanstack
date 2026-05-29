@@ -1,9 +1,17 @@
 import "./blogs.scss";
 
+import {
+  MarketingErrorComponent,
+  MarketingNotFoundComponent,
+  MarketingPendingComponent,
+} from "@/utils/marketing";
 import { seo } from "@/utils/seo";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/blogs/")({
+  errorComponent: MarketingErrorComponent,
+  pendingComponent: MarketingPendingComponent,
+  notFoundComponent: MarketingNotFoundComponent,
   head: () => ({
     meta: [
       ...seo({

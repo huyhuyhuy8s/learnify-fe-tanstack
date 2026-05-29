@@ -5,6 +5,8 @@ import PillTopNav from "@/components/PillTopNav";
 import PixelBlast from "@/components/PixelBlast";
 import { CONTACT_INFO, SOCIAL_LINKS } from "@/mock/contact";
 import { Trans, useTranslation } from "react-i18next";
+import { Suspense } from "react";
+import CubeLoader from "@/components/CubeLoader";
 
 export const Route = createLazyFileRoute("/contact/")({
   component: Contact,
@@ -17,13 +19,15 @@ function Contact() {
       <PillTopNav />
       <main className="contact__content">
         <section className="contact__hero">
-          <PixelBlast
-            color="#81c2ec"
-            variant="diamond"
-            pixelSize={3}
-            speed={0.35}
-            patternDensity={0.7}
-          />
+          <Suspense fallback={<CubeLoader />}>
+            <PixelBlast
+              color="#81c2ec"
+              variant="diamond"
+              pixelSize={3}
+              speed={0.35}
+              patternDensity={0.7}
+            />
+          </Suspense>
           <div className="contact__hero-content">
             <h1>
               <Trans

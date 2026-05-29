@@ -1,4 +1,5 @@
 import ChromaGrid from "@/components/ChromaGrid";
+import CubeLoader from "@/components/CubeLoader";
 import Icon from "@/components/Icon";
 import { OptimizeImage } from "@/components/Images";
 import PillTopNav from "@/components/PillTopNav";
@@ -6,6 +7,7 @@ import PixelBlast from "@/components/PixelBlast";
 import { teamMembers } from "@/mock";
 import { ABOUT_VALUES, MISSION_TEXT, VISION_TEXT } from "@/mock/about";
 import { createLazyFileRoute } from "@tanstack/react-router";
+import { Suspense } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
 export const Route = createLazyFileRoute("/about-us/")({
@@ -19,13 +21,15 @@ function AboutUs() {
       <PillTopNav />
       <main className="about-us__content">
         <section className="about-us__hero">
-          <PixelBlast
-            color="#3f5a42"
-            variant="square"
-            pixelSize={3}
-            speed={0.4}
-            patternDensity={0.8}
-          />
+          <Suspense fallback={<CubeLoader />}>
+            <PixelBlast
+              color="#3f5a42"
+              variant="square"
+              pixelSize={3}
+              speed={0.4}
+              patternDensity={0.8}
+            />
+          </Suspense>
           <div className="about-us__hero-content">
             <h1>
               <Trans
