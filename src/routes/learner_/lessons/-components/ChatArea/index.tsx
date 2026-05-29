@@ -67,7 +67,7 @@ const ChatArea = (props: TChatAreaProps) => {
   const showChatArea = state !== "initial" && state !== "complete";
 
   return (
-    <div className={classnames("chat-area", className)}>
+    <div className={classnames("chat-area", className)} data-lenis-prevent>
       {showChatArea && (
         <ChatHeader
           initialValue={lessonName}

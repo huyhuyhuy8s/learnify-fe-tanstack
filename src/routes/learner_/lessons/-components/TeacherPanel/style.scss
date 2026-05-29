@@ -18,4 +18,10 @@
     bottom: toRem(20);
     left: toRem(20);
   }
+
+  &--fallback {
+    display: flex;
+    @extend %teacher-container-shared;
+    place-items: center;
+  }
 }

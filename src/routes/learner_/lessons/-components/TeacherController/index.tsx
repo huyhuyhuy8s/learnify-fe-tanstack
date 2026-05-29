@@ -141,6 +141,7 @@ const TeacherController = (props: TTeacherControllerProps) => {
         <div
           className="teacher-controller_popup-overlay"
           onClick={onCloseSettings}
+          data-lenis-prevent
         >
           <div
             className="teacher-controller_popup"
