@@ -92,3 +92,30 @@ export const GOOGLE_LOGIN_MUTATION = `
     }
   }
 `;
+
+export const MARK_COMPLETE_LESSON_MUTATION = `
+  mutation MarkCompleteLesson($input: MarkCompleteInput!) {
+    markCompleteLesson(input: $input) {
+      isSuccess
+      message
+    }
+  }
+`;
+
+export const UPDATE_PROGRESS_MUTATION = `
+  mutation UpdateProgress($input: UpdateProgressInput!) {
+    updateProgress(input: $input) {
+      isSuccess
+      message
+      progress {
+        id
+        userId
+        status
+        percentage
+        completedLessons
+        totalLessons
+        courseId
+      }
+    }
+  }
+`;
