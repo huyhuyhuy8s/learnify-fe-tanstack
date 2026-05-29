@@ -1,10 +1,10 @@
 import "./pixel-blast.scss";
 
+import { Effect, EffectComposer, EffectPass, RenderPass } from "postprocessing";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import { Effect, EffectComposer, EffectPass, RenderPass } from "postprocessing";
-import VERTEX_SRC from "./shaders/vertex.glsl?raw";
 import FRAGMENT_SRC from "./shaders/fragment.glsl?raw";
+import VERTEX_SRC from "./shaders/vertex.glsl?raw";
 
 type PixelBlastVariant = "square" | "circle" | "triangle" | "diamond";
 

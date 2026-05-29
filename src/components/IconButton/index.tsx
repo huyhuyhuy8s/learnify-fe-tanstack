@@ -21,6 +21,7 @@ type TconButtonProp = {
   buttonType?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
   disabled?: boolean;
   loading?: boolean;
+  [x: string]: unknown;
 };
 
 const IconButton = (props: TconButtonProp) => {
@@ -42,6 +43,7 @@ const IconButton = (props: TconButtonProp) => {
     buttonType = "button",
     disabled = false,
     loading = false,
+    ...rest
   } = props;
 
   const [clicked, setClicked] = useState(false);
@@ -68,6 +70,7 @@ const IconButton = (props: TconButtonProp) => {
 
   return (
     <button
+      {...rest}
       className={buttonClassName}
       style={{
         ...style,
