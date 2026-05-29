@@ -1,5 +1,6 @@
 import { getCurrentUserFn } from "@/server/auth";
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import { normalizeRole } from "@/utils/role";
 import LandingPage from "@/routes/-components/LandingPage";
 import {
   MarketingErrorComponent,
@@ -12,7 +13,8 @@ export const Route = createFileRoute("/")({
   beforeLoad: async () => {
     const { user } = await getCurrentUserFn();
     if (user) {
-      const target = user.role === "teacher" ? "/teacher" : "/learner";
+      const target =
+        normalizeRole(user.role) === "teacher" ? "/teacher" : "/learner";
       throw redirect({ to: target });
     }
   },

@@ -58,6 +58,7 @@ const PORTALS: TPortal[] = [
 const ROLE_PORTALS: Record<string, string[]> = {
   learner: ["learner"],
   teacher: ["learner", "teacher"],
+  instructor: ["learner", "teacher"],
   reviewer: ["learner", "reviewer"],
   admin: ["learner", "teacher", "reviewer", "admin"],
 };
