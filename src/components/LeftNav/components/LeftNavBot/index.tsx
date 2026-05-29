@@ -36,10 +36,10 @@ const PORTALS: TPortal[] = [
     labelKey: "common.switch_to_learner",
   },
   {
-    key: "teacher",
-    path: "/teacher",
+    key: "instructor",
+    path: "/instructor",
     icon: "local_library",
-    labelKey: "common.switch_to_teacher",
+    labelKey: "common.switch_to_instructor",
   },
   {
     key: "reviewer",
@@ -57,10 +57,9 @@ const PORTALS: TPortal[] = [
 
 const ROLE_PORTALS: Record<string, string[]> = {
   learner: ["learner"],
-  teacher: ["learner", "teacher"],
-  instructor: ["learner", "teacher"],
+  instructor: ["learner", "instructor"],
   reviewer: ["learner", "reviewer"],
-  admin: ["learner", "teacher", "reviewer", "admin"],
+  admin: ["learner", "instructor", "reviewer", "admin"],
 };
 
 const LeftNavBot = () => {

@@ -18,7 +18,7 @@ const LeftNavItem = (props: TLeftNavItemProps) => {
       <Link
         className="link-box"
         to={href}
-        activeOptions={{ includeSearch: true, exact: href === "/learner/" }}
+        activeOptions={{ includeSearch: true, exact: true }}
       >
         <div className="icon-box">
           <Icon name={iconName} className={className} />
