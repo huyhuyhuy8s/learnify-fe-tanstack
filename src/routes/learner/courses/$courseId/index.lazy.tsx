@@ -1,14 +1,10 @@
-import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { Activity, useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { toast } from "sonner";
 import Card from "@/components/Card";
 import DecorationCard from "@/components/DecorationCard";
 import Empty from "@/components/Empty";
 import Icon from "@/components/Icon";
 import NotFound from "@/components/NotFound";
 import TextButton from "@/components/TextButton";
+import { useLayout } from "@/contexts/LayoutContext";
 import {
   useCourseProgress,
   useCreateReview,
@@ -17,13 +13,18 @@ import {
 } from "@/hooks/useCourseDetail";
 import { MOCK_COMMENT } from "@/mock";
 import { useAuthStore } from "@/store/authStore";
-import { useLayout } from "@/contexts/LayoutContext";
 import { COLORS } from "@/styles/colors";
 import type { TProgress, TStatusCard } from "@/types/global";
 import { formatDate } from "@/utils";
 import { courseQueryOptions } from "@/utils/courses";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
+import { Activity, Suspense, useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 import CommentForm from "../-components/CommentForm";
 import CommentItem from "../-components/CommentItem";
+import TetrisLoader from "@/components/TetrisLoader";
 
 export const Route = createLazyFileRoute("/learner/courses/$courseId/")({
   component: CourseComponent,
@@ -205,72 +206,74 @@ function CourseComponent() {
 
   return (
     <div className="course__container">
-      <div className="course__item-list">
-        <DecorationCard
-          listBadge={
-            <TextButton
-              text={t("course_detail.badge_text")}
-              size="tiny"
-              type="special"
-              typeSpecial="course"
-              backgroundColor={COLORS.navy500}
-              color={COLORS.neutral100}
-              onClick={() => {}}
-            />
-          }
-          typeSpecial="course"
-          title={courseDisplay.title}
-          status={courseDisplay.status}
-          listFeature={courseDisplay.listFeature}
-          percentage={courseDisplay.percentage}
-        />
-        {courseDisplay.abstract && (
-          <p className="course__abstract">{courseDisplay.abstract}</p>
-        )}
-        <div className="course__controller">
-          {!isEnrolled && (
-            <TextButton
-              text={
-                enrollCourseMutation.isPending
-                  ? t("course_detail.processing")
-                  : t("course_detail.enroll")
-              }
-              size="small"
-              icon="school"
-              type="primary"
-              typeSpecial="course"
-              onClick={handleEnrollCourse}
-              disabled={enrollCourseMutation.isPending}
-            />
-          )}
-
-          <TextButton
-            text={t("course_detail.show_feedback")}
-            size="small"
-            icon="feedback"
-            type="outlined"
+      <Suspense fallback={<TetrisLoader />}>
+        <div className="course__item-list">
+          <DecorationCard
+            listBadge={
+              <TextButton
+                text={t("course_detail.badge_text")}
+                size="tiny"
+                type="special"
+                typeSpecial="course"
+                backgroundColor={COLORS.navy500}
+                color={COLORS.neutral100}
+                onClick={() => {}}
+              />
+            }
             typeSpecial="course"
-            onClick={() => setShowComment((prev) => !prev)}
+            title={courseDisplay.title}
+            status={courseDisplay.status}
+            listFeature={courseDisplay.listFeature}
+            percentage={courseDisplay.percentage}
           />
-        </div>
-        <div className="course__list">
-          {lessonsDisplay.map((lesson) => (
-            <Card
-              key={lesson.id}
-              typeSpecial={lesson.typeSpecial}
-              title={lesson.title}
-              description={lesson.description}
-              duration={lesson.duration}
-              status={lesson.status}
-              percentage={lesson.percentage}
-              onClick={() =>
-                handleLessonClick(lesson.id, lesson.status === "locked")
-              }
-              disabled={lesson.status === "locked"}
+          {courseDisplay.abstract && (
+            <p className="course__abstract">{courseDisplay.abstract}</p>
+          )}
+          <div className="course__controller">
+            {!isEnrolled && (
+              <TextButton
+                text={
+                  enrollCourseMutation.isPending
+                    ? t("course_detail.processing")
+                    : t("course_detail.enroll")
+                }
+                size="small"
+                icon="school"
+                type="primary"
+                typeSpecial="course"
+                onClick={handleEnrollCourse}
+                disabled={enrollCourseMutation.isPending}
+              />
+            )}
+
+            <TextButton
+              text={t("course_detail.show_feedback")}
+              size="small"
+              icon="feedback"
+              type="outlined"
+              typeSpecial="course"
+              onClick={() => setShowComment((prev) => !prev)}
             />
-          ))}
+          </div>
+          <div className="course__list">
+            {lessonsDisplay.map((lesson) => (
+              <Card
+                key={lesson.id}
+                typeSpecial={lesson.typeSpecial}
+                title={lesson.title}
+                description={lesson.description}
+                duration={lesson.duration}
+                status={lesson.status}
+                percentage={lesson.percentage}
+                onClick={() =>
+                  handleLessonClick(lesson.id, lesson.status === "locked")
+                }
+                disabled={lesson.status === "locked"}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      </Suspense>
       <Activity mode={showComment ? "visible" : "hidden"}>
         <div className="course__comment">
           <TextButton

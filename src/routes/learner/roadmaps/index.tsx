@@ -1,17 +1,61 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Suspense, useMemo } from "react";
-import { Trans, useTranslation } from "react-i18next";
+import "./roadmaps.scss";
+
 import Card from "@/components/Card";
+import ErrorScene from "@/components/ErrorScene";
 import Search from "@/components/Search";
 import TetrisLoader from "@/components/TetrisLoader";
-import CategoryItem from "./-components/CategoryItem";
-import { CATEGORIES } from "./-constants";
+import TextButton from "@/components/TextButton";
 import { useSuspenseAllRoadmaps } from "@/hooks/useRoadmap";
 import { createLearnerHead } from "@/utils";
-import "./style.scss";
+import {
+  createFileRoute,
+  useNavigate,
+  useRouter,
+} from "@tanstack/react-router";
+import { Suspense, useMemo } from "react";
+import { Trans, useTranslation } from "react-i18next";
+import CategoryItem from "./-components/CategoryItem";
+import { CATEGORIES } from "./-constants";
+
+function RoadmapsErrorComponent() {
+  const router = useRouter();
+  const { t } = useTranslation();
+  return (
+    <ErrorScene>
+      <ErrorScene.Header>
+        <ErrorScene.Title errorCode={500}>
+          {t("errors.server_error")}
+        </ErrorScene.Title>
+        <ErrorScene.Description>
+          {t("errors.load_roadmaps")}
+        </ErrorScene.Description>
+      </ErrorScene.Header>
+      <ErrorScene.Content>
+        <div className="error-scene__control">
+          <TextButton
+            text={t("errors.try_again")}
+            onClick={() => router.invalidate()}
+            className="error-scene__btn"
+            size="medium"
+            icon="refresh"
+          />
+          <TextButton
+            text={t("errors.go_back")}
+            onClick={() => window.history.back()}
+            className="error-scene__btn error-scene__btn--secondary"
+            size="medium"
+            icon="arrow_back"
+            type="outlined"
+          />
+        </div>
+      </ErrorScene.Content>
+    </ErrorScene>
+  );
+}
 
 export const Route = createFileRoute("/learner/roadmaps/")({
   head: () => createLearnerHead("Roadmaps"),
+  errorComponent: RoadmapsErrorComponent,
   component: RoadmapsPage,
 });
 

@@ -1,10 +1,5 @@
-import {
-  createFileRoute,
-  useNavigate,
-  useRouter,
-} from "@tanstack/react-router";
-import { Suspense } from "react";
-import { Trans, useTranslation } from "react-i18next";
+import "./courses.scss";
+
 import Card from "@/components/Card";
 import ErrorScene from "@/components/ErrorScene";
 import Search from "@/components/Search";
@@ -15,7 +10,13 @@ import {
   type TBackendCourse,
 } from "@/hooks/useCourses";
 import { createLearnerHead } from "@/utils";
-import "./style.scss";
+import {
+  createFileRoute,
+  useNavigate,
+  useRouter,
+} from "@tanstack/react-router";
+import { Suspense } from "react";
+import { Trans, useTranslation } from "react-i18next";
 
 function CoursesErrorComponent() {
   const router = useRouter();
@@ -86,8 +87,8 @@ function CoursesPage() {
       }[]);
 
   return (
-    <Suspense fallback={<TetrisLoader />}>
-      <div className="courses-container">
+    <div className="courses-container">
+      <Suspense fallback={<TetrisLoader />}>
         <div className="courses-container__title">
           <h2 className="courses-container__title-context medium">
             <Trans
@@ -153,7 +154,7 @@ function CoursesPage() {
             ))}
           </div>
         </div>
-      </div>
-    </Suspense>
+      </Suspense>
+    </div>
   );
 }

@@ -63,3 +63,13 @@
     }
   }
 }
+
+@include break(xs) {
+  .roadmaps-container {
+    padding: 0 toRem(12);
+
+    &__categories-list {
+      gap: toRem(20);
+    }
+  }
+}
