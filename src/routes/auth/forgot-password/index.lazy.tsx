@@ -1,6 +1,8 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import ForgotPasswordStep1 from "../-components/ForgotPasswordStep1";
 import ForgotPasswordStep2 from "../-components/ForgotPasswordStep2";
+import Logo from "@/components/Logo";
+import AuthControls from "../-components/AuthControls";
 import { useForgotPasswordForm } from "../-hooks/useForgotPasswordForm";
 
 export const Route = createLazyFileRoute("/auth/forgot-password/")({
@@ -26,6 +28,8 @@ function ForgotPasswordPage() {
 
   return (
     <div className="forgot-password" id="forgot-password-page">
+      <Logo size="medium" to="/" className="forgot-password__logo" />
+      <AuthControls className="forgot-password__auth-controls" />
       {step === 1 && (
         <ForgotPasswordStep1
           data={step1Data}
