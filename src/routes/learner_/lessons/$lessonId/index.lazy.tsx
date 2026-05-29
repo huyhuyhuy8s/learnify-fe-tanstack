@@ -1,7 +1,7 @@
 import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import TetrisLoader from "@/components/TetrisLoader";
-import { useCallback, useEffect, useEffectEvent, useRef } from "react";
+import { useCallback, useEffect, useEffectEvent, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import ChatArea from "../-components/ChatArea";
@@ -11,7 +11,10 @@ import TeacherPanel from "../-components/TeacherPanel";
 import useLessonDetail from "../-hooks/useLessonDetail";
 import useTeacher from "../-hooks/useTeacher";
 import { graphqlClient } from "@/lib/graphql";
-import { FIND_ENROLLMENT_QUERY } from "@/graphql/course";
+import {
+  FIND_ENROLLMENT_QUERY,
+  GET_LESSONS_BY_COURSE_ID_QUERY,
+} from "@/graphql/course";
 import { useAuthStore } from "@/store";
 
 export const Route = createLazyFileRoute("/learner_/lessons/$lessonId/")({
@@ -116,6 +119,32 @@ function LessonDetail() {
     enabled: !!courseId && !!userId && !!data?.lesson,
   });
 
+  const { data: courseLessons } = useQuery({
+    queryKey: ["course-lessons-list", courseId],
+    queryFn: async () => {
+      if (!courseId) return [];
+      const res = await graphqlClient.request<{
+        getLessonsByCourseId: { lessons: { id: string; lessonName: string }[] };
+      }>(GET_LESSONS_BY_COURSE_ID_QUERY, { id: courseId });
+      return res.getLessonsByCourseId.lessons;
+    },
+    enabled: !!courseId,
+  });
+
+  const currentLessonIndex = useMemo(() => {
+    if (!courseLessons) return -1;
+    return courseLessons.findIndex((l) => l.id === lessonId);
+  }, [courseLessons, lessonId]);
+
+  const nextLesson = useMemo(() => {
+    if (
+      currentLessonIndex < 0 ||
+      currentLessonIndex >= (courseLessons?.length ?? 0) - 1
+    )
+      return null;
+    return courseLessons![currentLessonIndex + 1];
+  }, [currentLessonIndex, courseLessons]);
+
   useEffect(() => {
     if (isCheckingEnrollment || !courseId) return;
     if (!enrollmentData?.findEnrollment) {
@@ -160,6 +189,8 @@ function LessonDetail() {
         handleLessonComplete={handleLessonComplete}
         setAnimation={setAnimation}
         setStatus={setStatus}
+        courseId={courseId ?? ""}
+        nextLessonId={nextLesson?.id}
       />
 
       {showChatArea && (

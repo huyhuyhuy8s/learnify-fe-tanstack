@@ -14,11 +14,11 @@ const LeftNavItem = (props: TLeftNavItemProps) => {
   const { iconName, label, href, className = "" } = props;
 
   return (
-    <div className="left-nav-top__item">
+    <div className="left-nav-item">
       <Link
         className="link-box"
         to={href}
-        activeOptions={{ includeSearch: true, exact: href === "/learner/" }}
+        activeOptions={{ includeSearch: true, exact: true }}
       >
         <div className="icon-box">
           <Icon name={iconName} className={className} />

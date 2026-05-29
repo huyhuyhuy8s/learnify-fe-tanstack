@@ -10,6 +10,8 @@ import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { Suspense, type CSSProperties, type ReactNode } from "react";
 import { LearnerErrorComponent } from "./-components/LearnerErrorComponent";
 import classNames from "classnames";
+import { getCurrentUserFn } from "@/server/auth";
+import { requireAuth } from "@/utils/authGuard";
 
 type TLearnerComponentHolder = {
   className?: string;
@@ -35,6 +37,10 @@ function LearnerComponentHolder(props: TLearnerComponentHolder) {
 }
 
 export const Route = createFileRoute("/learner")({
+  beforeLoad: async () => {
+    const { user } = await getCurrentUserFn();
+    requireAuth({ user, isAuthenticated: !!user });
+  },
   head: () => ({
     ...createLearnerHead("Home"),
   }),

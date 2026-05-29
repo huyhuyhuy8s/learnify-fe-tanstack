@@ -21,7 +21,7 @@ export default function LandingPage() {
       <PillTopNav />
       <HeroSection
         onLearnerClick={() => navigate({ to: "/learner" })}
-        onTeacherClick={() => navigate({ to: "/teacher" })}
+        onTeacherClick={() => navigate({ to: "/instructor" })}
       />
       <LandingStats stats={ABOUT_STATS} />
       <LandingHow steps={HOW_IT_WORKS} />

@@ -17,7 +17,7 @@ export const Route = createFileRoute("/about-us/")({
       ...seo({
         title: "About Us | Learnify",
         description:
-          "Learnify is an educational platform that combines AI-powered 3D lecturers with hands-on labs. Built for learners, teachers, and academic institutions.",
+          "Learnify is an educational platform that combines AI-powered 3D lecturers with hands-on labs. Built for learners, instructors, and academic institutions.",
       }),
     ],
   }),

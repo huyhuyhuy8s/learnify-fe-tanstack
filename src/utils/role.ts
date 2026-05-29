@@ -2,7 +2,7 @@ import type { TRole } from "@/types/global";
 
 const VALID_ROLES: readonly TRole[] = [
   "learner",
-  "teacher",
+  "instructor",
   "reviewer",
   "admin",
 ];

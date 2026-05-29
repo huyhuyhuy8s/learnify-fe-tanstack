@@ -2,6 +2,7 @@
   "sidebar": {
     "search": "Search",
     "learnify": "Learnify",
+    "dashboard": "Dashboard",
     "courses": "Courses",
     "roadmaps": "Roadmaps",
     "friends": "Friends",
@@ -12,7 +13,10 @@
     "toggle_dark_mode": "Toggle dark mode",
     "language": "Language",
     "switch_to_learner": "Switch to Learner",
-    "switch_to_teacher": "Switch to Teacher",
+    "switch_to_instructor": "Switch to Instructor",
+    "switch_to_reviewer": "Switch to Reviewer",
+    "switch_to_admin": "Switch to Admin",
+    "switch_portal": "Switch Portal",
     "menu": "Menu",
     "close_menu": "Close menu"
   },
@@ -268,7 +272,9 @@
   "lesson_complete": {
     "title": "Lesson Complete!",
     "description": "You have finished this lesson. Great work!",
-    "back_to_dashboard": "Back to Dashboard"
+    "back_to_dashboard": "Back to Dashboard",
+    "back_to_course": "Back to Course",
+    "next_lesson": "Next Lesson"
   },
   "chat_message_wrapper": {
     "preparing_lesson": "Preparing your lesson...",
@@ -420,9 +426,9 @@
       "headline_line1": "Smart Learning.",
       "headline_line2": "Real Skills.",
       "headline_line3": "Ready Careers.",
-      "subtitle": "AI-Powered 3D lecturers guide you through hands-on labs. Built for learners, teachers, and academic institutions ready to transform education.",
+      "subtitle": "AI-Powered 3D lecturers guide you through hands-on labs. Built for learners, instructors, and academic institutions ready to transform education.",
       "learner_cta": "I'm a Learner",
-      "teacher_cta": "I'm a Teacher"
+      "instructor_cta": "I'm an Instructor"
     },
     "stats": {
       "title": "Trusted by <Beauty>Thousands</Beauty>"
@@ -455,8 +461,8 @@
         "desc": "Master skills through AI-guided 3D lectures and interactive labs. Learn at your own pace with personalized feedback.",
         "cta": "Start Learning"
       },
-      "teachers": {
-        "title": "For Teachers",
+      "instructors": {
+        "title": "For Instructors",
         "desc": "Create courses, manage students, and track progress with powerful analytics. Bring your curriculum to life with 3D content.",
         "cta": "Start Teaching"
       },
@@ -610,8 +616,8 @@
         "category": "Research",
         "readTime": "6 min read"
       },
-      "teacher-toolkit": {
-        "title": "The Modern Teacher's Toolkit",
+      "instructor-toolkit": {
+        "title": "The Modern Instructor's Toolkit",
         "excerpt": "How educators are leveraging AI-powered analytics and 3D content to create more engaging classrooms.",
         "category": "Teaching",
         "readTime": "5 min read"

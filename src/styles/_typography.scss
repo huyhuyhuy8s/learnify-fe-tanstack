@@ -54,7 +54,8 @@ h6 {
 
 p,
 small,
-.smaller {
+.smaller,
+a {
   color: $black;
   font-weight: $fw-regular;
   line-height: 1.25;
@@ -64,7 +65,8 @@ small,
   }
 }
 
-p {
+p,
+a {
   font-size: $fs-paragraph;
 }
 
@@ -96,14 +98,22 @@ small {
   font-weight: $fw-black;
 }
 
+*:visited {
+  color: $black;
+}
+
 a.link {
   color: $green-400;
   text-decoration-line: underline;
   @include transition;
   transition-property: color;
 
-  &:hover {
+  &:visited {
     color: $green-600;
+  }
+
+  &:hover {
+    color: $green-700;
   }
 
   &:active {

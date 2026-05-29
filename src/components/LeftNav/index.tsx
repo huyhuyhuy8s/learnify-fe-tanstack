@@ -2,83 +2,48 @@ import LeftNavTop from "./components/LeftNavTop";
 import LeftNavBot from "./components/LeftNavBot";
 import Controller from "./components/Controller";
 import classnames from "classnames";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { useRouterState } from "@tanstack/react-router";
 import { useScrollTop } from "@/hooks/useScrollTop";
-import Icon from "@/components/Icon";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import "./style.scss";
 
 type TLeftNavProps = {
   className?: string;
-  compact?: boolean;
 };
 
 const LeftNav = (props: TLeftNavProps) => {
-  const { className, compact = false } = props;
-  const [active, setActive] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const pathnames = useRouterState({
+  const { className } = props;
+  const [collapsed, setCollapsed] = useState(false);
+  const isMobile = useIsMobile();
+  const pathname = useRouterState({
     select: (state) => state.location.pathname,
   });
   const isTop = useScrollTop();
 
+  const active = isMobile ? false : !collapsed;
   const navClassNames = classnames(
     "left-nav",
-    { active: active, top: isTop && !compact, compact: compact },
+    { active, top: isTop },
     className
   );
 
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 768px)");
-
-    const handleMediaQueryChange = (
-      e: MediaQueryListEvent | MediaQueryList
-    ) => {
-      const matches = e.matches;
-      setIsMobile(matches);
-      if (matches) {
-        setActive(false);
-      } else {
-        setActive(true);
-      }
-    };
-
-    handleMediaQueryChange(mediaQuery);
-
-    mediaQuery.addEventListener("change", handleMediaQueryChange);
-    return () =>
-      mediaQuery.removeEventListener("change", handleMediaQueryChange);
-  }, []);
-
-  const handleOverlayClick = () => {
-    setActive(false);
-  };
-
-  if (compact) {
-    return (
-      <nav className={navClassNames}>
-        <button aria-label="Toggle navigation menu">
-          <Icon name="menu" />
-        </button>
-      </nav>
-    );
-  }
+  const handleToggle = () => setCollapsed((c) => !c);
+  const handleOverlayClick = () => setCollapsed(false);
 
   return (
     <>
       {active && isMobile && (
         <div
-          ref={overlayRef}
           className="left-nav__overlay"
           onClick={handleOverlayClick}
           data-lenis-prevent
         />
       )}
       <nav className={navClassNames} data-lenis-prevent>
-        <LeftNavTop pathname={pathnames} />
+        <LeftNavTop pathname={pathname} />
         <LeftNavBot />
-        <Controller active={active} onClick={() => setActive(!active)} />
+        <Controller active={active} onClick={handleToggle} />
       </nav>
     </>
   );

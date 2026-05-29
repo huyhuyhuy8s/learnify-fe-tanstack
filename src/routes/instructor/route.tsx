@@ -5,15 +5,21 @@ import TopNav from "@/components/TopNav";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { Suspense } from "react";
 import "./style.scss";
+import { getCurrentUserFn } from "@/server/auth";
+import { requireRole } from "@/utils/authGuard";
 
-export const Route = createFileRoute("/teacher")({
+export const Route = createFileRoute("/instructor")({
+  beforeLoad: async () => {
+    const { user } = await getCurrentUserFn();
+    requireRole("instructor", "admin")({ user, isAuthenticated: !!user });
+  },
   head: () => ({
-    meta: [{ title: "Teacher | Learnify" }],
+    meta: [{ title: "Instructor | Learnify" }],
   }),
-  component: TeacherLayout,
+  component: InstructorLayout,
 });
 
-function TeacherLayout() {
+function InstructorLayout() {
   return (
     <>
       <LeftNav />

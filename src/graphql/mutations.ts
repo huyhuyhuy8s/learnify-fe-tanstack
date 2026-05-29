@@ -102,6 +102,25 @@ export const MARK_COMPLETE_LESSON_MUTATION = `
   }
 `;
 
+export const GENERATE_AUTO_QUIZ_MUTATION = `
+  mutation GenerateAutoQuiz($lessonId: String!) {
+    generateAutoQuiz(lessonId: $lessonId) {
+      id
+      lessonId
+      name
+      questions {
+        id
+        text
+        options {
+          id
+          isCorrect
+          text
+        }
+      }
+    }
+  }
+`;
+
 export const UPDATE_PROGRESS_MUTATION = `
   mutation UpdateProgress($input: UpdateProgressInput!) {
     updateProgress(input: $input) {

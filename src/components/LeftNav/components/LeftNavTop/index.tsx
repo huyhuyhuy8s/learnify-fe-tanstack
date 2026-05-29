@@ -1,3 +1,4 @@
+import "./style.scss";
 import { useTranslation } from "react-i18next";
 import IconButton from "@/components/IconButton";
 import { useLayout } from "@/contexts/LayoutContext";
