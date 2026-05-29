@@ -5,8 +5,14 @@ import TopNav from "@/components/TopNav";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { Suspense } from "react";
 import "./style.scss";
+import { getCurrentUserFn } from "@/server/auth";
+import { requireRole } from "@/utils/authGuard";
 
 export const Route = createFileRoute("/teacher")({
+  beforeLoad: async () => {
+    const { user } = await getCurrentUserFn();
+    requireRole("teacher", "admin")({ user, isAuthenticated: !!user });
+  },
   head: () => ({
     meta: [{ title: "Teacher | Learnify" }],
   }),
