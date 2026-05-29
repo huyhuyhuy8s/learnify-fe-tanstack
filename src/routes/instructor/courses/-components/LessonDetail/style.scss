@@ -1,0 +1,23 @@
+@use "@styles/colors" as *;
+@use "@styles/functions" as *;
+
+.lesson-detail {
+  display: flex;
+  flex-direction: column;
+  gap: toRem(12);
+
+  &__title {
+    font-size: toRem(20);
+    color: $neutral-900;
+  }
+
+  &__abstract {
+    color: $neutral-600;
+    line-height: 1.6;
+  }
+
+  &__date {
+    font-size: toRem(12);
+    color: $neutral-400;
+  }
+}
