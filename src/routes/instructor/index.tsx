@@ -1,61 +1,77 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { getCurrentUserFn } from "@/server/auth";
-import Search from "@/components/Search";
-import TextButton from "@/components/TextButton";
+import { createFileRoute } from "@tanstack/react-router";
+import { useTranslation, Trans } from "react-i18next";
+import { useAuthStore } from "@/store";
+import { useInstructorDashboard } from "@/hooks/useCourses";
+import CubeLoader from "@/components/CubeLoader";
+import StatCard from "./-components/StatCard";
+import RecentCourses from "./-components/RecentCourses";
+import QuickActions from "./-components/QuickActions";
 import "./style.scss";
 
 export const Route = createFileRoute("/instructor/")({
-  beforeLoad: async () => {
-    const { user } = await getCurrentUserFn();
-    return { user };
-  },
   component: InstructorHome,
 });
 
 function InstructorHome() {
-  const navigate = useNavigate();
+  const { t } = useTranslation();
+  const user = useAuthStore((s) => s.user);
+  const { data, isLoading } = useInstructorDashboard(user?.id ?? "");
 
   return (
     <div className="instructor-home">
       <div className="instructor-home__hero">
         <h1 className="instructor-home__title semibold">
-          Welcome to the <span className="beauty">Instructor Dashboard</span>
+          <Trans
+            i18nKey="dashboard.welcome_title"
+            values={{ name: user?.username ?? "Instructor" }}
+            components={{ Beauty: <span className="beauty" /> }}
+          />
         </h1>
         <p className="instructor-home__subtitle regular">
-          Create courses, manage students, and track learning progress.
+          {t("dashboard.welcome_subtitle")}
         </p>
       </div>
-      <Search placeholder="Search your courses..." />
-      <div className="instructor-home__actions">
-        <TextButton
-          text="Create Course"
-          size="medium"
-          icon="add"
-          onClick={() => {}}
-        />
-        <TextButton
-          text="Manage Courses"
-          size="medium"
-          type="outlined"
-          icon="book"
-          onClick={() =>
-            navigate({
-              to: "/learner/courses",
-            })
-          }
-        />
-        <TextButton
-          text="Switch to Learner"
-          size="medium"
-          type="outlined"
-          icon="school"
-          onClick={() =>
-            navigate({
-              to: "/learner",
-            })
-          }
-        />
-      </div>
+
+      {isLoading ? (
+        <div className="instructor-home__loader">
+          <CubeLoader />
+        </div>
+      ) : data ? (
+        <div className="instructor-home__grid">
+          <div className="instructor-home__main">
+            <div className="instructor-home__stats">
+              <StatCard
+                icon="menu_book"
+                label={t("dashboard.total_courses")}
+                value={data.totalCourses}
+                accent="var(--color-green-600)"
+              />
+              <StatCard
+                icon="check_circle"
+                label={t("dashboard.published")}
+                value={data.publishedCount}
+                accent="var(--color-accent-emerald)"
+              />
+              <StatCard
+                icon="description"
+                label={t("dashboard.pending")}
+                value={data.pendingCount}
+                accent="var(--color-mode-yellow)"
+              />
+              <StatCard
+                icon="school"
+                label={t("dashboard.total_lessons")}
+                value={data.totalLessons}
+                accent="var(--color-accent-blue-celeste)"
+              />
+            </div>
+            <RecentCourses courses={data.recentCourses} />
+          </div>
+          <aside className="instructor-home__sidebar">
+            <QuickActions />
+          </aside>
+        </div>
+      ) : null}
     </div>
   );
 }

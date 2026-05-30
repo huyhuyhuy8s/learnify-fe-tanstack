@@ -295,6 +295,28 @@ export const CREATE_COURSE_MUTATION = `
   }
 `;
 
+export const GET_INSTRUCTOR_DASHBOARD = `
+  query GetInstructorDashboard($userId: String!) {
+    getCourseByUserId(userId: $userId) {
+      id
+      courseName
+      abstract
+      keyLearnings
+      status
+      createdAt
+      updatedAt
+    }
+    getAllLessons {
+      count
+      lessons {
+        id
+        courseId
+        lessonName
+      }
+    }
+  }
+`;
+
 export const DELETE_COURSE_MUTATION = `
   mutation DeleteCourse($id: String!) {
     deleteCourse(id: $id) {
