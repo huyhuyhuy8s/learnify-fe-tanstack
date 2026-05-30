@@ -6,8 +6,10 @@ import {
   useSuspenseGetAllCourses,
   type TBackendCourse,
 } from "@/hooks/useCourses";
+import { useGetUserProfile } from "@/hooks/useProfile";
 import { MOCK_COURSES } from "@/mock";
 import { getCurrentUserFn } from "@/server/auth";
+import { useAuthStore } from "@/store";
 import { createLearnerHead } from "@/utils";
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import React, { Suspense } from "react";
@@ -35,6 +37,8 @@ function Dashboard() {
   const { data } = useSuspenseGetAllCourses(0);
   const navigate = useNavigate();
   const isBackendSuccess = data?.isSuccess && data.courses.length > 0;
+  const user = useAuthStore((s) => s.user);
+  const { data: profile } = useGetUserProfile(user?.id);
 
   const displayCourse = isBackendSuccess
     ? data.courses.map((course: TBackendCourse) => ({
@@ -86,7 +90,10 @@ function Dashboard() {
             <DashboardAchievementsWidget />
           </div>
           <div className="dashboard__sidebar-widget">
-            <DashboardProgressWidget />
+            <DashboardProgressWidget
+              inProgress={profile?.countInProgressEnrollments.count ?? 0}
+              completed={profile?.countSuccessEnrollments.count ?? 0}
+            />
           </div>
         </div>
       </Suspense>
