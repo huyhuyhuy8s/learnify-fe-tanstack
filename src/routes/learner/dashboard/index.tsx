@@ -6,7 +6,7 @@ import {
   useSuspenseGetAllCourses,
   type TBackendCourse,
 } from "@/hooks/useCourses";
-import { useGetUserProfile } from "@/hooks/useProfile";
+import { useLearnerProgress } from "@/hooks/useCourseDetail";
 import { MOCK_COURSES } from "@/mock";
 import { getCurrentUserFn } from "@/server/auth";
 import { useAuthStore } from "@/store";
@@ -38,7 +38,7 @@ function Dashboard() {
   const navigate = useNavigate();
   const isBackendSuccess = data?.isSuccess && data.courses.length > 0;
   const user = useAuthStore((s) => s.user);
-  const { data: profile } = useGetUserProfile(user?.id);
+  const { data: progress } = useLearnerProgress(user?.id);
 
   const displayCourse = isBackendSuccess
     ? data.courses.map((course: TBackendCourse) => ({
@@ -49,6 +49,9 @@ function Dashboard() {
         duration: "45 mins",
         status: "default" as const,
         percentage: 0,
+        badgeStatus: (course.status === "Published" ? "public" : "private") as
+          | "public"
+          | "private",
       }))
     : MOCK_COURSES;
 
@@ -67,6 +70,7 @@ function Dashboard() {
                   duration={course.duration}
                   status={course.status}
                   percentage={course.percentage}
+                  badgeStatus={course.badgeStatus}
                   onClick={() =>
                     navigate({
                       to: "/learner/courses/$courseId",
@@ -91,8 +95,8 @@ function Dashboard() {
           </div>
           <div className="dashboard__sidebar-widget">
             <DashboardProgressWidget
-              inProgress={profile?.countInProgressEnrollments.count ?? 0}
-              completed={profile?.countSuccessEnrollments.count ?? 0}
+              completedCourses={progress?.completedCoursesCount ?? 0}
+              completedLessons={progress?.completedLessonsCount ?? 0}
             />
           </div>
         </div>

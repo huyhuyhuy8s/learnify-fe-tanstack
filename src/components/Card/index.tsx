@@ -15,6 +15,7 @@ const Card = (props: TCourseCardProps) => {
     disabled = false,
     status = "default",
     percentage = 0,
+    badgeStatus,
   } = props;
 
   return (
@@ -39,6 +40,15 @@ const Card = (props: TCourseCardProps) => {
             type="special"
             typeSpecial={typeSpecial}
           />
+          {badgeStatus && (
+            <TextButton
+              onClick={() => {}}
+              text="text"
+              size="tiny"
+              type="special"
+              typeSpecial={badgeStatus}
+            />
+          )}
         </div>
         <h5 className="medium" title={title}>
           {title}

@@ -9,6 +9,7 @@ export type MockCourse = {
   status?: TStatusCard;
   listFeature?: string[];
   percentage?: TProgress;
+  badgeStatus?: "public" | "private";
 };
 
 export const MOCK_COURSES: MockCourse[] = [

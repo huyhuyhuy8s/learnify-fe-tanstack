@@ -210,15 +210,28 @@ function CourseComponent() {
         <div className="course__item-list">
           <DecorationCard
             listBadge={
-              <TextButton
-                text={t("course_detail.badge_text")}
-                size="tiny"
-                type="special"
-                typeSpecial="course"
-                backgroundColor={COLORS.navy500}
-                color={COLORS.neutral100}
-                onClick={() => {}}
-              />
+              <>
+                <TextButton
+                  text={t("course_detail.badge_text")}
+                  size="tiny"
+                  type="special"
+                  typeSpecial="course"
+                  backgroundColor={COLORS.navy500}
+                  color={COLORS.neutral100}
+                  onClick={() => {}}
+                />
+                <TextButton
+                  text="text"
+                  size="tiny"
+                  type="special"
+                  typeSpecial={
+                    getCourseById?.status === "Published" ? "public" : "private"
+                  }
+                  backgroundColor={COLORS.grey}
+                  color={COLORS.neutral100}
+                  onClick={() => {}}
+                />
+              </>
             }
             typeSpecial="course"
             title={courseDisplay.title}

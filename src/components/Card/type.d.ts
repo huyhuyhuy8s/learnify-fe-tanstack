@@ -10,6 +10,7 @@ export type TCourseCardProps = {
   disabled?: boolean;
   status?: TStatusCard;
   percentage?: number;
+  badgeStatus?: "public" | "private";
 };
 
 export type TUseSpecialCardFooterProps = {

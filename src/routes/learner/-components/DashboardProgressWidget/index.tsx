@@ -9,21 +9,21 @@ type TProgressPill = {
 };
 
 type TDashboardProgressWidgetProps = {
-  inProgress: number;
-  completed: number;
+  completedCourses: number;
+  completedLessons: number;
 };
 
 const DashboardProgressWidget = ({
-  inProgress,
-  completed,
+  completedCourses,
+  completedLessons,
 }: TDashboardProgressWidgetProps) => {
   const { t } = useTranslation();
 
   const pills: TProgressPill[] = [
     { typeSpecial: "roadmap", value: 0 },
-    { typeSpecial: "certificate", value: completed },
-    { typeSpecial: "course", value: inProgress },
-    { typeSpecial: "lesson", value: 0 },
+    { typeSpecial: "certificate", value: completedCourses },
+    { typeSpecial: "course", value: completedCourses },
+    { typeSpecial: "lesson", value: completedLessons },
     { typeSpecial: "lab", value: 0 },
   ];
 

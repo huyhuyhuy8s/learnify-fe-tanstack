@@ -75,6 +75,9 @@ function CoursesPage() {
         duration: "45 mins",
         status: "default" as const,
         percentage: 0,
+        badgeStatus: (course.status === "Published" ? "public" : "private") as
+          | "public"
+          | "private",
       }))
     : ([] as {
         id: string;
@@ -84,6 +87,7 @@ function CoursesPage() {
         duration: string;
         status: "default";
         percentage: number;
+        badgeStatus: "public" | "private";
       }[]);
 
   return (
@@ -144,6 +148,7 @@ function CoursesPage() {
                 duration={course.duration}
                 status={course.status}
                 percentage={course.percentage}
+                badgeStatus={course.badgeStatus}
                 onClick={() =>
                   navigate({
                     to: "/learner/courses/$courseId",

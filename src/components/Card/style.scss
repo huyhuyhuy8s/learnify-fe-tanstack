@@ -25,6 +25,10 @@
     gap: toRem(15);
     min-width: 0;
 
+    &.badge {
+      display: flex;
+    }
+
     h5 {
       text-align: left;
       display: -webkit-box;
