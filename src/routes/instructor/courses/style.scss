@@ -115,6 +115,12 @@
       border-color: $green-700;
     }
 
+    &__icon,
+    &__name,
+    &__info {
+      color: $black;
+    }
+
     &__info {
       display: flex;
       flex-direction: column;
@@ -195,6 +201,44 @@
     font-size: toRem(12);
     color: $accent-blaze;
     margin-top: toRem(2);
+  }
+
+  &__form-hint {
+    font-size: toRem(11);
+    color: $neutral-400;
+    margin-top: toRem(2);
+  }
+
+  &__price-wrapper {
+    display: flex;
+    align-items: center;
+    border: toRem(1) solid $neutral-250;
+    border-radius: toRem(8);
+    overflow: hidden;
+
+    &:focus-within {
+      border-color: $green-600;
+    }
+  }
+
+  &__price-currency {
+    padding: 0 toRem(12);
+    font-size: toRem(14);
+    font-weight: 600;
+    color: $neutral-500;
+    background: $neutral-150;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+  }
+
+  &__price-wrapper &__form-input {
+    border: none;
+    flex: 1;
+
+    &:focus {
+      border: none;
+    }
   }
 
   &__form-actions {

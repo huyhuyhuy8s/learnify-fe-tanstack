@@ -151,6 +151,17 @@ export const CREATE_LESSON_FROM_AI_MUTATION = `
   }
 `;
 
+export const DELETE_LESSON_MUTATION = `
+  mutation DeleteLesson($id: String!) {
+    deleteLesson(id: $id) {
+      id
+      lessonName
+      abstract
+      createdAt
+    }
+  }
+`;
+
 export const UPLOAD_DOCUMENT_MUTATION = `
   mutation UploadDocument($file: Upload!, $uploadedBy: String) {
     uploadDocument(file: $file, uploadedBy: $uploadedBy) {

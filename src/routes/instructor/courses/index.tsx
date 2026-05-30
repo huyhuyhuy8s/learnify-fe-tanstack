@@ -9,6 +9,7 @@ import {
   useDeleteCourse,
   useCreateLessonFromAi,
   useUploadDocument,
+  useDeleteLesson,
 } from "@/hooks/useCourses";
 import type { TBackendCourse } from "@/hooks/useCourses";
 import { createFileRoute } from "@tanstack/react-router";
@@ -27,6 +28,14 @@ export const Route = createFileRoute("/instructor/courses/")({
 });
 
 const COURSE_STATUSES = ["All", "Published", "Pending", "Rejected"] as const;
+const COURSE_STATUS_TRANSLATION_KEYS: Record<string, string> = {
+  All: "courses.status_all",
+  Published: "courses.status_published",
+  Pending: "courses.status_pending",
+  Rejected: "courses.status_rejected",
+};
+const tStatus = (t: (key: string) => string, status: string) =>
+  t(COURSE_STATUS_TRANSLATION_KEYS[status] ?? status);
 type TCourseStatus = (typeof COURSE_STATUSES)[number];
 
 type TLesson = {
@@ -63,6 +72,7 @@ function ManageCoursesPage() {
   const [showAddCourse, setShowAddCourse] = useState(false);
   const [courseName, setCourseName] = useState("");
   const [courseDescription, setCourseDescription] = useState("");
+  const [coursePrice, setCoursePrice] = useState(0);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [courseToDelete, setCourseToDelete] = useState<string | null>(null);
 
@@ -71,8 +81,10 @@ function ManageCoursesPage() {
   const [lessonDescription, setLessonDescription] = useState("");
   const [lessonFiles, setLessonFiles] = useState<File[]>([]);
   const [lessonErrors, setLessonErrors] = useState<Record<string, string>>({});
+  const [lessonToDelete, setLessonToDelete] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const createLesson = useCreateLessonFromAi();
+  const deleteLesson = useDeleteLesson();
   const uploadDoc = useUploadDocument();
 
   const { data: courseData, isLoading: isCourseLoading } = useGetCoursesById(
@@ -110,12 +122,18 @@ function ManageCoursesPage() {
     }
     setErrors({});
     createCourse.mutate(
-      { courseName: result.data.courseName, abstract: result.data.abstract },
+      {
+        courseName: result.data.courseName,
+        abstract: result.data.abstract,
+        isFree: coursePrice === 0,
+        originalPrice: coursePrice,
+      },
       {
         onSuccess: () => {
           setShowAddCourse(false);
           setCourseName("");
           setCourseDescription("");
+          setCoursePrice(0);
           setErrors({});
         },
       }
@@ -215,6 +233,7 @@ function ManageCoursesPage() {
           setShowAddCourse(false);
           setCourseName("");
           setCourseDescription("");
+          setCoursePrice(0);
           setErrors({});
         }}
         title={t("sidebar.add_course")}
@@ -259,6 +278,26 @@ function ManageCoursesPage() {
               </span>
             )}
           </label>
+          <label className="manage-courses__form-label">
+            {t("courses.price")}
+            <div className="manage-courses__price-wrapper">
+              <span className="manage-courses__price-currency">₫</span>
+              <input
+                type="number"
+                min={0}
+                className="manage-courses__form-input"
+                value={coursePrice}
+                onChange={(e) =>
+                  setCoursePrice(Math.max(0, Number(e.target.value)))
+                }
+              />
+            </div>
+            {coursePrice === 0 && (
+              <span className="manage-courses__form-hint">
+                {t("courses.free_hint")}
+              </span>
+            )}
+          </label>
           <div className="manage-courses__form-actions">
             <button
               className="manage-courses__form-cancel"
@@ -266,6 +305,7 @@ function ManageCoursesPage() {
                 setShowAddCourse(false);
                 setCourseName("");
                 setCourseDescription("");
+                setCoursePrice(0);
                 setErrors({});
               }}
             >
@@ -447,11 +487,42 @@ function ManageCoursesPage() {
         </div>
       </Modal>
 
+      <Modal
+        open={!!lessonToDelete}
+        onClose={() => setLessonToDelete(null)}
+        title={t("courses.delete_lesson_title")}
+      >
+        <div className="manage-courses__confirm">
+          <p>{t("courses.delete_lesson_confirm")}</p>
+          <div className="manage-courses__form-actions">
+            <button
+              className="manage-courses__form-cancel"
+              onClick={() => setLessonToDelete(null)}
+            >
+              {t("common.cancel")}
+            </button>
+            <button
+              className="manage-courses__form-submit manage-courses__form-submit--danger"
+              onClick={() => {
+                if (lessonToDelete) {
+                  deleteLesson.mutate(lessonToDelete, {
+                    onSuccess: () => setLessonToDelete(null),
+                  });
+                }
+              }}
+              disabled={deleteLesson.isPending}
+            >
+              {deleteLesson.isPending ? "..." : t("common.delete")}
+            </button>
+          </div>
+        </div>
+      </Modal>
+
       <SplitPanel
         levels={3}
         tabs={COURSE_STATUSES.map((s) => ({
           value: s,
-          label: s === "All" ? t("courses.all") : s,
+          label: tStatus(t, s),
         }))}
         activeTab={statusFilter}
         onTabChange={(tab) => {
@@ -492,7 +563,7 @@ function ManageCoursesPage() {
               <span
                 className={`manage-courses__item-status manage-courses__item-status--${course.status.toLowerCase()}`}
               >
-                {course.status}
+                {tStatus(t, course.status)}
               </span>
             </div>
             <button
@@ -511,7 +582,9 @@ function ManageCoursesPage() {
             <h4 className="semibold">{course.courseName}</h4>
             <p className="manage-courses__course-abstract">{course.abstract}</p>
             <div className="manage-courses__course-meta">
-              <span>Status: {course.status}</span>
+              <span>
+                {t("courses.status")}: {tStatus(t, course.status)}
+              </span>
               <span>
                 Created: {new Date(course.createdAt).toLocaleDateString()}
               </span>
@@ -529,7 +602,10 @@ function ManageCoursesPage() {
                 selectedLessonId === lesson.id,
             })}
           >
-            <Icon name="play_circle" />
+            <Icon
+              name="play_circle"
+              className="manage-courses__lesson-item__icon"
+            />
             <div className="manage-courses__lesson-item__info">
               <span className="manage-courses__lesson-item__name medium">
                 {lesson.lessonName}
@@ -538,6 +614,15 @@ function ManageCoursesPage() {
                 {new Date(lesson.createdAt as string).toLocaleDateString()}
               </small>{" "}
             </div>
+            <button
+              className="manage-courses__item-delete"
+              onClick={(e) => {
+                e.stopPropagation();
+                setLessonToDelete(lesson.id);
+              }}
+            >
+              <Icon name="delete" size={18} />
+            </button>
           </div>
         )}
         renderSubDetail={(lesson) => (

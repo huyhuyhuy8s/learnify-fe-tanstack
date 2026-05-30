@@ -533,6 +533,8 @@ input CreateCourseDto {
   courseName: String!
   abstract: String
   creatorId: String
+  isFree: Boolean!
+  originalPrice: Float!
 }
 
 input UpdateCourseDto {
