@@ -14,6 +14,7 @@ import {
   useCreateReview,
   useEnrollCourse,
   useUserEnrollments,
+  useCoursePrice,
 } from "@/hooks/useCourseDetail";
 import { MOCK_COMMENT } from "@/mock";
 import { useAuthStore } from "@/store/authStore";
@@ -24,6 +25,7 @@ import { formatDate } from "@/utils";
 import { courseQueryOptions } from "@/utils/courses";
 import CommentForm from "../-components/CommentForm";
 import CommentItem from "../-components/CommentItem";
+import { useCreatePayment } from "@/hooks/usePayment";
 
 export const Route = createLazyFileRoute("/learner/courses/$courseId/")({
   component: CourseComponent,
@@ -40,6 +42,8 @@ function CourseComponent() {
   const { data } = useSuspenseQuery(courseQueryOptions(courseId));
   const { getCourseById, getLessonsByCourseId, getReviewsByCourse } = data;
   const { setLayoutConfigState } = useLayout();
+  const { data: coursePrice } = useCoursePrice(courseId);
+  const isPaidCourse = coursePrice ? coursePrice.isFree === false : false;
 
   useEffect(() => {
     if (getCourseById?.courseName) {
@@ -53,11 +57,22 @@ function CourseComponent() {
   const createReview = useCreateReview();
   const enrollCourseMutation = useEnrollCourse();
 
-  const { data: enrollments } = useUserEnrollments(userId);
-  const { data: progressData } = useCourseProgress(userId, courseId);
+  const { data: enrollments, refetch: refetchEnrollments } =
+    useUserEnrollments(userId);
+  const { data: progressData, refetch: refetchProgress } = useCourseProgress(
+    userId,
+    courseId
+  );
 
   const [showCommentForm, setShowCommentForm] = useState(false);
   const [showComment, setShowComment] = useState(false);
+
+  useEffect(() => {
+    if (userId) {
+      refetchEnrollments();
+      refetchProgress();
+    }
+  }, [userId, refetchEnrollments, refetchProgress]);
 
   const isEnrolled = useMemo(() => {
     if (!enrollments) return false;
@@ -155,6 +170,28 @@ function CourseComponent() {
     };
   }, [getCourseById, currentProgressPercentage, isEnrolled]);
 
+  const createPaymentMutation = useCreatePayment();
+
+  const handlePayment = () => {
+    if (!userId) {
+      toast.error(t("course_detail.toast_login_enroll"));
+      return;
+    }
+
+    createPaymentMutation.mutate(courseId, {
+      onSuccess: (data) => {
+        // Redirect thẳng sang trang thanh toán của PayOS
+        if (data?.checkoutUrl) {
+          window.location.href = data.checkoutUrl;
+        }
+      },
+      onError: (error) => {
+        toast.error("Không thể tạo phiên thanh toán. Vui lòng thử lại!");
+        console.error(error);
+      },
+    });
+  };
+
   const handleEnrollCourse = () => {
     if (!userId) {
       toast.error(t("course_detail.toast_login_enroll"));
@@ -228,21 +265,36 @@ function CourseComponent() {
           <p className="course__abstract">{courseDisplay.abstract}</p>
         )}
         <div className="course__controller">
-          {!isEnrolled && (
-            <TextButton
-              text={
-                enrollCourseMutation.isPending
-                  ? t("course_detail.processing")
-                  : t("course_detail.enroll")
-              }
-              size="small"
-              icon="school"
-              type="primary"
-              typeSpecial="course"
-              onClick={handleEnrollCourse}
-              disabled={enrollCourseMutation.isPending}
-            />
-          )}
+          {!isEnrolled &&
+            (isPaidCourse ? (
+              <TextButton
+                text={
+                  createPaymentMutation.isPending
+                    ? t("course_detail.processing")
+                    : `Mua khóa học - ${coursePrice?.originalPrice?.toLocaleString("vi-VN") || 0}đ`
+                }
+                size="small"
+                icon="shopping_cart"
+                type="primary"
+                typeSpecial="course"
+                onClick={handlePayment}
+                disabled={createPaymentMutation.isPending}
+              />
+            ) : (
+              <TextButton
+                text={
+                  enrollCourseMutation.isPending
+                    ? t("course_detail.processing")
+                    : t("course_detail.enroll")
+                }
+                size="small"
+                icon="school"
+                type="primary"
+                typeSpecial="course"
+                onClick={handleEnrollCourse}
+                disabled={enrollCourseMutation.isPending}
+              />
+            ))}
 
           <TextButton
             text={t("course_detail.show_feedback")}

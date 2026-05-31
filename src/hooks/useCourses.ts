@@ -6,7 +6,7 @@ import {
 } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql";
 import {
-  GET_ALL_COURSES_QUERY,
+  GET_ALL_PUBLISHED_COURSES_QUERY,
   GET_COURSE_LESSONS_BY_ID_QUERY,
   GET_COURSE_BY_STATUS_QUERY,
   PUBLISH_COURSE_MUTATION,
@@ -32,8 +32,8 @@ type GetCourseByIdResponse = {
   };
 };
 
-type GetAllCoursesResponse = {
-  getAllCourses: {
+type GetAllPublishedCoursesResponse = {
+  getAllPublishedCourses: {
     count: number;
     courses: TBackendCourse[];
     isSuccess: boolean;
@@ -54,11 +54,12 @@ export function useGetAllCourses(skip: number = 0) {
   return useQuery({
     queryKey: ["courses", "all", skip],
     queryFn: async () => {
-      const response = await graphqlClient.request<GetAllCoursesResponse>(
-        GET_ALL_COURSES_QUERY,
-        { skip }
-      );
-      return response.getAllCourses;
+      const response =
+        await graphqlClient.request<GetAllPublishedCoursesResponse>(
+          GET_ALL_PUBLISHED_COURSES_QUERY,
+          { skip }
+        );
+      return response.getAllPublishedCourses;
     },
   });
 }
@@ -67,11 +68,12 @@ export function useSuspenseGetAllCourses(skip: number = 0) {
   return useSuspenseQuery({
     queryKey: ["courses", "all", skip],
     queryFn: async () => {
-      const response = await graphqlClient.request<GetAllCoursesResponse>(
-        GET_ALL_COURSES_QUERY,
-        { skip }
-      );
-      return response.getAllCourses;
+      const response =
+        await graphqlClient.request<GetAllPublishedCoursesResponse>(
+          GET_ALL_PUBLISHED_COURSES_QUERY,
+          { skip }
+        );
+      return response.getAllPublishedCourses;
     },
   });
 }
@@ -131,12 +133,10 @@ export function useGetCoursesById(courseId: string) {
   return useQuery({
     queryKey: ["courses", "id", courseId],
     queryFn: async () => {
-      // Đảm bảo GetCourseByIdResponse có chứa cả 2 trường này nhé
-      const response = await graphqlClient.request<any>( // Tạm dùng any để tránh lỗi type nếu bạn chưa update type response
+      const response = await graphqlClient.request<any>(
         GET_COURSE_LESSONS_BY_ID_QUERY,
         { getCourseByIdId: courseId }
       );
-      // TRẢ VỀ TOÀN BỘ RESPONSE thay vì chỉ response.getCourseById
       return response;
     },
     staleTime: 0,

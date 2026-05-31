@@ -7,6 +7,7 @@ import {
   ENROLL_COURSE_MUTATION,
   GET_USER_ENROLLMENTS_QUERY,
   GET_PROGRESS_QUERY,
+  GET_COURSE_PRICE_QUERY,
 } from "@/graphql/course";
 import { CREATE_COMMENT_MUTATION } from "@/graphql/comment";
 import { useAuthStore } from "@/store/authStore";
@@ -257,5 +258,19 @@ export function useEnrollCourse() {
     onError: (error) => {
       toast.error(error.message);
     },
+  });
+}
+
+export function useCoursePrice(courseId: string) {
+  return useQuery({
+    queryKey: ["coursePrice", courseId],
+    queryFn: async () => {
+      const response = await graphqlClient.request<any>(
+        GET_COURSE_PRICE_QUERY,
+        { courseId }
+      );
+      return response.getCoursePrice;
+    },
+    enabled: !!courseId,
   });
 }
