@@ -235,7 +235,6 @@ mutation Mutation($courseId: String!) {
   }
 }
 `;
-
 export const GET_COURSE_LESSONS_BY_ID_QUERY = `
   query GetCourseLessonsById($getCourseByIdId: String!) {
   getCourseById(id: $getCourseByIdId) {
@@ -261,7 +260,6 @@ export const GET_COURSE_LESSONS_BY_ID_QUERY = `
   }
 }
 `;
-
 export const GET_COURSE_BY_USER_ID_QUERY = `
   query GetCourseByUserId($userId: String!) {
     getCourseByUserId(userId: $userId) {
