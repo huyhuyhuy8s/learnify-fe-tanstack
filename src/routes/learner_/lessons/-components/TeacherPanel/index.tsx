@@ -34,6 +34,11 @@ type TTeacherPanelProps = {
   onSelectVoice: (voiceId: string) => void;
   onPreviewVoice: (voiceId: string) => void;
   onToggle3DMode: (enabled: boolean) => void;
+  onReload?: () => void;
+  ttsSpeed?: number;
+  onTtsSpeedChange?: (speed: number) => void;
+  autoScroll?: boolean;
+  onAutoScrollChange?: (enabled: boolean) => void;
 };
 
 const TeacherPanel = (props: TTeacherPanelProps) => {
@@ -67,6 +72,11 @@ const TeacherPanel = (props: TTeacherPanelProps) => {
     onSelectVoice,
     onPreviewVoice,
     onToggle3DMode,
+    onReload,
+    ttsSpeed,
+    onTtsSpeedChange,
+    autoScroll,
+    onAutoScrollChange,
   } = props;
 
   if (state === "complete") return null;
@@ -87,6 +97,11 @@ const TeacherPanel = (props: TTeacherPanelProps) => {
     onSelectVoice,
     onPreviewVoice,
     onToggle3DMode,
+    onReload,
+    ttsSpeed,
+    onTtsSpeedChange,
+    autoScroll,
+    onAutoScrollChange,
   };
 
   if (is3DMode) {

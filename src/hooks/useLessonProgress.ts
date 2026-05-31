@@ -3,6 +3,7 @@ import { graphqlClient } from "@/lib/graphql";
 import {
   MARK_COMPLETE_LESSON_MUTATION,
   UPDATE_PROGRESS_MUTATION,
+  CURRENT_USER_QUERY,
 } from "@/graphql/mutations";
 import { useCourseProgress } from "@/hooks/useCourseDetail";
 import { useAuthStore } from "@/store";
@@ -31,6 +32,8 @@ export function useLessonProgress(
   const completedLessons = progressData?.progress?.[0]?.completedLessons ?? 0;
   const totalLessons = progressData?.progress?.[0]?.totalLessons ?? 0;
 
+  const DIAMOND_PER_LESSON = 10;
+
   const markCompleteMutation = useMutation({
     mutationFn: async () => {
       if (!userId || !lessonId) return;
@@ -38,10 +41,34 @@ export function useLessonProgress(
         input: { userId, lessonId },
       });
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({
         queryKey: ["course-progress", userId, courseId],
       });
+      try {
+        const response = await graphqlClient.request<{
+          currentUser: {
+            isSuccess: boolean;
+            users: Array<{ diamond?: number; currentSteak?: number }>;
+          };
+        }>(CURRENT_USER_QUERY);
+        if (response.currentUser.isSuccess && response.currentUser.users[0]) {
+          const fresh = response.currentUser.users[0]!;
+          const current = useAuthStore.getState().user;
+          if (current) {
+            useAuthStore.getState().setAuth({
+              ...current,
+              diamond: fresh.diamond ?? current.diamond,
+              currentSteak: fresh.currentSteak ?? current.currentSteak,
+            });
+          }
+        }
+      } catch (err) {
+        console.warn(
+          "Failed to refresh user data after lesson completion",
+          err
+        );
+      }
     },
   });
 
@@ -65,6 +92,27 @@ export function useLessonProgress(
 
   const handleComplete = () => {
     if (!userId || !lessonId) return;
+
+    const current = useAuthStore.getState().user;
+    if (current) {
+      const today = new Date().toDateString();
+      const lastDate = localStorage.getItem("lastStreakDate");
+      const newStreak =
+        lastDate === today
+          ? (current.currentSteak ?? 0)
+          : (current.currentSteak ?? 0) + 1;
+
+      useAuthStore.getState().setAuth({
+        ...current,
+        diamond: (current.diamond ?? 0) + DIAMOND_PER_LESSON,
+        currentSteak: newStreak,
+      });
+
+      if (lastDate !== today) {
+        localStorage.setItem("lastStreakDate", today);
+      }
+    }
+
     markCompleteMutation.mutate();
     if (courseId && progressId) {
       updateProgressMutation.mutate(completedLessons + 1);

@@ -72,7 +72,7 @@ function ManageCoursesPage() {
   const [showAddCourse, setShowAddCourse] = useState(false);
   const [courseName, setCourseName] = useState("");
   const [courseDescription, setCourseDescription] = useState("");
-  const [coursePrice, setCoursePrice] = useState(0);
+  const [coursePriceStr, setCoursePriceStr] = useState("0");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [courseToDelete, setCourseToDelete] = useState<string | null>(null);
 
@@ -121,10 +121,12 @@ function ManageCoursesPage() {
       return;
     }
     setErrors({});
+    const coursePrice = parseInt(coursePriceStr, 10) || 0;
     createCourse.mutate(
       {
         courseName: result.data.courseName,
         abstract: result.data.abstract,
+        creatorId: user?.id,
         isFree: coursePrice === 0,
         originalPrice: coursePrice,
       },
@@ -133,7 +135,7 @@ function ManageCoursesPage() {
           setShowAddCourse(false);
           setCourseName("");
           setCourseDescription("");
-          setCoursePrice(0);
+          setCoursePriceStr("0");
           setErrors({});
         },
       }
@@ -233,7 +235,7 @@ function ManageCoursesPage() {
           setShowAddCourse(false);
           setCourseName("");
           setCourseDescription("");
-          setCoursePrice(0);
+          setCoursePriceStr("0");
           setErrors({});
         }}
         title={t("sidebar.add_course")}
@@ -283,16 +285,27 @@ function ManageCoursesPage() {
             <div className="manage-courses__price-wrapper">
               <span className="manage-courses__price-currency">₫</span>
               <input
-                type="number"
-                min={0}
+                type="text"
+                inputMode="numeric"
                 className="manage-courses__form-input"
-                value={coursePrice}
-                onChange={(e) =>
-                  setCoursePrice(Math.max(0, Number(e.target.value)))
-                }
+                value={coursePriceStr}
+                onFocus={() => {
+                  if (coursePriceStr === "0") setCoursePriceStr("");
+                }}
+                onBlur={() => {
+                  if (coursePriceStr === "") setCoursePriceStr("0");
+                }}
+                onChange={(e) => {
+                  const raw = e.target.value.replace(/\D/g, "");
+                  if (raw === "") {
+                    setCoursePriceStr("");
+                  } else {
+                    setCoursePriceStr(raw.replace(/^0+/, "") || "0");
+                  }
+                }}
               />
             </div>
-            {coursePrice === 0 && (
+            {coursePriceStr === "0" && (
               <span className="manage-courses__form-hint">
                 {t("courses.free_hint")}
               </span>
@@ -305,7 +318,7 @@ function ManageCoursesPage() {
                 setShowAddCourse(false);
                 setCourseName("");
                 setCourseDescription("");
-                setCoursePrice(0);
+                setCoursePriceStr("0");
                 setErrors({});
               }}
             >

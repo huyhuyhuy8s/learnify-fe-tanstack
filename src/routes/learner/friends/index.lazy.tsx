@@ -36,7 +36,15 @@ function FriendsPage() {
   }
 
   return (
-    <Suspense fallback={<FriendItemSkeleton />}>
+    <Suspense
+      fallback={
+        <div className="friend-page">
+          <FriendItemSkeleton />
+          <FriendItemSkeleton />
+          <FriendItemSkeleton />
+        </div>
+      }
+    >
       <div className="friend-page">
         <SplitPanel
           levels={2}

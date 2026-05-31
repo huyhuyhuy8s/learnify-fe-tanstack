@@ -1,7 +1,14 @@
 import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import TetrisLoader from "@/components/TetrisLoader";
-import { useCallback, useEffect, useEffectEvent, useMemo, useRef } from "react";
+import {
+  useCallback,
+  useEffect,
+  useEffectEvent,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import ChatArea from "../-components/ChatArea";
@@ -62,6 +69,8 @@ function LessonDetail() {
     toggle3DMode,
     resetTeacher,
   } = useTeacher();
+  const [ttsSpeed, setTtsSpeed] = useState(1);
+  const [autoScroll, setAutoScroll] = useState(true);
   const courseContextRef = useRef<TCourseContextRef>(null);
   const isInitialMount = useRef(true);
 
@@ -102,6 +111,10 @@ function LessonDetail() {
   const handleLessonComplete = useCallback(() => {
     skipToQA();
   }, [skipToQA]);
+
+  const handleReload = useCallback(() => {
+    window.location.reload();
+  }, []);
 
   const courseId = data?.lesson?.courseId;
   const userId = useAuthStore((s) => s.user?.id);
@@ -224,6 +237,11 @@ function LessonDetail() {
         onSelectVoice={handleSelectVoice}
         onPreviewVoice={handlePreviewVoice}
         onToggle3DMode={toggle3DMode}
+        onReload={handleReload}
+        ttsSpeed={ttsSpeed}
+        onTtsSpeedChange={setTtsSpeed}
+        autoScroll={autoScroll}
+        onAutoScrollChange={setAutoScroll}
       />
     </div>
   );

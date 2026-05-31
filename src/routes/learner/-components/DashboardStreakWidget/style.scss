@@ -65,6 +65,19 @@
       border-radius: 50%;
       background-color: $neutral-100;
       border: toRem(1) dashed $mode-neutral;
+      transition:
+        background-color $transition-duration,
+        border-color $transition-duration;
+
+      &--active {
+        background-color: $mode-orange;
+        border-color: $mode-orange;
+      }
+
+      &--streak {
+        background-color: $green-pastel-200;
+        border-color: $green-400;
+      }
     }
     span {
       font-size: toRem(10);

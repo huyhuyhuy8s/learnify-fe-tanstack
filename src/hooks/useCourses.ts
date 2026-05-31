@@ -216,6 +216,7 @@ export function useCreateCourse() {
     mutationFn: async (data: {
       courseName: string;
       abstract?: string;
+      creatorId?: string;
       isFree: boolean;
       originalPrice: number;
     }) => {

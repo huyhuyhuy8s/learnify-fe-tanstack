@@ -23,14 +23,18 @@ import { Route as ContactIndexRouteImport } from "./routes/contact/index";
 import { Route as BlogsIndexRouteImport } from "./routes/blogs/index";
 import { Route as AdminIndexRouteImport } from "./routes/admin/index";
 import { Route as AboutUsIndexRouteImport } from "./routes/about-us/index";
+import { Route as ReviewerCourseIdRouteImport } from "./routes/reviewer/$courseId";
 import { Route as ApiUsersRouteImport } from "./routes/api/users";
 import { Route as LearnerLessonsRouteRouteImport } from "./routes/learner_/lessons/route";
 import { Route as LearnerUserRouteRouteImport } from "./routes/learner/user/route";
 import { Route as LearnerAboutRouteRouteImport } from "./routes/learner/about/route";
 import { Route as InstructorCoursesRouteRouteImport } from "./routes/instructor/courses/route";
+import { Route as ReviewerRejectedIndexRouteImport } from "./routes/reviewer/rejected/index";
+import { Route as ReviewerApprovedIndexRouteImport } from "./routes/reviewer/approved/index";
 import { Route as LearnerLessonsIndexRouteImport } from "./routes/learner_/lessons/index";
 import { Route as LearnerUserIndexRouteImport } from "./routes/learner/user/index";
 import { Route as LearnerSubscriptionsIndexRouteImport } from "./routes/learner/subscriptions/index";
+import { Route as LearnerSettingsIndexRouteImport } from "./routes/learner/settings/index";
 import { Route as LearnerSearchIndexRouteImport } from "./routes/learner/search/index";
 import { Route as LearnerRoadmapsIndexRouteImport } from "./routes/learner/roadmaps/index";
 import { Route as LearnerFriendsIndexRouteImport } from "./routes/learner/friends/index";
@@ -125,6 +129,11 @@ const AboutUsIndexRoute = AboutUsIndexRouteImport.update({
 } as any).lazy(() =>
   import("./routes/about-us/index.lazy").then((d) => d.Route),
 );
+const ReviewerCourseIdRoute = ReviewerCourseIdRouteImport.update({
+  id: "/$courseId",
+  path: "/$courseId",
+  getParentRoute: () => ReviewerRouteRoute,
+} as any);
 const ApiUsersRoute = ApiUsersRouteImport.update({
   id: "/api/users",
   path: "/api/users",
@@ -150,6 +159,16 @@ const InstructorCoursesRouteRoute = InstructorCoursesRouteRouteImport.update({
   path: "/courses",
   getParentRoute: () => InstructorRouteRoute,
 } as any);
+const ReviewerRejectedIndexRoute = ReviewerRejectedIndexRouteImport.update({
+  id: "/rejected/",
+  path: "/rejected/",
+  getParentRoute: () => ReviewerRouteRoute,
+} as any);
+const ReviewerApprovedIndexRoute = ReviewerApprovedIndexRouteImport.update({
+  id: "/approved/",
+  path: "/approved/",
+  getParentRoute: () => ReviewerRouteRoute,
+} as any);
 const LearnerLessonsIndexRoute = LearnerLessonsIndexRouteImport.update({
   id: "/",
   path: "/",
@@ -168,6 +187,11 @@ const LearnerSubscriptionsIndexRoute =
   } as any).lazy(() =>
     import("./routes/learner/subscriptions/index.lazy").then((d) => d.Route),
   );
+const LearnerSettingsIndexRoute = LearnerSettingsIndexRouteImport.update({
+  id: "/settings/",
+  path: "/settings/",
+  getParentRoute: () => LearnerRouteRoute,
+} as any);
 const LearnerSearchIndexRoute = LearnerSearchIndexRouteImport.update({
   id: "/search/",
   path: "/search/",
@@ -295,6 +319,7 @@ export interface FileRoutesByFullPath {
   "/learner/user": typeof LearnerUserRouteRouteWithChildren;
   "/learner/lessons": typeof LearnerLessonsRouteRouteWithChildren;
   "/api/users": typeof ApiUsersRouteWithChildren;
+  "/reviewer/$courseId": typeof ReviewerCourseIdRoute;
   "/about-us/": typeof AboutUsIndexRoute;
   "/admin/": typeof AdminIndexRoute;
   "/blogs/": typeof BlogsIndexRoute;
@@ -314,9 +339,12 @@ export interface FileRoutesByFullPath {
   "/learner/friends/": typeof LearnerFriendsIndexRoute;
   "/learner/roadmaps/": typeof LearnerRoadmapsIndexRoute;
   "/learner/search/": typeof LearnerSearchIndexRoute;
+  "/learner/settings/": typeof LearnerSettingsIndexRoute;
   "/learner/subscriptions/": typeof LearnerSubscriptionsIndexRoute;
   "/learner/user/": typeof LearnerUserIndexRoute;
   "/learner/lessons/": typeof LearnerLessonsIndexRoute;
+  "/reviewer/approved/": typeof ReviewerApprovedIndexRoute;
+  "/reviewer/rejected/": typeof ReviewerRejectedIndexRoute;
   "/instructor/courses/create/": typeof InstructorCoursesCreateIndexRoute;
   "/learner/courses/$courseId/": typeof LearnerCoursesCourseIdIndexRoute;
   "/learner/roadmaps/$roadmapId/": typeof LearnerRoadmapsRoadmapIdIndexRoute;
@@ -328,6 +356,7 @@ export interface FileRoutesByTo {
   "/deferred": typeof DeferredRoute;
   "/redirect": typeof RedirectRoute;
   "/api/users": typeof ApiUsersRouteWithChildren;
+  "/reviewer/$courseId": typeof ReviewerCourseIdRoute;
   "/about-us": typeof AboutUsIndexRoute;
   "/admin": typeof AdminIndexRoute;
   "/blogs": typeof BlogsIndexRoute;
@@ -347,9 +376,12 @@ export interface FileRoutesByTo {
   "/learner/friends": typeof LearnerFriendsIndexRoute;
   "/learner/roadmaps": typeof LearnerRoadmapsIndexRoute;
   "/learner/search": typeof LearnerSearchIndexRoute;
+  "/learner/settings": typeof LearnerSettingsIndexRoute;
   "/learner/subscriptions": typeof LearnerSubscriptionsIndexRoute;
   "/learner/user": typeof LearnerUserIndexRoute;
   "/learner/lessons": typeof LearnerLessonsIndexRoute;
+  "/reviewer/approved": typeof ReviewerApprovedIndexRoute;
+  "/reviewer/rejected": typeof ReviewerRejectedIndexRoute;
   "/instructor/courses/create": typeof InstructorCoursesCreateIndexRoute;
   "/learner/courses/$courseId": typeof LearnerCoursesCourseIdIndexRoute;
   "/learner/roadmaps/$roadmapId": typeof LearnerRoadmapsRoadmapIdIndexRoute;
@@ -370,6 +402,7 @@ export interface FileRoutesById {
   "/learner/user": typeof LearnerUserRouteRouteWithChildren;
   "/learner_/lessons": typeof LearnerLessonsRouteRouteWithChildren;
   "/api/users": typeof ApiUsersRouteWithChildren;
+  "/reviewer/$courseId": typeof ReviewerCourseIdRoute;
   "/about-us/": typeof AboutUsIndexRoute;
   "/admin/": typeof AdminIndexRoute;
   "/blogs/": typeof BlogsIndexRoute;
@@ -389,9 +422,12 @@ export interface FileRoutesById {
   "/learner/friends/": typeof LearnerFriendsIndexRoute;
   "/learner/roadmaps/": typeof LearnerRoadmapsIndexRoute;
   "/learner/search/": typeof LearnerSearchIndexRoute;
+  "/learner/settings/": typeof LearnerSettingsIndexRoute;
   "/learner/subscriptions/": typeof LearnerSubscriptionsIndexRoute;
   "/learner/user/": typeof LearnerUserIndexRoute;
   "/learner_/lessons/": typeof LearnerLessonsIndexRoute;
+  "/reviewer/approved/": typeof ReviewerApprovedIndexRoute;
+  "/reviewer/rejected/": typeof ReviewerRejectedIndexRoute;
   "/instructor/courses/create/": typeof InstructorCoursesCreateIndexRoute;
   "/learner/courses/$courseId/": typeof LearnerCoursesCourseIdIndexRoute;
   "/learner/roadmaps/$roadmapId/": typeof LearnerRoadmapsRoadmapIdIndexRoute;
@@ -413,6 +449,7 @@ export interface FileRouteTypes {
     | "/learner/user"
     | "/learner/lessons"
     | "/api/users"
+    | "/reviewer/$courseId"
     | "/about-us/"
     | "/admin/"
     | "/blogs/"
@@ -432,9 +469,12 @@ export interface FileRouteTypes {
     | "/learner/friends/"
     | "/learner/roadmaps/"
     | "/learner/search/"
+    | "/learner/settings/"
     | "/learner/subscriptions/"
     | "/learner/user/"
     | "/learner/lessons/"
+    | "/reviewer/approved/"
+    | "/reviewer/rejected/"
     | "/instructor/courses/create/"
     | "/learner/courses/$courseId/"
     | "/learner/roadmaps/$roadmapId/"
@@ -446,6 +486,7 @@ export interface FileRouteTypes {
     | "/deferred"
     | "/redirect"
     | "/api/users"
+    | "/reviewer/$courseId"
     | "/about-us"
     | "/admin"
     | "/blogs"
@@ -465,9 +506,12 @@ export interface FileRouteTypes {
     | "/learner/friends"
     | "/learner/roadmaps"
     | "/learner/search"
+    | "/learner/settings"
     | "/learner/subscriptions"
     | "/learner/user"
     | "/learner/lessons"
+    | "/reviewer/approved"
+    | "/reviewer/rejected"
     | "/instructor/courses/create"
     | "/learner/courses/$courseId"
     | "/learner/roadmaps/$roadmapId"
@@ -487,6 +531,7 @@ export interface FileRouteTypes {
     | "/learner/user"
     | "/learner_/lessons"
     | "/api/users"
+    | "/reviewer/$courseId"
     | "/about-us/"
     | "/admin/"
     | "/blogs/"
@@ -506,9 +551,12 @@ export interface FileRouteTypes {
     | "/learner/friends/"
     | "/learner/roadmaps/"
     | "/learner/search/"
+    | "/learner/settings/"
     | "/learner/subscriptions/"
     | "/learner/user/"
     | "/learner_/lessons/"
+    | "/reviewer/approved/"
+    | "/reviewer/rejected/"
     | "/instructor/courses/create/"
     | "/learner/courses/$courseId/"
     | "/learner/roadmaps/$roadmapId/"
@@ -635,6 +683,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AboutUsIndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    "/reviewer/$courseId": {
+      id: "/reviewer/$courseId";
+      path: "/$courseId";
+      fullPath: "/reviewer/$courseId";
+      preLoaderRoute: typeof ReviewerCourseIdRouteImport;
+      parentRoute: typeof ReviewerRouteRoute;
+    };
     "/api/users": {
       id: "/api/users";
       path: "/api/users";
@@ -670,6 +725,20 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof InstructorCoursesRouteRouteImport;
       parentRoute: typeof InstructorRouteRoute;
     };
+    "/reviewer/rejected/": {
+      id: "/reviewer/rejected/";
+      path: "/rejected";
+      fullPath: "/reviewer/rejected/";
+      preLoaderRoute: typeof ReviewerRejectedIndexRouteImport;
+      parentRoute: typeof ReviewerRouteRoute;
+    };
+    "/reviewer/approved/": {
+      id: "/reviewer/approved/";
+      path: "/approved";
+      fullPath: "/reviewer/approved/";
+      preLoaderRoute: typeof ReviewerApprovedIndexRouteImport;
+      parentRoute: typeof ReviewerRouteRoute;
+    };
     "/learner_/lessons/": {
       id: "/learner_/lessons/";
       path: "/";
@@ -689,6 +758,13 @@ declare module "@tanstack/react-router" {
       path: "/subscriptions";
       fullPath: "/learner/subscriptions/";
       preLoaderRoute: typeof LearnerSubscriptionsIndexRouteImport;
+      parentRoute: typeof LearnerRouteRoute;
+    };
+    "/learner/settings/": {
+      id: "/learner/settings/";
+      path: "/settings";
+      fullPath: "/learner/settings/";
+      preLoaderRoute: typeof LearnerSettingsIndexRouteImport;
       parentRoute: typeof LearnerRouteRoute;
     };
     "/learner/search/": {
@@ -888,6 +964,7 @@ interface LearnerRouteRouteChildren {
   LearnerFriendsIndexRoute: typeof LearnerFriendsIndexRoute;
   LearnerRoadmapsIndexRoute: typeof LearnerRoadmapsIndexRoute;
   LearnerSearchIndexRoute: typeof LearnerSearchIndexRoute;
+  LearnerSettingsIndexRoute: typeof LearnerSettingsIndexRoute;
   LearnerSubscriptionsIndexRoute: typeof LearnerSubscriptionsIndexRoute;
   LearnerCoursesCourseIdIndexRoute: typeof LearnerCoursesCourseIdIndexRoute;
   LearnerRoadmapsRoadmapIdIndexRoute: typeof LearnerRoadmapsRoadmapIdIndexRoute;
@@ -902,6 +979,7 @@ const LearnerRouteRouteChildren: LearnerRouteRouteChildren = {
   LearnerFriendsIndexRoute: LearnerFriendsIndexRoute,
   LearnerRoadmapsIndexRoute: LearnerRoadmapsIndexRoute,
   LearnerSearchIndexRoute: LearnerSearchIndexRoute,
+  LearnerSettingsIndexRoute: LearnerSettingsIndexRoute,
   LearnerSubscriptionsIndexRoute: LearnerSubscriptionsIndexRoute,
   LearnerCoursesCourseIdIndexRoute: LearnerCoursesCourseIdIndexRoute,
   LearnerRoadmapsRoadmapIdIndexRoute: LearnerRoadmapsRoadmapIdIndexRoute,
@@ -912,11 +990,17 @@ const LearnerRouteRouteWithChildren = LearnerRouteRoute._addFileChildren(
 );
 
 interface ReviewerRouteRouteChildren {
+  ReviewerCourseIdRoute: typeof ReviewerCourseIdRoute;
   ReviewerIndexRoute: typeof ReviewerIndexRoute;
+  ReviewerApprovedIndexRoute: typeof ReviewerApprovedIndexRoute;
+  ReviewerRejectedIndexRoute: typeof ReviewerRejectedIndexRoute;
 }
 
 const ReviewerRouteRouteChildren: ReviewerRouteRouteChildren = {
+  ReviewerCourseIdRoute: ReviewerCourseIdRoute,
   ReviewerIndexRoute: ReviewerIndexRoute,
+  ReviewerApprovedIndexRoute: ReviewerApprovedIndexRoute,
+  ReviewerRejectedIndexRoute: ReviewerRejectedIndexRoute,
 };
 
 const ReviewerRouteRouteWithChildren = ReviewerRouteRoute._addFileChildren(

@@ -25,8 +25,9 @@
     gap: toRem(15);
     min-width: 0;
 
-    &.badge {
+    .badge {
       display: flex;
+      gap: toRem(5);
     }
 
     h5 {

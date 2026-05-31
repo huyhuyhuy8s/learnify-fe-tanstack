@@ -1,12 +1,9 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { getCurrentUserFn } from "@/server/auth";
-import { requireRole } from "@/utils/authGuard";
+import ReviewerSidebar from "./-components/Sidebar";
+import TopNavRight from "@/components/TopNav/components/TopNavRight";
+import "./style.scss";
 
 export const Route = createFileRoute("/reviewer")({
-  beforeLoad: async () => {
-    const { user } = await getCurrentUserFn();
-    requireRole("reviewer", "admin")({ user, isAuthenticated: !!user });
-  },
   head: () => ({
     meta: [{ title: "Content Reviewer | Learnify" }],
   }),
@@ -14,5 +11,19 @@ export const Route = createFileRoute("/reviewer")({
 });
 
 function ReviewerLayout() {
-  return <Outlet />;
+  return (
+    <div className="rl">
+      <ReviewerSidebar />
+      <div className="rl__right">
+        <header className="rl__topbar">
+          <div className="rl__topbar-inner">
+            <TopNavRight />
+          </div>
+        </header>
+        <main className="rl__main">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
 }

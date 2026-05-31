@@ -61,8 +61,10 @@ const SplitPanel = <T extends { id: string }, S extends { id: string }>(
           "split-panel__body--3": levels === 3,
         })}
       >
-        {/* Level 1 — list */}
-        <div className={classnames("split-panel__list", listClassName)}>
+        <div
+          className={classnames("split-panel__list", listClassName)}
+          data-lenis-prevent
+        >
           {renderListHeader?.()}
           {isLoading
             ? (loader ?? <TetrisLoader size="md" speed="fast" />)
@@ -75,15 +77,14 @@ const SplitPanel = <T extends { id: string }, S extends { id: string }>(
               : (placeholder ?? <p className="split-panel__empty">No items</p>)}
         </div>
 
-        {/* Level 2 or 3: detail + optional sub-list */}
         {levels === 2 ? (
-          /* 2-level: right panel is detail */
           <div
             className={classnames(
               "split-panel__detail",
               "split-panel__detail--2",
               detailClassName
             )}
+            data-lenis-prevent
           >
             {selectedItem
               ? renderDetail(selectedItem)
@@ -94,7 +95,6 @@ const SplitPanel = <T extends { id: string }, S extends { id: string }>(
                 ))}
           </div>
         ) : (
-          /* 3-level: center sub-list + right sub-detail */
           <>
             <div
               className={classnames(
@@ -102,6 +102,7 @@ const SplitPanel = <T extends { id: string }, S extends { id: string }>(
                 "split-panel__detail--3",
                 subListClassName
               )}
+              data-lenis-prevent
             >
               {!selectedItem ? (
                 (placeholder ?? (
@@ -141,6 +142,7 @@ const SplitPanel = <T extends { id: string }, S extends { id: string }>(
                 "split-panel__sub-detail",
                 subDetailClassName
               )}
+              data-lenis-prevent
             >
               {selectedSubItem && renderSubDetail
                 ? renderSubDetail(selectedSubItem)

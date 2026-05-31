@@ -36,6 +36,8 @@ import chevron_rightSvg from "@material-symbols/svg-400/rounded/chevron_right.sv
 import chevron_rightFillSvg from "@material-symbols/svg-400/rounded/chevron_right-fill.svg?raw";
 import closeSvg from "@material-symbols/svg-400/rounded/close.svg?raw";
 import closeFillSvg from "@material-symbols/svg-400/rounded/close-fill.svg?raw";
+import downloadSvg from "@material-symbols/svg-400/rounded/download.svg?raw";
+import downloadFillSvg from "@material-symbols/svg-400/rounded/download-fill.svg?raw";
 import codeSvg from "@material-symbols/svg-400/rounded/code.svg?raw";
 import codeFillSvg from "@material-symbols/svg-400/rounded/code-fill.svg?raw";
 import conversion_pathSvg from "@material-symbols/svg-400/rounded/conversion_path.svg?raw";
@@ -156,6 +158,10 @@ import volume_offSvg from "@material-symbols/svg-400/rounded/volume_off.svg?raw"
 import volume_offFillSvg from "@material-symbols/svg-400/rounded/volume_off-fill.svg?raw";
 import volume_upSvg from "@material-symbols/svg-400/rounded/volume_up.svg?raw";
 import volume_upFillSvg from "@material-symbols/svg-400/rounded/volume_up-fill.svg?raw";
+import zoom_inSvg from "@material-symbols/svg-400/rounded/zoom_in.svg?raw";
+import zoom_inFillSvg from "@material-symbols/svg-400/rounded/zoom_in-fill.svg?raw";
+import zoom_outSvg from "@material-symbols/svg-400/rounded/zoom_out.svg?raw";
+import zoom_outFillSvg from "@material-symbols/svg-400/rounded/zoom_out-fill.svg?raw";
 import cancelSvg from "@material-symbols/svg-400/rounded/cancel.svg?raw";
 import cancelFillSvg from "@material-symbols/svg-400/rounded/cancel-fill.svg?raw";
 import deleteSvg from "@material-symbols/svg-400/rounded/delete.svg?raw";
@@ -425,6 +431,18 @@ export const iconPaths: Record<string, { regular: string; fill: string }> = {
   },
   cancel: { regular: extractPath(cancelSvg), fill: extractPath(cancelFillSvg) },
   delete: { regular: extractPath(deleteSvg), fill: extractPath(deleteFillSvg) },
+  download: {
+    regular: extractPath(downloadSvg),
+    fill: extractPath(downloadFillSvg),
+  },
+  zoom_in: {
+    regular: extractPath(zoom_inSvg),
+    fill: extractPath(zoom_inFillSvg),
+  },
+  zoom_out: {
+    regular: extractPath(zoom_outSvg),
+    fill: extractPath(zoom_outFillSvg),
+  },
   voice_over_off: {
     regular: extractPath(voice_over_offSvg),
     fill: extractPath(voice_over_offFillSvg),

@@ -11,6 +11,8 @@
   height: calc(100dvh - toRem(77) - toRem(100));
 
   &__body-left {
+    height: calc(100dvh - toRem(77) - toRem(100) - toRem(16) - toRem(50));
+    overflow: auto;
     background-color: $green-100;
   }
 

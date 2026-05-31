@@ -6,6 +6,31 @@
 @use "theme" as *;
 @use "typography" as *;
 
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $neutral-300;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $neutral-400;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: $neutral-300 transparent;
+}
+
 .separator {
   width: 100%;
   height: toRem(1);

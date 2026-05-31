@@ -1,6 +1,7 @@
 @use "@styles/variables" as *;
 @use "@styles/colors" as *;
 @use "@styles/functions" as *;
+@use "@styles/mixins" as *;
 
 .chat-message {
   display: flex;
@@ -100,5 +101,76 @@
     object-fit: contain;
     display: block;
     border-radius: inherit;
+    cursor: zoom-in;
+  }
+
+  &__modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.85);
+    flex-direction: column;
+    gap: toRem(16);
+  }
+
+  &__modal-toolbar {
+    display: flex;
+    align-items: center;
+    gap: toRem(12);
+    padding: toRem(8) toRem(16);
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: toRem(12);
+    backdrop-filter: blur(8px);
+  }
+
+  &__modal-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: toRem(36);
+    height: toRem(36);
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    color: $white;
+    cursor: pointer;
+    @include transition;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .icon {
+      font-size: toRem(20);
+    }
+  }
+
+  &__modal-zoom {
+    color: $white;
+    font-size: $fs-small;
+    font-weight: $fw-medium;
+    min-width: toRem(48);
+    text-align: center;
+  }
+
+  &__modal-image-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 90vw;
+    max-height: 80vh;
+    overflow: hidden;
+  }
+
+  &__modal-image {
+    max-width: 90vw;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: toRem(8);
+    @include transition;
+    transition-property: transform;
   }
 }

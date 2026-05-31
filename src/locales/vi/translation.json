@@ -210,6 +210,11 @@
     "toast_login_feedback": "Vui lòng đăng nhập để gửi đánh giá",
     "no_description": "Không có mô tả",
     "badge_text": "văn bản",
+    "start": "Bắt đầu",
+    "continue": "Tiếp tục",
+    "completed": "Hoàn thành",
+    "private_course": "Khóa học này không khả dụng",
+    "not_published": "Khóa học này chưa được xuất bản",
     "server_error": "Lỗi máy chủ",
     "load_error": "Đã xảy ra lỗi khi tải khóa học này. Máy chủ gặp sự cố. Vui lòng thử lại sau."
   },
@@ -349,10 +354,18 @@
     "settings": "Cài đặt",
     "switch_2d": "Chuyển sang 2D",
     "switch_3d": "Chuyển sang 3D",
-    "menu": "Điều khiển"
+    "menu": "Điều khiển",
+    "reload": "Tải lại"
   },
   "voice_settings": {
-    "title": "Cài đặt giọng nói",
+    "title": "Cài đặt",
+    "voice_label": "Giọng nói",
+    "speed_label": "Tốc độ TTS",
+    "auto_scroll_label": "Tự động cuộn",
+    "theme_label": "Giao diện",
+    "language_label": "Ngôn ngữ",
+    "dark": "Tối",
+    "light": "Sáng",
     "voices": [
       {
         "label": "Aria",
@@ -389,7 +402,8 @@
     "skip_qa": "Chuyển đến Hỏi & Đáp",
     "skip_quiz": "Chuyển đến Bài kiểm tra",
     "complete_lesson": "Hoàn thành bài học",
-    "report_issue": "Báo cáo vấn đề"
+    "report_issue": "Báo cáo vấn đề",
+    "flagged": "Đã báo cáo vấn đề thành công!"
   },
   "chat_input": {
     "placeholder": "Nhập tin nhắn của bạn...",
@@ -704,5 +718,16 @@
     },
     "log_in": "Đăng nhập",
     "sign_up": "Đăng ký"
+  },
+  "notification": {
+    "title": "Thông báo",
+    "no_notifications": "Chưa có thông báo nào"
+  },
+  "settings": {
+    "title": "Cài đặt",
+    "theme": "Giao diện",
+    "language": "Ngôn ngữ",
+    "dark": "Tối",
+    "light": "Sáng"
   }
 }

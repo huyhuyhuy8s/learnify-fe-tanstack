@@ -1,4 +1,7 @@
 import classnames from "classnames";
+import { useState } from "react";
+import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 import "./style.scss";
 import ChatHeader from "../ChatHeader";
 import LessonWelcome from "../LessonWelcome";
@@ -44,6 +47,8 @@ type TChatAreaProps = {
 };
 
 const ChatArea = (props: TChatAreaProps) => {
+  const { t } = useTranslation();
+  const [flagged, setFlagged] = useState(false);
   const {
     className,
     state,
@@ -80,6 +85,13 @@ const ChatArea = (props: TChatAreaProps) => {
           onSkipLesson={onSkipLesson}
           onSkipQA={onSkipQA}
           onSkipQuiz={onSkipQuiz}
+          onFlag={() => {
+            if (!flagged) {
+              setFlagged(true);
+              toast.success(t("chat_header.flagged"));
+            }
+          }}
+          flagged={flagged}
         />
       )}
 

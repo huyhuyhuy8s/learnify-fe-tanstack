@@ -1,0 +1,116 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
+.review-action-panel {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  width: 100%;
+  background-color: $white;
+  border-top: toRem(1) solid $neutral-200;
+  border-radius: $br-sm $br-sm 0 0;
+  @include box-shadow(0, -4, 20, 0);
+  padding: toRem(16) toRem(24);
+  display: flex;
+  align-items: center;
+  gap: toRem(16);
+  flex-wrap: wrap;
+
+  &__back {
+    font-size: $fs-paragraph;
+    font-weight: $fw-medium;
+    color: $neutral-600;
+    text-decoration: none;
+    margin-right: auto;
+    @include transition;
+    transition-property: color;
+
+    &:hover {
+      color: $neutral-900;
+    }
+  }
+
+  &__decided {
+    font-size: $fs-paragraph;
+    color: $neutral-600;
+    margin: 0;
+  }
+
+  &__decided-status {
+    font-weight: $fw-semibold;
+
+    &--approved {
+      color: $green-700;
+    }
+
+    &--rejected {
+      color: $salmon-700;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: toRem(12);
+    flex-shrink: 0;
+  }
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: toRem(8);
+    padding: toRem(10) toRem(24);
+    font-size: $fs-paragraph;
+    font-weight: $fw-semibold;
+    border: none;
+    border-radius: $br-xs;
+    cursor: pointer;
+    @include transition;
+    transition-property: background-color, transform, opacity;
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    &--approve {
+      background-color: $green-600;
+      color: $white;
+
+      &:not(:disabled):hover {
+        background-color: $green-700;
+        transform: translateY(toRem(-1));
+      }
+
+      &:not(:disabled):active {
+        background-color: $green-800;
+        transform: translateY(0);
+      }
+    }
+
+    &--reject {
+      background-color: $salmon-600;
+      color: $white;
+
+      &:not(:disabled):hover {
+        background-color: $salmon-700;
+        transform: translateY(toRem(-1));
+      }
+
+      &:not(:disabled):active {
+        background-color: $salmon-800;
+        transform: translateY(0);
+      }
+    }
+  }
+
+  &__btn-icon {
+    font-size: toRem(14);
+    font-weight: $fw-bold;
+    line-height: 1;
+  }
+}

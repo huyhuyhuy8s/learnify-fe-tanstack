@@ -210,6 +210,11 @@
     "toast_login_feedback": "Please log in to leave feedback",
     "no_description": "No description",
     "badge_text": "text",
+    "start": "Start",
+    "continue": "Continue",
+    "completed": "Completed",
+    "private_course": "This course is not available",
+    "not_published": "This course has not been published yet",
     "server_error": "Server Error",
     "load_error": "Something went wrong while loading this course. The server encountered an issue. Please try again or come back later."
   },
@@ -349,10 +354,18 @@
     "settings": "Settings",
     "switch_2d": "Switch to 2D",
     "switch_3d": "Switch to 3D",
-    "menu": "Controls"
+    "menu": "Controls",
+    "reload": "Reload"
   },
   "voice_settings": {
-    "title": "Voice Settings",
+    "title": "Settings",
+    "voice_label": "Voice",
+    "speed_label": "TTS Speed",
+    "auto_scroll_label": "Auto-scroll",
+    "theme_label": "Theme",
+    "language_label": "Language",
+    "dark": "Dark",
+    "light": "Light",
     "voices": [
       {
         "label": "Aria",
@@ -389,7 +402,8 @@
     "skip_qa": "Skip to Q&A",
     "skip_quiz": "Skip to Quiz",
     "complete_lesson": "Complete lesson",
-    "report_issue": "Report issue"
+    "report_issue": "Report issue",
+    "flagged": "Issue reported successfully!"
   },
   "chat_input": {
     "placeholder": "Type your message...",
@@ -704,5 +718,16 @@
     },
     "log_in": "Log in",
     "sign_up": "Sign Up"
+  },
+  "notification": {
+    "title": "Notifications",
+    "no_notifications": "No notifications yet"
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": "Theme",
+    "language": "Language",
+    "dark": "Dark",
+    "light": "Light"
   }
 }

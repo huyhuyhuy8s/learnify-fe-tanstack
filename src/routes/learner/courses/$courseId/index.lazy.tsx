@@ -19,7 +19,14 @@ import { formatDate } from "@/utils";
 import { courseQueryOptions } from "@/utils/courses";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
-import { Activity, Suspense, useEffect, useMemo, useState } from "react";
+import {
+  Activity,
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import CommentForm from "../-components/CommentForm";
@@ -42,6 +49,9 @@ function CourseComponent() {
   const { getCourseById, getLessonsByCourseId, getReviewsByCourse } = data;
   const { setLayoutConfigState } = useLayout();
 
+  const isInstructorOrAdmin =
+    currentUser?.role === "teacher" || currentUser?.role === "admin";
+
   useEffect(() => {
     if (getCourseById?.courseName) {
       setLayoutConfigState((prev) => ({
@@ -50,6 +60,17 @@ function CourseComponent() {
       }));
     }
   }, [getCourseById?.courseName, setLayoutConfigState]);
+
+  useEffect(() => {
+    if (
+      getCourseById?.status &&
+      getCourseById.status !== "Published" &&
+      !isInstructorOrAdmin
+    ) {
+      toast.error(t("course_detail.private_course"));
+      navigate({ to: "/learner/courses" });
+    }
+  }, [getCourseById?.status, isInstructorOrAdmin, navigate, t]);
 
   const createReview = useCreateReview();
   const enrollCourseMutation = useEnrollCourse();
@@ -156,13 +177,68 @@ function CourseComponent() {
     };
   }, [getCourseById, currentProgressPercentage, isEnrolled]);
 
-  const handleEnrollCourse = () => {
+  const handleEnrollCourse = useCallback(() => {
     if (!userId) {
       toast.error(t("course_detail.toast_login_enroll"));
       return;
     }
     enrollCourseMutation.mutate({ courseId, userId });
-  };
+  }, [userId, courseId, enrollCourseMutation, t]);
+
+  const startButtonText = useMemo(() => {
+    if (!isEnrolled) return t("course_detail.enroll");
+    if (currentProgressPercentage >= 100) return t("course_detail.completed");
+    if (currentProgressPercentage > 0) return t("course_detail.continue");
+    return t("course_detail.start");
+  }, [isEnrolled, currentProgressPercentage, t]);
+
+  const startButtonIcon = useMemo(() => {
+    if (!isEnrolled) return "school";
+    if (currentProgressPercentage >= 100) return "check";
+    return "arrow_right_alt";
+  }, [isEnrolled, currentProgressPercentage]);
+
+  const handleStartClick = useCallback(() => {
+    if (!isEnrolled) {
+      handleEnrollCourse();
+      return;
+    }
+
+    const lessons = getLessonsByCourseId?.lessons;
+    if (!lessons || lessons.length === 0) return;
+
+    if (currentProgressPercentage >= 100) {
+      navigate({
+        to: "/learner/lessons/$lessonId",
+        params: { lessonId: lessons[lessons.length - 1]!.id },
+      });
+    } else if (currentProgressPercentage > 0) {
+      const completedLessons =
+        progressData?.progress?.[0]?.completedLessons ?? 0;
+      const targetLesson = lessons[completedLessons] ?? lessons[0]!;
+      navigate({
+        to: "/learner/lessons/$lessonId",
+        params: { lessonId: targetLesson.id },
+      });
+    } else {
+      navigate({
+        to: "/learner/lessons/$lessonId",
+        params: { lessonId: lessons[0]!.id },
+      });
+    }
+  }, [
+    isEnrolled,
+    getLessonsByCourseId,
+    currentProgressPercentage,
+    progressData,
+    navigate,
+    handleEnrollCourse,
+  ]);
+
+  const startButtonDisabled = useMemo(() => {
+    if (!isEnrolled) return enrollCourseMutation.isPending;
+    return false;
+  }, [isEnrolled, enrollCourseMutation.isPending]);
 
   const handleLessonClick = (lessonId: string, isLocked: boolean) => {
     if (!isEnrolled) {
@@ -238,27 +314,15 @@ function CourseComponent() {
             status={courseDisplay.status}
             listFeature={courseDisplay.listFeature}
             percentage={courseDisplay.percentage}
+            onStartClick={handleStartClick}
+            startText={startButtonText}
+            startIcon={startButtonIcon}
+            startDisabled={startButtonDisabled}
           />
           {courseDisplay.abstract && (
             <p className="course__abstract">{courseDisplay.abstract}</p>
           )}
           <div className="course__controller">
-            {!isEnrolled && (
-              <TextButton
-                text={
-                  enrollCourseMutation.isPending
-                    ? t("course_detail.processing")
-                    : t("course_detail.enroll")
-                }
-                size="small"
-                icon="school"
-                type="primary"
-                typeSpecial="course"
-                onClick={handleEnrollCourse}
-                disabled={enrollCourseMutation.isPending}
-              />
-            )}
-
             <TextButton
               text={t("course_detail.show_feedback")}
               size="small"

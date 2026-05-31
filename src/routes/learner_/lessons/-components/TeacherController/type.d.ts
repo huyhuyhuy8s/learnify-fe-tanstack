@@ -18,5 +18,10 @@ export type TTeacherControllerProps = {
   onSelectVoice: (voiceId: string) => void;
   onPreviewVoice?: (voiceId: string) => void;
   onToggle3DMode: (enabled: boolean) => void;
+  onReload?: () => void;
+  ttsSpeed?: number;
+  onTtsSpeedChange?: (speed: number) => void;
+  autoScroll?: boolean;
+  onAutoScrollChange?: (enabled: boolean) => void;
   className?: string;
 };

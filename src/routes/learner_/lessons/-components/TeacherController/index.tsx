@@ -10,6 +10,7 @@ import type { TTeacherControllerProps } from "./type";
 const TeacherController = (props: TTeacherControllerProps) => {
   const { t } = useTranslation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [wasStopped, setWasStopped] = useState(false);
   const {
     status,
     isMuted,
@@ -28,6 +29,11 @@ const TeacherController = (props: TTeacherControllerProps) => {
     onSelectVoice,
     onPreviewVoice,
     onToggle3DMode,
+    onReload,
+    ttsSpeed,
+    onTtsSpeedChange,
+    autoScroll,
+    onAutoScrollChange,
     className,
   } = props;
 
@@ -35,6 +41,17 @@ const TeacherController = (props: TTeacherControllerProps) => {
   const isPaused = status === "paused";
   const isSpeaking = status === "speaking";
   const isThinking = status === "thinking";
+  const showReload = wasStopped && isIdle;
+
+  const handleStop = () => {
+    setWasStopped(true);
+    onStop();
+  };
+
+  const handleReload = () => {
+    setWasStopped(false);
+    onReload?.();
+  };
 
   const renderButtons = (className: string) => (
     <div className={className}>
@@ -54,17 +71,29 @@ const TeacherController = (props: TTeacherControllerProps) => {
         backgroundColor={COLORS.modeSalmon}
       />
 
-      <IconButton
-        icon="stop"
-        onClick={onStop}
-        disabled={isIdle || isThinking}
-        loading={isLoading}
-        tooltip={t("teacher_controller.stop")}
-        size="tiny"
-        type="secondary"
-        color={COLORS.white}
-        backgroundColor={COLORS.modeOrange}
-      />
+      {showReload ? (
+        <IconButton
+          icon="refresh"
+          onClick={handleReload}
+          tooltip={t("teacher_controller.reload")}
+          size="tiny"
+          type="secondary"
+          color={COLORS.white}
+          backgroundColor={COLORS.modeDarkGreen}
+        />
+      ) : (
+        <IconButton
+          icon="stop"
+          onClick={handleStop}
+          disabled={isIdle || isThinking}
+          loading={isLoading}
+          tooltip={t("teacher_controller.stop")}
+          size="tiny"
+          type="secondary"
+          color={COLORS.white}
+          backgroundColor={COLORS.modeOrange}
+        />
+      )}
 
       <IconButton
         icon={isMuted ? "volume_off" : "volume_up"}
@@ -152,6 +181,10 @@ const TeacherController = (props: TTeacherControllerProps) => {
               onSelectVoice={onSelectVoice}
               onPreviewVoice={onPreviewVoice}
               onClose={onCloseSettings}
+              ttsSpeed={ttsSpeed}
+              onTtsSpeedChange={onTtsSpeedChange}
+              autoScroll={autoScroll}
+              onAutoScrollChange={onAutoScrollChange}
             />
           </div>
         </div>
