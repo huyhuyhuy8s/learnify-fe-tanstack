@@ -2,7 +2,7 @@ import "./style.scss";
 
 import PillTopNav from "@/components/PillTopNav";
 import { ABOUT_STATS, ABOUT_VALUES } from "@/mock/about";
-import { SUBSCRIPTIONS } from "@/routes/learner/subscriptions/-constants";
+import { SUBSCRIPTIONS } from "@learner/subscriptions/-constants";
 import { useNavigate } from "@tanstack/react-router";
 import HeroSection from "./-components/HeroSection";
 import LandingAudience from "./-components/LandingAudience";

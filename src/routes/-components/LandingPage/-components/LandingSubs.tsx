@@ -1,6 +1,6 @@
 import Icon from "@/components/Icon";
 import TextButton from "@/components/TextButton";
-import type { TSubscription } from "@/routes/learner/subscriptions/-types/type";
+import type { TSubscription } from "@learner/subscriptions/-types/type";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";

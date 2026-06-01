@@ -1,4 +1,4 @@
-import type { TAboutStatProps } from "@/routes/learner/about/-types/about";
+import type { TAboutStatProps } from "@learner/about/-types/about";
 import { COLORS } from "@/styles/colors";
 
 export interface TeamMember {

@@ -1,11 +1,8 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import AboutStat from "@/routes/learner/about/-components/AboutStat";
-import type {
-  TAboutStatProps,
-  TLabel,
-} from "@/routes/learner/about/-types/about";
+import AboutStat from "@learner/about/-components/AboutStat";
+import type { TAboutStatProps, TLabel } from "@learner/about/-types/about";
 import { Trans, useTranslation } from "react-i18next";
 
 import "./LandingStats.scss";

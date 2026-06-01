@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import { OptimizeImage } from "@/components/Images";
 import { Slanted } from "@/components/Shapes";
 import { ABOUT_STATS } from "@/mock";
-import AboutStat from "@/routes/learner/about/-components/AboutStat/index";
-import TeamList from "@/routes/learner/about/-components/TeamList";
+import AboutStat from "@learner/about/-components/AboutStat/index";
+import TeamList from "@learner/about/-components/TeamList";
 import { COLORS } from "@/styles/colors";
 import "./style.scss";
 
