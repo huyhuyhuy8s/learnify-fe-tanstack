@@ -5,7 +5,8 @@ import {
 } from "@tanstack/react-router";
 import { z } from "zod";
 import Icon from "@/components/Icon";
-import classNames from "classnames";
+import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 import "./style.scss";
 
 const payosCancelSchema = z.object({
@@ -26,6 +27,7 @@ function PaymentCancelComponent() {
   const searchParams = Route.useSearch();
   const navigate = useNavigate();
   const router = useRouter();
+  const { t } = useTranslation();
 
   const handleRetry = () => {
     navigate({ to: "/learner/courses" });
@@ -45,21 +47,18 @@ function PaymentCancelComponent() {
         <div className="payment-cancel__icon">
           <Icon name="cancel" />
         </div>
-        <h1 className="payment-cancel__title">Thanh toán đã bị hủy</h1>
-        <p className="payment-cancel__desc">
-          Giao dịch của bạn đã bị hủy. Bạn có thể thử lại hoặc quay về trang
-          trước.
-        </p>
+        <h1 className="payment-cancel__title">{t("payment.cancel_title")}</h1>
+        <p className="payment-cancel__desc">{t("payment.cancel_desc")}</p>
 
         {searchParams.orderCode && (
           <div className="payment-cancel__details">
             <h3 className="payment-cancel__details-title">
-              Chi tiết giao dịch
+              {t("payment.cancel_order_label")}
             </h3>
 
             <div className="payment-cancel__details-row">
               <span className="payment-cancel__details-label">
-                Mã đơn hàng:
+                {t("payment.cancel_order_label")}
               </span>
               <span className="payment-cancel__details-value">
                 {searchParams.orderCode}
@@ -69,15 +68,15 @@ function PaymentCancelComponent() {
             {searchParams.status && (
               <div className="payment-cancel__details-row">
                 <span className="payment-cancel__details-label">
-                  Trạng thái:
+                  {t("payment.cancel_status_label")}
                 </span>
                 <span
-                  className={classNames(
+                  className={classnames(
                     "payment-cancel__details-value",
                     "payment-cancel__details-value--badge"
                   )}
                 >
-                  Đã hủy
+                  {t("payment.cancel_status_value")}
                 </span>
               </div>
             )}
@@ -87,38 +86,40 @@ function PaymentCancelComponent() {
         <div className="payment-cancel__actions">
           <button
             onClick={handleRetry}
-            className={classNames(
+            className={classnames(
               "payment-cancel__btn",
               "payment-cancel__btn--primary"
             )}
           >
-            <Icon name="refresh" /> Thử lại thanh toán
+            <Icon name="refresh" /> {t("payment.cancel_retry")}
           </button>
 
           <button
             onClick={handleGoBack}
-            className={classNames(
+            className={classnames(
               "payment-cancel__btn",
               "payment-cancel__btn--secondary"
             )}
           >
-            <Icon name="arrow_back" /> Quay lại trang trước
+            <Icon name="arrow_back" /> {t("payment.cancel_go_back")}
           </button>
 
           <button
             onClick={handleGoHome}
-            className={classNames(
+            className={classnames(
               "payment-cancel__btn",
               "payment-cancel__btn--text"
             )}
           >
-            Về trang chủ
+            {t("payment.cancel_go_home")}
           </button>
         </div>
 
         <div className="payment-cancel__support">
-          <p>Bạn gặp vấn đề khi thanh toán?</p>
-          <a href="mailto:support@learnify.io.vn">Liên hệ hỗ trợ</a>
+          <p>{t("payment.cancel_support")}</p>
+          <a href="mailto:support@learnify.io.vn">
+            {t("payment.cancel_support_link")}
+          </a>
         </div>
       </div>
     </div>
