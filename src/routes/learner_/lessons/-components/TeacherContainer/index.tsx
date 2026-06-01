@@ -69,18 +69,25 @@ function TeacherContainer(props: TTeacherContainerProps) {
     loadingMessage = "",
   } = props;
   const teacherAnimationRef = useRef<TTeacherAnimationRef>(null);
-  const hasCalledReadyRef = useRef(false);
 
-  const { progress } = useProgress();
-  const teacherReady = progress >= 30 && !isLoading;
+  const onModelReadyRef = useRef(onModelReady);
+  const onModelsReadyRef = useRef(onModelsReady);
 
   useEffect(() => {
-    if (teacherReady && !hasCalledReadyRef.current) {
-      hasCalledReadyRef.current = true;
-      onModelReady?.();
-      onModelsReady?.();
-    }
-  }, [teacherReady, onModelReady, onModelsReady]);
+    onModelReadyRef.current = onModelReady;
+  }, [onModelReady]);
+
+  useEffect(() => {
+    onModelsReadyRef.current = onModelsReady;
+  }, [onModelsReady]);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      onModelReadyRef.current?.();
+      onModelsReadyRef.current?.();
+    });
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   return (
     <div className="teacher-container">
