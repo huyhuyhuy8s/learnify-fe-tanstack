@@ -47,12 +47,11 @@ const TeacherAnimation = forwardRef<
     const isDegAnimation = DEG_ANIMATIONS.includes(
       animation as TTeacherAnimationDeg
     );
-    const extraRotation = isDegAnimation ? Math.PI : 0;
-    return [rotation[0], rotation[1] + extraRotation, rotation[2]] as [
-      number,
-      number,
-      number,
-    ];
+    return [
+      rotation[0],
+      isDegAnimation ? Math.PI : rotation[1],
+      rotation[2],
+    ] as [number, number, number];
   }, [animation, rotation]);
 
   const glTFAnimations = useMemo(
