@@ -15,21 +15,22 @@ type TLeftNavProps = {
 const LeftNav = (props: TLeftNavProps) => {
   const { className } = props;
   const isMobile = useIsMobile();
-  const [collapsed, setCollapsed] = useState(isMobile);
+  const [toggled, setToggled] = useState(false);
+
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
   });
   const isTop = useScrollTop();
 
-  const active = !collapsed;
+  const active = isMobile ? toggled : true;
   const navClassNames = classnames(
     "left-nav",
     { active, top: isTop },
     className
   );
 
-  const handleToggle = () => setCollapsed((c) => !c);
-  const handleOverlayClick = () => setCollapsed(false);
+  const handleToggle = () => setToggled((c) => !c);
+  const handleOverlayClick = () => setToggled(false);
 
   return (
     <>
