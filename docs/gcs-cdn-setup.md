@@ -82,22 +82,29 @@ gcloud compute addresses describe learnify-cdn-ip --global
 
 After this completes, you'll have a CDN URL like `http://34.XXX.XXX.XXX/models/teacher.glb`.
 
-## Step 6: (Optional) Custom Domain with Managed SSL
+## Step 6: Custom Domain with Managed SSL
 
-If you want to serve from `cdn.learnify-edu.duckdns.org`:
+> **DuckDNS note**: DuckDNS does not support sub-subdomains (e.g., `cdn.learnify-edu.duckdns.org`). Create a separate DuckDNS domain — `learnify-cdn.duckdns.org` — and point it to the CDN IP.
 
 ```bash
-# Get a new DuckDNS subdomain or create a CNAME record
-# Then: create a managed SSL certificate
-gcloud compute ssl-certificates create learnify-cdn-cert \
-  --domains=cdn.learnify-edu.duckdns.org
+# 1. Get the CDN IP
+gcloud compute addresses describe learnify-cdn-ip --global --format='value(address)'
 
-# Create HTTPS proxy
+# 2. Point learnify-cdn.duckdns.org to that IP at duckdns.org
+
+# 3. Delete any failed cert from previous attempts
+gcloud compute ssl-certificates delete learnify-cdn-cert --quiet
+
+# 4. Create SSL certificate
+gcloud compute ssl-certificates create learnify-cdn-cert \
+  --domains=learnify-cdn.duckdns.org
+
+# 5. Create or update HTTPS proxy
 gcloud compute target-https-proxies create learnify-models-https-proxy \
   --url-map=learnify-models-url-map \
   --ssl-certificates=learnify-cdn-cert
 
-# Create HTTPS forwarding rule
+# 6. Create HTTPS forwarding rule
 gcloud compute forwarding-rules create learnify-models-https-rule \
   --address=learnify-cdn-ip \
   --target-https-proxy=learnify-models-https-proxy \
@@ -108,41 +115,29 @@ gcloud compute forwarding-rules create learnify-models-https-rule \
 SSL provisioning takes 10-30 minutes. Verify:
 
 ```bash
-gcloud compute ssl-certificates describe learnify-cdn-cert
+gcloud compute ssl-certificates describe learnify-cdn-cert --format='value(managed.status)'
 ```
 
-Once `status: ACTIVE`, your models are available at `https://cdn.learnify-edu.duckdns.org/models/teacher.glb`.
+Once `status: ACTIVE`, update `.env.production`:
 
-## Step 7: Update Frontend URLs
-
-Edit `src/routes/learner_/lessons/-components/TeacherContainer/index.tsx`:
-
-```tsx
-// Change from local paths to CDN paths
-// Before:
-const teacherModel = useGLTF("/models/teacher.glb");
-
-// After:
-const CDN_BASE = import.meta.env.PROD
-  ? "https://cdn.learnify-edu.duckdns.org"
-  : "";
-const teacherModel = useGLTF(`${CDN_BASE}/models/teacher.glb`);
+```
+VITE_MODEL_CDN_URL="https://learnify-cdn.duckdns.org"
 ```
 
-Or use an environment variable:
+## Step 7: Frontend CDN Wiring (already implemented)
 
-```tsx
-// vite.config.ts
-define: {
-  __MODEL_CDN_URL__: JSON.stringify(process.env.VITE_MODEL_CDN_URL || ""),
-},
+The `TeacherContainer` component uses `getModelUrl()` which reads `VITE_MODEL_CDN_URL` from the environment:
+
+```ts
+// src/routes/learner_/lessons/-components/TeacherContainer/index.tsx
+const getModelUrl = (filename: string) =>
+  `${import.meta.env.VITE_MODEL_CDN_URL || ""}/models/${filename}`;
 ```
 
-Then in the component:
+- **Dev/local**: `VITE_MODEL_CDN_URL` is empty → loads from `/models/` on localhost
+- **Production**: Set in `.env.production` → loads from CDN
 
-```tsx
-const CDN_BASE = (import.meta as any).env?.VITE_MODEL_CDN_URL || "";
-```
+The env var flows through: `.env.production` → `docker-compose.yml` build args → `Dockerfile` ARG/ENV → `import.meta.env` in browser.
 
 ## Step 8: Update Nginx as Fallback
 
@@ -154,7 +149,7 @@ location ~ ^/models/ {
     # Replace with your CDN IP/domain
     proxy_pass http://34.XXX.XXX.XXX;
     proxy_http_version 1.1;
-    proxy_set_header Host cdn.learnify-edu.duckdns.org;
+    proxy_set_header Host learnify-cdn.duckdns.org;
     proxy_cache static;
     proxy_cache_valid 200 365d;
     proxy_cache_use_stale error timeout updating;
@@ -168,7 +163,7 @@ Or keep serving from the app with nginx cache (current behavior).
 
 ```bash
 # Test direct access
-curl -I https://cdn.learnify-edu.duckdns.org/models/teacher.glb
+curl -I https://learnify-cdn.duckdns.org/models/teacher.glb
 
 # Should show:
 # HTTP/2 200
