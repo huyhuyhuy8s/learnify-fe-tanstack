@@ -12,6 +12,9 @@ useGLTF.setDecoderPath(
   "https://www.gstatic.com/draco/versioned/decoders/1.5.6/"
 );
 
+const getModelUrl = (filename: string) =>
+  `${import.meta.env.VITE_MODEL_CDN_URL || ""}/models/${filename}`;
+
 type TTeacherContainerProps = {
   animation?: TTeacherAnimation;
   children?: React.ReactNode;
@@ -33,7 +36,7 @@ const CameraController = (props: { target: [number, number, number] }) => {
 };
 
 function ClassroomModel() {
-  const { scene } = useGLTF("/models/classroom_default.glb");
+  const { scene } = useGLTF(getModelUrl("classroom_default.glb"));
   return <primitive object={scene} />;
 }
 
@@ -81,9 +84,9 @@ function TeacherContainer(props: TTeacherContainerProps) {
 
   useEffect(() => {
     return () => {
-      useGLTF.clear("/models/teacher_animation.glb");
-      useGLTF.clear("/models/teacher.glb");
-      useGLTF.clear("/models/classroom_default.glb");
+      useGLTF.clear(getModelUrl("teacher_animation.glb"));
+      useGLTF.clear(getModelUrl("teacher.glb"));
+      useGLTF.clear(getModelUrl("classroom_default.glb"));
     };
   }, []);
 
@@ -150,8 +153,8 @@ function TeacherScene({
   animation?: TTeacherAnimation;
   teacherAnimationRef: React.RefObject<TTeacherAnimationRef | null>;
 }) {
-  const teacherModel = useGLTF("/models/teacher.glb");
-  const animationModel = useGLTF("/models/teacher_animation.glb");
+  const teacherModel = useGLTF(getModelUrl("teacher.glb"));
+  const animationModel = useGLTF(getModelUrl("teacher_animation.glb"));
 
   const teacherScene = useMemo(
     () => teacherModel?.scene,
