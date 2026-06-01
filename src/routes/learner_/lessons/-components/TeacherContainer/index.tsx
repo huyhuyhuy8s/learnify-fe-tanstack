@@ -15,6 +15,10 @@ useGLTF.setDecoderPath(
 const getModelUrl = (filename: string) =>
   `${import.meta.env.VITE_MODEL_CDN_URL || ""}/models/${filename}`;
 
+useGLTF.preload(getModelUrl("teacher.glb"));
+useGLTF.preload(getModelUrl("teacher_animation.glb"));
+useGLTF.preload(getModelUrl("classroom_default.glb"));
+
 type TTeacherContainerProps = {
   animation?: TTeacherAnimation;
   children?: React.ReactNode;
