@@ -1,6 +1,6 @@
-import { Environment, Preload, useGLTF } from "@react-three/drei";
+import { Environment, useGLTF, useProgress } from "@react-three/drei";
 import "./style.scss";
-import { useEffect, useRef, useMemo } from "react";
+import { Suspense, useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import TeacherAnimation from "../TeacherAnimation";
 import type { TTeacherAnimationRef } from "../TeacherAnimation";
@@ -21,10 +21,6 @@ type TTeacherContainerProps = {
   loadingMessage?: string;
 };
 
-const Classroom = ({ scene }: { scene: Group }) => {
-  return <primitive object={scene} />;
-};
-
 const CameraController = (props: { target: [number, number, number] }) => {
   const { target } = props;
   const targetVec = useRef(new Vector3(...target));
@@ -36,27 +32,29 @@ const CameraController = (props: { target: [number, number, number] }) => {
   return null;
 };
 
-const useModelPreloader = (onReady: () => void) => {
-  const onReadyRef = useRef(onReady);
+function ClassroomModel() {
+  const { scene } = useGLTF("/models/classroom_default.glb");
+  return <primitive object={scene} />;
+}
 
-  useEffect(() => {
-    onReadyRef.current = onReady;
-  }, [onReady]);
+function TeacherModel({ scene }: { scene: Group }) {
+  return <primitive object={scene} />;
+}
 
-  const animationModel = useGLTF("/models/teacher_animation.glb");
-  const teacherModel = useGLTF("/models/teacher.glb");
-  const classroomModel = useGLTF("/models/classroom_default.glb");
+function ProgressBar() {
+  const { progress, active } = useProgress();
 
-  const isLoaded = !!(animationModel && teacherModel && classroomModel);
+  if (!active) return null;
 
-  useEffect(() => {
-    if (isLoaded) {
-      onReadyRef.current();
-    }
-  }, [isLoaded]);
-
-  return { isLoaded, animationModel, teacherModel, classroomModel };
-};
+  return (
+    <div className="teacher-container__progress-bar">
+      <div
+        className="teacher-container__progress-fill"
+        style={{ width: `${progress}%` }}
+      />
+    </div>
+  );
+}
 
 function TeacherContainer(props: TTeacherContainerProps) {
   const {
@@ -70,26 +68,16 @@ function TeacherContainer(props: TTeacherContainerProps) {
   const teacherAnimationRef = useRef<TTeacherAnimationRef>(null);
   const hasCalledReadyRef = useRef(false);
 
-  const { isLoaded, animationModel, teacherModel, classroomModel } =
-    useModelPreloader(() => {
-      if (!hasCalledReadyRef.current) {
-        hasCalledReadyRef.current = true;
-        onModelReady?.();
-        onModelsReady?.();
-      }
-    });
+  const { progress } = useProgress();
+  const teacherReady = progress >= 30 && !isLoading;
 
-  const teacherScene = useMemo(
-    () => teacherModel?.scene,
-    [teacherModel?.scene]
-  );
-
-  const classroomScene = useMemo(
-    () => classroomModel?.scene,
-    [classroomModel?.scene]
-  );
-
-  const showOverlay = isLoading || !isLoaded;
+  useEffect(() => {
+    if (teacherReady && !hasCalledReadyRef.current) {
+      hasCalledReadyRef.current = true;
+      onModelReady?.();
+      onModelsReady?.();
+    }
+  }, [teacherReady, onModelReady, onModelsReady]);
 
   useEffect(() => {
     return () => {
@@ -101,7 +89,7 @@ function TeacherContainer(props: TTeacherContainerProps) {
 
   return (
     <div className="teacher-container">
-      {showOverlay && (
+      {isLoading && (
         <div className="teacher-container__loader-overlay">
           <CubeLoader />
           {loadingMessage && (
@@ -114,38 +102,73 @@ function TeacherContainer(props: TTeacherContainerProps) {
 
       {children}
 
+      <ProgressBar />
+
       <Canvas
         camera={{ position: [1, 1.425, 1], fov: 15 }}
         gl={{
-          antialias: true,
+          antialias: false,
           premultipliedAlpha: false,
         }}
         style={{
           background: "#1a1a1a",
-          opacity: showOverlay ? 0 : 1,
-          transition: "opacity 0.3s ease",
         }}
       >
-        {teacherScene && (
-          <>
-            <ambientLight intensity={0.4} />
-            <directionalLight position={[5, 5, 5]} intensity={1} />
-            <Environment preset="city" background={false} />
-            <Classroom scene={classroomScene} />
-            <TeacherAnimation
-              ref={teacherAnimationRef}
-              animation={animation}
-              animationModel={animationModel}
-              teacherModel={{ scene: teacherScene }}
-              rotation={[0, Math.PI, 0]}
-              position={[1, 0.25, -2]}
-            />
-            <CameraController target={[1, 1.425, 1]} />
-          </>
-        )}
-        <Preload all />
+        <AmbientScene />
+
+        <Suspense fallback={null}>
+          <TeacherScene
+            animation={animation}
+            teacherAnimationRef={teacherAnimationRef}
+          />
+        </Suspense>
+
+        <Suspense fallback={null}>
+          <ClassroomModel />
+        </Suspense>
+
+        <CameraController target={[1, 1.425, 1]} />
       </Canvas>
     </div>
+  );
+}
+
+function AmbientScene() {
+  return (
+    <>
+      <ambientLight intensity={0.4} />
+      <directionalLight position={[5, 5, 5]} intensity={1} />
+      <Environment preset="city" background={false} resolution={64} />
+    </>
+  );
+}
+
+function TeacherScene({
+  animation,
+  teacherAnimationRef,
+}: {
+  animation?: TTeacherAnimation;
+  teacherAnimationRef: React.RefObject<TTeacherAnimationRef | null>;
+}) {
+  const teacherModel = useGLTF("/models/teacher.glb");
+  const animationModel = useGLTF("/models/teacher_animation.glb");
+
+  const teacherScene = useMemo(
+    () => teacherModel?.scene,
+    [teacherModel?.scene]
+  );
+
+  if (!teacherScene) return null;
+
+  return (
+    <TeacherAnimation
+      ref={teacherAnimationRef}
+      animation={animation}
+      animationModel={animationModel}
+      teacherModel={{ scene: teacherScene }}
+      rotation={[0, Math.PI, 0]}
+      position={[1, 0.25, -2]}
+    />
   );
 }
 

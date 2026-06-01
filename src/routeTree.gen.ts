@@ -188,7 +188,9 @@ const LearnerSettingsIndexRoute = LearnerSettingsIndexRouteImport.update({
   id: "/settings/",
   path: "/settings/",
   getParentRoute: () => LearnerRouteRoute,
-} as any);
+} as any).lazy(() =>
+  import("./routes/learner/settings/index.lazy").then((d) => d.Route),
+);
 const LearnerSearchIndexRoute = LearnerSearchIndexRouteImport.update({
   id: "/search/",
   path: "/search/",
@@ -210,12 +212,16 @@ const LearnerDashboardIndexRoute = LearnerDashboardIndexRouteImport.update({
   id: "/dashboard/",
   path: "/dashboard/",
   getParentRoute: () => LearnerRouteRoute,
-} as any);
+} as any).lazy(() =>
+  import("./routes/learner/dashboard/index.lazy").then((d) => d.Route),
+);
 const LearnerCoursesIndexRoute = LearnerCoursesIndexRouteImport.update({
   id: "/courses/",
   path: "/courses/",
   getParentRoute: () => LearnerRouteRoute,
-} as any);
+} as any).lazy(() =>
+  import("./routes/learner/courses/index.lazy").then((d) => d.Route),
+);
 const LearnerAboutIndexRoute = LearnerAboutIndexRouteImport.update({
   id: "/",
   path: "/",
@@ -225,7 +231,9 @@ const InstructorCoursesIndexRoute = InstructorCoursesIndexRouteImport.update({
   id: "/",
   path: "/",
   getParentRoute: () => InstructorCoursesRouteRoute,
-} as any);
+} as any).lazy(() =>
+  import("./routes/instructor/courses/index.lazy").then((d) => d.Route),
+);
 const AuthVerifyEmailIndexRoute = AuthVerifyEmailIndexRouteImport.update({
   id: "/auth/verify-email/",
   path: "/auth/verify-email/",
