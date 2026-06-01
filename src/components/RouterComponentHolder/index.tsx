@@ -12,6 +12,7 @@ function RouterComponentHolder(props: TRouterComponentHolder) {
     <div
       className={classNames("learner-loader", props.className)}
       style={{
+        marginTop: "-50px",
         height: "100%",
         width: "100%",
         display: "flex",

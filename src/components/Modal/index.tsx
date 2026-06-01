@@ -29,7 +29,7 @@ const Modal = ({ open, onClose, title, children }: TModalProps) => {
         const modal = e.currentTarget.querySelector<HTMLElement>(".modal");
         if (!modal) return;
         const primary =
-          modal.querySelector<HTMLButtonElement>('button[type="submit"]') ??
+          modal.querySelector<HTMLButtonElement>("button[type='submit']") ??
           modal.querySelector<HTMLButtonElement>(
             ".modal__body button:last-of-type"
           );

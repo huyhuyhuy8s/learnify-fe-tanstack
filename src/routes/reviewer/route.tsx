@@ -1,5 +1,7 @@
 import Footer from "@/components/Footer";
+import GraphqlError from "@/components/GraphqlError";
 import LeftNav from "@/components/LeftNav";
+import RouterComponentHolder from "@/components/RouterComponentHolder";
 import TetrisLoader from "@/components/TetrisLoader";
 import TopNav from "@/components/TopNav";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
@@ -17,6 +19,10 @@ export const Route = createFileRoute("/reviewer")({
     meta: [{ title: "Content Reviewer | Learnify" }],
   }),
   component: ReviewerLayout,
+  errorComponent: ({ error }) => (
+    <RouterComponentHolder children={<GraphqlError error={error} />} />
+  ),
+  pendingComponent: () => <RouterComponentHolder children={<TetrisLoader />} />,
 });
 
 function ReviewerLayout() {

@@ -101,7 +101,18 @@
     "load_roadmap": "Không thể tải lộ trình học lúc này. Đây có thể là sự cố mạng hoặc máy chủ. Vui lòng thử lại.",
     "try_again": "Thử lại",
     "go_back": "Quay lại",
-    "session_expired": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại."
+    "session_expired": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.",
+    "throttler_title": "Quá nhiều yêu cầu",
+    "throttler_advice": "Bạn đang gửi quá nhiều yêu cầu. Vui lòng chờ một lát và thử lại. Giới hạn này tự động đặt lại sau mỗi 10 giây.",
+    "validation_title": "Dữ liệu không hợp lệ",
+    "validation_advice": "Dữ liệu bạn gửi không hợp lệ. Vui lòng kiểm tra lại thông tin và thử lại.",
+    "not_found_title": "Không tìm thấy tài nguyên",
+    "not_found_advice": "Không tìm thấy tài nguyên yêu cầu. Có thể tài nguyên đã bị di chuyển hoặc xóa.",
+    "forbidden_title": "Truy cập bị từ chối",
+    "forbidden_advice": "Bạn không có quyền truy cập tài nguyên này. Vui lòng liên hệ hỗ trợ nếu bạn cho rằng đây là nhầm lẫn.",
+    "bad_request_title": "Yêu cầu không hợp lệ",
+    "bad_request_advice": "Máy chủ không thể xử lý yêu cầu của bạn. Vui lòng thử lại hoặc liên hệ hỗ trợ.",
+    "server_advice": "Đã xảy ra lỗi máy chủ. Nhóm kỹ thuật đã được thông báo. Vui lòng thử lại sau."
   },
   "auth": {
     "login": {
@@ -217,7 +228,27 @@
     "private_course": "Khóa học này không khả dụng",
     "not_published": "Khóa học này chưa được xuất bản",
     "server_error": "Lỗi máy chủ",
-    "load_error": "Đã xảy ra lỗi khi tải khóa học này. Máy chủ gặp sự cố. Vui lòng thử lại sau."
+    "load_error": "Đã xảy ra lỗi khi tải khóa học này. Máy chủ gặp sự cố. Vui lòng thử lại sau.",
+    "buy": "Mua khóa học",
+    "payment_error": "Không thể tạo phiên thanh toán. Vui lòng thử lại!"
+  },
+  "payment": {
+    "success_title": "Thanh toán thành công!",
+    "success_desc": "Thanh toán của bạn đã được xác nhận. Bạn có thể bắt đầu học ngay!",
+    "success_order_label": "Mã đơn hàng:",
+    "success_cta": "Vào học ngay",
+    "processing_title": "Đang xử lý...",
+    "processing_desc": "Vui lòng không đóng trình duyệt trong khi hệ thống đang ghi danh.",
+    "cancel_title": "Thanh toán đã bị hủy",
+    "cancel_desc": "Giao dịch của bạn đã bị hủy. Bạn có thể thử lại hoặc quay lại.",
+    "cancel_order_label": "Mã đơn hàng:",
+    "cancel_status_label": "Trạng thái:",
+    "cancel_status_value": "Đã hủy",
+    "cancel_retry": "Thử lại thanh toán",
+    "cancel_go_back": "Quay lại",
+    "cancel_go_home": "Về trang chủ",
+    "cancel_support": "Bạn gặp vấn đề khi thanh toán?",
+    "cancel_support_link": "Liên hệ hỗ trợ"
   },
   "roadmaps": {
     "headline": "Định hình <Beauty>tương lai của bạn</Beauty> theo cách của riêng bạn",

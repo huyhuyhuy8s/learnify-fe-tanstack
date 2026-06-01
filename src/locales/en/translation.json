@@ -101,7 +101,18 @@
     "load_roadmap": "Unable to load roadmap at this time. This could be a network issue or a server problem. Please try again.",
     "try_again": "Try Again",
     "go_back": "Go Back",
-    "session_expired": "Session expired. Please log in again."
+    "session_expired": "Session expired. Please log in again.",
+    "throttler_title": "Too Many Requests",
+    "throttler_advice": "You are sending too many requests. Please wait a moment and try again. This limit resets automatically every 10 seconds.",
+    "validation_title": "Invalid Input",
+    "validation_advice": "The data you submitted is not valid. Please check your input and try again.",
+    "not_found_title": "Resource Not Found",
+    "not_found_advice": "The requested resource could not be found. It may have been moved or deleted.",
+    "forbidden_title": "Access Denied",
+    "forbidden_advice": "You do not have permission to access this resource. Please contact support if you believe this is a mistake.",
+    "bad_request_title": "Bad Request",
+    "bad_request_advice": "The server could not process your request. Please try again or contact support.",
+    "server_advice": "An internal server error occurred. Our team has been notified. Please try again later."
   },
   "auth": {
     "login": {
@@ -217,7 +228,27 @@
     "private_course": "This course is not available",
     "not_published": "This course has not been published yet",
     "server_error": "Server Error",
-    "load_error": "Something went wrong while loading this course. The server encountered an issue. Please try again or come back later."
+    "load_error": "Something went wrong while loading this course. The server encountered an issue. Please try again or come back later.",
+    "buy": "Buy Course",
+    "payment_error": "Unable to create payment session. Please try again!"
+  },
+  "payment": {
+    "success_title": "Payment Successful!",
+    "success_desc": "Your payment has been confirmed. You can now start learning!",
+    "success_order_label": "Order code:",
+    "success_cta": "Start Learning",
+    "processing_title": "Processing...",
+    "processing_desc": "Please do not close the browser while we process your enrollment.",
+    "cancel_title": "Payment Cancelled",
+    "cancel_desc": "Your transaction has been cancelled. You can try again or go back.",
+    "cancel_order_label": "Order code:",
+    "cancel_status_label": "Status:",
+    "cancel_status_value": "Cancelled",
+    "cancel_retry": "Retry Payment",
+    "cancel_go_back": "Go Back",
+    "cancel_go_home": "Go Home",
+    "cancel_support": "Having trouble with payment?",
+    "cancel_support_link": "Contact Support"
   },
   "roadmaps": {
     "headline": "Shape <Beauty>your future</Beauty> by yourself",

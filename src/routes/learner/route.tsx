@@ -22,8 +22,8 @@ export const Route = createFileRoute("/learner")({
     ...createLearnerHead("Home"),
   }),
   component: LearnerLayout,
-  errorComponent: () => (
-    <RouterComponentHolder children={<LearnerErrorComponent />} />
+  errorComponent: ({ error }) => (
+    <RouterComponentHolder children={<LearnerErrorComponent error={error} />} />
   ),
   pendingComponent: () => <RouterComponentHolder children={<TetrisLoader />} />,
   notFoundComponent: () => <RouterComponentHolder children={<NotFound />} />,
