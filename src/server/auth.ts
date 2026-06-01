@@ -10,6 +10,8 @@ type UserData = {
   email: string;
   username?: string;
   role?: string;
+  diamond?: number;
+  currentSteak?: number;
 };
 
 const sessionSchema = z.object({
@@ -20,6 +22,8 @@ const sessionSchema = z.object({
   }),
   username: z.string().optional(),
   role: z.string().optional(),
+  diamond: z.number().optional(),
+  currentSteak: z.number().optional(),
 });
 
 export const getCurrentUserFn = createServerFn({ method: "GET" }).handler(

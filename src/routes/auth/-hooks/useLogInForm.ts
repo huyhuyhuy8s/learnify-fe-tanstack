@@ -80,6 +80,8 @@ export const useLogInForm = (props: { redirect?: string }) => {
               email: userData.email,
               username: userData.username,
               role: normalizeRole(userData.role),
+              diamond: userData.diamond,
+              currentSteak: userData.currentSteak,
             },
           });
         await router.invalidate();

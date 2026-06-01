@@ -49,6 +49,8 @@ type UserResponse {
   phoneNumber: String
   avatar: String
   role: String
+  diamond: Float
+  currentSteak: Float
   createdAt: DateTime!
   updatedAt: DateTime!
 }
