@@ -36,7 +36,6 @@ const LeftNavTop = (props: TLeftNavTopProps) => {
             iconName={item.iconName}
             label={t(item.labelKey)}
             href={item.href}
-            active={pathname === item.href}
           />
         ))}
       </div>

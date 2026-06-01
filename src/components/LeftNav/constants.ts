@@ -45,9 +45,25 @@ export const instructorTopItems: TTopItem[] = [
   },
 ];
 
+export const reviewerTopItems: TTopItem[] = [
+  {
+    iconName: "local_library",
+    labelKey: "sidebar.dashboard",
+    href: "/reviewer",
+  },
+  {
+    iconName: "school",
+    labelKey: "sidebar.manage_courses",
+    href: "/reviewer/courses",
+  },
+];
+
 export function getTopItemsByPathname(pathname: string): TTopItem[] {
   if (pathname.startsWith("/instructor")) {
     return instructorTopItems;
+  }
+  if (pathname.startsWith("/reviewer")) {
+    return reviewerTopItems;
   }
   return learnerTopItems;
 }

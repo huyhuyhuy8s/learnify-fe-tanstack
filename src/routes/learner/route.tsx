@@ -1,40 +1,17 @@
-import "./style.scss";
+import "./route.scss";
 
 import Footer from "@/components/Footer";
 import LeftNav from "@/components/LeftNav";
 import NotFound from "@/components/NotFound";
+import RouterComponentHolder from "@/components/RouterComponentHolder";
 import TetrisLoader from "@/components/TetrisLoader";
 import TopNav from "@/components/TopNav";
-import { createLearnerHead } from "@/utils";
-import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { Suspense, type CSSProperties, type ReactNode } from "react";
-import { LearnerErrorComponent } from "./-components/LearnerErrorComponent";
-import classNames from "classnames";
 import { getCurrentUserFn } from "@/server/auth";
+import { createLearnerHead } from "@/utils";
 import { requireAuth } from "@/utils/authGuard";
-
-type TLearnerComponentHolder = {
-  className?: string;
-  style?: CSSProperties;
-  children: ReactNode;
-};
-
-function LearnerComponentHolder(props: TLearnerComponentHolder) {
-  return (
-    <div
-      className={classNames("learner-loader", props.className)}
-      style={{
-        height: "100%",
-        width: "100%",
-        display: "flex",
-        placeContent: "center",
-        ...props.style,
-      }}
-    >
-      {props.children}
-    </div>
-  );
-}
+import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { Suspense } from "react";
+import { LearnerErrorComponent } from "./-components/LearnerErrorComponent";
 
 export const Route = createFileRoute("/learner")({
   beforeLoad: async () => {
@@ -46,12 +23,10 @@ export const Route = createFileRoute("/learner")({
   }),
   component: LearnerLayout,
   errorComponent: () => (
-    <LearnerComponentHolder children={<LearnerErrorComponent />} />
+    <RouterComponentHolder children={<LearnerErrorComponent />} />
   ),
-  pendingComponent: () => (
-    <LearnerComponentHolder children={<TetrisLoader />} />
-  ),
-  notFoundComponent: () => <LearnerComponentHolder children={<NotFound />} />,
+  pendingComponent: () => <RouterComponentHolder children={<TetrisLoader />} />,
+  notFoundComponent: () => <RouterComponentHolder children={<NotFound />} />,
 });
 
 function LearnerLayout() {

@@ -1,4 +1,4 @@
-import { SplitPanel } from "@/components/SplitPanel";
+import SplitPanel from "@/components/SplitPanel";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
 import FriendDetail from "./-components/FriendDetail";
@@ -46,50 +46,62 @@ function FriendsPage() {
       }
     >
       <div className="friend-page">
-        <SplitPanel
-          levels={2}
-          tabs={tabs}
-          activeTab={typeFriend}
-          onTabChange={(tab) => {
-            setTypeFriend(tab as typeof typeFriend);
-            setSelectedId(null);
-          }}
-          items={displayList}
-          selectedId={selectedId}
-          isLoading={isLoading}
-          loader={<FriendItemSkeleton />}
-          renderItem={(friend, idx) => (
-            <FriendItem
-              index={idx + 1}
-              id={friend.id}
-              name={friend.name}
-              imgUrl={friend.imgUrl}
-              typeFriendItem={friend.typeFriendItem}
-              streaks={friend.streaks}
-              isActive={selectedId === friend.id}
-              onClick={() => setSelectedId(friend.id)}
-              onAccept={() => handleRespondRequest(friend.id, true)}
-              onDecline={() => handleRespondRequest(friend.id, false)}
-            />
-          )}
-          renderDetail={() =>
-            friendDetailData ? (
-              <FriendDetail
-                {...friendDetailData}
-                showAddFriendBtn={shouldShowAddFriendBtn}
-                isSendingRequest={isSendingRequest}
-                onSendFriendRequest={() => handleSendRequest(selectedId!)}
-              />
-            ) : (
-              <div className="friend-page__placeholder-profile">
-                <h5>{t("friends.placeholder_heading")}</h5>
-                <p>{t("friends.placeholder_text")}</p>
-              </div>
-            )
-          }
-          listClassName="friend-page__body-left"
-          detailClassName="friend-page__body-right"
-        />
+        <SplitPanel>
+          <SplitPanel.Tabs>
+            {tabs.map((tab) => (
+              <SplitPanel.Tab
+                key={tab.value}
+                active={typeFriend === tab.value}
+                onClick={() => {
+                  setTypeFriend(tab.value as typeof typeFriend);
+                  setSelectedId(null);
+                }}
+              >
+                {tab.label}
+              </SplitPanel.Tab>
+            ))}
+          </SplitPanel.Tabs>
+
+          <SplitPanel.Content>
+            <SplitPanel.List className="friend-page__body-left">
+              {isLoading ? (
+                <FriendItemSkeleton />
+              ) : (
+                displayList.map((friend, idx) => (
+                  <FriendItem
+                    key={friend.id}
+                    index={idx + 1}
+                    id={friend.id}
+                    name={friend.name}
+                    imgUrl={friend.imgUrl}
+                    typeFriendItem={friend.typeFriendItem}
+                    streaks={friend.streaks}
+                    isActive={selectedId === friend.id}
+                    onClick={() => setSelectedId(friend.id)}
+                    onAccept={() => handleRespondRequest(friend.id, true)}
+                    onDecline={() => handleRespondRequest(friend.id, false)}
+                  />
+                ))
+              )}
+            </SplitPanel.List>
+
+            <SplitPanel.Detail className="friend-page__body-right">
+              {friendDetailData ? (
+                <FriendDetail
+                  {...friendDetailData}
+                  showAddFriendBtn={shouldShowAddFriendBtn}
+                  isSendingRequest={isSendingRequest}
+                  onSendFriendRequest={() => handleSendRequest(selectedId!)}
+                />
+              ) : (
+                <div className="friend-page__placeholder-profile">
+                  <h5>{t("friends.placeholder_heading")}</h5>
+                  <p>{t("friends.placeholder_text")}</p>
+                </div>
+              )}
+            </SplitPanel.Detail>
+          </SplitPanel.Content>
+        </SplitPanel>
       </div>
     </Suspense>
   );

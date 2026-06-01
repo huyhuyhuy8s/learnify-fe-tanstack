@@ -1,6 +1,7 @@
-import { SplitPanel } from "@/components/SplitPanel";
+import SplitPanel from "@/components/SplitPanel";
 import Icon from "@/components/Icon";
 import Modal from "@/components/Modal";
+import TetrisLoader from "@/components/TetrisLoader";
 import { useAuthStore } from "@/store";
 import {
   useGetCoursesByUserId,
@@ -531,133 +532,147 @@ function ManageCoursesPage() {
         </div>
       </Modal>
 
-      <SplitPanel
-        levels={3}
-        tabs={COURSE_STATUSES.map((s) => ({
-          value: s,
-          label: tStatus(t, s),
-        }))}
-        activeTab={statusFilter}
-        onTabChange={(tab) => {
-          setStatusFilter(tab as TCourseStatus);
-          setSelectedCourseId(null);
-          setSelectedLessonId(null);
-        }}
-        items={filteredCourses}
-        selectedId={selectedCourseId}
-        isLoading={isLoading}
-        renderListHeader={() => (
-          <button
-            className="manage-courses__add-btn"
-            onClick={() => setShowAddCourse(true)}
-          >
-            <Icon name="add" /> {t("sidebar.add_course")}
-          </button>
-        )}
-        renderItem={(course) => (
-          <div
-            className={classNames("manage-courses__item", {
-              "manage-courses__item--active": selectedCourseId === course.id,
-            })}
-            onClick={() => {
-              setSelectedCourseId(course.id);
-              setSelectedLessonId(null);
-            }}
-          >
-            <Icon
-              name="menu_book"
-              className="manage-courses__item-icon"
-              size={20}
-            />
-            <div className="manage-courses__item-info">
-              <span className="manage-courses__item-name">
-                {course.courseName}
-              </span>
-              <span
-                className={`manage-courses__item-status manage-courses__item-status--${course.status.toLowerCase()}`}
+      <SplitPanel>
+        <SplitPanel.Tabs>
+          {COURSE_STATUSES.map((s) => (
+            <SplitPanel.Tab
+              key={s}
+              active={statusFilter === s}
+              onClick={() => {
+                setStatusFilter(s as TCourseStatus);
+                setSelectedCourseId(null);
+                setSelectedLessonId(null);
+              }}
+            >
+              {tStatus(t, s)}
+            </SplitPanel.Tab>
+          ))}
+        </SplitPanel.Tabs>
+
+        <SplitPanel.Content>
+          <SplitPanel.List>
+            <button
+              className="manage-courses__add-btn"
+              onClick={() => setShowAddCourse(true)}
+            >
+              <Icon name="add" /> {t("sidebar.add_course")}
+            </button>
+            {filteredCourses.map((course) => (
+              <div
+                key={course.id}
+                className={classNames("manage-courses__item", {
+                  "manage-courses__item--active":
+                    selectedCourseId === course.id,
+                })}
+                onClick={() => {
+                  setSelectedCourseId(course.id);
+                  setSelectedLessonId(null);
+                }}
               >
-                {tStatus(t, course.status)}
-              </span>
-            </div>
-            <button
-              className="manage-courses__item-delete"
-              onClick={(e) => {
-                e.stopPropagation();
-                setCourseToDelete(course.id);
-              }}
-            >
-              <Icon name="delete" size={18} />
-            </button>
-          </div>
-        )}
-        renderDetail={(course) => (
-          <div className="manage-courses__course-detail-body">
-            <h4 className="semibold">{course.courseName}</h4>
-            <p className="manage-courses__course-abstract">{course.abstract}</p>
-            <div className="manage-courses__course-meta">
-              <span>
-                {t("courses.status")}: {tStatus(t, course.status)}
-              </span>
-              <span>
-                Created: {new Date(course.createdAt).toLocaleDateString()}
-              </span>
-            </div>
-          </div>
-        )}
-        subItems={lessons}
-        selectedSubId={selectedLessonId}
-        onSelectSub={setSelectedLessonId}
-        isSubLoading={isCourseLoading}
-        renderSubItem={(lesson) => (
-          <div
-            className={classNames("manage-courses__lesson-item", {
-              "manage-courses__lesson-item--active":
-                selectedLessonId === lesson.id,
-            })}
-          >
-            <Icon
-              name="play_circle"
-              className="manage-courses__lesson-item__icon"
-            />
-            <div className="manage-courses__lesson-item__info">
-              <span className="manage-courses__lesson-item__name medium">
-                {lesson.lessonName}
-              </span>
-              <small className="manage-courses__lesson-item__date">
-                {new Date(lesson.createdAt as string).toLocaleDateString()}
-              </small>{" "}
-            </div>
-            <button
-              className="manage-courses__item-delete"
-              onClick={(e) => {
-                e.stopPropagation();
-                setLessonToDelete(lesson.id);
-              }}
-            >
-              <Icon name="delete" size={18} />
-            </button>
-          </div>
-        )}
-        renderSubDetail={(lesson) => (
-          <LessonDetail
-            id={lesson.id}
-            lessonName={lesson.lessonName}
-            abstract={lesson.abstract}
-            createdAt={lesson.createdAt}
-          />
-        )}
-        renderSubListHeader={() => (
-          <button
-            className="manage-courses__add-btn"
-            onClick={() => {
-              if (!selectedCourseId) return;
-              setShowAddLesson(true);
-            }}
-          >
-            <Icon name="add" /> {t("sidebar.add_lesson")}
-          </button>
-        )}
-      />
+                <Icon
+                  name="menu_book"
+                  className="manage-courses__item-icon"
+                  size={20}
+                />
+                <div className="manage-courses__item-info">
+                  <span className="manage-courses__item-name">
+                    {course.courseName}
+                  </span>
+                  <span
+                    className={`manage-courses__item-status manage-courses__item-status--${course.status.toLowerCase()}`}
+                  >
+                    {tStatus(t, course.status)}
+                  </span>
+                </div>
+                <button
+                  className="manage-courses__item-delete"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCourseToDelete(course.id);
+                  }}
+                >
+                  <Icon name="delete" size={18} />
+                </button>
+              </div>
+            ))}
+          </SplitPanel.List>
+
+          <SplitPanel.SubList>
+            {!selectedCourseId ? (
+              <div className="split-panel__placeholder">
+                <p>Select a course</p>
+              </div>
+            ) : (
+              <>
+                <button
+                  className="manage-courses__add-btn"
+                  onClick={() => {
+                    if (!selectedCourseId) return;
+                    setShowAddLesson(true);
+                  }}
+                >
+                  <Icon name="add" /> {t("sidebar.add_lesson")}
+                </button>
+                {isCourseLoading ? (
+                  <TetrisLoader size="md" speed="fast" />
+                ) : lessons.length > 0 ? (
+                  lessons.map((lesson) => (
+                    <div
+                      key={lesson.id}
+                      className={classNames("manage-courses__lesson-item", {
+                        "manage-courses__lesson-item--active":
+                          selectedLessonId === lesson.id,
+                      })}
+                      onClick={() => setSelectedLessonId(lesson.id)}
+                    >
+                      <Icon
+                        name="play_circle"
+                        className="manage-courses__lesson-item__icon"
+                      />
+                      <div className="manage-courses__lesson-item__info">
+                        <span className="manage-courses__lesson-item__name medium">
+                          {lesson.lessonName}
+                        </span>
+                        <small className="manage-courses__lesson-item__date">
+                          {new Date(
+                            lesson.createdAt as string
+                          ).toLocaleDateString()}
+                        </small>
+                      </div>
+                      <button
+                        className="manage-courses__item-delete"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setLessonToDelete(lesson.id);
+                        }}
+                      >
+                        <Icon name="delete" size={18} />
+                      </button>
+                    </div>
+                  ))
+                ) : (
+                  <div className="split-panel__empty">No lessons</div>
+                )}
+              </>
+            )}
+          </SplitPanel.SubList>
+
+          <SplitPanel.SubDetail>
+            {selectedLessonId && selectedLesson ? (
+              <LessonDetail
+                id={selectedLesson.id}
+                lessonName={selectedLesson.lessonName}
+                abstract={selectedLesson.abstract}
+                createdAt={selectedLesson.createdAt}
+              />
+            ) : (
+              <div className="split-panel__placeholder">
+                <p>Select a lesson</p>
+              </div>
+            )}
+          </SplitPanel.SubDetail>
+        </SplitPanel.Content>
+      </SplitPanel>
     </div>
   );
 }

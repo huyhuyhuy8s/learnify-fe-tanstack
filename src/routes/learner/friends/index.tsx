@@ -1,12 +1,14 @@
 import "./friends.scss";
 
-import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { useTranslation } from "react-i18next";
 import ErrorScene from "@/components/ErrorScene";
+import NotFound from "@/components/NotFound";
+import RouterComponentHolder from "@/components/RouterComponentHolder";
 import TetrisLoader from "@/components/TetrisLoader";
 import TextButton from "@/components/TextButton";
 import { getCurrentUserFn } from "@/server/auth";
 import { createLearnerHead } from "@/utils";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 
 function FriendsErrorComponent() {
   const { t } = useTranslation();
@@ -50,6 +52,9 @@ export const Route = createFileRoute("/learner/friends/")({
     return { user };
   },
   head: () => createLearnerHead("Friends"),
-  errorComponent: FriendsErrorComponent,
-  pendingComponent: TetrisLoader,
+  errorComponent: () => (
+    <RouterComponentHolder children={<FriendsErrorComponent />} />
+  ),
+  notFoundComponent: () => <RouterComponentHolder children={<NotFound />} />,
+  pendingComponent: () => <RouterComponentHolder children={<TetrisLoader />} />,
 }).lazy(() => import("./index.lazy").then((m) => m.Route));

@@ -194,7 +194,8 @@
     "files_required": "Vui lòng tải lên ít nhất một tệp",
     "files_max_count": "Chỉ được phép tối đa {{count}} tệp",
     "files_type_error": "Chỉ chấp nhận tệp .pdf, .ppt, .pptx",
-    "files_size_error": "{{name}} vượt quá giới hạn {{size}}"
+    "files_size_error": "{{name}} vượt quá giới hạn {{size}}",
+    "select_course_to_review": "Chọn một khóa học để xem xét"
   },
   "course_detail": {
     "enroll": "Đăng ký khóa học",

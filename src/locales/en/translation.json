@@ -194,7 +194,8 @@
     "files_required": "Please upload at least one file",
     "files_max_count": "Maximum {{count}} files allowed",
     "files_type_error": "Only .pdf, .ppt, .pptx files are allowed",
-    "files_size_error": "{{name}} exceeds {{size}} limit"
+    "files_size_error": "{{name}} exceeds {{size}} limit",
+    "select_course_to_review": "Select a course to review"
   },
   "course_detail": {
     "enroll": "Enroll Course",

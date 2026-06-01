@@ -7,7 +7,6 @@ type TLeftNavItemProps = {
   label: string;
   href: string;
   className?: string;
-  active?: boolean;
 };
 
 const LeftNavItem = (props: TLeftNavItemProps) => {
@@ -18,7 +17,7 @@ const LeftNavItem = (props: TLeftNavItemProps) => {
       <Link
         className="link-box"
         to={href}
-        activeOptions={{ includeSearch: true, exact: true }}
+        activeOptions={{ includeSearch: false, exact: true }}
       >
         <div className="icon-box">
           <Icon name={iconName} className={className} />

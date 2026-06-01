@@ -86,3 +86,4 @@ src/gql
 /.env.production
 /DESIGN.md
 /docs/designs/materials-design-3-expressive
+/.understand-anything
