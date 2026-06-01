@@ -5,10 +5,12 @@ type TLearnerErrorComponentProps = {
   error?: unknown;
 };
 
-export function LearnerErrorComponent({ error }: TLearnerErrorComponentProps) {
+function LearnerErrorComponent({ error }: TLearnerErrorComponentProps) {
   return (
     <RouterComponentHolder>
       <GraphqlError error={error} />
     </RouterComponentHolder>
   );
 }
+
+export default LearnerErrorComponent;

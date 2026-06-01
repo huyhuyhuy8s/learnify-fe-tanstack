@@ -1,11 +1,14 @@
+import "./style.scss";
+
+import { useRouter } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import classnames from "classnames";
+
 import ErrorScene from "@/components/ErrorScene";
 import Icon from "@/components/Icon";
 import TextButton from "@/components/TextButton";
-import { useRouter } from "@tanstack/react-router";
-import { useTranslation } from "react-i18next";
+
 import type { TGraphqlErrorProps } from "./type";
-import "./style.scss";
 
 type GraphQLErrorItem = {
   message: string;

@@ -1,13 +1,15 @@
+import "./style.scss";
+
 import {
   createFileRoute,
   useNavigate,
   useRouter,
 } from "@tanstack/react-router";
 import { z } from "zod";
-import Icon from "@/components/Icon";
 import classnames from "classnames";
 import { useTranslation } from "react-i18next";
-import "./style.scss";
+
+import Icon from "@/components/Icon";
 
 const payosCancelSchema = z.object({
   orderCode: z.string().catch(""),

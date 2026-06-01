@@ -1,12 +1,14 @@
 import "./style.scss";
 
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useMemo } from "react";
 import { useTranslation, Trans } from "react-i18next";
+
 import { useAuthStore } from "@/store";
 import { useGetAllCourses, type TBackendCourse } from "@/hooks/useCourses";
-import Icon from "@/components/Icon";
+
 import CubeLoader from "@/components/CubeLoader";
-import { useMemo } from "react";
+import Icon from "@/components/Icon";
 
 export const Route = createFileRoute("/reviewer/")({
   head: () => ({
@@ -121,7 +123,7 @@ function ReviewerDashboard() {
 
             <div className="reviewer-dashboard__pending-section">
               <h2 className="reviewer-dashboard__section-title semibold">
-                {t("dashboard.pending")} Reviews
+                {t("dashboard.pending_reviews")}
               </h2>
               {stats.pendingCourses.length > 0 ? (
                 <div className="reviewer-dashboard__pending-list">

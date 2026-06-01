@@ -1,19 +1,22 @@
+import "./style.scss";
+
 import {
   createFileRoute,
   useNavigate,
   useRouter,
 } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 import { toast } from "sonner";
-import { useGetPayment, useUpdatePaymentStatus } from "@/hooks/usePayment";
-import { useQueryClient } from "@tanstack/react-query";
-import { useEnrollCourse } from "@/hooks/useCourseDetail";
-import { useAuthStore } from "@/store/authStore";
-import Icon from "@/components/Icon";
 import classnames from "classnames";
 import { useTranslation } from "react-i18next";
-import "./style.scss";
+
+import { useGetPayment, useUpdatePaymentStatus } from "@/hooks/usePayment";
+import { useEnrollCourse } from "@/hooks/useCourseDetail";
+import { useAuthStore } from "@/store/authStore";
+
+import Icon from "@/components/Icon";
 
 const payosSearchSchema = z.object({
   code: z.union([z.string(), z.number()]).transform(String).catch(""),

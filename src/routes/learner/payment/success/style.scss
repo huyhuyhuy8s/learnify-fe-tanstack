@@ -29,17 +29,16 @@
     justify-content: center;
     align-items: center;
     margin-bottom: toRem(24);
-    i,
     svg {
       font-size: toRem(72);
     }
 
     &--success {
-      color: #22c55e;
+      color: $green-600;
     }
 
     &--error {
-      color: #ef4444;
+      color: $orange-600;
     }
 
     &--loading {

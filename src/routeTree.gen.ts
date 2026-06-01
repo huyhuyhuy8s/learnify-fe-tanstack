@@ -52,7 +52,6 @@ import { Route as LearnerRoadmapsRoadmapIdIndexRouteImport } from "./routes/lear
 import { Route as LearnerPaymentSuccessIndexRouteImport } from "./routes/learner/payment/success/index";
 import { Route as LearnerPaymentCancelIndexRouteImport } from "./routes/learner/payment/cancel/index";
 import { Route as LearnerCoursesCourseIdIndexRouteImport } from "./routes/learner/courses/$courseId/index";
-import { Route as InstructorCoursesCreateIndexRouteImport } from "./routes/instructor/courses/create/index";
 
 const RedirectRoute = RedirectRouteImport.update({
   id: "/redirect",
@@ -309,12 +308,6 @@ const LearnerCoursesCourseIdIndexRoute =
       (d) => d.Route,
     ),
   );
-const InstructorCoursesCreateIndexRoute =
-  InstructorCoursesCreateIndexRouteImport.update({
-    id: "/create/",
-    path: "/create/",
-    getParentRoute: () => InstructorCoursesRouteRoute,
-  } as any);
 
 export interface FileRoutesByFullPath {
   "/": typeof IndexRoute;
@@ -354,7 +347,6 @@ export interface FileRoutesByFullPath {
   "/learner/user/": typeof LearnerUserIndexRoute;
   "/learner/lessons/": typeof LearnerLessonsIndexRoute;
   "/reviewer/courses/": typeof ReviewerCoursesIndexRoute;
-  "/instructor/courses/create/": typeof InstructorCoursesCreateIndexRoute;
   "/learner/courses/$courseId/": typeof LearnerCoursesCourseIdIndexRoute;
   "/learner/payment/cancel/": typeof LearnerPaymentCancelIndexRoute;
   "/learner/payment/success/": typeof LearnerPaymentSuccessIndexRoute;
@@ -391,7 +383,6 @@ export interface FileRoutesByTo {
   "/learner/user": typeof LearnerUserIndexRoute;
   "/learner/lessons": typeof LearnerLessonsIndexRoute;
   "/reviewer/courses": typeof ReviewerCoursesIndexRoute;
-  "/instructor/courses/create": typeof InstructorCoursesCreateIndexRoute;
   "/learner/courses/$courseId": typeof LearnerCoursesCourseIdIndexRoute;
   "/learner/payment/cancel": typeof LearnerPaymentCancelIndexRoute;
   "/learner/payment/success": typeof LearnerPaymentSuccessIndexRoute;
@@ -438,7 +429,6 @@ export interface FileRoutesById {
   "/learner/user/": typeof LearnerUserIndexRoute;
   "/learner_/lessons/": typeof LearnerLessonsIndexRoute;
   "/reviewer/courses/": typeof ReviewerCoursesIndexRoute;
-  "/instructor/courses/create/": typeof InstructorCoursesCreateIndexRoute;
   "/learner/courses/$courseId/": typeof LearnerCoursesCourseIdIndexRoute;
   "/learner/payment/cancel/": typeof LearnerPaymentCancelIndexRoute;
   "/learner/payment/success/": typeof LearnerPaymentSuccessIndexRoute;
@@ -486,7 +476,6 @@ export interface FileRouteTypes {
     | "/learner/user/"
     | "/learner/lessons/"
     | "/reviewer/courses/"
-    | "/instructor/courses/create/"
     | "/learner/courses/$courseId/"
     | "/learner/payment/cancel/"
     | "/learner/payment/success/"
@@ -523,7 +512,6 @@ export interface FileRouteTypes {
     | "/learner/user"
     | "/learner/lessons"
     | "/reviewer/courses"
-    | "/instructor/courses/create"
     | "/learner/courses/$courseId"
     | "/learner/payment/cancel"
     | "/learner/payment/success"
@@ -569,7 +557,6 @@ export interface FileRouteTypes {
     | "/learner/user/"
     | "/learner_/lessons/"
     | "/reviewer/courses/"
-    | "/instructor/courses/create/"
     | "/learner/courses/$courseId/"
     | "/learner/payment/cancel/"
     | "/learner/payment/success/"
@@ -900,13 +887,6 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof LearnerCoursesCourseIdIndexRouteImport;
       parentRoute: typeof LearnerRouteRoute;
     };
-    "/instructor/courses/create/": {
-      id: "/instructor/courses/create/";
-      path: "/create";
-      fullPath: "/instructor/courses/create/";
-      preLoaderRoute: typeof InstructorCoursesCreateIndexRouteImport;
-      parentRoute: typeof InstructorCoursesRouteRoute;
-    };
   }
 }
 
@@ -924,13 +904,11 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
 
 interface InstructorCoursesRouteRouteChildren {
   InstructorCoursesIndexRoute: typeof InstructorCoursesIndexRoute;
-  InstructorCoursesCreateIndexRoute: typeof InstructorCoursesCreateIndexRoute;
 }
 
 const InstructorCoursesRouteRouteChildren: InstructorCoursesRouteRouteChildren =
   {
     InstructorCoursesIndexRoute: InstructorCoursesIndexRoute,
-    InstructorCoursesCreateIndexRoute: InstructorCoursesCreateIndexRoute,
   };
 
 const InstructorCoursesRouteRouteWithChildren =

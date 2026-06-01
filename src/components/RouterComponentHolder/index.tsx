@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import classnames from "classnames";
 import type { CSSProperties, ReactNode } from "react";
 
 type TRouterComponentHolder = {
@@ -10,7 +10,7 @@ type TRouterComponentHolder = {
 function RouterComponentHolder(props: TRouterComponentHolder) {
   return (
     <div
-      className={classNames("learner-loader", props.className)}
+      className={classnames("learner-loader", props.className)}
       style={{
         marginTop: "-50px",
         height: "100%",
