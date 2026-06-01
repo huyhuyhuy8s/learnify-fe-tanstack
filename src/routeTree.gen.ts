@@ -14,12 +14,14 @@ import { Route as DeferredRouteImport } from "./routes/deferred";
 import { Route as TeacherRouteRouteImport } from "./routes/teacher/route";
 import { Route as ReviewerRouteRouteImport } from "./routes/reviewer/route";
 import { Route as LearnerRouteRouteImport } from "./routes/learner/route";
+import { Route as AdminRouteRouteImport } from "./routes/admin/route";
 import { Route as IndexRouteImport } from "./routes/index";
 import { Route as TeacherIndexRouteImport } from "./routes/teacher/index";
 import { Route as ReviewerIndexRouteImport } from "./routes/reviewer/index";
 import { Route as LearnerIndexRouteImport } from "./routes/learner/index";
 import { Route as ContactIndexRouteImport } from "./routes/contact/index";
 import { Route as BlogsIndexRouteImport } from "./routes/blogs/index";
+import { Route as AdminIndexRouteImport } from "./routes/admin/index";
 import { Route as AboutUsIndexRouteImport } from "./routes/about-us/index";
 import { Route as ReviewerCourseIdRouteImport } from "./routes/reviewer/$courseId";
 import { Route as ApiUsersRouteImport } from "./routes/api/users";
@@ -42,6 +44,7 @@ import { Route as AuthVerifyEmailIndexRouteImport } from "./routes/auth/verify-e
 import { Route as AuthSignUpIndexRouteImport } from "./routes/auth/sign-up/index";
 import { Route as AuthLogInIndexRouteImport } from "./routes/auth/log-in/index";
 import { Route as AuthForgotPasswordIndexRouteImport } from "./routes/auth/forgot-password/index";
+import { Route as AdminUsersIndexRouteImport } from "./routes/admin/users/index";
 import { Route as ApiUsersIdRouteImport } from "./routes/api/users.$id";
 import { Route as LearnerLessonsLessonIdIndexRouteImport } from "./routes/learner_/lessons/$lessonId/index";
 import { Route as LearnerUserUserIdIndexRouteImport } from "./routes/learner/user/$userId/index";
@@ -73,6 +76,11 @@ const ReviewerRouteRoute = ReviewerRouteRouteImport.update({
 const LearnerRouteRoute = LearnerRouteRouteImport.update({
   id: "/learner",
   path: "/learner",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: "/admin",
+  path: "/admin",
   getParentRoute: () => rootRouteImport,
 } as any);
 const IndexRoute = IndexRouteImport.update({
@@ -109,6 +117,11 @@ const BlogsIndexRoute = BlogsIndexRouteImport.update({
   path: "/blogs/",
   getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import("./routes/blogs/index.lazy").then((d) => d.Route));
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: "/",
+  path: "/",
+  getParentRoute: () => AdminRouteRoute,
+} as any);
 const AboutUsIndexRoute = AboutUsIndexRouteImport.update({
   id: "/about-us/",
   path: "/about-us/",
@@ -234,6 +247,11 @@ const AuthForgotPasswordIndexRoute = AuthForgotPasswordIndexRouteImport.update({
 } as any).lazy(() =>
   import("./routes/auth/forgot-password/index.lazy").then((d) => d.Route),
 );
+const AdminUsersIndexRoute = AdminUsersIndexRouteImport.update({
+  id: "/users/",
+  path: "/users/",
+  getParentRoute: () => AdminRouteRoute,
+} as any);
 const ApiUsersIdRoute = ApiUsersIdRouteImport.update({
   id: "/$id",
   path: "/$id",
@@ -291,6 +309,7 @@ const LearnerCoursesCourseIdIndexRoute =
 
 export interface FileRoutesByFullPath {
   "/": typeof IndexRoute;
+  "/admin": typeof AdminRouteRouteWithChildren;
   "/learner": typeof LearnerRouteRouteWithChildren;
   "/reviewer": typeof ReviewerRouteRouteWithChildren;
   "/teacher": typeof TeacherRouteRouteWithChildren;
@@ -303,12 +322,14 @@ export interface FileRoutesByFullPath {
   "/api/users": typeof ApiUsersRouteWithChildren;
   "/reviewer/$courseId": typeof ReviewerCourseIdRoute;
   "/about-us/": typeof AboutUsIndexRoute;
+  "/admin/": typeof AdminIndexRoute;
   "/blogs/": typeof BlogsIndexRoute;
   "/contact/": typeof ContactIndexRoute;
   "/learner/": typeof LearnerIndexRoute;
   "/reviewer/": typeof ReviewerIndexRoute;
   "/teacher/": typeof TeacherIndexRoute;
   "/api/users/$id": typeof ApiUsersIdRoute;
+  "/admin/users/": typeof AdminUsersIndexRoute;
   "/auth/forgot-password/": typeof AuthForgotPasswordIndexRoute;
   "/auth/log-in/": typeof AuthLogInIndexRoute;
   "/auth/sign-up/": typeof AuthSignUpIndexRoute;
@@ -338,12 +359,14 @@ export interface FileRoutesByTo {
   "/api/users": typeof ApiUsersRouteWithChildren;
   "/reviewer/$courseId": typeof ReviewerCourseIdRoute;
   "/about-us": typeof AboutUsIndexRoute;
+  "/admin": typeof AdminIndexRoute;
   "/blogs": typeof BlogsIndexRoute;
   "/contact": typeof ContactIndexRoute;
   "/learner": typeof LearnerIndexRoute;
   "/reviewer": typeof ReviewerIndexRoute;
   "/teacher": typeof TeacherIndexRoute;
   "/api/users/$id": typeof ApiUsersIdRoute;
+  "/admin/users": typeof AdminUsersIndexRoute;
   "/auth/forgot-password": typeof AuthForgotPasswordIndexRoute;
   "/auth/log-in": typeof AuthLogInIndexRoute;
   "/auth/sign-up": typeof AuthSignUpIndexRoute;
@@ -369,6 +392,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
   "/": typeof IndexRoute;
+  "/admin": typeof AdminRouteRouteWithChildren;
   "/learner": typeof LearnerRouteRouteWithChildren;
   "/reviewer": typeof ReviewerRouteRouteWithChildren;
   "/teacher": typeof TeacherRouteRouteWithChildren;
@@ -381,12 +405,14 @@ export interface FileRoutesById {
   "/api/users": typeof ApiUsersRouteWithChildren;
   "/reviewer/$courseId": typeof ReviewerCourseIdRoute;
   "/about-us/": typeof AboutUsIndexRoute;
+  "/admin/": typeof AdminIndexRoute;
   "/blogs/": typeof BlogsIndexRoute;
   "/contact/": typeof ContactIndexRoute;
   "/learner/": typeof LearnerIndexRoute;
   "/reviewer/": typeof ReviewerIndexRoute;
   "/teacher/": typeof TeacherIndexRoute;
   "/api/users/$id": typeof ApiUsersIdRoute;
+  "/admin/users/": typeof AdminUsersIndexRoute;
   "/auth/forgot-password/": typeof AuthForgotPasswordIndexRoute;
   "/auth/log-in/": typeof AuthLogInIndexRoute;
   "/auth/sign-up/": typeof AuthSignUpIndexRoute;
@@ -413,6 +439,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
     | "/"
+    | "/admin"
     | "/learner"
     | "/reviewer"
     | "/teacher"
@@ -425,12 +452,14 @@ export interface FileRouteTypes {
     | "/api/users"
     | "/reviewer/$courseId"
     | "/about-us/"
+    | "/admin/"
     | "/blogs/"
     | "/contact/"
     | "/learner/"
     | "/reviewer/"
     | "/teacher/"
     | "/api/users/$id"
+    | "/admin/users/"
     | "/auth/forgot-password/"
     | "/auth/log-in/"
     | "/auth/sign-up/"
@@ -460,12 +489,14 @@ export interface FileRouteTypes {
     | "/api/users"
     | "/reviewer/$courseId"
     | "/about-us"
+    | "/admin"
     | "/blogs"
     | "/contact"
     | "/learner"
     | "/reviewer"
     | "/teacher"
     | "/api/users/$id"
+    | "/admin/users"
     | "/auth/forgot-password"
     | "/auth/log-in"
     | "/auth/sign-up"
@@ -490,6 +521,7 @@ export interface FileRouteTypes {
   id:
     | "__root__"
     | "/"
+    | "/admin"
     | "/learner"
     | "/reviewer"
     | "/teacher"
@@ -502,12 +534,14 @@ export interface FileRouteTypes {
     | "/api/users"
     | "/reviewer/$courseId"
     | "/about-us/"
+    | "/admin/"
     | "/blogs/"
     | "/contact/"
     | "/learner/"
     | "/reviewer/"
     | "/teacher/"
     | "/api/users/$id"
+    | "/admin/users/"
     | "/auth/forgot-password/"
     | "/auth/log-in/"
     | "/auth/sign-up/"
@@ -533,6 +567,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren;
   LearnerRouteRoute: typeof LearnerRouteRouteWithChildren;
   ReviewerRouteRoute: typeof ReviewerRouteRouteWithChildren;
   TeacherRouteRoute: typeof TeacherRouteRouteWithChildren;
@@ -586,6 +621,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof LearnerRouteRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    "/admin": {
+      id: "/admin";
+      path: "/admin";
+      fullPath: "/admin";
+      preLoaderRoute: typeof AdminRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     "/": {
       id: "/";
       path: "/";
@@ -627,6 +669,13 @@ declare module "@tanstack/react-router" {
       fullPath: "/blogs/";
       preLoaderRoute: typeof BlogsIndexRouteImport;
       parentRoute: typeof rootRouteImport;
+    };
+    "/admin/": {
+      id: "/admin/";
+      path: "/";
+      fullPath: "/admin/";
+      preLoaderRoute: typeof AdminIndexRouteImport;
+      parentRoute: typeof AdminRouteRoute;
     };
     "/about-us/": {
       id: "/about-us/";
@@ -782,6 +831,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AuthForgotPasswordIndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    "/admin/users/": {
+      id: "/admin/users/";
+      path: "/users";
+      fullPath: "/admin/users/";
+      preLoaderRoute: typeof AdminUsersIndexRouteImport;
+      parentRoute: typeof AdminRouteRoute;
+    };
     "/api/users/$id": {
       id: "/api/users/$id";
       path: "/$id";
@@ -833,6 +889,20 @@ declare module "@tanstack/react-router" {
     };
   }
 }
+
+interface AdminRouteRouteChildren {
+  AdminIndexRoute: typeof AdminIndexRoute;
+  AdminUsersIndexRoute: typeof AdminUsersIndexRoute;
+}
+
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminIndexRoute: AdminIndexRoute,
+  AdminUsersIndexRoute: AdminUsersIndexRoute,
+};
+
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
+);
 
 interface LearnerAboutRouteRouteChildren {
   LearnerAboutIndexRoute: typeof LearnerAboutIndexRoute;
@@ -962,6 +1032,7 @@ const ApiUsersRouteWithChildren = ApiUsersRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRouteRoute: AdminRouteRouteWithChildren,
   LearnerRouteRoute: LearnerRouteRouteWithChildren,
   ReviewerRouteRoute: ReviewerRouteRouteWithChildren,
   TeacherRouteRoute: TeacherRouteRouteWithChildren,

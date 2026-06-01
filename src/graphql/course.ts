@@ -235,8 +235,6 @@ export const GET_COURSE_LESSONS_BY_ID_QUERY = `
     keyLearnings
     status
     updatedAt
-    isFree
-    price
   }
   getLessonsByCourseId(id: $getCourseByIdId) {
     isSuccess
