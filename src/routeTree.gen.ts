@@ -46,6 +46,8 @@ import { Route as ApiUsersIdRouteImport } from "./routes/api/users.$id";
 import { Route as LearnerLessonsLessonIdIndexRouteImport } from "./routes/learner_/lessons/$lessonId/index";
 import { Route as LearnerUserUserIdIndexRouteImport } from "./routes/learner/user/$userId/index";
 import { Route as LearnerRoadmapsRoadmapIdIndexRouteImport } from "./routes/learner/roadmaps/$roadmapId/index";
+import { Route as LearnerPaymentSuccessIndexRouteImport } from "./routes/learner/payment/success/index";
+import { Route as LearnerPaymentCancelIndexRouteImport } from "./routes/learner/payment/cancel/index";
 import { Route as LearnerCoursesCourseIdIndexRouteImport } from "./routes/learner/courses/$courseId/index";
 
 const RedirectRoute = RedirectRouteImport.update({
@@ -264,6 +266,18 @@ const LearnerRoadmapsRoadmapIdIndexRoute =
       (d) => d.Route,
     ),
   );
+const LearnerPaymentSuccessIndexRoute =
+  LearnerPaymentSuccessIndexRouteImport.update({
+    id: "/payment/success/",
+    path: "/payment/success/",
+    getParentRoute: () => LearnerRouteRoute,
+  } as any);
+const LearnerPaymentCancelIndexRoute =
+  LearnerPaymentCancelIndexRouteImport.update({
+    id: "/payment/cancel/",
+    path: "/payment/cancel/",
+    getParentRoute: () => LearnerRouteRoute,
+  } as any);
 const LearnerCoursesCourseIdIndexRoute =
   LearnerCoursesCourseIdIndexRouteImport.update({
     id: "/courses/$courseId/",
@@ -311,6 +325,8 @@ export interface FileRoutesByFullPath {
   "/reviewer/approved/": typeof ReviewerApprovedIndexRoute;
   "/reviewer/rejected/": typeof ReviewerRejectedIndexRoute;
   "/learner/courses/$courseId/": typeof LearnerCoursesCourseIdIndexRoute;
+  "/learner/payment/cancel/": typeof LearnerPaymentCancelIndexRoute;
+  "/learner/payment/success/": typeof LearnerPaymentSuccessIndexRoute;
   "/learner/roadmaps/$roadmapId/": typeof LearnerRoadmapsRoadmapIdIndexRoute;
   "/learner/user/$userId/": typeof LearnerUserUserIdIndexRoute;
   "/learner/lessons/$lessonId/": typeof LearnerLessonsLessonIdIndexRoute;
@@ -344,6 +360,8 @@ export interface FileRoutesByTo {
   "/reviewer/approved": typeof ReviewerApprovedIndexRoute;
   "/reviewer/rejected": typeof ReviewerRejectedIndexRoute;
   "/learner/courses/$courseId": typeof LearnerCoursesCourseIdIndexRoute;
+  "/learner/payment/cancel": typeof LearnerPaymentCancelIndexRoute;
+  "/learner/payment/success": typeof LearnerPaymentSuccessIndexRoute;
   "/learner/roadmaps/$roadmapId": typeof LearnerRoadmapsRoadmapIdIndexRoute;
   "/learner/user/$userId": typeof LearnerUserUserIdIndexRoute;
   "/learner/lessons/$lessonId": typeof LearnerLessonsLessonIdIndexRoute;
@@ -385,6 +403,8 @@ export interface FileRoutesById {
   "/reviewer/approved/": typeof ReviewerApprovedIndexRoute;
   "/reviewer/rejected/": typeof ReviewerRejectedIndexRoute;
   "/learner/courses/$courseId/": typeof LearnerCoursesCourseIdIndexRoute;
+  "/learner/payment/cancel/": typeof LearnerPaymentCancelIndexRoute;
+  "/learner/payment/success/": typeof LearnerPaymentSuccessIndexRoute;
   "/learner/roadmaps/$roadmapId/": typeof LearnerRoadmapsRoadmapIdIndexRoute;
   "/learner/user/$userId/": typeof LearnerUserUserIdIndexRoute;
   "/learner_/lessons/$lessonId/": typeof LearnerLessonsLessonIdIndexRoute;
@@ -427,6 +447,8 @@ export interface FileRouteTypes {
     | "/reviewer/approved/"
     | "/reviewer/rejected/"
     | "/learner/courses/$courseId/"
+    | "/learner/payment/cancel/"
+    | "/learner/payment/success/"
     | "/learner/roadmaps/$roadmapId/"
     | "/learner/user/$userId/"
     | "/learner/lessons/$lessonId/";
@@ -460,6 +482,8 @@ export interface FileRouteTypes {
     | "/reviewer/approved"
     | "/reviewer/rejected"
     | "/learner/courses/$courseId"
+    | "/learner/payment/cancel"
+    | "/learner/payment/success"
     | "/learner/roadmaps/$roadmapId"
     | "/learner/user/$userId"
     | "/learner/lessons/$lessonId";
@@ -500,6 +524,8 @@ export interface FileRouteTypes {
     | "/reviewer/approved/"
     | "/reviewer/rejected/"
     | "/learner/courses/$courseId/"
+    | "/learner/payment/cancel/"
+    | "/learner/payment/success/"
     | "/learner/roadmaps/$roadmapId/"
     | "/learner/user/$userId/"
     | "/learner_/lessons/$lessonId/";
@@ -784,6 +810,20 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof LearnerRoadmapsRoadmapIdIndexRouteImport;
       parentRoute: typeof LearnerRoadmapsRouteRoute;
     };
+    "/learner/payment/success/": {
+      id: "/learner/payment/success/";
+      path: "/payment/success";
+      fullPath: "/learner/payment/success/";
+      preLoaderRoute: typeof LearnerPaymentSuccessIndexRouteImport;
+      parentRoute: typeof LearnerRouteRoute;
+    };
+    "/learner/payment/cancel/": {
+      id: "/learner/payment/cancel/";
+      path: "/payment/cancel";
+      fullPath: "/learner/payment/cancel/";
+      preLoaderRoute: typeof LearnerPaymentCancelIndexRouteImport;
+      parentRoute: typeof LearnerRouteRoute;
+    };
     "/learner/courses/$courseId/": {
       id: "/learner/courses/$courseId/";
       path: "/courses/$courseId";
@@ -842,6 +882,8 @@ interface LearnerRouteRouteChildren {
   LearnerSearchIndexRoute: typeof LearnerSearchIndexRoute;
   LearnerSubscriptionsIndexRoute: typeof LearnerSubscriptionsIndexRoute;
   LearnerCoursesCourseIdIndexRoute: typeof LearnerCoursesCourseIdIndexRoute;
+  LearnerPaymentCancelIndexRoute: typeof LearnerPaymentCancelIndexRoute;
+  LearnerPaymentSuccessIndexRoute: typeof LearnerPaymentSuccessIndexRoute;
 }
 
 const LearnerRouteRouteChildren: LearnerRouteRouteChildren = {
@@ -855,6 +897,8 @@ const LearnerRouteRouteChildren: LearnerRouteRouteChildren = {
   LearnerSearchIndexRoute: LearnerSearchIndexRoute,
   LearnerSubscriptionsIndexRoute: LearnerSubscriptionsIndexRoute,
   LearnerCoursesCourseIdIndexRoute: LearnerCoursesCourseIdIndexRoute,
+  LearnerPaymentCancelIndexRoute: LearnerPaymentCancelIndexRoute,
+  LearnerPaymentSuccessIndexRoute: LearnerPaymentSuccessIndexRoute,
 };
 
 const LearnerRouteRouteWithChildren = LearnerRouteRoute._addFileChildren(

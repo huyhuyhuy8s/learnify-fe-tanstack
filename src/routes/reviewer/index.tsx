@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { type TReviewerCourse } from "@/mock/reviewer-courses"; // Đã bỏ MOCK_REVIEWER_COURSES
+import { type TReviewerCourse } from "@/mock/reviewer-courses";
 import ReviewerTable from "./-components/CourseTable";
 import TetrisLoader from "@/components/TetrisLoader";
 import { useGetCoursesStatus } from "@/hooks/useCourses";
@@ -16,7 +16,6 @@ function ReviewerPendingPage() {
 
   if (isLoading) return <TetrisLoader />;
 
-  // Bỏ check > 0. Chỉ cần data.courses tồn tại là tính success
   const isBackendSuccess = data?.isSuccess && Array.isArray(data.courses);
 
   const displayCourses: TReviewerCourse[] = isBackendSuccess
@@ -28,7 +27,7 @@ function ReviewerPendingPage() {
         status: "Pending",
         thumbnail: "https://via.placeholder.com/40",
       }))
-    : []; // Trả về mảng rỗng thay vì fallback mock data
+    : [];
 
   return (
     <ReviewerTable title="Pending Course Reviews" courses={displayCourses} />

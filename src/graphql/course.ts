@@ -56,23 +56,23 @@ export const GET_LESSONS_BY_COURSE_ID_QUERY = `
   }
 `;
 
-export const GET_ALL_COURSES_QUERY = `
-  query GetAllCourses($skip: Float!) {
-    getAllCourses(skip: $skip) {
-      count
-      courses {
-        id
-        courseName
-        abstract
-        createdAt
-        keyLearnings
-        status
-        updatedAt
-      }
-      isSuccess
-      message
+export const GET_ALL_PUBLISHED_COURSES_QUERY = `
+  query Query($skip: Float!) {
+  getAllPublishedCourses(skip: $skip) {
+    isSuccess
+    message
+    count
+    courses {
+      id
+      courseName
+      abstract
+      createdAt
+      keyLearnings
+      status
+      updatedAt
     }
   }
+}
 `;
 
 export const GET_COURSE_LESSONS_COMMENT_QUERY = `
@@ -235,6 +235,8 @@ export const GET_COURSE_LESSONS_BY_ID_QUERY = `
     keyLearnings
     status
     updatedAt
+    isFree
+    price
   }
   getLessonsByCourseId(id: $getCourseByIdId) {
     isSuccess
@@ -249,4 +251,15 @@ export const GET_COURSE_LESSONS_BY_ID_QUERY = `
     message
   }
 }
+`;
+
+export const GET_COURSE_PRICE_QUERY = `
+  query GetCoursePrice($courseId: String!) {
+    getCoursePrice(courseId: $courseId) {
+      id
+      originalPrice
+      salePrice
+      isFree
+    }
+  }
 `;
