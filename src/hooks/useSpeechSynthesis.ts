@@ -89,43 +89,50 @@ const useSpeechSynthesis = (): TSpeechSynthesisReturn => {
         });
       }
 
+      const isElevenLabsVoiceId = /^[A-Za-z0-9]{20}$/.test(
+        options?.voiceId || ""
+      );
+
       // Edge TTS (free, no API key needed, supports Vietnamese)
-      try {
-        const result = await getEdgeTtsAudio({
-          data: {
-            text,
-            voice: options?.voiceId || "vi-VN-HoaiMyNeural",
-          },
-        });
+      // Skip if voiceId is an ElevenLabs ID — Edge TTS expects Windows voice names
+      if (!isElevenLabsVoiceId) {
+        try {
+          const result = await getEdgeTtsAudio({
+            data: {
+              text,
+              voice: options?.voiceId || "vi-VN-HoaiMyNeural",
+            },
+          });
 
-        if (!result?.audio) {
-          throw new Error("Empty audio response from Edge TTS");
+          if (!result?.audio) {
+            throw new Error("Empty audio response from Edge TTS");
+          }
+
+          const url = `data:audio/mpeg;base64,${result.audio}`;
+          const audioElement = new Audio(url);
+          audioRef.current = audioElement;
+
+          return await new Promise<HTMLAudioElement | null>((resolve) => {
+            speakResolveRef.current = resolve;
+
+            audioElement.onended = () => {
+              speakResolveRef.current = null;
+              handleSpeechEnd();
+              resolve(audioElement);
+            };
+            audioElement.onerror = () => {
+              speakResolveRef.current = null;
+              handleSpeechEnd();
+              resolve(null);
+            };
+
+            setIsSpeaking(true);
+            audioElement.play();
+          });
+        } catch (error) {
+          audioRef.current = null;
+          logger.warn("[EdgeTTS] failed, falling back to ElevenLabs:", error);
         }
-
-        const url = `data:audio/mpeg;base64,${result.audio}`;
-        const audioElement = new Audio(url);
-        audioRef.current = audioElement;
-
-        return await new Promise<HTMLAudioElement | null>((resolve) => {
-          speakResolveRef.current = resolve;
-
-          audioElement.onended = () => {
-            speakResolveRef.current = null;
-            handleSpeechEnd();
-            resolve(audioElement);
-          };
-          audioElement.onerror = () => {
-            speakResolveRef.current = null;
-            handleSpeechEnd();
-            resolve(null);
-          };
-
-          setIsSpeaking(true);
-          audioElement.play();
-        });
-      } catch (error) {
-        audioRef.current = null;
-        logger.warn("[EdgeTTS] failed, falling back to ElevenLabs:", error);
       }
 
       const apiKey = import.meta.env.VITE_ELEVENLABS_API_KEY;
