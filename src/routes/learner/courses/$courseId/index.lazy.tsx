@@ -3,14 +3,17 @@ import DecorationCard from "@/components/DecorationCard";
 import Empty from "@/components/Empty";
 import Icon from "@/components/Icon";
 import NotFound from "@/components/NotFound";
+import TetrisLoader from "@/components/TetrisLoader";
 import TextButton from "@/components/TextButton";
 import { useLayout } from "@/contexts/LayoutContext";
 import {
   useCourseProgress,
+  useCoursePrice,
   useCreateReview,
   useEnrollCourse,
   useUserEnrollments,
 } from "@/hooks/useCourseDetail";
+import { useCreatePayment } from "@/hooks/usePayment";
 import { MOCK_COMMENT } from "@/mock";
 import { useAuthStore } from "@/store/authStore";
 import { COLORS } from "@/styles/colors";
@@ -31,7 +34,6 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import CommentForm from "../-components/CommentForm";
 import CommentItem from "../-components/CommentItem";
-import TetrisLoader from "@/components/TetrisLoader";
 
 export const Route = createLazyFileRoute("/learner/courses/$courseId/")({
   component: CourseComponent,
@@ -48,6 +50,8 @@ function CourseComponent() {
   const { data } = useSuspenseQuery(courseQueryOptions(courseId));
   const { getCourseById, getLessonsByCourseId, getReviewsByCourse } = data;
   const { setLayoutConfigState } = useLayout();
+  const { data: coursePrice } = useCoursePrice(courseId);
+  const isPaidCourse = coursePrice ? coursePrice.isFree === false : false;
 
   const isInstructorOrAdmin =
     currentUser?.role === "teacher" || currentUser?.role === "admin";
@@ -74,12 +78,24 @@ function CourseComponent() {
 
   const createReview = useCreateReview();
   const enrollCourseMutation = useEnrollCourse();
+  const createPaymentMutation = useCreatePayment();
 
-  const { data: enrollments } = useUserEnrollments(userId);
-  const { data: progressData } = useCourseProgress(userId, courseId);
+  const { data: enrollments, refetch: refetchEnrollments } =
+    useUserEnrollments(userId);
+  const { data: progressData, refetch: refetchProgress } = useCourseProgress(
+    userId,
+    courseId
+  );
 
   const [showCommentForm, setShowCommentForm] = useState(false);
   const [showComment, setShowComment] = useState(false);
+
+  useEffect(() => {
+    if (userId) {
+      refetchEnrollments();
+      refetchProgress();
+    }
+  }, [userId, refetchEnrollments, refetchProgress]);
 
   const isEnrolled = useMemo(() => {
     if (!enrollments) return false;
@@ -185,21 +201,49 @@ function CourseComponent() {
     enrollCourseMutation.mutate({ courseId, userId });
   }, [userId, courseId, enrollCourseMutation, t]);
 
+  const handlePayment = () => {
+    if (!userId) {
+      toast.error(t("course_detail.toast_login_enroll"));
+      return;
+    }
+
+    createPaymentMutation.mutate(courseId, {
+      onSuccess: (data) => {
+        if (data?.checkoutUrl) {
+          window.location.href = data.checkoutUrl;
+        }
+      },
+      onError: () => {
+        toast.error(t("course_detail.payment_error"));
+      },
+    });
+  };
+
   const startButtonText = useMemo(() => {
-    if (!isEnrolled) return t("course_detail.enroll");
+    if (!isEnrolled) {
+      if (isPaidCourse) {
+        const price = coursePrice?.salePrice ?? coursePrice?.originalPrice ?? 0;
+        return `${t("course_detail.buy")} - ${price.toLocaleString()}đ`;
+      }
+      return t("course_detail.enroll");
+    }
     if (currentProgressPercentage >= 100) return t("course_detail.completed");
     if (currentProgressPercentage > 0) return t("course_detail.continue");
     return t("course_detail.start");
-  }, [isEnrolled, currentProgressPercentage, t]);
+  }, [isEnrolled, isPaidCourse, coursePrice, currentProgressPercentage, t]);
 
   const startButtonIcon = useMemo(() => {
-    if (!isEnrolled) return "school";
+    if (!isEnrolled) return isPaidCourse ? "shopping_cart" : "school";
     if (currentProgressPercentage >= 100) return "check";
     return "arrow_right_alt";
-  }, [isEnrolled, currentProgressPercentage]);
+  }, [isEnrolled, isPaidCourse, currentProgressPercentage]);
 
   const handleStartClick = useCallback(() => {
     if (!isEnrolled) {
+      if (isPaidCourse) {
+        handlePayment();
+        return;
+      }
       handleEnrollCourse();
       return;
     }
@@ -228,17 +272,27 @@ function CourseComponent() {
     }
   }, [
     isEnrolled,
+    isPaidCourse,
     getLessonsByCourseId,
     currentProgressPercentage,
     progressData,
     navigate,
     handleEnrollCourse,
+    handlePayment,
   ]);
 
   const startButtonDisabled = useMemo(() => {
-    if (!isEnrolled) return enrollCourseMutation.isPending;
+    if (!isEnrolled) {
+      if (isPaidCourse) return createPaymentMutation.isPending;
+      return enrollCourseMutation.isPending;
+    }
     return false;
-  }, [isEnrolled, enrollCourseMutation.isPending]);
+  }, [
+    isEnrolled,
+    isPaidCourse,
+    createPaymentMutation.isPending,
+    enrollCourseMutation.isPending,
+  ]);
 
   const handleLessonClick = (lessonId: string, isLocked: boolean) => {
     if (!isEnrolled) {

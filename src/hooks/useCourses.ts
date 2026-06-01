@@ -6,7 +6,7 @@ import {
 } from "@tanstack/react-query";
 import { graphqlClient } from "@/lib/graphql";
 import {
-  GET_ALL_COURSES_QUERY,
+  GET_ALL_PUBLISHED_COURSES_QUERY,
   GET_COURSE_LESSONS_BY_ID_QUERY,
   GET_COURSE_BY_STATUS_QUERY,
   GET_COURSE_BY_USER_ID_QUERY,
@@ -41,8 +41,8 @@ type GetCourseByIdResponse = {
   };
 };
 
-type GetAllCoursesResponse = {
-  getAllCourses: {
+type GetAllPublishedCoursesResponse = {
+  getAllPublishedCourses: {
     count: number;
     courses: TBackendCourse[];
     isSuccess: boolean;
@@ -63,11 +63,12 @@ export function useGetAllCourses(skip: number = 0) {
   return useQuery({
     queryKey: ["courses", "all", skip],
     queryFn: async () => {
-      const response = await graphqlClient.request<GetAllCoursesResponse>(
-        GET_ALL_COURSES_QUERY,
-        { skip }
-      );
-      return response.getAllCourses;
+      const response =
+        await graphqlClient.request<GetAllPublishedCoursesResponse>(
+          GET_ALL_PUBLISHED_COURSES_QUERY,
+          { skip }
+        );
+      return response.getAllPublishedCourses;
     },
   });
 }
@@ -76,11 +77,12 @@ export function useSuspenseGetAllCourses(skip: number = 0) {
   return useSuspenseQuery({
     queryKey: ["courses", "all", skip],
     queryFn: async () => {
-      const response = await graphqlClient.request<GetAllCoursesResponse>(
-        GET_ALL_COURSES_QUERY,
-        { skip }
-      );
-      return response.getAllCourses;
+      const response =
+        await graphqlClient.request<GetAllPublishedCoursesResponse>(
+          GET_ALL_PUBLISHED_COURSES_QUERY,
+          { skip }
+        );
+      return response.getAllPublishedCourses;
     },
   });
 }
