@@ -60,7 +60,8 @@
     "quick_actions": "Thao tác nhanh",
     "create_course": "Tạo khóa học",
     "manage_courses": "Quản lý khóa học",
-    "switch_learner": "Xem với tư cách Học viên"
+    "switch_learner": "Xem với tư cách Học viên",
+    "pending_reviews": "Chờ xem xét"
   },
   "friends": {
     "tabs": {
@@ -206,7 +207,12 @@
     "files_max_count": "Chỉ được phép tối đa {{count}} tệp",
     "files_type_error": "Chỉ chấp nhận tệp .pdf, .ppt, .pptx",
     "files_size_error": "{{name}} vượt quá giới hạn {{size}}",
-    "select_course_to_review": "Chọn một khóa học để xem xét"
+    "select_course_to_review": "Chọn một khóa học để xem xét",
+    "select_course": "Chọn một khóa học",
+    "select_lesson": "Chọn một bài học",
+    "no_lessons": "Không có bài học",
+    "create": "Tạo khóa học",
+    "creating": "Đang tạo..."
   },
   "course_detail": {
     "enroll": "Đăng ký khóa học",

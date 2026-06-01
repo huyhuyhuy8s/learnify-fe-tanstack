@@ -96,13 +96,12 @@
   &__lesson-item {
     display: flex;
     align-items: center;
-    gap: toRem(8);
+    gap: toRem(20);
     padding: toRem(12) toRem(16);
     border-radius: toRem(6);
     border-width: toRem(1);
     border-style: solid;
     border-color: $neutral-250;
-    gap: toRem(20);
     cursor: pointer;
     @include transition;
 
@@ -115,42 +114,22 @@
       border-color: $green-700;
     }
 
-    &__icon,
-    &__name,
-    &__info {
+    &-icon,
+    &-name,
+    &-info {
       color: $black;
     }
 
-    &__info {
+    &-info {
       display: flex;
       flex-direction: column;
       gap: toRem(10);
     }
-  }
 
-  &__course-detail-body {
-    display: flex;
-    flex-direction: column;
-    gap: toRem(12);
-
-    h4 {
-      font-size: toRem(20);
-      color: $neutral-900;
+    &-date {
+      font-size: toRem(11);
+      color: $neutral-400;
     }
-  }
-
-  &__course-abstract {
-    color: $neutral-600;
-    line-height: 1.6;
-    font-size: toRem(14);
-  }
-
-  &__course-meta {
-    display: flex;
-    flex-direction: column;
-    gap: toRem(6);
-    font-size: toRem(12);
-    color: $neutral-400;
   }
 
   &__form {

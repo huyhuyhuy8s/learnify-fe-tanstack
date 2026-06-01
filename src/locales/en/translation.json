@@ -60,7 +60,8 @@
     "quick_actions": "Quick Actions",
     "create_course": "Create Course",
     "manage_courses": "Manage Courses",
-    "switch_learner": "View as Learner"
+    "switch_learner": "View as Learner",
+    "pending_reviews": "Pending Reviews"
   },
   "friends": {
     "tabs": {
@@ -206,7 +207,12 @@
     "files_max_count": "Maximum {{count}} files allowed",
     "files_type_error": "Only .pdf, .ppt, .pptx files are allowed",
     "files_size_error": "{{name}} exceeds {{size}} limit",
-    "select_course_to_review": "Select a course to review"
+    "select_course_to_review": "Select a course to review",
+    "select_course": "Select a course",
+    "select_lesson": "Select a lesson",
+    "no_lessons": "No lessons",
+    "create": "Create Course",
+    "creating": "Creating..."
   },
   "course_detail": {
     "enroll": "Enroll Course",
