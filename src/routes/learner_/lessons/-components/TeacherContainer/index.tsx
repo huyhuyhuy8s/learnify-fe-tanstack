@@ -4,7 +4,7 @@ import { Suspense, useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import TeacherAnimation from "../TeacherAnimation";
 import type { TTeacherAnimationRef } from "../TeacherAnimation";
-import { Vector3, type Group } from "three";
+import { Vector3 } from "three";
 import CubeLoader from "@/components/CubeLoader";
 import type { TTeacherAnimation } from "../TeacherAnimation/type";
 
@@ -37,10 +37,6 @@ const CameraController = (props: { target: [number, number, number] }) => {
 
 function ClassroomModel() {
   const { scene } = useGLTF(getModelUrl("classroom_default.glb"));
-  return <primitive object={scene} />;
-}
-
-function TeacherModel({ scene }: { scene: Group }) {
   return <primitive object={scene} />;
 }
 
@@ -81,14 +77,6 @@ function TeacherContainer(props: TTeacherContainerProps) {
       onModelsReady?.();
     }
   }, [teacherReady, onModelReady, onModelsReady]);
-
-  useEffect(() => {
-    return () => {
-      useGLTF.clear(getModelUrl("teacher_animation.glb"));
-      useGLTF.clear(getModelUrl("teacher.glb"));
-      useGLTF.clear(getModelUrl("classroom_default.glb"));
-    };
-  }, []);
 
   return (
     <div className="teacher-container">
