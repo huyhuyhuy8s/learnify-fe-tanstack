@@ -21,7 +21,6 @@ const WelcomeHeader = ({ name = "Admin" }: TWelcomeHeaderProps) => {
     <div className="admin-welcome">
       <div className="admin-welcome__text">
         <h1 className="admin-welcome__title">
-          {/* Đã thay chữ Admin thành biến name ở đây */}
           {greeting}, {name} 👋
         </h1>
         <p className="admin-welcome__subtitle">
