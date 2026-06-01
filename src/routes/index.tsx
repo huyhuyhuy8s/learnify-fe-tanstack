@@ -7,13 +7,13 @@ import {
   MarketingPendingComponent,
 } from "@/utils/marketing";
 import { seo } from "@/utils/seo";
+import { getRoleDefaultRoute, normalizeRole } from "@/utils/role";
 
 export const Route = createFileRoute("/")({
   beforeLoad: async () => {
     const { user } = await getCurrentUserFn();
     if (user) {
-      const target = user.role === "instructor" ? "/instructor" : "/learner";
-      throw redirect({ to: target });
+      throw redirect({ to: getRoleDefaultRoute(normalizeRole(user.role)) });
     }
   },
   errorComponent: MarketingErrorComponent,

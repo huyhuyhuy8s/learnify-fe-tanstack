@@ -3,7 +3,7 @@ import { useNavigate, useRouter } from "@tanstack/react-router";
 import { useLogin } from "@/hooks/useLogin";
 import { setSessionFn } from "@/server/auth";
 import { fetchCurrentUser } from "@/apis/auth";
-import { normalizeRole } from "@/utils/role";
+import { normalizeRole, getRoleDefaultRoute } from "@/utils/role";
 import z from "zod";
 import { logger } from "@/utils/logger";
 
@@ -89,7 +89,8 @@ export const useLogInForm = (props: { redirect?: string }) => {
         if (redirect) {
           navigate({ to: redirect });
         } else {
-          navigate({ to: "/learner" });
+          const role = normalizeRole(userData?.role);
+          navigate({ to: getRoleDefaultRoute(role) });
         }
       } else {
         setErrors({

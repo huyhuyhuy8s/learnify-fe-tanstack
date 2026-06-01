@@ -12,7 +12,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import { useGoogleLogin } from "@/hooks/useGoogleLogin";
 import { setSessionFn } from "@/server/auth";
 import { fetchCurrentUser } from "@/apis/auth";
-import { normalizeRole } from "@/utils/role";
+import { normalizeRole, getRoleDefaultRoute } from "@/utils/role";
 import { logger } from "@/utils/logger";
 import LogInForm from "../-components/LogInForm";
 import AuthControls from "../-components/AuthControls";
@@ -42,7 +42,10 @@ function LogInPage() {
     await router.invalidate();
     toast.success("Logged in successfully!");
     if (redirect) navigate({ to: redirect });
-    else navigate({ to: "/learner/dashboard" });
+    else {
+      const role = normalizeRole(userData?.role);
+      navigate({ to: getRoleDefaultRoute(role) });
+    }
   };
 
   return (

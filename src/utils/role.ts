@@ -13,3 +13,14 @@ export function normalizeRole(raw: unknown): TRole {
     ? (lowered as TRole)
     : "learner";
 }
+
+const ROLE_DEFAULT_ROUTE: Record<TRole, string> = {
+  learner: "/learner",
+  instructor: "/instructor",
+  reviewer: "/reviewer",
+  admin: "/admin",
+};
+
+export function getRoleDefaultRoute(role: TRole): string {
+  return ROLE_DEFAULT_ROUTE[role] ?? "/learner";
+}
