@@ -1,4 +1,5 @@
 import { useState } from "react";
+import TextButton from "@/components/TextButton";
 import type { MockLesson } from "@/mock/reviewer-courses";
 import "./style.scss";
 
@@ -26,24 +27,24 @@ const LessonSyllabus = ({ lessons }: TLessonSyllabusProps) => {
 
           return (
             <li key={lesson.id} className="lesson-syllabus__item">
-              <button
-                type="button"
+              <div
                 className={`lesson-syllabus__trigger${isOpen ? " lesson-syllabus__trigger--open" : ""}`}
-                onClick={() => toggle(lesson.id)}
+                id={`lesson-trigger-${lesson.id}`}
                 aria-expanded={isOpen}
                 aria-controls={`lesson-body-${lesson.id}`}
-                id={`lesson-trigger-${lesson.id}`}
               >
-                <span className="lesson-syllabus__order">
-                  {String(lesson.order).padStart(2, "0")}
-                </span>
-                <span className="lesson-syllabus__name">
-                  {lesson.lessonName}
-                </span>
-                <span className="lesson-syllabus__chevron" aria-hidden>
-                  {isOpen ? "▲" : "▼"}
-                </span>
-              </button>
+                <TextButton
+                  type="secondary"
+                  roundedCorner="roundedSquare"
+                  size="small"
+                  leftIcon={false}
+                  rightIcon
+                  buttonType="button"
+                  icon={isOpen ? "expand_less" : "expand_more"}
+                  text={`${String(lesson.order).padStart(2, "0")} ${lesson.lessonName}`}
+                  onClick={() => toggle(lesson.id)}
+                />
+              </div>
 
               <div
                 id={`lesson-body-${lesson.id}`}

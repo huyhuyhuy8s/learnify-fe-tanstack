@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import Icon from "@/components/Icon";
 import type { TReviewStatus } from "@/mock/reviewer-courses";
 import "./style.scss";
 
@@ -19,11 +20,12 @@ const ReviewActionPanel = ({
   return (
     <div className="review-action-panel">
       <Link
-        to="/reviewer"
+        to="/reviewer/courses"
         className="review-action-panel__back"
-        aria-label="Back to reviewer list"
+        aria-label="Back to course list"
       >
-        ← Back to List
+        <Icon name="arrow_back" />
+        Back to List
       </Link>
 
       {!isPending && (
