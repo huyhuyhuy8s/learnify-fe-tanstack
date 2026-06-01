@@ -13,7 +13,7 @@ const Controller = (props: TControllerProps) => {
 
   return (
     <button
-      className={classnames("left-nav-controller", className)}
+      className={classnames("left-nav-controller", { active }, className)}
       onClick={onClick}
       type="button"
       aria-label={

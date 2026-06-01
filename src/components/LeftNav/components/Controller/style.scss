@@ -3,16 +3,25 @@
 @use "@styles/mixins" as *;
 @use "@styles/functions" as *;
 
+$nav-width: toRem(67.5 + 30);
+
 .left-nav-controller {
-  position: absolute;
+  position: fixed;
   top: toRem(100);
-  right: toRem(-38);
+  left: $nav-width;
+  z-index: 3;
   aspect-ratio: 1 / 1;
   place-content: center;
   cursor: pointer;
-  z-index: 1;
   @include transition;
-  display: none;
+  display: flex;
+  background: none;
+  border: none;
+  padding: 0;
+
+  &:not(.active) {
+    left: 0;
+  }
 
   .icon {
     font-size: toRem(36);
@@ -24,11 +33,5 @@
     .icon {
       filter: invert(0.8);
     }
-  }
-}
-
-@include break(sm) {
-  .left-nav-controller {
-    display: flex;
   }
 }

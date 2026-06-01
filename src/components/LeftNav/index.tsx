@@ -43,8 +43,8 @@ const LeftNav = (props: TLeftNavProps) => {
       <nav className={navClassNames} data-lenis-prevent>
         <LeftNavTop pathname={pathname} />
         <LeftNavBot />
-        <Controller active={active} onClick={handleToggle} />
       </nav>
+      <Controller active={active} onClick={handleToggle} />
     </>
   );
 };
