@@ -8,11 +8,11 @@ import type { TVoiceSettingsPopupProps } from "./type";
 import "./style.scss";
 
 const VOICE_OPTIONS = [
-  { id: "21mAOkJ9QZ3WBdAmXlRS", label: "Aria" },
   { id: "XB0fDUnXU5powFXDhCwa", label: "Charlotte" },
+  { id: "LcfcDJNUP1GQjkzn1xUU", label: "Emily" },
+  { id: "oWAxZDx7w5VEj9dCyTzz", label: "Grace" },
+  { id: "21m00Tcm4TlvDq8ikWAM", label: "Rachel" },
   { id: "AZnzlk1XvdvUeBnXmlfg", label: "Domi" },
-  { id: "pNInz6obpgDQGcFmaJgB", label: "Rachel" },
-  { id: "EXAVITQu4vr4xnSDxMaL", label: "Sarah" },
 ] as const;
 
 const VoiceSettingsPopup = (props: TVoiceSettingsPopupProps) => {

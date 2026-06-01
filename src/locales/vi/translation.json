@@ -406,24 +406,24 @@
     "light": "Sáng",
     "voices": [
       {
-        "label": "Aria",
-        "description": "Người Mỹ gốc Phi"
-      },
-      {
         "label": "Charlotte",
-        "description": "Anh"
+        "description": "Thụy Điển — tiếng Việt tốt nhất"
       },
       {
-        "label": "Domi",
-        "description": "Mỹ"
+        "label": "Emily",
+        "description": "Mỹ — rõ ràng, tự nhiên"
+      },
+      {
+        "label": "Grace",
+        "description": "Mỹ — giọng ấm"
       },
       {
         "label": "Rachel",
-        "description": "Mỹ"
+        "description": "Mỹ — linh hoạt"
       },
       {
-        "label": "Sarah",
-        "description": "Nữ nhẹ nhàng"
+        "label": "Domi",
+        "description": "Mỹ — trò chuyện tự nhiên"
       }
     ]
   },

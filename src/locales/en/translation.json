@@ -406,24 +406,24 @@
     "light": "Light",
     "voices": [
       {
-        "label": "Aria",
-        "description": "African American"
-      },
-      {
         "label": "Charlotte",
-        "description": "British"
+        "description": "Swedish — best Vietnamese"
       },
       {
-        "label": "Domi",
-        "description": "American"
+        "label": "Emily",
+        "description": "American — clear & natural"
+      },
+      {
+        "label": "Grace",
+        "description": "American — warm tone"
       },
       {
         "label": "Rachel",
-        "description": "American"
+        "description": "American — versatile"
       },
       {
-        "label": "Sarah",
-        "description": "Soft Female"
+        "label": "Domi",
+        "description": "American — conversational"
       }
     ]
   },
