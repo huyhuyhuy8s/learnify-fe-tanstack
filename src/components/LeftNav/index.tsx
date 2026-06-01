@@ -14,14 +14,14 @@ type TLeftNavProps = {
 
 const LeftNav = (props: TLeftNavProps) => {
   const { className } = props;
-  const [collapsed, setCollapsed] = useState(false);
   const isMobile = useIsMobile();
+  const [collapsed, setCollapsed] = useState(isMobile);
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
   });
   const isTop = useScrollTop();
 
-  const active = isMobile ? false : !collapsed;
+  const active = !collapsed;
   const navClassNames = classnames(
     "left-nav",
     { active, top: isTop },
@@ -43,8 +43,8 @@ const LeftNav = (props: TLeftNavProps) => {
       <nav className={navClassNames} data-lenis-prevent>
         <LeftNavTop pathname={pathname} />
         <LeftNavBot />
+        <Controller active={active} onClick={handleToggle} />
       </nav>
-      <Controller active={active} onClick={handleToggle} />
     </>
   );
 };
