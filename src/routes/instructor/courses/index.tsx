@@ -24,6 +24,7 @@ function ManageCoursesPage() {
     STATUSES,
     filteredCourses,
     isLoading,
+    isCourseLoading,
     statusFilter,
     setStatusFilter,
     selectedCourseId,
@@ -351,47 +352,56 @@ function ManageCoursesPage() {
 
         <SplitPanel.Content>
           <SplitPanel.List>
-            <button className="manage-courses__add-btn" onClick={openAddCourse}>
-              <Icon name="add" /> {t("sidebar.add_course")}
-            </button>
-            {filteredCourses.map((course) => (
-              <div
-                key={course.id}
-                className={classnames("manage-courses__item", {
-                  "manage-courses__item--active":
-                    selectedCourseId === course.id,
-                })}
-                onClick={() => {
-                  setSelectedCourseId(course.id);
-                  setSelectedLessonId(null);
-                }}
-              >
-                <Icon
-                  name="menu_book"
-                  className="manage-courses__item-icon"
-                  size={20}
-                />
-                <div className="manage-courses__item-info">
-                  <span className="manage-courses__item-name">
-                    {course.courseName}
-                  </span>
-                  <span
-                    className={`manage-courses__item-status manage-courses__item-status--${course.status.toLowerCase()}`}
-                  >
-                    {tStatus(t, course.status)}
-                  </span>
-                </div>
+            {isLoading && filteredCourses.length === 0 ? (
+              <TetrisLoader size="md" speed="fast" />
+            ) : (
+              <>
                 <button
-                  className="manage-courses__item-delete"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    openDeleteCourse(course.id);
-                  }}
+                  className="manage-courses__add-btn"
+                  onClick={openAddCourse}
                 >
-                  <Icon name="delete" size={18} />
+                  <Icon name="add" /> {t("sidebar.add_course")}
                 </button>
-              </div>
-            ))}
+                {filteredCourses.map((course) => (
+                  <div
+                    key={course.id}
+                    className={classnames("manage-courses__item", {
+                      "manage-courses__item--active":
+                        selectedCourseId === course.id,
+                    })}
+                    onClick={() => {
+                      setSelectedCourseId(course.id);
+                      setSelectedLessonId(null);
+                    }}
+                  >
+                    <Icon
+                      name="menu_book"
+                      className="manage-courses__item-icon"
+                      size={20}
+                    />
+                    <div className="manage-courses__item-info">
+                      <span className="manage-courses__item-name">
+                        {course.courseName}
+                      </span>
+                      <span
+                        className={`manage-courses__item-status manage-courses__item-status--${course.status.toLowerCase()}`}
+                      >
+                        {tStatus(t, course.status)}
+                      </span>
+                    </div>
+                    <button
+                      className="manage-courses__item-delete"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openDeleteCourse(course.id);
+                      }}
+                    >
+                      <Icon name="delete" size={18} />
+                    </button>
+                  </div>
+                ))}
+              </>
+            )}
           </SplitPanel.List>
 
           <SplitPanel.SubList>
@@ -399,6 +409,8 @@ function ManageCoursesPage() {
               <div className="split-panel__placeholder">
                 <p>{t("courses.select_course")}</p>
               </div>
+            ) : isCourseLoading ? (
+              <TetrisLoader size="md" speed="fast" />
             ) : (
               <>
                 <button
@@ -444,11 +456,7 @@ function ManageCoursesPage() {
                   ))
                 ) : (
                   <div className="split-panel__empty">
-                    {isLoading ? (
-                      <TetrisLoader size="md" speed="fast" />
-                    ) : (
-                      t("courses.no_lessons")
-                    )}
+                    {t("courses.no_lessons")}
                   </div>
                 )}
               </>
@@ -456,7 +464,9 @@ function ManageCoursesPage() {
           </SplitPanel.SubList>
 
           <SplitPanel.SubDetail>
-            {selectedLessonId && selectedLesson ? (
+            {selectedLessonId && isCourseLoading ? (
+              <TetrisLoader size="md" speed="fast" />
+            ) : selectedLessonId && selectedLesson ? (
               <LessonDetail
                 id={selectedLesson.id}
                 lessonName={selectedLesson.lessonName}
