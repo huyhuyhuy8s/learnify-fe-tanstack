@@ -76,6 +76,7 @@ export function useManageCourses() {
   const [lessonFiles, setLessonFiles] = useState<File[]>([]);
   const [lessonErrors, setLessonErrors] = useState<Record<string, string>>({});
   const [lessonToDelete, setLessonToDelete] = useState<string | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   const { data: courseData, isLoading: isCourseLoading } = useGetCoursesById(
     selectedCourseId ?? ""
@@ -190,6 +191,56 @@ export function useManageCourses() {
   const removeFile = useCallback((index: number) => {
     setLessonFiles((prev) => prev.filter((_, i) => i !== index));
   }, []);
+
+  const addFiles = useCallback(
+    (files: FileList | File[]) => {
+      const incoming = Array.from(files);
+      setLessonFiles((prev) => {
+        const combined = [...prev, ...incoming];
+        const err = validateFiles(combined);
+        if (err) {
+          setLessonErrors((p) => ({ ...p, files: err }));
+          return prev;
+        }
+        setLessonErrors((p) => {
+          const next = { ...p };
+          delete next.files;
+          return next;
+        });
+        return combined;
+      });
+    },
+    [validateFiles]
+  );
+
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }, []);
+
+  const handleDragEnter = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  }, []);
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsDragging(false);
+      if (e.dataTransfer.files.length > 0) {
+        addFiles(e.dataTransfer.files);
+      }
+    },
+    [addFiles]
+  );
 
   const resetAddLesson = useCallback(() => {
     setShowAddLesson(false);
@@ -319,6 +370,11 @@ export function useManageCourses() {
     handleAddCourse,
     handleFileChange,
     removeFile,
+    isDragging,
+    handleDragOver,
+    handleDragEnter,
+    handleDragLeave,
+    handleDrop,
     handleAddLesson,
     handleDeleteCourse,
     handleDeleteLesson,

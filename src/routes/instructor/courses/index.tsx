@@ -56,6 +56,11 @@ function ManageCoursesPage() {
     handleAddCourse,
     handleFileChange,
     removeFile,
+    isDragging,
+    handleDragOver,
+    handleDragEnter,
+    handleDragLeave,
+    handleDrop,
     handleAddLesson,
     handleDeleteCourse,
     handleDeleteLesson,
@@ -241,8 +246,13 @@ function ManageCoursesPage() {
             <div
               className={classnames("manage-courses__file-zone", {
                 "manage-courses__file-zone--error": lessonErrors.files,
+                "manage-courses__file-zone--dragging": isDragging,
               })}
               onClick={() => fileInputRef.current?.click()}
+              onDragOver={handleDragOver}
+              onDragEnter={handleDragEnter}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
             >
               <Icon name="attach_file" size={24} />
               <span>{t("courses.files_click")}</span>

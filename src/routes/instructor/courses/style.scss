@@ -325,11 +325,12 @@
     &--error {
       border-color: $accent-blaze;
     }
-  }
 
-  &__file-hint {
-    font-size: toRem(11);
-    color: $neutral-400;
+    &--dragging {
+      border-color: $green-600;
+      background: $green-100;
+      border-style: solid;
+    }
   }
 
   &__file-hidden {
