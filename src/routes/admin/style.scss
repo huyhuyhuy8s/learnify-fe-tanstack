@@ -2,31 +2,40 @@
 @use "@styles/colors" as *;
 @use "@styles/mixins" as *;
 @use "@styles/functions" as *;
+@use "sass:math";
 
-.al {
+.body {
   display: flex;
-  flex-direction: row;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  background-color: #f4f6fb;
+  flex-direction: column;
+  min-height: 100dvh;
 
-  &__right {
+  .inner {
     display: flex;
     flex-direction: column;
-    flex: 1;
-    height: 100%;
-    overflow: hidden;
-    min-width: 0;
+    background-color: $green-100;
+    padding: toRem(100);
+    gap: 10dvh;
   }
 
-  &__main {
-    flex: 1;
-    overflow-y: auto;
-    padding: toRem(32);
+  .content {
     display: flex;
     flex-direction: column;
-    gap: toRem(24);
-    padding-bottom: toRem(80);
+    min-height: calc(100dvh - toRem(65) - toRem(100));
+  }
+}
+
+@include break(md) {
+  .body {
+    .inner {
+      padding: toRem(100) toRem(75);
+    }
+  }
+}
+
+@include break(sm) {
+  .body {
+    .inner {
+      padding: toRem(75) toRem(50);
+    }
   }
 }

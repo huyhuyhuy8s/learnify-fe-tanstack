@@ -58,12 +58,28 @@ export const reviewerTopItems: TTopItem[] = [
   },
 ];
 
+export const adminTopItems: TTopItem[] = [
+  {
+    iconName: "dashboard",
+    labelKey: "admin.sidebar.dashboard",
+    href: "/admin",
+  },
+  {
+    iconName: "group",
+    labelKey: "admin.sidebar.user_management",
+    href: "/admin/users",
+  },
+];
+
 export function getTopItemsByPathname(pathname: string): TTopItem[] {
   if (pathname.startsWith("/instructor")) {
     return instructorTopItems;
   }
   if (pathname.startsWith("/reviewer")) {
     return reviewerTopItems;
+  }
+  if (pathname.startsWith("/admin")) {
+    return adminTopItems;
   }
   return learnerTopItems;
 }

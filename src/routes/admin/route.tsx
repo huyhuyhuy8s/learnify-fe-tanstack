@@ -1,11 +1,16 @@
+import "./style.scss";
+
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import GraphqlError from "@/components/GraphqlError";
-import RouterComponentHolder from "@/components/RouterComponentHolder";
+import { Suspense } from "react";
+
 import { getCurrentUserFn } from "@/server/auth";
 import { requireRole } from "@/utils/authGuard";
-import AdminSidebar from "./-components/Sidebar";
-import AdminHeader from "./-components/Header";
-import "./style.scss";
+
+import GraphqlError from "@/components/GraphqlError";
+import LeftNav from "@/components/LeftNav";
+import RouterComponentHolder from "@/components/RouterComponentHolder";
+import TetrisLoader from "@/components/TetrisLoader";
+import TopNav from "@/components/TopNav";
 
 export const Route = createFileRoute("/admin")({
   beforeLoad: async () => {
@@ -19,18 +24,23 @@ export const Route = createFileRoute("/admin")({
   errorComponent: ({ error }) => (
     <RouterComponentHolder children={<GraphqlError error={error} />} />
   ),
+  pendingComponent: () => <RouterComponentHolder children={<TetrisLoader />} />,
 });
 
 function AdminLayout() {
   return (
-    <div className="al">
-      <AdminSidebar />
-      <div className="al__right">
-        <AdminHeader />
-        <main className="al__main">
-          <Outlet />
-        </main>
-      </div>
-    </div>
+    <>
+      <LeftNav />
+      <article className="body">
+        <TopNav />
+        <div className="inner">
+          <div className="content">
+            <Suspense fallback={<TetrisLoader />}>
+              <Outlet />
+            </Suspense>
+          </div>
+        </div>
+      </article>
+    </>
   );
 }
