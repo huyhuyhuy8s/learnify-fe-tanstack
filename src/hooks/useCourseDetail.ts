@@ -317,11 +317,20 @@ export function useEnrollCourse() {
   });
 }
 
+type GetCoursePriceResponse = {
+  getCoursePrice: {
+    id: string;
+    originalPrice: number;
+    salePrice?: number | null;
+    isFree: boolean;
+  };
+};
+
 export function useCoursePrice(courseId: string) {
   return useQuery({
     queryKey: ["coursePrice", courseId],
     queryFn: async () => {
-      const response = await graphqlClient.request<any>(
+      const response = await graphqlClient.request<GetCoursePriceResponse>(
         GET_COURSE_PRICE_QUERY,
         { courseId }
       );

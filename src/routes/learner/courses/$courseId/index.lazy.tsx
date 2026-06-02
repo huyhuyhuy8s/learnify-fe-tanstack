@@ -42,7 +42,7 @@ export const Route = createLazyFileRoute("/learner/courses/$courseId/")({
 function CourseComponent() {
   const navigate = useNavigate();
   const { courseId } = Route.useParams();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const currentUser = useAuthStore((state) => state.user);
   const userId = currentUser?.id;
@@ -223,7 +223,7 @@ function CourseComponent() {
     if (!isEnrolled) {
       if (isPaidCourse) {
         const price = coursePrice?.salePrice ?? coursePrice?.originalPrice ?? 0;
-        return `${t("course_detail.buy")} - ${price.toLocaleString()}đ`;
+        return `${t("course_detail.buy")} - ${price.toLocaleString(i18n.language)}đ`;
       }
       return t("course_detail.enroll");
     }
@@ -351,7 +351,11 @@ function CourseComponent() {
                   onClick={() => {}}
                 />
                 <TextButton
-                  text="text"
+                  text={t(
+                    getCourseById?.status === "Published"
+                      ? "course_detail.public_status"
+                      : "course_detail.private_status"
+                  )}
                   size="tiny"
                   type="special"
                   typeSpecial={

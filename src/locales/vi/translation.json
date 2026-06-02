@@ -751,5 +751,92 @@
     "language": "Ngôn ngữ",
     "dark": "Tối",
     "light": "Sáng"
+  },
+  "admin": {
+    "dashboard": {
+      "load_error": "Không thể tải dữ liệu bảng điều khiển."
+    },
+    "welcome": {
+      "greeting_morning": "Chào buổi sáng",
+      "greeting_afternoon": "Chào buổi chiều",
+      "greeting_evening": "Chào buổi tối",
+      "subtitle": "Dưới đây là những gì đang diễn ra trên nền tảng của bạn hôm nay"
+    },
+    "stats": {
+      "total_users": "Tổng người dùng",
+      "today_subscriber": "Người đăng ký hôm nay",
+      "revenue": "Doanh thu",
+      "system_bugs": "Lỗi hệ thống",
+      "trend": "+8.2% so với tháng trước"
+    },
+    "chart": {
+      "title": "Hoạt động người dùng trong 7 ngày",
+      "aria_label": "Biểu đồ đường hoạt động người dùng"
+    },
+    "recent_users": {
+      "title": "Người dùng gần đây",
+      "empty": "Không có người dùng gần đây.",
+      "just_now": "Vừa xong",
+      "min_ago_one": "{{count}} phút trước",
+      "min_ago_other": "{{count}} phút trước",
+      "hr_ago_one": "{{count}} giờ trước",
+      "hr_ago_other": "{{count}} giờ trước",
+      "days_ago_one": "{{count}} ngày trước",
+      "days_ago_other": "{{count}} ngày trước"
+    },
+    "system_activity": {
+      "title": "Hoạt động hệ thống"
+    },
+    "search": {
+      "placeholder": "Tìm kiếm theo tên, email hoặc vai trò..."
+    },
+    "users": {
+      "title": "Quản lý người dùng",
+      "table": {
+        "id": "ID",
+        "user": "Người dùng",
+        "email": "Email",
+        "role": "Vai trò",
+        "joined": "Tham gia",
+        "actions": "Thao tác",
+        "edit": "Sửa",
+        "delete": "Xóa",
+        "empty": "Không tìm thấy người dùng"
+      },
+      "modal": {
+        "create_title": "Tạo người dùng mới",
+        "edit_title": "Chỉnh sửa người dùng",
+        "username": "Tên người dùng",
+        "username_placeholder": "vd: john_doe",
+        "email": "Email",
+        "email_placeholder": "user@example.com",
+        "phone": "Số điện thoại",
+        "phone_placeholder": "+84 000 000 000",
+        "password": "Mật khẩu",
+        "password_placeholder": "Tối thiểu 8 ký tự",
+        "role": "Vai trò",
+        "cancel": "Hủy",
+        "save": "Lưu thay đổi",
+        "create": "Tạo người dùng",
+        "saving": "Đang lưu..."
+      },
+      "delete_confirm": "Bạn có chắc chắn muốn xóa vĩnh viễn người dùng này?"
+    },
+    "pagination": {
+      "showing": "Hiển thị <strong>{{start}}–{{end}}</strong> trên <strong>{{total}}</strong>"
+    },
+    "sidebar": {
+      "dashboard": "Bảng điều khiển",
+      "user_management": "Quản lý người dùng",
+      "settings": "Cài đặt",
+      "policy": "Chính sách",
+      "add_user": "Thêm người dùng"
+    },
+    "header": {
+      "search_placeholder": "Tìm kiếm người dùng, cài đặt..."
+    },
+    "page_header": {
+      "add_user": "Thêm người dùng"
+    }
   }
 }

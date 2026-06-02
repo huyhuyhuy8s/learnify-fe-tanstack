@@ -751,5 +751,92 @@
     "language": "Language",
     "dark": "Dark",
     "light": "Light"
+  },
+  "admin": {
+    "dashboard": {
+      "load_error": "Failed to load dashboard data."
+    },
+    "welcome": {
+      "greeting_morning": "Good morning",
+      "greeting_afternoon": "Good afternoon",
+      "greeting_evening": "Good evening",
+      "subtitle": "Here's what's happening on your platform today"
+    },
+    "stats": {
+      "total_users": "Total Users",
+      "today_subscriber": "Today's Subscribers",
+      "revenue": "Revenue",
+      "system_bugs": "System Bugs",
+      "trend": "+8.2% from last month"
+    },
+    "chart": {
+      "title": "User Activity within 7 days",
+      "aria_label": "User activity line chart"
+    },
+    "recent_users": {
+      "title": "Recent Users",
+      "empty": "No recent users.",
+      "just_now": "Just now",
+      "min_ago_one": "{{count}} min ago",
+      "min_ago_other": "{{count}} mins ago",
+      "hr_ago_one": "{{count}} hr ago",
+      "hr_ago_other": "{{count}} hrs ago",
+      "days_ago_one": "{{count}} day ago",
+      "days_ago_other": "{{count}} days ago"
+    },
+    "system_activity": {
+      "title": "System Activity"
+    },
+    "search": {
+      "placeholder": "Search by name, email or role..."
+    },
+    "users": {
+      "title": "User Management",
+      "table": {
+        "id": "ID",
+        "user": "User",
+        "email": "Email",
+        "role": "Role",
+        "joined": "Joined",
+        "actions": "Actions",
+        "edit": "Edit",
+        "delete": "Delete",
+        "empty": "No users found"
+      },
+      "modal": {
+        "create_title": "Create New User",
+        "edit_title": "Edit User",
+        "username": "Username",
+        "username_placeholder": "e.g. john_doe",
+        "email": "Email",
+        "email_placeholder": "user@example.com",
+        "phone": "Phone Number",
+        "phone_placeholder": "+84 000 000 000",
+        "password": "Password",
+        "password_placeholder": "Minimum 8 characters",
+        "role": "Role",
+        "cancel": "Cancel",
+        "save": "Save Changes",
+        "create": "Create User",
+        "saving": "Saving..."
+      },
+      "delete_confirm": "Are you sure you want to permanently delete this user?"
+    },
+    "pagination": {
+      "showing": "Showing <strong>{{start}}–{{end}}</strong> of <strong>{{total}}</strong>"
+    },
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "user_management": "User Management",
+      "settings": "Settings",
+      "policy": "Policy",
+      "add_user": "Add User"
+    },
+    "header": {
+      "search_placeholder": "Search users, settings..."
+    },
+    "page_header": {
+      "add_user": "Add User"
+    }
   }
 }

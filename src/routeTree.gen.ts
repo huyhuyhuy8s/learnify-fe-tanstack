@@ -45,6 +45,7 @@ import { Route as AuthVerifyEmailIndexRouteImport } from "./routes/auth/verify-e
 import { Route as AuthSignUpIndexRouteImport } from "./routes/auth/sign-up/index";
 import { Route as AuthLogInIndexRouteImport } from "./routes/auth/log-in/index";
 import { Route as AuthForgotPasswordIndexRouteImport } from "./routes/auth/forgot-password/index";
+import { Route as AdminUsersIndexRouteImport } from "./routes/admin/users/index";
 import { Route as ApiUsersIdRouteImport } from "./routes/api/users.$id";
 import { Route as LearnerLessonsLessonIdIndexRouteImport } from "./routes/learner_/lessons/$lessonId/index";
 import { Route as LearnerUserUserIdIndexRouteImport } from "./routes/learner/user/$userId/index";
@@ -262,6 +263,11 @@ const AuthForgotPasswordIndexRoute = AuthForgotPasswordIndexRouteImport.update({
 } as any).lazy(() =>
   import("./routes/auth/forgot-password/index.lazy").then((d) => d.Route),
 );
+const AdminUsersIndexRoute = AdminUsersIndexRouteImport.update({
+  id: "/users/",
+  path: "/users/",
+  getParentRoute: () => AdminRouteRoute,
+} as any);
 const ApiUsersIdRoute = ApiUsersIdRouteImport.update({
   id: "/$id",
   path: "/$id",
@@ -339,6 +345,7 @@ export interface FileRoutesByFullPath {
   "/learner/": typeof LearnerIndexRoute;
   "/reviewer/": typeof ReviewerIndexRoute;
   "/api/users/$id": typeof ApiUsersIdRoute;
+  "/admin/users/": typeof AdminUsersIndexRoute;
   "/auth/forgot-password/": typeof AuthForgotPasswordIndexRoute;
   "/auth/log-in/": typeof AuthLogInIndexRoute;
   "/auth/sign-up/": typeof AuthSignUpIndexRoute;
@@ -375,6 +382,7 @@ export interface FileRoutesByTo {
   "/learner": typeof LearnerIndexRoute;
   "/reviewer": typeof ReviewerIndexRoute;
   "/api/users/$id": typeof ApiUsersIdRoute;
+  "/admin/users": typeof AdminUsersIndexRoute;
   "/auth/forgot-password": typeof AuthForgotPasswordIndexRoute;
   "/auth/log-in": typeof AuthLogInIndexRoute;
   "/auth/sign-up": typeof AuthSignUpIndexRoute;
@@ -421,6 +429,7 @@ export interface FileRoutesById {
   "/learner/": typeof LearnerIndexRoute;
   "/reviewer/": typeof ReviewerIndexRoute;
   "/api/users/$id": typeof ApiUsersIdRoute;
+  "/admin/users/": typeof AdminUsersIndexRoute;
   "/auth/forgot-password/": typeof AuthForgotPasswordIndexRoute;
   "/auth/log-in/": typeof AuthLogInIndexRoute;
   "/auth/sign-up/": typeof AuthSignUpIndexRoute;
@@ -468,6 +477,7 @@ export interface FileRouteTypes {
     | "/learner/"
     | "/reviewer/"
     | "/api/users/$id"
+    | "/admin/users/"
     | "/auth/forgot-password/"
     | "/auth/log-in/"
     | "/auth/sign-up/"
@@ -504,6 +514,7 @@ export interface FileRouteTypes {
     | "/learner"
     | "/reviewer"
     | "/api/users/$id"
+    | "/admin/users"
     | "/auth/forgot-password"
     | "/auth/log-in"
     | "/auth/sign-up"
@@ -549,6 +560,7 @@ export interface FileRouteTypes {
     | "/learner/"
     | "/reviewer/"
     | "/api/users/$id"
+    | "/admin/users/"
     | "/auth/forgot-password/"
     | "/auth/log-in/"
     | "/auth/sign-up/"
@@ -846,6 +858,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AuthForgotPasswordIndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    "/admin/users/": {
+      id: "/admin/users/";
+      path: "/users";
+      fullPath: "/admin/users/";
+      preLoaderRoute: typeof AdminUsersIndexRouteImport;
+      parentRoute: typeof AdminRouteRoute;
+    };
     "/api/users/$id": {
       id: "/api/users/$id";
       path: "/$id";
@@ -900,10 +919,12 @@ declare module "@tanstack/react-router" {
 
 interface AdminRouteRouteChildren {
   AdminIndexRoute: typeof AdminIndexRoute;
+  AdminUsersIndexRoute: typeof AdminUsersIndexRoute;
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminIndexRoute: AdminIndexRoute,
+  AdminUsersIndexRoute: AdminUsersIndexRoute,
 };
 
 const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(

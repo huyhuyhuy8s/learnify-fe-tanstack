@@ -3,6 +3,9 @@ import GraphqlError from "@/components/GraphqlError";
 import RouterComponentHolder from "@/components/RouterComponentHolder";
 import { getCurrentUserFn } from "@/server/auth";
 import { requireRole } from "@/utils/authGuard";
+import AdminSidebar from "./-components/Sidebar";
+import AdminHeader from "./-components/Header";
+import "./style.scss";
 
 export const Route = createFileRoute("/admin")({
   beforeLoad: async () => {
@@ -19,5 +22,15 @@ export const Route = createFileRoute("/admin")({
 });
 
 function AdminLayout() {
-  return <Outlet />;
+  return (
+    <div className="al">
+      <AdminSidebar />
+      <div className="al__right">
+        <AdminHeader />
+        <main className="al__main">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
 }
