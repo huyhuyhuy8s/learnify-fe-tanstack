@@ -168,7 +168,7 @@ function TeacherScene({
       animation={animation}
       animationModel={animationModel}
       teacherModel={{ scene: teacherScene }}
-      rotation={[0, Math.PI, 0]}
+      rotation={[0, 0, 0]}
       position={[1, 0.25, -2]}
     />
   );

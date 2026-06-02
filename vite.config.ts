@@ -71,4 +71,7 @@ export default defineConfig({
       },
     },
   },
+  define: {
+    __MODEL_CDN_URL__: JSON.stringify(process.env.VITE_MODEL_CDN_URL || ""),
+  },
 });

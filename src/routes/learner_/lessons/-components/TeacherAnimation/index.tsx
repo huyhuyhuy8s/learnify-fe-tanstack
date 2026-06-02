@@ -49,7 +49,7 @@ const TeacherAnimation = forwardRef<
     );
     return [
       rotation[0],
-      isDegAnimation ? Math.PI : rotation[1],
+      isDegAnimation ? rotation[1] : rotation[1],
       rotation[2],
     ] as [number, number, number];
   }, [animation, rotation]);
