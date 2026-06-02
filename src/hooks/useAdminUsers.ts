@@ -35,7 +35,7 @@ export type TUpdateUserAdminInput = {
 };
 
 type GetAllUsersResponse = {
-  getAllUsers: {
+  users: {
     isSuccess: boolean;
     count: number;
     message: string;
@@ -58,7 +58,7 @@ export function useGetAllAdminUsers() {
     queryFn: async () => {
       const response =
         await graphqlClient.request<GetAllUsersResponse>(GET_ALL_USERS_QUERY);
-      return response.getAllUsers;
+      return response.users;
     },
   });
 }
