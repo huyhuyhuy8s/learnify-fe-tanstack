@@ -406,24 +406,8 @@
     "light": "Light",
     "voices": [
       {
-        "label": "Charlotte",
-        "description": "Swedish — best Vietnamese"
-      },
-      {
-        "label": "Emily",
-        "description": "American — clear & natural"
-      },
-      {
-        "label": "Grace",
-        "description": "American — warm tone"
-      },
-      {
-        "label": "Rachel",
-        "description": "American — versatile"
-      },
-      {
-        "label": "Domi",
-        "description": "American — conversational"
+        "label": "Default",
+        "description": "ElevenLabs AI — voice"
       }
     ]
   },

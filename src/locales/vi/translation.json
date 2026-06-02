@@ -406,24 +406,8 @@
     "light": "Sáng",
     "voices": [
       {
-        "label": "Charlotte",
-        "description": "Thụy Điển — tiếng Việt tốt nhất"
-      },
-      {
-        "label": "Emily",
-        "description": "Mỹ — rõ ràng, tự nhiên"
-      },
-      {
-        "label": "Grace",
-        "description": "Mỹ — giọng ấm"
-      },
-      {
-        "label": "Rachel",
-        "description": "Mỹ — linh hoạt"
-      },
-      {
-        "label": "Domi",
-        "description": "Mỹ — trò chuyện tự nhiên"
+        "label": "Default",
+        "description": "ElevenLabs AI — giọng nói"
       }
     ]
   },
