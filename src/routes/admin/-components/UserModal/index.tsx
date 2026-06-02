@@ -19,7 +19,7 @@ type TUserModalProps = {
   onUpdate: (data: TUpdateUserAdminInput) => void;
 };
 
-const ROLE_OPTIONS = ["Learner", "Instructor", "Reviewer", "Admin"] as const;
+const ROLE_OPTIONS = ["User", "Instructor", "Reviewer", "Admin"] as const;
 
 const UserModal = ({
   mode,
