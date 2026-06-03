@@ -1,3 +1,5 @@
+import type { TIconName } from "@/components/Icon";
+
 export type TCategoryKey =
   | "ai_llm"
   | "calculus"
@@ -7,7 +9,7 @@ export type TCategoryKey =
   | "language";
 
 export type TCategory = {
-  icon: string;
+  icon: TIconName;
   labelKey: string;
   key: TCategoryKey;
   keywords: string[];

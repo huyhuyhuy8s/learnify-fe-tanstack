@@ -174,7 +174,7 @@
   },
   "courses": {
     "title": "Explore our <Beauty>Best courses</Beauty> only for you",
-    "description": "Course Description",
+    "description": "Your home for building AI skills and more. Get hands on with Learnify, dive into in-depth courses, and learn directly from the experts. When ready, prove your new skills with career-boosting credentials.",
     "filter_btn": "Filter",
     "filter_type": "Course Type",
     "filter_free": "Free",
@@ -286,6 +286,7 @@
   "roadmaps": {
     "headline": "Shape <Beauty>your future</Beauty> by yourself",
     "description": "Roadmaps are collections of learnings designed to build deep skills in a particular area. Whether you're looking to earn achievements, build a collection of skills badges, or prepare for a certification, there are paths right for you. When you're done, share your accomplishments on social media and hiring platforms like Linkedin and Credly!",
+    "search_placeholder": "Search roadmaps...",
     "categories": {
       "ai_llm": "AI / LLM",
       "calculus": "Calculus",

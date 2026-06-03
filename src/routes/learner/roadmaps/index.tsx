@@ -145,6 +145,7 @@ function RoadmapsPage() {
         </div>
         <div className="roadmaps-content">
           <Search
+            placeholder={t("roadmaps.search_placeholder")}
             onSearch={(query) =>
               navigate({
                 to: "/learner/roadmaps",
@@ -156,7 +157,7 @@ function RoadmapsPage() {
             {CATEGORIES.map((item) => (
               <CategoryItem
                 key={item.key}
-                icon={item.icon as any}
+                icon={item.icon}
                 labelKey={item.labelKey}
                 selected={activeCategory === item.key}
                 onClick={() => handleCategoryClick(item.key)}
@@ -166,7 +167,8 @@ function RoadmapsPage() {
               <TextButton
                 text={t("courses.filter_clear")}
                 size="tiny"
-                type="secondary"
+                type="outlined"
+                icon="close"
                 onClick={() =>
                   navigate({
                     to: "/learner/roadmaps",
