@@ -56,8 +56,7 @@ p,
 small,
 .smaller,
 a,
-li,
-svg {
+li {
   color: $black;
   font-weight: $fw-regular;
   line-height: 1.25;
@@ -65,6 +64,10 @@ svg {
   &:first-letter {
     text-transform: uppercase;
   }
+}
+
+svg {
+  color: inherit;
 }
 
 p,
