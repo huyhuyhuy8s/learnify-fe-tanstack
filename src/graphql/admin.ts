@@ -1,5 +1,5 @@
 export const GET_ALL_USERS_QUERY = `
-  query Query {
+  query GetAllUsers {
     users {
       count
       message
@@ -18,7 +18,7 @@ export const GET_ALL_USERS_QUERY = `
 `;
 
 export const CREATE_USER_MUTATION = `
-  mutation Mutation($data: CreateUserInput!) {
+  mutation CreateUser($data: CreateUserInput!) {
     createUser(data: $data) {
       createdAt
       email
@@ -31,7 +31,7 @@ export const CREATE_USER_MUTATION = `
 `;
 
 export const UPDATE_ADMIN_USER_MUTATION = `
-  mutation Mutation($data: UpdateUserAdminInput!) {
+  mutation UpdateAdminUser($data: UpdateUserAdminInput!) {
     updateAdmin(data: $data) {
       email
       createdAt
@@ -44,7 +44,7 @@ export const UPDATE_ADMIN_USER_MUTATION = `
 `;
 
 export const DELETE_USER_MUTATION = `
-  mutation Mutation($deleteUserId: String!) {
-    deleteUser(id: $deleteUserId)
+  mutation DeleteUser($id: String!) {
+    deleteUser(id: $id)
   }
 `;

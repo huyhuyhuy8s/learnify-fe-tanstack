@@ -163,6 +163,16 @@ export const GET_PROGRESS_QUERY = `
   }
 `;
 
+export const FIND_ENROLLMENT_QUERY = `
+  query FindEnrollment($courseId: String!) {
+    findEnrollment(courseId: $courseId) {
+      id
+      courseId
+      userId
+    }
+  }
+`;
+
 export const ASK_LESSON_QUESTION_QUERY = `
   query AskLessonQuestion($lessonId: String!, $question: String!) {
     askLessonQuestion(lessonId: $lessonId, question: $question)
@@ -251,6 +261,80 @@ export const GET_COURSE_LESSONS_BY_ID_QUERY = `
 }
 `;
 
+export const GET_COURSE_BY_USER_ID_QUERY = `
+  query GetCourseByUserId($userId: String!) {
+    getCourseByUserId(userId: $userId) {
+      id
+      courseName
+      abstract
+      keyLearnings
+      status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const CREATE_COURSE_MUTATION = `
+  mutation CreateCourse($data: CreateCourseDto!) {
+    createCourse(data: $data) {
+      isSuccess
+      message
+      count
+      courses {
+        id
+        courseName
+        abstract
+        keyLearnings
+        status
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
+export const GET_INSTRUCTOR_DASHBOARD = `
+  query GetInstructorDashboard($userId: String!) {
+    getCourseByUserId(userId: $userId) {
+      id
+      courseName
+      abstract
+      keyLearnings
+      status
+      createdAt
+      updatedAt
+    }
+    getAllLessons {
+      count
+      lessons {
+        id
+        courseId
+        lessonName
+      }
+    }
+  }
+`;
+
+export const DELETE_COURSE_MUTATION = `
+  mutation DeleteCourse($id: String!) {
+    deleteCourse(id: $id) {
+      isSuccess
+      message
+      count
+      courses {
+        id
+        courseName
+        abstract
+        keyLearnings
+        status
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
 export const GET_COURSE_PRICE_QUERY = `
   query GetCoursePrice($courseId: String!) {
     getCoursePrice(courseId: $courseId) {
@@ -258,6 +342,23 @@ export const GET_COURSE_PRICE_QUERY = `
       originalPrice
       salePrice
       isFree
+    }
+  }
+`;
+
+export const GET_ALL_LESSONS_QUERY = `
+  query GetAllLessons {
+    getAllLessons {
+      isSuccess
+      count
+      message
+      lessons {
+        id
+        lessonName
+        abstract
+        courseId
+        createdAt
+      }
     }
   }
 `;

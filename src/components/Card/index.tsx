@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import classnames from "classnames";
 import "./style.scss";
 import type { TCourseCardProps } from "./type";
@@ -5,6 +6,7 @@ import TextButton from "@/components/TextButton";
 import CardFooter from "./components/CardFooter";
 
 const Card = (props: TCourseCardProps) => {
+  const { t } = useTranslation();
   const {
     className,
     onClick,
@@ -15,6 +17,7 @@ const Card = (props: TCourseCardProps) => {
     disabled = false,
     status = "default",
     percentage = 0,
+    badgeStatus,
   } = props;
 
   return (
@@ -38,7 +41,18 @@ const Card = (props: TCourseCardProps) => {
             size="tiny"
             type="special"
             typeSpecial={typeSpecial}
+            tooltip={t(`special_tooltip.${typeSpecial}`)}
           />
+          {badgeStatus && (
+            <TextButton
+              onClick={() => {}}
+              text="text"
+              size="tiny"
+              type="special"
+              typeSpecial={badgeStatus}
+              tooltip={t(`special_tooltip.${badgeStatus}`)}
+            />
+          )}
         </div>
         <h5 className="medium" title={title}>
           {title}

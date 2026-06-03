@@ -1,12 +1,29 @@
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import TetrisLoader from "@/components/TetrisLoader";
-import { useCallback, useEffect, useEffectEvent, useRef } from "react";
+import {
+  useCallback,
+  useEffect,
+  useEffectEvent,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 import ChatArea from "../-components/ChatArea";
 import CourseContext from "../-components/CourseContext";
 import type { TCourseContextRef } from "../-components/CourseContext/type";
 import TeacherPanel from "../-components/TeacherPanel";
 import useLessonDetail from "../-hooks/useLessonDetail";
 import useTeacher from "../-hooks/useTeacher";
+import { graphqlClient } from "@/lib/graphql";
+import {
+  FIND_ENROLLMENT_QUERY,
+  GET_LESSONS_BY_COURSE_ID_QUERY,
+} from "@/graphql/course";
+import { useAuthStore } from "@/store";
+import CourseCompletionModal from "../-components/CourseCompletionModal";
 
 export const Route = createLazyFileRoute("/learner_/lessons/$lessonId/")({
   component: LessonDetail,
@@ -24,6 +41,8 @@ function LessonDetail() {
     skipToQuiz,
     completeLesson,
     reset,
+    handleComplete,
+    isCourseCompleted,
   } = useLessonDetail(lessonId);
   const {
     chatRef,
@@ -52,6 +71,8 @@ function LessonDetail() {
     toggle3DMode,
     resetTeacher,
   } = useTeacher();
+  const [ttsSpeed, setTtsSpeed] = useState(1);
+  const [autoScroll, setAutoScroll] = useState(true);
   const courseContextRef = useRef<TCourseContextRef>(null);
   const isInitialMount = useRef(true);
 
@@ -84,15 +105,80 @@ function LessonDetail() {
     stopChat();
     skipToQuiz();
   }, [stopChat, skipToQuiz]);
+  const [showCourseModal, setShowCourseModal] = useState(false);
+
   const handleSkipQuiz = useCallback(() => {
     stopChat();
     completeLesson();
-  }, [stopChat, completeLesson]);
+    handleComplete();
+    if (isCourseCompleted) {
+      setTimeout(() => setShowCourseModal(true), 500);
+    }
+  }, [stopChat, completeLesson, handleComplete, isCourseCompleted]);
   const handleLessonComplete = useCallback(() => {
     skipToQA();
   }, [skipToQA]);
 
-  if (isLoading && !data) {
+  const handleReload = useCallback(() => {
+    window.location.reload();
+  }, []);
+
+  const courseId = data?.lesson?.courseId;
+  const userId = useAuthStore((s) => s.user?.id);
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const { data: enrollmentData, isLoading: isCheckingEnrollment } = useQuery({
+    queryKey: ["enrollment", courseId, userId],
+    queryFn: async () => {
+      if (!courseId || !userId) return null;
+      return graphqlClient.request<{
+        findEnrollment: { id: string } | null;
+      }>(FIND_ENROLLMENT_QUERY, { courseId });
+    },
+    enabled: !!courseId && !!userId && !!data?.lesson,
+  });
+
+  const { data: courseLessons } = useQuery({
+    queryKey: ["course-lessons-list", courseId],
+    queryFn: async () => {
+      if (!courseId) return [];
+      const res = await graphqlClient.request<{
+        getLessonsByCourseId: { lessons: { id: string; lessonName: string }[] };
+      }>(GET_LESSONS_BY_COURSE_ID_QUERY, { id: courseId });
+      return res.getLessonsByCourseId.lessons;
+    },
+    enabled: !!courseId,
+  });
+
+  const currentLessonIndex = useMemo(() => {
+    if (!courseLessons) return -1;
+    return courseLessons.findIndex((l) => l.id === lessonId);
+  }, [courseLessons, lessonId]);
+
+  const nextLesson = useMemo(() => {
+    if (
+      currentLessonIndex < 0 ||
+      currentLessonIndex >= (courseLessons?.length ?? 0) - 1
+    )
+      return null;
+    return courseLessons![currentLessonIndex + 1];
+  }, [currentLessonIndex, courseLessons]);
+
+  useEffect(() => {
+    if (isCheckingEnrollment || !courseId) return;
+    if (!enrollmentData?.findEnrollment) {
+      toast.error(t("toast_enroll_first"));
+      navigate({ to: "/learner/courses/$courseId", params: { courseId } });
+    }
+  }, [enrollmentData, isCheckingEnrollment, courseId, navigate, t]);
+
+  const hasCourseId = !!courseId;
+  const enrollmentChecked = !hasCourseId || !!enrollmentData;
+  const isNotEnrolled =
+    enrollmentChecked && hasCourseId && !enrollmentData?.findEnrollment;
+
+  if (isLoading || isCheckingEnrollment || isNotEnrolled) {
     return (
       <div className="lesson-detail-page lesson-detail-page_loading">
         <TetrisLoader />
@@ -123,6 +209,8 @@ function LessonDetail() {
         handleLessonComplete={handleLessonComplete}
         setAnimation={setAnimation}
         setStatus={setStatus}
+        courseId={courseId ?? ""}
+        nextLessonId={nextLesson?.id}
       />
 
       {showChatArea && (
@@ -156,6 +244,16 @@ function LessonDetail() {
         onSelectVoice={handleSelectVoice}
         onPreviewVoice={handlePreviewVoice}
         onToggle3DMode={toggle3DMode}
+        onReload={handleReload}
+        ttsSpeed={ttsSpeed}
+        onTtsSpeedChange={setTtsSpeed}
+        autoScroll={autoScroll}
+        onAutoScrollChange={setAutoScroll}
+      />
+
+      <CourseCompletionModal
+        isOpen={showCourseModal}
+        onClose={() => setShowCourseModal(false)}
       />
     </div>
   );

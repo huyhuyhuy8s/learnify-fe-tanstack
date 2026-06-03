@@ -7,7 +7,7 @@ import type { TChatMessageRef } from "../-components/ChatMessages";
 export type TStopFn = () => void;
 
 const DEFAULT_VOICE_ID =
-  import.meta.env.VITE_EDGETTS_VOICE_ID || "vi-VN-HoaiMyNeural";
+  import.meta.env.VITE_ELEVENLABS_VOICE_ID || "hpp4J3VqNfWAUOO0d1Us";
 
 const LOADING_MESSAGES = [
   "Loading 3D environment...",

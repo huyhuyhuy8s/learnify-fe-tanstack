@@ -3,13 +3,15 @@ import { useAppSession } from "@/utils/session";
 import { z } from "zod";
 import { getLanguageCookie, getThemeCookie } from "./cookies.server";
 
-const SESSION_TTL = 7 * 24 * 60 * 60 * 1000;
+const SESSION_TTL = 45 * 60 * 1000;
 
 type UserData = {
   id: string | number;
   email: string;
   username?: string;
   role?: string;
+  diamond?: number;
+  currentSteak?: number;
 };
 
 const sessionSchema = z.object({
@@ -20,6 +22,8 @@ const sessionSchema = z.object({
   }),
   username: z.string().optional(),
   role: z.string().optional(),
+  diamond: z.number().optional(),
+  currentSteak: z.number().optional(),
 });
 
 export const getCurrentUserFn = createServerFn({ method: "GET" }).handler(

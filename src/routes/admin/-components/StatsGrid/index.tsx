@@ -1,58 +1,52 @@
-import Icon from "@/components/Icon";
 import "./style.scss";
+
+import Icon from "@/components/Icon";
+import { useTranslation } from "react-i18next";
 
 type StatsGridProps = {
   totalUsers: number;
   todaySubscribers: number;
 };
 
-type TStatCard = {
-  id: string;
-  label: string;
-  value: string | number;
-  icon: string;
-  trend?: string;
-  trendUp?: boolean;
-  colorMod: "blue" | "green" | "orange" | "red";
-};
-
 const StatsGrid = ({ totalUsers, todaySubscribers }: StatsGridProps) => {
-  const STAT_CARDS: TStatCard[] = [
+  const { t } = useTranslation();
+
+  const STAT_CARDS = [
     {
       id: "stat-total-users",
-      label: "Total Users",
+      labelKey: "admin.stats.total_users",
       value: totalUsers.toLocaleString(),
-      icon: "group",
-      trend: "+8.2% from last month",
+      icon: "group" as const,
+      trend: t("admin.stats.trend"),
       trendUp: true,
-      colorMod: "blue",
+      colorMod: "blue" as const,
     },
     {
       id: "stat-today-subscribers",
-      label: "Today Subscriber",
+      labelKey: "admin.stats.today_subscriber",
       value: todaySubscribers.toLocaleString(),
-      icon: "person_add",
-      trend: "+12.5% from yesterday",
+      icon: "person_add" as const,
+      trend: t("admin.stats.trend"),
       trendUp: true,
-      colorMod: "green",
+      colorMod: "green" as const,
     },
     {
       id: "stat-revenue",
-      label: "Revenue",
+      labelKey: "admin.stats.revenue",
       value: "$48,290",
-      icon: "payments",
-      trend: "+3.1% from last week",
+      icon: "payments" as const,
+      trend: t("admin.stats.trend"),
       trendUp: true,
-      colorMod: "orange",
+      colorMod: "orange" as const,
     },
     {
       id: "stat-system-bugs",
-      label: "System Bug",
+      labelKey: "admin.stats.system_bugs",
       value: "7",
-      icon: "bug_report",
-      trend: "-2 from last week",
+      icon: "bug_report" as const,
+      trend: t("admin.stats.trend"),
       trendUp: false,
-      colorMod: "red",
+      colorMod: "red" as const,
     },
   ];
 
@@ -68,7 +62,7 @@ const StatsGrid = ({ totalUsers, todaySubscribers }: StatsGridProps) => {
             <div className="admin-stats-grid__icon-wrap">
               <Icon name={card.icon} size={22} />
             </div>
-            <span className="admin-stats-grid__label">{card.label}</span>
+            <span className="admin-stats-grid__label">{t(card.labelKey)}</span>
           </div>
           <p className="admin-stats-grid__value">{card.value}</p>
           {card.trend && (

@@ -18,7 +18,7 @@ interface LandingHowProps {
 
 export default function LandingHow({ steps }: LandingHowProps) {
   const ref = useRef<HTMLElement>(null);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useGSAP(
     () => {
@@ -43,7 +43,6 @@ export default function LandingHow({ steps }: LandingHowProps) {
       <div className="landing-section__inner">
         <h2 className="landing-section__title">
           <Trans
-            key={i18n.language}
             i18nKey="landing.how.title"
             components={{ Beauty: <span className="beauty" /> }}
           />

@@ -1,29 +1,51 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
-import ReviewerSidebar from "./-components/Sidebar";
-import TopNavRight from "@/components/TopNav/components/TopNavRight";
 import "./style.scss";
 
+import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { Suspense } from "react";
+
+import { getCurrentUserFn } from "@/server/auth";
+import { requireRole } from "@/utils/authGuard";
+
+import Footer from "@/components/Footer";
+import GraphqlError from "@/components/GraphqlError";
+import LeftNav from "@/components/LeftNav";
+import RouterComponentHolder from "@/components/RouterComponentHolder";
+import TetrisLoader from "@/components/TetrisLoader";
+import TopNav from "@/components/TopNav";
+
 export const Route = createFileRoute("/reviewer")({
+  beforeLoad: async () => {
+    const { user, expired } = await getCurrentUserFn();
+    requireRole(
+      "reviewer",
+      "admin"
+    )({ user, isAuthenticated: !!user, expired });
+  },
   head: () => ({
     meta: [{ title: "Content Reviewer | Learnify" }],
   }),
   component: ReviewerLayout,
+  errorComponent: ({ error }) => (
+    <RouterComponentHolder children={<GraphqlError error={error} />} />
+  ),
+  pendingComponent: () => <RouterComponentHolder children={<TetrisLoader />} />,
 });
 
 function ReviewerLayout() {
   return (
-    <div className="rl">
-      <ReviewerSidebar />
-      <div className="rl__right">
-        <header className="rl__topbar">
-          <div className="rl__topbar-inner">
-            <TopNavRight />
+    <>
+      <LeftNav />
+      <article className="body">
+        <TopNav />
+        <div className="inner">
+          <div className="content">
+            <Suspense fallback={<TetrisLoader />}>
+              <Outlet />
+            </Suspense>
           </div>
-        </header>
-        <main className="rl__main">
-          <Outlet />
-        </main>
-      </div>
-    </div>
+          <Footer />
+        </div>
+      </article>
+    </>
   );
 }

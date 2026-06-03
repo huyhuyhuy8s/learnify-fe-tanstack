@@ -1,119 +1,104 @@
+import TextButton from "@/components/TextButton";
 import "./style.scss";
+
+import type { EChartsOption } from "echarts";
+import ReactECharts from "echarts-for-react";
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 type ChartSectionProps = {
   labels: string[];
   dataPoints: number[];
 };
 
+const LINE_COLOR = "#4361ee";
+
 const ChartSection = ({ labels, dataPoints }: ChartSectionProps) => {
-  const maxVal = Math.max(...dataPoints, 10);
-  const minVal = 0;
-  const range = maxVal - minVal || 1;
-  const W = 600;
-  const H = 160;
-  const PAD = 24;
-  const plotW = W - PAD * 2;
-  const plotH = H - PAD * 2;
+  const { t } = useTranslation();
 
-  const points = dataPoints
-    .map((val, i) => {
-      const x = PAD + (i / (dataPoints.length - 1 || 1)) * plotW;
-      const y = PAD + ((maxVal - val) / range) * plotH;
-      return `${x},${y}`;
-    })
-    .join(" ");
-
-  const firstX = PAD;
-  const lastX = PAD + plotW;
-  const baseY = PAD + plotH;
-  const fillPoints = `${firstX},${baseY} ${points} ${lastX},${baseY}`;
-
-  const yLabels = [
-    maxVal,
-    Math.round(maxVal * 0.75),
-    Math.round(maxVal * 0.5),
-    Math.round(maxVal * 0.25),
-    0,
-  ];
+  const option: EChartsOption = useMemo(
+    () => ({
+      grid: {
+        left: 30,
+        right: 16,
+        top: 12,
+        bottom: 24,
+      },
+      xAxis: {
+        type: "category",
+        data: labels,
+        axisLine: { show: false },
+        axisTick: { show: false },
+        axisLabel: {
+          fontSize: 11,
+          color: "#94a3b8",
+          fontWeight: 500,
+        },
+      },
+      yAxis: {
+        type: "value",
+        min: 0,
+        splitLine: {
+          lineStyle: { color: "#e2e8f0", width: 1 },
+        },
+        axisLabel: {
+          fontSize: 11,
+          color: "#94a3b8",
+          fontWeight: 500,
+        },
+      },
+      series: [
+        {
+          type: "line",
+          data: dataPoints,
+          smooth: false,
+          symbol: "circle",
+          symbolSize: 8,
+          lineStyle: { color: LINE_COLOR, width: 2.5 },
+          itemStyle: { color: LINE_COLOR },
+          areaStyle: {
+            color: {
+              type: "linear",
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [
+                { offset: 0, color: "rgba(67, 97, 238, 0.25)" },
+                { offset: 1, color: "rgba(67, 97, 238, 0.02)" },
+              ],
+            },
+          },
+        },
+      ],
+      tooltip: {
+        trigger: "axis",
+      },
+    }),
+    [labels, dataPoints]
+  );
 
   return (
     <div className="admin-chart">
       <div className="admin-chart__header">
-        <h2 className="admin-chart__title">User Activity within 7 days</h2>
-        <span className="admin-chart__badge">Last 7 Days</span>
+        <h2 className="admin-chart__title">{t("admin.chart.title")}</h2>
+        <TextButton
+          size="tiny"
+          type="secondary"
+          typeSecondary="navy"
+          text="Last 7 days"
+          onClick={() => {}}
+          leftIcon={false}
+        />
       </div>
 
       <div className="admin-chart__body">
-        <div className="admin-chart__y-labels">
-          {yLabels.map((v, i) => (
-            <span key={i} className="admin-chart__y-label">
-              {v}
-            </span>
-          ))}
-        </div>
-
-        <div className="admin-chart__svg-wrap">
-          <svg
-            viewBox={`0 0 ${W} ${H}`}
-            preserveAspectRatio="none"
-            className="admin-chart__svg"
-            aria-label="User activity line chart"
-          >
-            <defs>
-              <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#4361ee" stopOpacity="0.25" />
-                <stop offset="100%" stopColor="#4361ee" stopOpacity="0.02" />
-              </linearGradient>
-            </defs>
-
-            {[0.25, 0.5, 0.75, 1].map((frac) => (
-              <line
-                key={frac}
-                x1={PAD}
-                y1={PAD + frac * plotH}
-                x2={PAD + plotW}
-                y2={PAD + frac * plotH}
-                stroke="#e2e8f0"
-                strokeWidth="1"
-              />
-            ))}
-
-            <polygon points={fillPoints} fill="url(#chartGradient)" />
-
-            <polyline
-              points={points}
-              fill="none"
-              stroke="#4361ee"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-
-            {dataPoints.map((val, i) => {
-              const x = PAD + (i / (dataPoints.length - 1 || 1)) * plotW;
-              const y = PAD + ((maxVal - val) / range) * plotH;
-              return (
-                <circle
-                  key={i}
-                  cx={x}
-                  cy={y}
-                  r="4"
-                  fill="#fff"
-                  stroke="#4361ee"
-                  strokeWidth="2.5"
-                />
-              );
-            })}
-          </svg>
-
-          <div className="admin-chart__x-labels">
-            {labels.map((d, i) => (
-              <span key={i} className="admin-chart__x-label">
-                {d}
-              </span>
-            ))}
-          </div>
-        </div>
+        <ReactECharts
+          option={option}
+          style={{ width: "100%", height: 200 }}
+          notMerge
+          lazyUpdate
+        />
       </div>
     </div>
   );

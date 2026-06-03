@@ -1,11 +1,14 @@
 import classnames from "classnames";
+import { useState } from "react";
+import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 import "./style.scss";
 import ChatHeader from "../ChatHeader";
 import LessonWelcome from "../LessonWelcome";
 import ChatMessages from "../ChatMessages";
 import QuizPanel from "../QuizPanel";
 import LessonComplete from "../LessonComplete";
-import { mockQuizQuestions } from "@/mock/quiz";
+import { useQuiz } from "@/hooks/useQuiz";
 import type { TTeacherAnimation } from "../TeacherAnimation/type";
 import type { TTeacherStatus } from "../TeacherStatusIndicator/type";
 import type { TChatMessageRef } from "../ChatMessages";
@@ -39,9 +42,13 @@ type TChatAreaProps = {
   handleLessonComplete: () => void;
   setAnimation: (animation: TTeacherAnimation) => void;
   setStatus: (status: TTeacherStatus) => void;
+  courseId?: string;
+  nextLessonId?: string;
 };
 
 const ChatArea = (props: TChatAreaProps) => {
+  const { t } = useTranslation();
+  const [flagged, setFlagged] = useState(false);
   const {
     className,
     state,
@@ -62,12 +69,15 @@ const ChatArea = (props: TChatAreaProps) => {
     handleLessonComplete,
     setAnimation,
     setStatus,
+    courseId,
+    nextLessonId,
   } = props;
 
+  const { data: quizQuestions } = useQuiz(lessonId);
   const showChatArea = state !== "initial" && state !== "complete";
 
   return (
-    <div className={classnames("chat-area", className)}>
+    <div className={classnames("chat-area", className)} data-lenis-prevent>
       {showChatArea && (
         <ChatHeader
           initialValue={lessonName}
@@ -75,6 +85,13 @@ const ChatArea = (props: TChatAreaProps) => {
           onSkipLesson={onSkipLesson}
           onSkipQA={onSkipQA}
           onSkipQuiz={onSkipQuiz}
+          onFlag={() => {
+            if (!flagged) {
+              setFlagged(true);
+              toast.success(t("chat_header.flagged"));
+            }
+          }}
+          flagged={flagged}
         />
       )}
 
@@ -115,11 +132,13 @@ const ChatArea = (props: TChatAreaProps) => {
         />
       )}
 
-      {state === "quiz" && (
-        <QuizPanel questions={mockQuizQuestions} onComplete={onSkipQuiz} />
+      {state === "quiz" && quizQuestions && (
+        <QuizPanel questions={quizQuestions} onComplete={onSkipQuiz} />
       )}
 
-      {state === "complete" && <LessonComplete />}
+      {state === "complete" && (
+        <LessonComplete courseId={courseId} nextLessonId={nextLessonId} />
+      )}
     </div>
   );
 };

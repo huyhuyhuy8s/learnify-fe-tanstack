@@ -171,7 +171,15 @@ const ChatMessages = forwardRef<TChatMessageRef, TChatMessagesProps>(
     }, [mode, playbackStop, chat.stop, stopRef]);
 
     useEffect(() => {
-      scrollToBottom();
+      const lastMsg = displayMessages[displayMessages.length - 1];
+      if (lastMsg) {
+        const el = document.getElementById(`msg-${lastMsg.id}`);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+        } else {
+          scrollToBottom();
+        }
+      }
     }, [displayMessages, scrollToBottom]);
 
     const handleSendMessage = useCallback(

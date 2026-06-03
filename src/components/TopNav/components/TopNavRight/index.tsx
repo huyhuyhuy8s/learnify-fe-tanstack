@@ -1,6 +1,6 @@
 import AccountMenu from "@/components/AccountMenu";
 import IconButton from "@/components/IconButton";
-import Icon from "@/components/Icon";
+import NotificationPopup from "@/components/NotificationPopup";
 import classNames from "classnames";
 import { useMemo, useState, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
@@ -16,7 +16,9 @@ import "./style.scss";
 const TopNavRight = () => {
   const { t } = useTranslation();
   const [accountMenuVisible, setAccountMenuVisible] = useState(false);
+  const [notificationVisible, setNotificationVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const notifyRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   const { isAuthenticated, user, onLogout } = useAuthStore(
@@ -29,6 +31,10 @@ const TopNavRight = () => {
 
   useOnClickOutside(containerRef, () => {
     if (accountMenuVisible) setAccountMenuVisible(false);
+  });
+
+  useOnClickOutside(notifyRef, () => {
+    if (notificationVisible) setNotificationVisible(false);
   });
 
   const handleLogout = useCallback(async () => {
@@ -67,14 +73,29 @@ const TopNavRight = () => {
 
     return (
       <>
-        <div className="crystal">
-          <Icon name="diamond" />
-          <p>{user.diamond || 0}</p>
+        <div ref={notifyRef}>
+          <NotificationPopup
+            className={classNames({ invisible: !notificationVisible })}
+          />
         </div>
-        <div className="streak">
-          <Icon name="mode_heat" />
-          <p>{user.currentSteak || 0}</p>
-        </div>
+        <TextButton
+          icon="diamond"
+          text={String(user.diamond ?? 0)}
+          tooltip={t("pill_top_nav.diamond_tooltip")}
+          onClick={() => navigate({ to: "/learner/shop" })}
+          size="small"
+          type="secondary"
+          typeSecondary="pastelNavy"
+        />
+        <TextButton
+          icon="mode_heat"
+          text={String(user.currentSteak ?? 0)}
+          tooltip={t("pill_top_nav.streak_tooltip")}
+          onClick={() => navigate({ to: "/learner/streak" })}
+          size="small"
+          type="secondary"
+          typeSecondary="pastelOrange"
+        />
         <IconButton
           icon="notifications_active"
           specialIcon="notifications"
@@ -82,7 +103,7 @@ const TopNavRight = () => {
           size="tiny"
           shape="circle"
           ariaLabel="Notifications"
-          onClick={() => {}}
+          onClick={() => setNotificationVisible(!notificationVisible)}
         />
         <IconButton
           icon="person"

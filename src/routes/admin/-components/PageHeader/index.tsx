@@ -1,4 +1,5 @@
-import Icon from "@/components/Icon";
+import { useTranslation } from "react-i18next";
+import TextButton from "@/components/TextButton";
 import "./style.scss";
 
 type TPageHeaderProps = {
@@ -8,6 +9,8 @@ type TPageHeaderProps = {
 };
 
 const PageHeader = ({ title, count, onAddUser }: TPageHeaderProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="admin-page-header">
       <div className="admin-page-header__text">
@@ -19,16 +22,13 @@ const PageHeader = ({ title, count, onAddUser }: TPageHeaderProps) => {
         )}
       </div>
 
-      <button
-        id="page-header-add-user-btn"
-        type="button"
-        className="admin-page-header__add-btn"
-        aria-label="Add a new user"
+      <TextButton
+        icon="person_add"
+        text={t("admin.page_header.add_user")}
+        tooltip={t("admin.page_header.add_user_tooltip")}
         onClick={onAddUser}
-      >
-        <Icon name="person_add" size={18} />
-        <span>Add User</span>
-      </button>
+        size="medium"
+      />
     </div>
   );
 };

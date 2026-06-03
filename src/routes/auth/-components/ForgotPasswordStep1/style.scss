@@ -14,7 +14,8 @@
     padding: 50px;
     background-color: $white;
     border-radius: $br-xl;
-    width: 500px;
+    max-width: toRem(500);
+    width: 100%;
   }
 
   &__content {
@@ -94,5 +95,11 @@
     text-align: center;
     font-size: 16px;
     color: $neutral-500;
+  }
+
+  @include break(xs) {
+    &__container {
+      padding: 30px 20px;
+    }
   }
 }

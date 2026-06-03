@@ -7,7 +7,7 @@ import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import LazySilkBackground from "../LazySilkBackground";
+import LazySilkBackground from "../index.lazy";
 
 interface HeroSectionProps {
   onLearnerClick: () => void;
@@ -60,11 +60,9 @@ export default function HeroSection({
       />
       <div className="landing-hero__content">
         <h1 className="landing-hero__headline">
-          {t("landing.hero.headline_line1")}
-          <br />
+          <span>{t("landing.hero.headline_line1")}</span>
           <span className="beauty">{t("landing.hero.headline_line2")}</span>
-          <br />
-          {t("landing.hero.headline_line3")}
+          <span>{t("landing.hero.headline_line3")}</span>
         </h1>
         <p className="landing-hero__subtitle regular">
           {t("landing.hero.subtitle")}
@@ -77,7 +75,7 @@ export default function HeroSection({
             onClick={onLearnerClick}
           />
           <TextButton
-            text={t("landing.hero.teacher_cta")}
+            text={t("landing.hero.instructor_cta")}
             size="large"
             type="outlined"
             icon="local_library"

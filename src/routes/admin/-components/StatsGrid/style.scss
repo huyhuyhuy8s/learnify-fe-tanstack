@@ -27,7 +27,6 @@
     position: relative;
     overflow: hidden;
     @include transition;
-    transition-property: transform, box-shadow;
 
     &:hover {
       transform: translateY(toRem(-2));
@@ -48,8 +47,13 @@
     &--blue {
       .admin-stats-grid__icon-wrap {
         background-color: $navy-pastel-100;
-        color: $navy-600;
+        color: $black;
+
+        [data-theme="dark"] & {
+          color: $white;
+        }
       }
+
       &::after {
         background-color: $navy-600;
       }
@@ -58,8 +62,13 @@
     &--green {
       .admin-stats-grid__icon-wrap {
         background-color: $green-pastel-200;
-        color: $green-700;
+        color: $black;
+
+        [data-theme="dark"] & {
+          color: $white;
+        }
       }
+
       &::after {
         background-color: $green-600;
       }
@@ -68,8 +77,13 @@
     &--orange {
       .admin-stats-grid__icon-wrap {
         background-color: $orange-pastel-100;
-        color: $orange-700;
+        color: $black;
+
+        [data-theme="dark"] & {
+          color: $white;
+        }
       }
+
       &::after {
         background-color: $orange-600;
       }
@@ -78,8 +92,13 @@
     &--red {
       .admin-stats-grid__icon-wrap {
         background-color: $salmon-pastel-100;
-        color: $salmon-700;
+        color: $black;
+
+        [data-theme="dark"] & {
+          color: $white;
+        }
       }
+
       &::after {
         background-color: $salmon-600;
       }
@@ -127,11 +146,11 @@
     margin: 0;
 
     &--up {
-      color: $green-700;
+      color: $accent-emerald;
     }
 
     &--down {
-      color: $salmon-700;
+      color: $accent-blaze;
     }
   }
 }

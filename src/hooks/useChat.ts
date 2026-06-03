@@ -100,9 +100,18 @@ const useChat = (props: TUseChatProps): TUseChatReturn => {
             : null) || "Sorry, I couldn't process your question right now.";
 
         const speakText = paragraphs ? paragraphs.join(" ") : answer;
-        let speakPromise: Promise<unknown> | null = null;
+
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === thinkingId ? { ...msg, content: "" } : msg
+          )
+        );
 
         onAnimationChange(randomFrom(TALKING_ANIMATIONS));
+
+        let speakPromise: Promise<unknown> | null = null;
+
+        let progressInterval: ReturnType<typeof setInterval> | null = null;
 
         if (!isMutedRef.current) {
           onStatusChange("speaking");
@@ -113,13 +122,32 @@ const useChat = (props: TUseChatProps): TUseChatReturn => {
           );
         }
 
+        let charIdx = 0;
+        const charIntervalMs = Math.max(15, Math.min(60, 1000 / 25));
+
+        progressInterval = setInterval(() => {
+          charIdx++;
+          if (charIdx >= speakText.length) {
+            if (progressInterval) clearInterval(progressInterval);
+            return;
+          }
+          setMessages((prev) =>
+            prev.map((msg) =>
+              msg.id === thinkingId
+                ? { ...msg, content: speakText.slice(0, charIdx) }
+                : msg
+            )
+          );
+        }, charIntervalMs);
+
+        await speakPromise;
+        if (progressInterval) clearInterval(progressInterval);
+
         setMessages((prev) =>
           prev.map((msg) =>
             msg.id === thinkingId ? { ...msg, content: answer } : msg
           )
         );
-
-        await speakPromise;
 
         onStatusChange("idle");
         onAnimationChange("Idle");

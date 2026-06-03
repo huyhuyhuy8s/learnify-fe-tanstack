@@ -36,6 +36,8 @@ import chevron_rightSvg from "@material-symbols/svg-400/rounded/chevron_right.sv
 import chevron_rightFillSvg from "@material-symbols/svg-400/rounded/chevron_right-fill.svg?raw";
 import closeSvg from "@material-symbols/svg-400/rounded/close.svg?raw";
 import closeFillSvg from "@material-symbols/svg-400/rounded/close-fill.svg?raw";
+import downloadSvg from "@material-symbols/svg-400/rounded/download.svg?raw";
+import downloadFillSvg from "@material-symbols/svg-400/rounded/download-fill.svg?raw";
 import codeSvg from "@material-symbols/svg-400/rounded/code.svg?raw";
 import codeFillSvg from "@material-symbols/svg-400/rounded/code-fill.svg?raw";
 import conversion_pathSvg from "@material-symbols/svg-400/rounded/conversion_path.svg?raw";
@@ -156,8 +158,14 @@ import volume_offSvg from "@material-symbols/svg-400/rounded/volume_off.svg?raw"
 import volume_offFillSvg from "@material-symbols/svg-400/rounded/volume_off-fill.svg?raw";
 import volume_upSvg from "@material-symbols/svg-400/rounded/volume_up.svg?raw";
 import volume_upFillSvg from "@material-symbols/svg-400/rounded/volume_up-fill.svg?raw";
+import zoom_inSvg from "@material-symbols/svg-400/rounded/zoom_in.svg?raw";
+import zoom_inFillSvg from "@material-symbols/svg-400/rounded/zoom_in-fill.svg?raw";
+import zoom_outSvg from "@material-symbols/svg-400/rounded/zoom_out.svg?raw";
+import zoom_outFillSvg from "@material-symbols/svg-400/rounded/zoom_out-fill.svg?raw";
 import cancelSvg from "@material-symbols/svg-400/rounded/cancel.svg?raw";
 import cancelFillSvg from "@material-symbols/svg-400/rounded/cancel-fill.svg?raw";
+import deleteSvg from "@material-symbols/svg-400/rounded/delete.svg?raw";
+import deleteFillSvg from "@material-symbols/svg-400/rounded/delete-fill.svg?raw";
 import voice_over_offSvg from "@material-symbols/svg-400/rounded/voice_over_off.svg?raw";
 import voice_over_offFillSvg from "@material-symbols/svg-400/rounded/voice_over_off-fill.svg?raw";
 import cognitionSvg from "@material-symbols/svg-400/rounded/cognition.svg?raw";
@@ -175,19 +183,49 @@ import headset_micSvg from "@material-symbols/svg-400/rounded/headset_mic.svg?ra
 import headset_micFillSvg from "@material-symbols/svg-400/rounded/headset_mic-fill.svg?raw";
 import handshakeSvg from "@material-symbols/svg-400/rounded/handshake.svg?raw";
 import handshakeFillSvg from "@material-symbols/svg-400/rounded/handshake-fill.svg?raw";
+import dashboardSvg from "@material-symbols/svg-400/rounded/dashboard.svg?raw";
+import dashboardFillSvg from "@material-symbols/svg-400/rounded/dashboard-fill.svg?raw";
+import editSvg from "@material-symbols/svg-400/rounded/edit.svg?raw";
+import editFillSvg from "@material-symbols/svg-400/rounded/edit-fill.svg?raw";
+import person_offSvg from "@material-symbols/svg-400/rounded/person_off.svg?raw";
+import person_offFillSvg from "@material-symbols/svg-400/rounded/person_off-fill.svg?raw";
+import paymentsSvg from "@material-symbols/svg-400/rounded/payments.svg?raw";
+import paymentsFillSvg from "@material-symbols/svg-400/rounded/payments-fill.svg?raw";
+import bug_reportSvg from "@material-symbols/svg-400/rounded/bug_report.svg?raw";
+import bug_reportFillSvg from "@material-symbols/svg-400/rounded/bug_report-fill.svg?raw";
+import trending_upSvg from "@material-symbols/svg-400/rounded/trending_up.svg?raw";
+import trending_upFillSvg from "@material-symbols/svg-400/rounded/trending_up-fill.svg?raw";
+import trending_downSvg from "@material-symbols/svg-400/rounded/trending_down.svg?raw";
+import trending_downFillSvg from "@material-symbols/svg-400/rounded/trending_down-fill.svg?raw";
+import progress_activitySvg from "@material-symbols/svg-400/rounded/progress_activity.svg?raw";
+import progress_activityFillSvg from "@material-symbols/svg-400/rounded/progress_activity-fill.svg?raw";
 import location_onSvg from "@material-symbols/svg-400/rounded/location_on.svg?raw";
 import location_onFillSvg from "@material-symbols/svg-400/rounded/location_on-fill.svg?raw";
 import account_circleSvg from "@material-symbols/svg-400/rounded/account_circle.svg?raw";
 import account_circleFillSvg from "@material-symbols/svg-400/rounded/account_circle-fill.svg?raw";
 import lightbulbSvg from "@material-symbols/svg-400/rounded/lightbulb.svg?raw";
 import lightbulbFillSvg from "@material-symbols/svg-400/rounded/lightbulb-fill.svg?raw";
+import visibilitySvg from "@material-symbols/svg-400/rounded/visibility.svg?raw";
+import visibilityFillSvg from "@material-symbols/svg-400/rounded/visibility-fill.svg?raw";
+import visibility_offSvg from "@material-symbols/svg-400/rounded/visibility_off.svg?raw";
+import visibility_offFillSvg from "@material-symbols/svg-400/rounded/visibility_off-fill.svg?raw";
+import calendar_todaySvg from "@material-symbols/svg-400/rounded/calendar_today.svg?raw";
+import calendar_todayFillSvg from "@material-symbols/svg-400/rounded/calendar_today-fill.svg?raw";
+import action_keySvg from "@material-symbols/svg-400/rounded/action_key.svg?raw";
+import action_keyFillSvg from "@material-symbols/svg-400/rounded/action_key-fill.svg?raw";
+import saveSvg from "@material-symbols/svg-400/rounded/save.svg?raw";
+import saveFillSvg from "@material-symbols/svg-400/rounded/save-fill.svg?raw";
+import filter_listSvg from "@material-symbols/svg-400/rounded/filter_list.svg?raw";
+import filter_listFillSvg from "@material-symbols/svg-400/rounded/filter_list-fill.svg?raw";
+import scheduleSvg from "@material-symbols/svg-400/rounded/schedule.svg?raw";
+import scheduleFillSvg from "@material-symbols/svg-400/rounded/schedule-fill.svg?raw";
 
 function extractPath(raw: string) {
   const match = raw.match(/<path d="([^"]+)"/);
   return match?.[1] ?? "";
 }
 
-export const iconPaths: Record<string, { regular: string; fill: string }> = {
+export const iconPaths = {
   account_tree: {
     regular: extractPath(account_treeSvg),
     fill: extractPath(account_treeFillSvg),
@@ -361,6 +399,10 @@ export const iconPaths: Record<string, { regular: string; fill: string }> = {
     regular: extractPath(psychologySvg),
     fill: extractPath(psychologyFillSvg),
   },
+  progress_activity: {
+    regular: extractPath(progress_activitySvg),
+    fill: extractPath(progress_activityFillSvg),
+  },
   public: { regular: extractPath(publicSvg), fill: extractPath(publicFillSvg) },
   quick_reference: {
     regular: extractPath(quick_referenceSvg),
@@ -418,6 +460,19 @@ export const iconPaths: Record<string, { regular: string; fill: string }> = {
     fill: extractPath(volume_upFillSvg),
   },
   cancel: { regular: extractPath(cancelSvg), fill: extractPath(cancelFillSvg) },
+  delete: { regular: extractPath(deleteSvg), fill: extractPath(deleteFillSvg) },
+  download: {
+    regular: extractPath(downloadSvg),
+    fill: extractPath(downloadFillSvg),
+  },
+  zoom_in: {
+    regular: extractPath(zoom_inSvg),
+    fill: extractPath(zoom_inFillSvg),
+  },
+  zoom_out: {
+    regular: extractPath(zoom_outSvg),
+    fill: extractPath(zoom_outFillSvg),
+  },
   voice_over_off: {
     regular: extractPath(voice_over_offSvg),
     fill: extractPath(voice_over_offFillSvg),
@@ -447,6 +502,34 @@ export const iconPaths: Record<string, { regular: string; fill: string }> = {
     regular: extractPath(handshakeSvg),
     fill: extractPath(handshakeFillSvg),
   },
+  dashboard: {
+    regular: extractPath(dashboardSvg),
+    fill: extractPath(dashboardFillSvg),
+  },
+  edit: {
+    regular: extractPath(editSvg),
+    fill: extractPath(editFillSvg),
+  },
+  person_off: {
+    regular: extractPath(person_offSvg),
+    fill: extractPath(person_offFillSvg),
+  },
+  payments: {
+    regular: extractPath(paymentsSvg),
+    fill: extractPath(paymentsFillSvg),
+  },
+  bug_report: {
+    regular: extractPath(bug_reportSvg),
+    fill: extractPath(bug_reportFillSvg),
+  },
+  trending_up: {
+    regular: extractPath(trending_upSvg),
+    fill: extractPath(trending_upFillSvg),
+  },
+  trending_down: {
+    regular: extractPath(trending_downSvg),
+    fill: extractPath(trending_downFillSvg),
+  },
   location_on: {
     regular: extractPath(location_onSvg),
     fill: extractPath(location_onFillSvg),
@@ -459,4 +542,34 @@ export const iconPaths: Record<string, { regular: string; fill: string }> = {
     regular: extractPath(lightbulbSvg),
     fill: extractPath(lightbulbFillSvg),
   },
-} as const;
+  visibility: {
+    regular: extractPath(visibilitySvg),
+    fill: extractPath(visibilityFillSvg),
+  },
+  visibility_off: {
+    regular: extractPath(visibility_offSvg),
+    fill: extractPath(visibility_offFillSvg),
+  },
+  calendar_today: {
+    regular: extractPath(calendar_todaySvg),
+    fill: extractPath(calendar_todayFillSvg),
+  },
+  action_key: {
+    regular: extractPath(action_keySvg),
+    fill: extractPath(action_keyFillSvg),
+  },
+  save: {
+    regular: extractPath(saveSvg),
+    fill: extractPath(saveFillSvg),
+  },
+  filter_list: {
+    regular: extractPath(filter_listSvg),
+    fill: extractPath(filter_listFillSvg),
+  },
+  schedule: {
+    regular: extractPath(scheduleSvg),
+    fill: extractPath(scheduleFillSvg),
+  },
+};
+
+export type TIconName = keyof typeof iconPaths;

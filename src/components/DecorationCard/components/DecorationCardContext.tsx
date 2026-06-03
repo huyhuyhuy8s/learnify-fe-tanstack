@@ -1,5 +1,5 @@
 import type { TSpecial } from "@/types/global";
-import "./style.scss";
+import "../style.scss";
 import { COLORS } from "@/styles/colors";
 
 type TDecorationCardContextProps = {

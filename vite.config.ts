@@ -1,9 +1,30 @@
 // vite.config.ts
-import { defineConfig } from "vite";
+import { defineConfig, type PluginOption } from "vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact, { reactCompilerPreset } from "@vitejs/plugin-react";
 import { fileURLToPath } from "node:url";
 import babelPlugin from "@rolldown/plugin-babel";
+import { visualizer } from "rollup-plugin-visualizer";
+
+const plugins: PluginOption[] = [
+  tanstackStart(),
+  // react's vite plugin must come after start's vite plugin
+  viteReact(),
+  babelPlugin({
+    presets: [reactCompilerPreset()],
+  }),
+];
+
+if (process.env.ANALYZE) {
+  plugins.push(
+    visualizer({
+      open: true,
+      gzipSize: true,
+      brotliSize: true,
+      filename: "stats.html",
+    })
+  );
+}
 
 export default defineConfig({
   server: {
@@ -15,14 +36,7 @@ export default defineConfig({
       "@styles": fileURLToPath(new URL("./src/styles", import.meta.url)),
     },
   },
-  plugins: [
-    tanstackStart(),
-    // react's vite plugin must come after start's vite plugin
-    viteReact(),
-    babelPlugin({
-      presets: [reactCompilerPreset()],
-    }),
-  ],
+  plugins,
   build: {
     rollupOptions: {
       output: {
@@ -39,6 +53,12 @@ export default defineConfig({
           )
             return "vendor-util";
           if (id.includes("node_modules/@tanstack")) return "vendor-tanstack";
+          if (
+            id.includes("node_modules/three") ||
+            id.includes("node_modules/@react-three") ||
+            id.includes("node_modules/postprocessing")
+          )
+            return "vendor-three";
         },
       },
     },
@@ -50,5 +70,8 @@ export default defineConfig({
         silenceDeprecations: ["import", "global-builtin"],
       },
     },
+  },
+  define: {
+    __MODEL_CDN_URL__: JSON.stringify(process.env.VITE_MODEL_CDN_URL || ""),
   },
 });

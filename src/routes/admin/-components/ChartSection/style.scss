@@ -8,6 +8,7 @@
   border-radius: $br-lg;
   padding: toRem(24) toRem(28);
   @include box-shadow(0, 2, 16, 0);
+  @include transition;
   display: flex;
   flex-direction: column;
   gap: toRem(20);
@@ -36,52 +37,6 @@
   }
 
   &__body {
-    display: flex;
-    align-items: stretch;
-    gap: toRem(8);
-  }
-
-  &__y-labels {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: toRem(4) 0;
-    flex-shrink: 0;
-  }
-
-  &__y-label {
-    font-size: $fs-smaller;
-    color: $neutral-400;
-    font-weight: $fw-medium;
-    text-align: right;
-    min-width: toRem(28);
-  }
-
-  &__svg-wrap {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: toRem(6);
-    min-width: 0;
-  }
-
-  &__svg {
-    width: 100%;
-    height: toRem(180);
-    display: block;
-  }
-
-  &__x-labels {
-    display: flex;
-    justify-content: space-between;
-    padding: toRem(0) toRem(4);
-  }
-
-  &__x-label {
-    font-size: $fs-smaller;
-    color: $neutral-400;
-    font-weight: $fw-medium;
-    text-align: center;
-    flex: 1;
+    min-height: 0;
   }
 }

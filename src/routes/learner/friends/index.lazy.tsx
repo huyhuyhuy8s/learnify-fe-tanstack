@@ -1,243 +1,107 @@
-import TetrisLoader from "@/components/TetrisLoader";
-import { DEFAULT_AVATAR } from "@/constants/avatar";
-import {
-  useGetLeaderboard,
-  useGetMyFriends,
-  useGetPendingRequests,
-  useRespondFriendRequest,
-  useSendFriendRequest,
-} from "@/hooks/useFriends";
-import type { TBackendUser } from "@/hooks/useProfile";
+import SplitPanel from "@/components/SplitPanel";
 import { createLazyFileRoute } from "@tanstack/react-router";
-import classNames from "classnames";
-import { Suspense, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { Suspense } from "react";
 import FriendDetail from "./-components/FriendDetail";
-import type { TFriendDetail } from "./-components/FriendDetail/type";
 import FriendEmptyState from "./-components/FriendEmptyState";
 import FriendItem from "./-components/FriendItem";
-import type {
-  TFriendItem,
-  TTypeFriendItem,
-} from "./-components/FriendItem/type";
+import FriendItemSkeleton from "./-components/FriendItemSkeleton";
+import { useFriendsPage } from "./-hooks/useFriendsPage";
+import "./friends.scss";
 
 export const Route = createLazyFileRoute("/learner/friends/")({
   component: FriendsPage,
 });
 
-type TDisplayFriend = Omit<TFriendItem, "id" | "onClick"> & {
-  id: string;
-  rawUser?: TBackendUser;
-  onClick?: () => void;
-};
-
 function FriendsPage() {
-  const { t } = useTranslation();
-  const [typeFriend, setTypeFriend] = useState<TTypeFriendItem>("leaderboard");
-  const [selectedIndex, setSelectedIndex] = useState<string | null>(null);
-
   const { user: currentUser } = Route.useRouteContext();
 
-  const { data: friendsData, isLoading: isLoadingFriends } = useGetMyFriends();
-  const { data: pendingData, isLoading: isLoadingPending } =
-    useGetPendingRequests();
-  const { data: leaderboardData, isLoading: isLoadingLeaderboard } =
-    useGetLeaderboard();
-
-  const respondMutation = useRespondFriendRequest();
-  const sendRequestMutation = useSendFriendRequest();
-
-  const tabs: { value: TTypeFriendItem; label: string; icon?: string }[] = [
-    { value: "leaderboard", label: t("friends.tabs.leaderboard") },
-    { value: "friends", label: t("friends.tabs.friends") },
-    { value: "request", label: t("friends.tabs.requests") },
-  ];
-
-  const displayList: TDisplayFriend[] = useMemo(() => {
-    if (typeFriend === "leaderboard" && leaderboardData?.isSuccess) {
-      return leaderboardData.users.map((user) => ({
-        id: user.id,
-        name: user.username,
-        imgUrl: DEFAULT_AVATAR,
-        typeFriendItem: "leaderboard" as TTypeFriendItem,
-        streaks: user.currentSteak || 0,
-        rawUser: user,
-      }));
-    }
-
-    if (typeFriend === "friends" && friendsData?.isSuccess) {
-      return friendsData.users.map((user) => ({
-        id: user.id,
-        name: user.username,
-        imgUrl: DEFAULT_AVATAR,
-        typeFriendItem: "friends" as TTypeFriendItem,
-        streaks: user.currentSteak || 0,
-        rawUser: user,
-      }));
-    }
-
-    if (typeFriend === "request" && pendingData?.isSuccess) {
-      return pendingData.users.map((user) => ({
-        id: user.id,
-        name: user.username,
-        imgUrl: DEFAULT_AVATAR,
-        typeFriendItem: "request" as TTypeFriendItem,
-        streaks: user.currentSteak || 0,
-        rawUser: user,
-      }));
-    }
-    return [];
-  }, [typeFriend, friendsData, pendingData, leaderboardData]);
-
-  const selectedFriend =
-    selectedIndex !== null
-      ? displayList.find((friend) => friend.id === selectedIndex)
-      : null;
-
-  let friendDetailData: TFriendDetail | null = null;
-  if (selectedFriend && selectedFriend.rawUser) {
-    const user = selectedFriend.rawUser;
-    friendDetailData = {
-      id: user.id,
-      name: user.username,
-      email: user.email,
-      imgUrl: DEFAULT_AVATAR,
-      imgBackground: undefined,
-      phoneNumber: user.phoneNumber,
-      streak: user.currentSteak || 0,
-      badges: 0,
-      follower: 0,
-      course: 0,
-    };
-  }
-
-  let shouldShowAddFriendBtn = false;
-  if (typeFriend === "leaderboard" && selectedFriend) {
-    const isSelf = currentUser?.id === selectedFriend.id;
-
-    const isAlreadyFriend = friendsData?.users?.some(
-      (u) => u.id === selectedFriend.id
-    );
-
-    const isPending = pendingData?.users?.some(
-      (u) => u.id === selectedFriend.id
-    );
-    shouldShowAddFriendBtn = !isSelf && !isAlreadyFriend && !isPending;
-  }
-
-  const handleRespondRequest = (requesterId: string, isAccepted: boolean) => {
-    respondMutation.mutate(
-      { requesterId, isAccepted },
-      {
-        onSuccess: (res) => {
-          if (res.respondFriendRequest.isSuccess) {
-            alert(
-              isAccepted
-                ? t("friends.alerts.accepted")
-                : t("friends.alerts.declined")
-            );
-            if (selectedIndex === requesterId) setSelectedIndex(null);
-          } else {
-            alert(res.respondFriendRequest.message);
-          }
-        },
-      }
-    );
-  };
-
-  const handleSendRequest = (targetUserId: string) => {
-    sendRequestMutation.mutate(
-      { targetUserId },
-      {
-        onSuccess: (res) => {
-          if (res.sendFriendRequest.isSuccess) {
-            alert(t("friends.alerts.sent"));
-          } else {
-            alert(res.sendFriendRequest.message);
-          }
-        },
-      }
-    );
-  };
-
-  const isLoading =
-    (typeFriend === "friends" && isLoadingFriends) ||
-    (typeFriend === "request" && isLoadingPending) ||
-    (typeFriend === "leaderboard" && isLoadingLeaderboard);
+  const {
+    t,
+    typeFriend,
+    setTypeFriend,
+    selectedId,
+    setSelectedId,
+    displayList,
+    friendDetailData,
+    shouldShowAddFriendBtn,
+    isLoading,
+    isSendingRequest,
+    handleRespondRequest,
+    handleSendRequest,
+    tabs,
+  } = useFriendsPage(currentUser?.id);
 
   if (!currentUser) {
     return <FriendEmptyState />;
   }
 
   return (
-    <Suspense fallback={<TetrisLoader />}>
+    <Suspense
+      fallback={
+        <div className="friend-page">
+          <FriendItemSkeleton />
+          <FriendItemSkeleton />
+          <FriendItemSkeleton />
+        </div>
+      }
+    >
       <div className="friend-page">
-        <div className="friend-page__header">
-          {tabs.map((tab) => (
-            <button
-              key={tab.value}
-              onClick={() => {
-                setTypeFriend(tab.value);
-                setSelectedIndex(null);
-              }}
-              className={classNames("friend-page__header-tab", {
-                "friend-page__header-tab--active": typeFriend === tab.value,
-              })}
-            >
-              <p className="regular">{tab.label}</p>
-            </button>
-          ))}
-        </div>
+        <SplitPanel>
+          <SplitPanel.Tabs>
+            {tabs.map((tab) => (
+              <SplitPanel.Tab
+                key={tab.value}
+                active={typeFriend === tab.value}
+                onClick={() => {
+                  setTypeFriend(tab.value as typeof typeFriend);
+                  setSelectedId(null);
+                }}
+              >
+                {tab.label}
+              </SplitPanel.Tab>
+            ))}
+          </SplitPanel.Tabs>
 
-        <div className="friend-page__body">
-          <div className="friend-page__body-left">
-            {isLoading ? (
-              <TetrisLoader size="md" speed="fast" />
-            ) : displayList.length > 0 ? (
-              displayList.map((friend, idx) => (
-                <FriendItem
-                  id={friend.id}
-                  key={friend.id}
-                  name={friend.name}
-                  imgUrl={friend.imgUrl}
-                  typeFriendItem={friend.typeFriendItem}
-                  streaks={friend.streaks}
-                  index={idx + 1}
-                  isActive={selectedIndex === friend.id}
-                  onClick={() => setSelectedIndex(friend.id)}
-                  onAccept={() =>
-                    handleRespondRequest(friend.id.toString(), true)
-                  }
-                  onDecline={() =>
-                    handleRespondRequest(friend.id.toString(), false)
-                  }
+          <SplitPanel.Content>
+            <SplitPanel.List className="friend-page__body-left">
+              {isLoading ? (
+                <FriendItemSkeleton />
+              ) : (
+                displayList.map((friend, idx) => (
+                  <FriendItem
+                    key={friend.id}
+                    index={idx + 1}
+                    id={friend.id}
+                    name={friend.name}
+                    imgUrl={friend.imgUrl}
+                    typeFriendItem={friend.typeFriendItem}
+                    streaks={friend.streaks}
+                    isActive={selectedId === friend.id}
+                    onClick={() => setSelectedId(friend.id)}
+                    onAccept={() => handleRespondRequest(friend.id, true)}
+                    onDecline={() => handleRespondRequest(friend.id, false)}
+                  />
+                ))
+              )}
+            </SplitPanel.List>
+
+            <SplitPanel.Detail className="friend-page__body-right">
+              {friendDetailData ? (
+                <FriendDetail
+                  {...friendDetailData}
+                  showAddFriendBtn={shouldShowAddFriendBtn}
+                  isSendingRequest={isSendingRequest}
+                  onSendFriendRequest={() => handleSendRequest(selectedId!)}
                 />
-              ))
-            ) : (
-              <p className="friend-page__body-left-empty">
-                {t("friends.no_items")}
-              </p>
-            )}
-          </div>
-
-          <div className="friend-page__body-right">
-            {friendDetailData && selectedFriend ? (
-              <FriendDetail
-                {...friendDetailData}
-                showAddFriendBtn={shouldShowAddFriendBtn}
-                isSendingRequest={sendRequestMutation.isPending}
-                onSendFriendRequest={() =>
-                  handleSendRequest(selectedFriend.id.toString())
-                }
-              />
-            ) : (
-              <div className="friend-page__placeholder-profile">
-                <h5>{t("friends.placeholder_heading")}</h5>
-                <p>{t("friends.placeholder_text")}</p>
-              </div>
-            )}
-          </div>
-        </div>
+              ) : (
+                <div className="friend-page__placeholder-profile">
+                  <h5>{t("friends.placeholder_heading")}</h5>
+                  <p>{t("friends.placeholder_text")}</p>
+                </div>
+              )}
+            </SplitPanel.Detail>
+          </SplitPanel.Content>
+        </SplitPanel>
       </div>
     </Suspense>
   );

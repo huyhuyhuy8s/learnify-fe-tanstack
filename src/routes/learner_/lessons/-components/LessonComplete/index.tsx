@@ -3,7 +3,12 @@ import { useTranslation } from "react-i18next";
 import Icon from "@/components/Icon";
 import "./style.scss";
 
-const LessonComplete = () => {
+type TLessonCompleteProps = {
+  courseId?: string;
+  nextLessonId?: string;
+};
+
+const LessonComplete = ({ courseId, nextLessonId }: TLessonCompleteProps) => {
   const { t } = useTranslation();
   return (
     <div className="lesson-complete">
@@ -12,9 +17,32 @@ const LessonComplete = () => {
       <p className="lesson-complete__text">
         {t("lesson_complete.description")}
       </p>
-      <Link to="/learner/dashboard" className="lesson-complete__back">
-        {t("lesson_complete.back_to_dashboard")}
-      </Link>
+      <div className="lesson-complete__actions">
+        {courseId ? (
+          <Link
+            to="/learner/courses/$courseId"
+            params={{ courseId }}
+            className="lesson-complete__back"
+          >
+            <Icon name="arrow_back" className="lesson-complete__back-icon" />
+            {t("lesson_complete.back_to_course")}
+          </Link>
+        ) : (
+          <Link to="/learner/dashboard" className="lesson-complete__back">
+            {t("lesson_complete.back_to_dashboard")}
+          </Link>
+        )}
+        {nextLessonId ? (
+          <Link
+            to="/learner/lessons/$lessonId"
+            params={{ lessonId: nextLessonId }}
+            className="lesson-complete__next"
+          >
+            <Icon name="arrow_forward" className="lesson-complete__next-icon" />
+            {t("lesson_complete.next_lesson")}
+          </Link>
+        ) : null}
+      </div>
     </div>
   );
 };

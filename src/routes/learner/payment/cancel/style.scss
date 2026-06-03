@@ -29,9 +29,8 @@
     justify-content: center;
     align-items: center;
     margin-bottom: toRem(24);
-    color: #ef4444;
+    color: $orange-600;
 
-    i,
     svg {
       font-size: toRem(72);
     }
@@ -91,8 +90,8 @@
       color: $neutral-800;
 
       &--badge {
-        background-color: #fee2e2;
-        color: #b91c1c;
+        background-color: $orange-100;
+        color: $orange-700;
         padding: toRem(4) toRem(12);
         border-radius: toRem(999);
         font-size: toRem(14);

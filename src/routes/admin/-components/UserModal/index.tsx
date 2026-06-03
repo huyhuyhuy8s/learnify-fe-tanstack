@@ -1,10 +1,12 @@
-import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
+import { useTranslation } from "react-i18next";
 import type {
   TAdminUser,
   TCreateUserInput,
   TUpdateUserAdminInput,
 } from "@/hooks/useAdminUsers";
-import Icon from "@/components/Icon";
+import Modal from "@/components/Modal";
+import TextButton from "@/components/TextButton";
 import "./style.scss";
 
 type TUserModalMode = "create" | "edit";
@@ -19,7 +21,7 @@ type TUserModalProps = {
   onUpdate: (data: TUpdateUserAdminInput) => void;
 };
 
-const ROLE_OPTIONS = ["User", "Instructor", "Reviewer", "Admin"] as const;
+const ROLE_OPTIONS = ["Learner", "Instructor", "Reviewer", "Admin"] as const;
 
 const UserModal = ({
   mode,
@@ -30,31 +32,8 @@ const UserModal = ({
   onCreate,
   onUpdate,
 }: TUserModalProps) => {
-  const dialogRef = useRef<HTMLDialogElement>(null);
+  const { t } = useTranslation();
   const isEdit = mode === "edit";
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-
-    if (isOpen && !dialog.open) {
-      dialog.showModal();
-    } else if (!isOpen && dialog.open) {
-      dialog.close();
-    }
-  }, [isOpen]);
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-    const handleClose = () => onClose();
-    dialog.addEventListener("close", handleClose);
-    return () => dialog.removeEventListener("close", handleClose);
-  }, [onClose]);
-
-  const handleBackdropClick = (e: React.MouseEvent<HTMLDialogElement>) => {
-    if (e.target === dialogRef.current) onClose();
-  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -80,149 +59,142 @@ const UserModal = ({
     }
   };
 
-  return (
-    <dialog
-      ref={dialogRef}
-      className="user-modal"
-      aria-modal="true"
-      aria-label={isEdit ? "Edit user" : "Create new user"}
-      onClick={handleBackdropClick}
+  return createPortal(
+    <Modal
+      open={isOpen}
+      onClose={onClose}
+      title={
+        isEdit
+          ? t("admin.users.modal.edit_title")
+          : t("admin.users.modal.create_title")
+      }
     >
-      <div className="user-modal__panel">
-        <div className="user-modal__header">
-          <h2 className="user-modal__title">
-            {isEdit ? "Edit User" : "Create New User"}
-          </h2>
-          <button
-            type="button"
-            id="user-modal-close-btn"
-            className="user-modal__close-btn"
-            aria-label="Close modal"
-            onClick={onClose}
-          >
-            <Icon name="close" size={20} />
-          </button>
+      <form
+        id="user-modal-form"
+        className="user-modal"
+        onSubmit={handleSubmit}
+        noValidate
+      >
+        <div className="user-modal__field">
+          <label className="user-modal__label" htmlFor="modal-username">
+            {t("admin.users.modal.username")} <span aria-hidden="true">*</span>
+          </label>
+          <input
+            id="modal-username"
+            name="username"
+            type="text"
+            className="user-modal__input"
+            defaultValue={user?.username ?? ""}
+            placeholder={t("admin.users.modal.username_placeholder")}
+            required
+            autoComplete="off"
+          />
         </div>
 
-        <form
-          id="user-modal-form"
-          className="user-modal__form"
-          onSubmit={handleSubmit}
-          noValidate
-        >
+        <div className="user-modal__field">
+          <label className="user-modal__label" htmlFor="modal-email">
+            {t("admin.users.modal.email")} <span aria-hidden="true">*</span>
+          </label>
+          <input
+            id="modal-email"
+            name="email"
+            type="email"
+            className="user-modal__input"
+            defaultValue={user?.email ?? ""}
+            placeholder={t("admin.users.modal.email_placeholder")}
+            required
+            autoComplete="off"
+          />
+        </div>
+
+        <div className="user-modal__field">
+          <label className="user-modal__label" htmlFor="modal-phone">
+            {t("admin.users.modal.phone")}
+          </label>
+          <input
+            id="modal-phone"
+            name="phoneNumber"
+            type="tel"
+            className="user-modal__input"
+            defaultValue={user?.phoneNumber ?? ""}
+            placeholder={t("admin.users.modal.phone_placeholder")}
+            autoComplete="off"
+          />
+        </div>
+
+        {!isEdit && (
           <div className="user-modal__field">
-            <label className="user-modal__label" htmlFor="modal-username">
-              Username <span aria-hidden="true">*</span>
+            <label className="user-modal__label" htmlFor="modal-password">
+              {t("admin.users.modal.password")}{" "}
+              <span aria-hidden="true">*</span>
             </label>
             <input
-              id="modal-username"
-              name="username"
-              type="text"
+              id="modal-password"
+              name="password"
+              type="password"
               className="user-modal__input"
-              defaultValue={user?.username ?? ""}
-              placeholder="e.g. john_doe"
+              placeholder={t("admin.users.modal.password_placeholder")}
               required
-              autoComplete="off"
+              minLength={8}
+              autoComplete="new-password"
             />
           </div>
+        )}
 
-          <div className="user-modal__field">
-            <label className="user-modal__label" htmlFor="modal-email">
-              Email <span aria-hidden="true">*</span>
-            </label>
-            <input
-              id="modal-email"
-              name="email"
-              type="email"
-              className="user-modal__input"
-              defaultValue={user?.email ?? ""}
-              placeholder="user@example.com"
-              required
-              autoComplete="off"
-            />
-          </div>
+        <div className="user-modal__field">
+          <label className="user-modal__label" htmlFor="modal-role">
+            {t("admin.users.modal.role")} <span aria-hidden="true">*</span>
+          </label>
+          <select
+            id="modal-role"
+            name="role"
+            className="user-modal__select"
+            defaultValue={user?.role ?? "Learner"}
+            required
+          >
+            {ROLE_OPTIONS.map((r) => (
+              <option key={r} value={r}>
+                {r}
+              </option>
+            ))}
+          </select>
+        </div>
 
-          <div className="user-modal__field">
-            <label className="user-modal__label" htmlFor="modal-phone">
-              Phone Number
-            </label>
-            <input
-              id="modal-phone"
-              name="phoneNumber"
-              type="tel"
-              className="user-modal__input"
-              defaultValue={user?.phoneNumber ?? ""}
-              placeholder="+84 000 000 000"
-              autoComplete="off"
-            />
-          </div>
-
-          {!isEdit && (
-            <div className="user-modal__field">
-              <label className="user-modal__label" htmlFor="modal-password">
-                Password <span aria-hidden="true">*</span>
-              </label>
-              <input
-                id="modal-password"
-                name="password"
-                type="password"
-                className="user-modal__input"
-                placeholder="Minimum 8 characters"
-                required
-                minLength={8}
-                autoComplete="new-password"
-              />
-            </div>
-          )}
-
-          <div className="user-modal__field">
-            <label className="user-modal__label" htmlFor="modal-role">
-              Role <span aria-hidden="true">*</span>
-            </label>
-            <select
-              id="modal-role"
-              name="role"
-              className="user-modal__select"
-              defaultValue={user?.role ?? "Learner"}
-              required
-            >
-              {ROLE_OPTIONS.map((r) => (
-                <option key={r} value={r}>
-                  {r}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="user-modal__actions">
-            <button
-              type="button"
-              id="user-modal-cancel-btn"
-              className="user-modal__btn user-modal__btn--cancel"
-              onClick={onClose}
-              disabled={isPending}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              id="user-modal-submit-btn"
-              className="user-modal__btn user-modal__btn--submit"
-              disabled={isPending}
-            >
-              {isPending ? (
-                <span className="user-modal__spinner" aria-hidden="true" />
-              ) : null}
-              {isPending
-                ? "Saving..."
+        <div className="user-modal__actions">
+          <TextButton
+            text={t("admin.users.modal.cancel")}
+            tooltip={t("admin.users.modal.cancel_tooltip")}
+            onClick={onClose}
+            disabled={isPending}
+            size="medium"
+            icon="close"
+            type="secondary"
+          />
+          <TextButton
+            text={
+              isPending
+                ? t("admin.users.modal.saving")
                 : isEdit
-                  ? "Save Changes"
-                  : "Create User"}
-            </button>
-          </div>
-        </form>
-      </div>
-    </dialog>
+                  ? t("admin.users.modal.save")
+                  : t("admin.users.modal.create")
+            }
+            tooltip={
+              isEdit
+                ? t("admin.users.modal.submit_edit_tooltip")
+                : t("admin.users.modal.submit_create_tooltip")
+            }
+            buttonType="submit"
+            onClick={() => {}}
+            disabled={isPending}
+            loading={isPending}
+            icon={isPending ? "progress_activity" : isEdit ? "save" : "add"}
+            size="medium"
+            type="primary"
+          />
+        </div>
+      </form>
+    </Modal>,
+    document.body
   );
 };
 

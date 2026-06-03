@@ -1,40 +1,43 @@
-import { Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "@tanstack/react-router";
+import Icon from "@/components/Icon";
 import type { TReviewStatus } from "@/mock/reviewer-courses";
 import "./style.scss";
 
 type TReviewActionPanelProps = {
-  courseId: string;
   status: TReviewStatus;
   onApprove: () => void;
   onReject: () => void;
+  isPublishing?: boolean;
+  isRejecting?: boolean;
 };
 
 const ReviewActionPanel = ({
   status,
   onApprove,
   onReject,
+  isPublishing = false,
+  isRejecting = false,
 }: TReviewActionPanelProps) => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
   const isPending = status === "Pending";
 
   return (
     <div className="review-action-panel">
-      <Link
-        to="/reviewer"
+      <button
+        type="button"
         className="review-action-panel__back"
-        aria-label="Back to reviewer list"
+        aria-label={t("reviewer.back_to_list")}
+        onClick={() => navigate({ to: "/reviewer/courses" })}
       >
-        ← Back to List
-      </Link>
+        <Icon name="arrow_back" />
+        {t("reviewer.back_to_list")}
+      </button>
 
       {!isPending && (
         <p className="review-action-panel__decided">
-          This course has already been{" "}
-          <strong
-            className={`review-action-panel__decided-status review-action-panel__decided-status--${status.toLowerCase()}`}
-          >
-            {status}
-          </strong>
-          .
+          {t("reviewer.already_decided", { status })}
         </p>
       )}
 
@@ -44,13 +47,10 @@ const ReviewActionPanel = ({
           id="btn-approve-course"
           className="review-action-panel__btn review-action-panel__btn--approve"
           onClick={onApprove}
-          disabled={!isPending}
-          aria-label="Approve this course"
+          disabled={!isPending || isPublishing}
+          aria-label={t("reviewer.approve")}
         >
-          <span className="review-action-panel__btn-icon" aria-hidden>
-            ✓
-          </span>
-          Approve Course
+          {isPublishing ? t("common.creating") : t("reviewer.approve")}
         </button>
 
         <button
@@ -58,13 +58,10 @@ const ReviewActionPanel = ({
           id="btn-reject-course"
           className="review-action-panel__btn review-action-panel__btn--reject"
           onClick={onReject}
-          disabled={!isPending}
-          aria-label="Reject this course"
+          disabled={!isPending || isRejecting}
+          aria-label={t("reviewer.reject")}
         >
-          <span className="review-action-panel__btn-icon" aria-hidden>
-            ✕
-          </span>
-          Reject Course
+          {isRejecting ? t("common.creating") : t("reviewer.reject")}
         </button>
       </div>
     </div>

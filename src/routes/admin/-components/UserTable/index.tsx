@@ -1,6 +1,11 @@
+import "./style.scss";
+
+import { useTranslation } from "react-i18next";
 import type { TAdminUser } from "@/hooks/useAdminUsers";
 import Icon from "@/components/Icon";
-import "./style.scss";
+import TextButton from "@/components/TextButton";
+import capitalize from "lodash/capitalize";
+import type { TTypeSecondary } from "@/types/global";
 
 type TUserTableProps = {
   users: TAdminUser[];
@@ -12,32 +17,13 @@ type TUserTableProps = {
   onDelete: (userId: string) => void;
 };
 
-const TABLE_COLUMNS = [
-  { key: "checkbox", label: "" },
-  { key: "id", label: "ID" },
-  { key: "username", label: "User" },
-  { key: "email", label: "Email" },
-  { key: "role", label: "Role" },
-  { key: "createdAt", label: "Joined" },
-  { key: "actions", label: "Actions" },
-];
-
-const ROLE_MOD: Record<string, string> = {
-  Learner: "blue",
-  Teacher: "green",
-  Reviewer: "orange",
-  Admin: "red",
+const ROLE_MOD: Record<string, TTypeSecondary> = {
+  learner: "pastelNavy",
+  user: "pastelNavy",
+  instructor: "green",
+  reviewer: "yellow",
+  admin: "salmon",
 };
-
-const SkeletonRow = () => (
-  <tr className="admin-user-table__skeleton-row">
-    {TABLE_COLUMNS.map((col) => (
-      <td key={col.key} className="admin-user-table__cell">
-        <div className="admin-user-table__skeleton" />
-      </td>
-    ))}
-  </tr>
-);
 
 const UserTable = ({
   users,
@@ -48,12 +34,34 @@ const UserTable = ({
   onEdit,
   onDelete,
 }: TUserTableProps) => {
+  const { t, i18n } = useTranslation();
+
+  const TABLE_COLUMNS = [
+    { key: "checkbox", label: "" },
+    { key: "id", label: t("admin.users.table.id") },
+    { key: "username", label: t("admin.users.table.user") },
+    { key: "email", label: t("admin.users.table.email") },
+    { key: "role", label: t("admin.users.table.role") },
+    { key: "createdAt", label: t("admin.users.table.joined") },
+    { key: "actions", label: t("admin.users.table.actions") },
+  ];
+
+  const SkeletonRow = () => (
+    <tr className="admin-user-table__skeleton-row">
+      {TABLE_COLUMNS.map((col) => (
+        <td key={col.key} className="admin-user-table__cell">
+          <div className="admin-user-table__skeleton" />
+        </td>
+      ))}
+    </tr>
+  );
+
   const allSelected = users.length > 0 && selectedIds.size === users.length;
   const someSelected = selectedIds.size > 0 && !allSelected;
 
   const formatDate = (raw: string) => {
     try {
-      return new Date(Number(raw) || raw).toLocaleDateString("en-US", {
+      return new Date(Number(raw) || raw).toLocaleDateString(i18n.language, {
         year: "numeric",
         month: "short",
         day: "numeric",
@@ -99,7 +107,7 @@ const UserTable = ({
                 className="admin-user-table__empty"
               >
                 <Icon name="person_off" size={40} />
-                <p>No users found</p>
+                <p>{t("admin.users.table.empty")}</p>
               </td>
             </tr>
           ) : (
@@ -120,9 +128,14 @@ const UserTable = ({
                 </td>
 
                 <td className="admin-user-table__cell admin-user-table__cell--id">
-                  <span className="admin-user-table__id">
-                    #{user.id.slice(0, 6)}
-                  </span>
+                  <TextButton
+                    typeSecondary="pastelNavy"
+                    size="tiny"
+                    text={`#${user.id.slice(0, 6)}`}
+                    leftIcon={false}
+                    type="secondary"
+                    onClick={() => {}}
+                  />
                 </td>
 
                 <td className="admin-user-table__cell">
@@ -151,11 +164,19 @@ const UserTable = ({
                 </td>
 
                 <td className="admin-user-table__cell">
-                  <span
-                    className={`admin-user-table__badge admin-user-table__badge--${ROLE_MOD[user.role] ?? "blue"}`}
-                  >
-                    {user.role}
-                  </span>
+                  <TextButton
+                    size="tiny"
+                    type="secondary"
+                    className={`admin-user-table__badge admin-user-table__badge--${user.role?.toLowerCase() ?? ""}`}
+                    typeSecondary={
+                      user.role
+                        ? ROLE_MOD[user.role.toLowerCase()]
+                        : "pastelNavy"
+                    }
+                    leftIcon={false}
+                    text={user.role ? capitalize(user.role) : "User"}
+                    onClick={() => {}}
+                  />
                 </td>
 
                 <td className="admin-user-table__cell">
@@ -164,26 +185,22 @@ const UserTable = ({
 
                 <td className="admin-user-table__cell admin-user-table__cell--actions">
                   <div className="admin-user-table__actions">
-                    <button
-                      type="button"
-                      id={`edit-user-btn-${user.id}`}
-                      className="admin-user-table__action-btn admin-user-table__action-btn--edit"
-                      aria-label={`Edit ${user.username}`}
+                    <TextButton
+                      icon="edit"
+                      text={t("admin.users.table.edit")}
+                      tooltip={t("admin.users.table.edit_tooltip")}
                       onClick={() => onEdit(user)}
-                    >
-                      <Icon name="edit" size={15} />
-                      Edit
-                    </button>
-                    <button
-                      type="button"
-                      id={`delete-user-btn-${user.id}`}
-                      className="admin-user-table__action-btn admin-user-table__action-btn--delete"
-                      aria-label={`Delete ${user.username}`}
+                      size="tiny"
+                      type="primary"
+                    />
+                    <TextButton
+                      icon="delete"
+                      text={t("admin.users.table.delete")}
+                      tooltip={t("admin.users.table.delete_tooltip")}
                       onClick={() => onDelete(user.id)}
-                    >
-                      <Icon name="delete" size={15} />
-                      Delete
-                    </button>
+                      size="tiny"
+                      type="outlined"
+                    />
                   </div>
                 </td>
               </tr>

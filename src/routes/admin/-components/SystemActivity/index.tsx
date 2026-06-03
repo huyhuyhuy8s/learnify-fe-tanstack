@@ -1,9 +1,11 @@
-import Icon from "@/components/Icon";
 import "./style.scss";
+
+import { useTranslation } from "react-i18next";
+import Icon, { type TIconName } from "@/components/Icon";
 
 type TActivityItem = {
   id: string;
-  icon: string;
+  icon: TIconName;
   iconMod: "blue" | "green" | "orange" | "red";
   message: string;
   time: string;
@@ -55,10 +57,14 @@ const MOCK_ACTIVITIES: TActivityItem[] = [
 ];
 
 const SystemActivity = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="admin-system-activity">
       <div className="admin-system-activity__header">
-        <h2 className="admin-system-activity__title">System Activity</h2>
+        <h2 className="admin-system-activity__title">
+          {t("admin.system_activity.title")}
+        </h2>
       </div>
 
       <ul className="admin-system-activity__list">

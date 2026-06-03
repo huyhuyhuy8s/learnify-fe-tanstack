@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import "./style.scss";
 
 type TWelcomeHeaderProps = {
@@ -5,12 +6,17 @@ type TWelcomeHeaderProps = {
 };
 
 const WelcomeHeader = ({ name = "Admin" }: TWelcomeHeaderProps) => {
+  const { t, i18n } = useTranslation();
   const now = new Date();
   const hour = now.getHours();
   const greeting =
-    hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+    hour < 12
+      ? t("admin.welcome.greeting_morning")
+      : hour < 18
+        ? t("admin.welcome.greeting_afternoon")
+        : t("admin.welcome.greeting_evening");
 
-  const dateStr = now.toLocaleDateString("en-US", {
+  const dateStr = now.toLocaleDateString(i18n.language, {
     weekday: "long",
     year: "numeric",
     month: "long",
@@ -21,10 +27,10 @@ const WelcomeHeader = ({ name = "Admin" }: TWelcomeHeaderProps) => {
     <div className="admin-welcome">
       <div className="admin-welcome__text">
         <h1 className="admin-welcome__title">
-          {greeting}, {name} 👋
+          {greeting}, {name}
         </h1>
         <p className="admin-welcome__subtitle">
-          Here's what's happening on your platform today · {dateStr}
+          {t("admin.welcome.subtitle")} · {dateStr}
         </p>
       </div>
     </div>

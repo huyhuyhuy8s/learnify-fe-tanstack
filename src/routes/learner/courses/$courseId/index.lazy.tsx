@@ -1,31 +1,39 @@
-import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { Activity, useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { toast } from "sonner";
 import Card from "@/components/Card";
 import DecorationCard from "@/components/DecorationCard";
 import Empty from "@/components/Empty";
 import Icon from "@/components/Icon";
 import NotFound from "@/components/NotFound";
+import TetrisLoader from "@/components/TetrisLoader";
 import TextButton from "@/components/TextButton";
+import { useLayout } from "@/contexts/LayoutContext";
 import {
   useCourseProgress,
+  useCoursePrice,
   useCreateReview,
   useEnrollCourse,
   useUserEnrollments,
-  useCoursePrice,
 } from "@/hooks/useCourseDetail";
+import { useCreatePayment } from "@/hooks/usePayment";
 import { MOCK_COMMENT } from "@/mock";
 import { useAuthStore } from "@/store/authStore";
-import { useLayout } from "@/contexts/LayoutContext";
 import { COLORS } from "@/styles/colors";
 import type { TProgress, TStatusCard } from "@/types/global";
 import { formatDate } from "@/utils";
 import { courseQueryOptions } from "@/utils/courses";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
+import {
+  Activity,
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 import CommentForm from "../-components/CommentForm";
 import CommentItem from "../-components/CommentItem";
-import { useCreatePayment } from "@/hooks/usePayment";
 
 export const Route = createLazyFileRoute("/learner/courses/$courseId/")({
   component: CourseComponent,
@@ -34,7 +42,7 @@ export const Route = createLazyFileRoute("/learner/courses/$courseId/")({
 function CourseComponent() {
   const navigate = useNavigate();
   const { courseId } = Route.useParams();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const currentUser = useAuthStore((state) => state.user);
   const userId = currentUser?.id;
@@ -45,6 +53,9 @@ function CourseComponent() {
   const { data: coursePrice } = useCoursePrice(courseId);
   const isPaidCourse = coursePrice ? coursePrice.isFree === false : false;
 
+  const isInstructorOrAdmin =
+    currentUser?.role === "teacher" || currentUser?.role === "admin";
+
   useEffect(() => {
     if (getCourseById?.courseName) {
       setLayoutConfigState((prev) => ({
@@ -54,8 +65,20 @@ function CourseComponent() {
     }
   }, [getCourseById?.courseName, setLayoutConfigState]);
 
+  useEffect(() => {
+    if (
+      getCourseById?.status &&
+      getCourseById.status !== "Published" &&
+      !isInstructorOrAdmin
+    ) {
+      toast.error(t("course_detail.private_course"));
+      navigate({ to: "/learner/courses", search: { q: "" } });
+    }
+  }, [getCourseById?.status, isInstructorOrAdmin, navigate, t]);
+
   const createReview = useCreateReview();
   const enrollCourseMutation = useEnrollCourse();
+  const createPaymentMutation = useCreatePayment();
 
   const { data: enrollments, refetch: refetchEnrollments } =
     useUserEnrollments(userId);
@@ -124,7 +147,7 @@ function CourseComponent() {
           typeSpecial: "lesson" as const,
           title: lesson.lessonName,
           description: lesson.abstract ?? t("course_detail.no_description"),
-          duration: "45 mins",
+          duration: 45,
           status,
           percentage,
         };
@@ -170,9 +193,15 @@ function CourseComponent() {
     };
   }, [getCourseById, currentProgressPercentage, isEnrolled]);
 
-  const createPaymentMutation = useCreatePayment();
+  const handleEnrollCourse = useCallback(() => {
+    if (!userId) {
+      toast.error(t("course_detail.toast_login_enroll"));
+      return;
+    }
+    enrollCourseMutation.mutate({ courseId, userId });
+  }, [userId, courseId, enrollCourseMutation, t]);
 
-  const handlePayment = () => {
+  const handlePayment = useCallback(() => {
     if (!userId) {
       toast.error(t("course_detail.toast_login_enroll"));
       return;
@@ -180,25 +209,98 @@ function CourseComponent() {
 
     createPaymentMutation.mutate(courseId, {
       onSuccess: (data) => {
-        // Redirect thẳng sang trang thanh toán của PayOS
         if (data?.checkoutUrl) {
           window.location.href = data.checkoutUrl;
         }
       },
-      onError: (error) => {
-        toast.error("Không thể tạo phiên thanh toán. Vui lòng thử lại!");
-        console.error(error);
+      onError: () => {
+        toast.error(t("course_detail.payment_error"));
       },
     });
-  };
+  }, [courseId, createPaymentMutation, t, userId]);
 
-  const handleEnrollCourse = () => {
-    if (!userId) {
-      toast.error(t("course_detail.toast_login_enroll"));
+  const startButtonText = useMemo(() => {
+    if (!isEnrolled) {
+      if (isPaidCourse) {
+        const price = coursePrice?.salePrice ?? coursePrice?.originalPrice ?? 0;
+        return `${t("course_detail.buy")} - ${price.toLocaleString(i18n.language)}đ`;
+      }
+      return t("course_detail.enroll");
+    }
+    if (currentProgressPercentage >= 100) return t("course_detail.completed");
+    if (currentProgressPercentage > 0) return t("course_detail.continue");
+    return t("course_detail.start");
+  }, [
+    isEnrolled,
+    currentProgressPercentage,
+    t,
+    isPaidCourse,
+    coursePrice?.salePrice,
+    coursePrice?.originalPrice,
+    i18n.language,
+  ]);
+
+  const startButtonIcon = useMemo(() => {
+    if (!isEnrolled) return isPaidCourse ? "shopping_cart" : "school";
+    if (currentProgressPercentage >= 100) return "check";
+    return "arrow_right_alt";
+  }, [isEnrolled, isPaidCourse, currentProgressPercentage]);
+
+  const handleStartClick = useCallback(() => {
+    if (!isEnrolled) {
+      if (isPaidCourse) {
+        handlePayment();
+        return;
+      }
+      handleEnrollCourse();
       return;
     }
-    enrollCourseMutation.mutate({ courseId, userId });
-  };
+
+    const lessons = getLessonsByCourseId?.lessons;
+    if (!lessons || lessons.length === 0) return;
+
+    if (currentProgressPercentage >= 100) {
+      navigate({
+        to: "/learner/lessons/$lessonId",
+        params: { lessonId: lessons[lessons.length - 1]!.id },
+      });
+    } else if (currentProgressPercentage > 0) {
+      const completedLessons =
+        progressData?.progress?.[0]?.completedLessons ?? 0;
+      const targetLesson = lessons[completedLessons] ?? lessons[0]!;
+      navigate({
+        to: "/learner/lessons/$lessonId",
+        params: { lessonId: targetLesson.id },
+      });
+    } else {
+      navigate({
+        to: "/learner/lessons/$lessonId",
+        params: { lessonId: lessons[0]!.id },
+      });
+    }
+  }, [
+    isEnrolled,
+    isPaidCourse,
+    getLessonsByCourseId,
+    currentProgressPercentage,
+    progressData,
+    navigate,
+    handleEnrollCourse,
+    handlePayment,
+  ]);
+
+  const startButtonDisabled = useMemo(() => {
+    if (!isEnrolled) {
+      if (isPaidCourse) return createPaymentMutation.isPending;
+      return enrollCourseMutation.isPending;
+    }
+    return false;
+  }, [
+    isEnrolled,
+    isPaidCourse,
+    createPaymentMutation.isPending,
+    enrollCourseMutation.isPending,
+  ]);
 
   const handleLessonClick = (lessonId: string, isLocked: boolean) => {
     if (!isEnrolled) {
@@ -242,87 +344,79 @@ function CourseComponent() {
 
   return (
     <div className="course__container">
-      <div className="course__item-list">
-        <DecorationCard
-          listBadge={
+      <Suspense fallback={<TetrisLoader />}>
+        <div className="course__item-list">
+          <DecorationCard
+            listBadge={
+              <>
+                <TextButton
+                  text={t("course_detail.badge_text")}
+                  size="tiny"
+                  type="special"
+                  typeSpecial="course"
+                  backgroundColor={COLORS.navy500}
+                  color={COLORS.neutral100}
+                  onClick={() => {}}
+                />
+                <TextButton
+                  text={t(
+                    getCourseById?.status === "Published"
+                      ? "course_detail.public_status"
+                      : "course_detail.private_status"
+                  )}
+                  size="tiny"
+                  type="special"
+                  typeSpecial={
+                    getCourseById?.status === "Published" ? "public" : "private"
+                  }
+                  backgroundColor={COLORS.grey}
+                  color={COLORS.neutral100}
+                  onClick={() => {}}
+                />
+              </>
+            }
+            typeSpecial="course"
+            title={courseDisplay.title}
+            status={courseDisplay.status}
+            listFeature={courseDisplay.listFeature}
+            percentage={courseDisplay.percentage}
+            onStartClick={handleStartClick}
+            startText={startButtonText}
+            startIcon={startButtonIcon}
+            startDisabled={startButtonDisabled}
+          />
+          {courseDisplay.abstract && (
+            <p className="course__abstract">{courseDisplay.abstract}</p>
+          )}
+          <div className="course__controller">
             <TextButton
-              text={t("course_detail.badge_text")}
-              size="tiny"
-              type="special"
+              text={t("course_detail.show_feedback")}
+              size="small"
+              icon="feedback"
+              type="outlined"
               typeSpecial="course"
-              backgroundColor={COLORS.navy500}
-              color={COLORS.neutral100}
-              onClick={() => {}}
+              onClick={() => setShowComment((prev) => !prev)}
             />
-          }
-          typeSpecial="course"
-          title={courseDisplay.title}
-          status={courseDisplay.status}
-          listFeature={courseDisplay.listFeature}
-          percentage={courseDisplay.percentage}
-        />
-        {courseDisplay.abstract && (
-          <p className="course__abstract">{courseDisplay.abstract}</p>
-        )}
-        <div className="course__controller">
-          {!isEnrolled &&
-            (isPaidCourse ? (
-              <TextButton
-                text={
-                  createPaymentMutation.isPending
-                    ? t("course_detail.processing")
-                    : `Mua khóa học - ${coursePrice?.originalPrice?.toLocaleString("vi-VN") || 0}đ`
+          </div>
+          <div className="course__list">
+            {lessonsDisplay.map((lesson) => (
+              <Card
+                key={lesson.id}
+                typeSpecial={lesson.typeSpecial}
+                title={lesson.title}
+                description={lesson.description}
+                duration={lesson.duration}
+                status={lesson.status}
+                percentage={lesson.percentage}
+                onClick={() =>
+                  handleLessonClick(lesson.id, lesson.status === "locked")
                 }
-                size="small"
-                icon="shopping_cart"
-                type="primary"
-                typeSpecial="course"
-                onClick={handlePayment}
-                disabled={createPaymentMutation.isPending}
-              />
-            ) : (
-              <TextButton
-                text={
-                  enrollCourseMutation.isPending
-                    ? t("course_detail.processing")
-                    : t("course_detail.enroll")
-                }
-                size="small"
-                icon="school"
-                type="primary"
-                typeSpecial="course"
-                onClick={handleEnrollCourse}
-                disabled={enrollCourseMutation.isPending}
+                disabled={lesson.status === "locked"}
               />
             ))}
-
-          <TextButton
-            text={t("course_detail.show_feedback")}
-            size="small"
-            icon="feedback"
-            type="outlined"
-            typeSpecial="course"
-            onClick={() => setShowComment((prev) => !prev)}
-          />
+          </div>
         </div>
-        <div className="course__list">
-          {lessonsDisplay.map((lesson) => (
-            <Card
-              key={lesson.id}
-              typeSpecial={lesson.typeSpecial}
-              title={lesson.title}
-              description={lesson.description}
-              duration={lesson.duration}
-              status={lesson.status}
-              percentage={lesson.percentage}
-              onClick={() =>
-                handleLessonClick(lesson.id, lesson.status === "locked")
-              }
-              disabled={lesson.status === "locked"}
-            />
-          ))}
-        </div>
-      </div>
+      </Suspense>
       <Activity mode={showComment ? "visible" : "hidden"}>
         <div className="course__comment">
           <TextButton

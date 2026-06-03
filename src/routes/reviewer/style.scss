@@ -3,91 +3,148 @@
 @use "@styles/mixins" as *;
 @use "@styles/functions" as *;
 
-.rl {
+.reviewer-dashboard {
   display: flex;
-  flex-direction: row;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  background-color: $white;
+  flex-direction: column;
+  gap: toRem(32);
+  padding: toRem(32) toRem(24);
 
-  &__right {
+  &__hero {
     display: flex;
     flex-direction: column;
-    flex: 1;
-    height: 100%;
-    overflow: hidden;
-    min-width: 0;
+    gap: toRem(8);
   }
 
-  &__topbar {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100%;
-    height: toRem(72);
-    flex-shrink: 0;
-    padding: toRem(16) toRem(32);
-    gap: toRem(16);
-    background-color: $white;
-    border-bottom: toRem(1) solid $neutral-200;
-    z-index: 20;
+  &__title {
+    font-size: $fs-heading3;
+    color: $neutral-900;
   }
 
-  &__topbar-inner {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: toRem(16);
+  &__subtitle {
+    font-size: $fs-paragraph;
+    color: $neutral-500;
+  }
 
-    > .top-nav-right {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: toRem(12);
-    }
+  &__loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: toRem(200);
+  }
+
+  &__grid {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(32);
   }
 
   &__main {
-    flex: 1;
-    overflow-y: auto;
-    padding: toRem(32);
-
     display: flex;
     flex-direction: column;
-    gap: toRem(20);
-    padding-bottom: toRem(80);
+    gap: toRem(32);
   }
-}
 
-.reviewer-sidebar {
-  width: toRem(120);
-  height: 100%;
-  flex-shrink: 0;
-  border-right: toRem(1) solid #eaeaea;
-  border-radius: 0;
-}
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(toRem(200), 1fr));
+    gap: toRem(16);
+  }
 
-$reviewer-card-radius: $br-lg;
+  &__stat-card {
+    display: flex;
+    align-items: center;
+    gap: toRem(16);
+    padding: toRem(20);
+    border-radius: $br-sm;
+    background-color: $white;
+    border: toRem(1) solid $neutral-200;
 
-.reviewer-pending__table-wrapper,
-.reviewer-approved__table-wrapper,
-.reviewer-rejected__table-wrapper {
-  border-radius: $reviewer-card-radius;
-  border: none;
-}
+    &--pending {
+      border-color: #fef08a;
+    }
 
-.course-detail-header {
-  border-radius: $reviewer-card-radius;
-  border: none;
-}
+    &--published {
+      border-color: $green-pastel-200;
+    }
 
-.lesson-syllabus {
-  border-radius: $reviewer-card-radius;
-  border: none;
-}
+    &--rejected {
+      border-color: $salmon-pastel-200;
+    }
+  }
 
-.review-action-panel {
-  border-radius: $reviewer-card-radius $reviewer-card-radius 0 0;
+  &__stat-icon {
+    flex-shrink: 0;
+    color: $neutral-500;
+  }
+
+  &__stat-info {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(2);
+  }
+
+  &__stat-value {
+    font-size: $fs-heading4;
+    font-weight: $fw-semibold;
+    color: $neutral-900;
+  }
+
+  &__stat-label {
+    font-size: $fs-small;
+    color: $neutral-500;
+  }
+
+  &__section-title {
+    font-size: $fs-heading5;
+    color: $neutral-900;
+    margin-bottom: toRem(4);
+  }
+
+  &__pending-section {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(16);
+  }
+
+  &__pending-list {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(8);
+  }
+
+  &__pending-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: toRem(12) toRem(16);
+    border-radius: $br-sm;
+    border: toRem(1) solid $neutral-200;
+    cursor: pointer;
+    transition: background-color 200ms ease;
+
+    &:hover {
+      background-color: $neutral-100;
+    }
+  }
+
+  &__pending-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(4);
+  }
+
+  &__pending-item-name {
+    font-size: $fs-paragraph;
+    color: $neutral-900;
+  }
+
+  &__pending-item-date {
+    font-size: $fs-small;
+    color: $neutral-400;
+  }
+
+  &__empty {
+    font-size: $fs-paragraph;
+    color: $neutral-400;
+  }
 }

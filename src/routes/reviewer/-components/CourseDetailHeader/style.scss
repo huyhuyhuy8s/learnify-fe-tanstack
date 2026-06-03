@@ -5,12 +5,12 @@
 
 .course-detail-header {
   background-color: $white;
-  border-radius: $br-lg;
-  padding: toRem(28) toRem(32);
-  @include box-shadow(0, 2, 16, 0);
+  border-radius: $br-sm;
+  padding: toRem(24) toRem(28);
+  @include box-shadow(0, 2, 12, 0);
   display: flex;
   flex-direction: column;
-  gap: toRem(24);
+  gap: toRem(20);
 
   &__top {
     display: flex;
@@ -22,12 +22,12 @@
   &__meta {
     display: flex;
     flex-direction: column;
-    gap: toRem(8);
+    gap: toRem(6);
   }
 
   &__title {
-    font-size: $fs-heading4;
-    font-weight: $fw-bold;
+    font-size: $fs-heading5;
+    font-weight: $fw-medium;
     color: $neutral-900;
     line-height: 1.25;
     margin: 0;
@@ -60,32 +60,6 @@
     color: $neutral-500;
   }
 
-  &__badge {
-    display: inline-flex;
-    align-items: center;
-    padding: toRem(6) toRem(16);
-    border-radius: $br-xl;
-    font-size: $fs-small;
-    font-weight: $fw-semibold;
-    white-space: nowrap;
-    flex-shrink: 0;
-
-    &--pending {
-      background-color: #fef08a;
-      color: #854d0e;
-    }
-
-    &--approved {
-      background-color: $green-pastel-200;
-      color: $green-700;
-    }
-
-    &--rejected {
-      background-color: $salmon-pastel-200;
-      color: $salmon-700;
-    }
-  }
-
   &__abstract {
     font-size: $fs-paragraph;
     color: $neutral-700;
@@ -101,7 +75,7 @@
     gap: toRem(12);
     background-color: $neutral-150;
     border-radius: $br-xs;
-    padding: toRem(20) toRem(24);
+    padding: toRem(16) toRem(20);
   }
 
   &__learnings-title {
@@ -117,23 +91,15 @@
     padding: 0;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(toRem(260), 1fr));
-    gap: toRem(10) toRem(24);
+    gap: toRem(8) toRem(20);
   }
 
   &__learning-item {
     display: flex;
     align-items: flex-start;
-    gap: toRem(10);
+    gap: toRem(8);
     font-size: $fs-paragraph;
     color: $neutral-700;
     line-height: 1.5;
-  }
-
-  &__check {
-    color: $green-600;
-    font-weight: $fw-bold;
-    font-size: $fs-paragraph;
-    flex-shrink: 0;
-    margin-top: toRem(1);
   }
 }
