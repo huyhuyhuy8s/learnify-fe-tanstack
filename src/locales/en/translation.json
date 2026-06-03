@@ -757,7 +757,9 @@
       "desc": "Structured learning paths from beginner to career-ready."
     },
     "log_in": "Log in",
-    "sign_up": "Sign Up"
+    "sign_up": "Sign Up",
+    "diamond_tooltip": "View Shop",
+    "streak_tooltip": "View Streak"
   },
   "notification": {
     "title": "Notifications",
@@ -919,6 +921,18 @@
     "what_students_learn": "What students will learn",
     "by_creator": "By {{name}}",
     "submitted": "Submitted {{date}}"
+  },
+  "shop": {
+    "title": "Learnify Shop",
+    "coming_soon": "Shop will be updated soon!",
+    "message": "Good luck on your lessons and archive as much as you can before the shop is completed! There will be many thing that worth with your effort!",
+    "back": "Back to Dashboard"
+  },
+  "streak": {
+    "title": "Learning Streak",
+    "coming_soon": "Streak Protections & Boosts — Coming Soon!",
+    "message": "Your daily streak will unlock powerful tools to supercharge your learning: streak freezes to protect your progress on busy days, XP boosts to accelerate your course completion, and exclusive bonus rewards for maintaining long streaks. Stay consistent and reap the benefits!",
+    "back": "Back to Dashboard"
   },
   "course_completion": {
     "lesson": "Lesson",

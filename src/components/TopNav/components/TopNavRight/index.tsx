@@ -1,6 +1,5 @@
 import AccountMenu from "@/components/AccountMenu";
 import IconButton from "@/components/IconButton";
-import Icon from "@/components/Icon";
 import NotificationPopup from "@/components/NotificationPopup";
 import classNames from "classnames";
 import { useMemo, useState, useRef, useCallback } from "react";
@@ -79,14 +78,24 @@ const TopNavRight = () => {
             className={classNames({ invisible: !notificationVisible })}
           />
         </div>
-        <div className="crystal">
-          <Icon name="diamond" />
-          <p>{user.diamond || 0}</p>
-        </div>
-        <div className="streak">
-          <Icon name="mode_heat" />
-          <p>{user.currentSteak || 0}</p>
-        </div>
+        <TextButton
+          icon="diamond"
+          text={String(user.diamond ?? 0)}
+          tooltip={t("top_nav.diamond_tooltip")}
+          onClick={() => navigate({ to: "/learner/shop" })}
+          size="small"
+          type="secondary"
+          typeSecondary="pastelNavy"
+        />
+        <TextButton
+          icon="mode_heat"
+          text={String(user.currentSteak ?? 0)}
+          tooltip={t("top_nav.streak_tooltip")}
+          onClick={() => navigate({ to: "/learner/streak" })}
+          size="small"
+          type="secondary"
+          typeSecondary="pastelOrange"
+        />
         <IconButton
           icon="notifications_active"
           specialIcon="notifications"

@@ -33,6 +33,8 @@ import { Route as ReviewerCoursesIndexRouteImport } from "./routes/reviewer/cour
 import { Route as LearnerLessonsIndexRouteImport } from "./routes/learner_/lessons/index";
 import { Route as LearnerUserIndexRouteImport } from "./routes/learner/user/index";
 import { Route as LearnerSubscriptionsIndexRouteImport } from "./routes/learner/subscriptions/index";
+import { Route as LearnerStreakIndexRouteImport } from "./routes/learner/streak/index";
+import { Route as LearnerShopIndexRouteImport } from "./routes/learner/shop/index";
 import { Route as LearnerSettingsIndexRouteImport } from "./routes/learner/settings/index";
 import { Route as LearnerSearchIndexRouteImport } from "./routes/learner/search/index";
 import { Route as LearnerRoadmapsIndexRouteImport } from "./routes/learner/roadmaps/index";
@@ -185,6 +187,20 @@ const LearnerSubscriptionsIndexRoute =
   } as any).lazy(() =>
     import("./routes/learner/subscriptions/index.lazy").then((d) => d.Route),
   );
+const LearnerStreakIndexRoute = LearnerStreakIndexRouteImport.update({
+  id: "/streak/",
+  path: "/streak/",
+  getParentRoute: () => LearnerRouteRoute,
+} as any).lazy(() =>
+  import("./routes/learner/streak/index.lazy").then((d) => d.Route),
+);
+const LearnerShopIndexRoute = LearnerShopIndexRouteImport.update({
+  id: "/shop/",
+  path: "/shop/",
+  getParentRoute: () => LearnerRouteRoute,
+} as any).lazy(() =>
+  import("./routes/learner/shop/index.lazy").then((d) => d.Route),
+);
 const LearnerSettingsIndexRoute = LearnerSettingsIndexRouteImport.update({
   id: "/settings/",
   path: "/settings/",
@@ -360,6 +376,8 @@ export interface FileRoutesByFullPath {
   "/learner/roadmaps/": typeof LearnerRoadmapsIndexRoute;
   "/learner/search/": typeof LearnerSearchIndexRoute;
   "/learner/settings/": typeof LearnerSettingsIndexRoute;
+  "/learner/shop/": typeof LearnerShopIndexRoute;
+  "/learner/streak/": typeof LearnerStreakIndexRoute;
   "/learner/subscriptions/": typeof LearnerSubscriptionsIndexRoute;
   "/learner/user/": typeof LearnerUserIndexRoute;
   "/learner/lessons/": typeof LearnerLessonsIndexRoute;
@@ -397,6 +415,8 @@ export interface FileRoutesByTo {
   "/learner/roadmaps": typeof LearnerRoadmapsIndexRoute;
   "/learner/search": typeof LearnerSearchIndexRoute;
   "/learner/settings": typeof LearnerSettingsIndexRoute;
+  "/learner/shop": typeof LearnerShopIndexRoute;
+  "/learner/streak": typeof LearnerStreakIndexRoute;
   "/learner/subscriptions": typeof LearnerSubscriptionsIndexRoute;
   "/learner/user": typeof LearnerUserIndexRoute;
   "/learner/lessons": typeof LearnerLessonsIndexRoute;
@@ -444,6 +464,8 @@ export interface FileRoutesById {
   "/learner/roadmaps/": typeof LearnerRoadmapsIndexRoute;
   "/learner/search/": typeof LearnerSearchIndexRoute;
   "/learner/settings/": typeof LearnerSettingsIndexRoute;
+  "/learner/shop/": typeof LearnerShopIndexRoute;
+  "/learner/streak/": typeof LearnerStreakIndexRoute;
   "/learner/subscriptions/": typeof LearnerSubscriptionsIndexRoute;
   "/learner/user/": typeof LearnerUserIndexRoute;
   "/learner_/lessons/": typeof LearnerLessonsIndexRoute;
@@ -492,6 +514,8 @@ export interface FileRouteTypes {
     | "/learner/roadmaps/"
     | "/learner/search/"
     | "/learner/settings/"
+    | "/learner/shop/"
+    | "/learner/streak/"
     | "/learner/subscriptions/"
     | "/learner/user/"
     | "/learner/lessons/"
@@ -529,6 +553,8 @@ export interface FileRouteTypes {
     | "/learner/roadmaps"
     | "/learner/search"
     | "/learner/settings"
+    | "/learner/shop"
+    | "/learner/streak"
     | "/learner/subscriptions"
     | "/learner/user"
     | "/learner/lessons"
@@ -575,6 +601,8 @@ export interface FileRouteTypes {
     | "/learner/roadmaps/"
     | "/learner/search/"
     | "/learner/settings/"
+    | "/learner/shop/"
+    | "/learner/streak/"
     | "/learner/subscriptions/"
     | "/learner/user/"
     | "/learner_/lessons/"
@@ -774,6 +802,20 @@ declare module "@tanstack/react-router" {
       path: "/subscriptions";
       fullPath: "/learner/subscriptions/";
       preLoaderRoute: typeof LearnerSubscriptionsIndexRouteImport;
+      parentRoute: typeof LearnerRouteRoute;
+    };
+    "/learner/streak/": {
+      id: "/learner/streak/";
+      path: "/streak";
+      fullPath: "/learner/streak/";
+      preLoaderRoute: typeof LearnerStreakIndexRouteImport;
+      parentRoute: typeof LearnerRouteRoute;
+    };
+    "/learner/shop/": {
+      id: "/learner/shop/";
+      path: "/shop";
+      fullPath: "/learner/shop/";
+      preLoaderRoute: typeof LearnerShopIndexRouteImport;
       parentRoute: typeof LearnerRouteRoute;
     };
     "/learner/settings/": {
@@ -995,6 +1037,8 @@ interface LearnerRouteRouteChildren {
   LearnerRoadmapsIndexRoute: typeof LearnerRoadmapsIndexRoute;
   LearnerSearchIndexRoute: typeof LearnerSearchIndexRoute;
   LearnerSettingsIndexRoute: typeof LearnerSettingsIndexRoute;
+  LearnerShopIndexRoute: typeof LearnerShopIndexRoute;
+  LearnerStreakIndexRoute: typeof LearnerStreakIndexRoute;
   LearnerSubscriptionsIndexRoute: typeof LearnerSubscriptionsIndexRoute;
   LearnerCoursesCourseIdIndexRoute: typeof LearnerCoursesCourseIdIndexRoute;
   LearnerPaymentCancelIndexRoute: typeof LearnerPaymentCancelIndexRoute;
@@ -1012,6 +1056,8 @@ const LearnerRouteRouteChildren: LearnerRouteRouteChildren = {
   LearnerRoadmapsIndexRoute: LearnerRoadmapsIndexRoute,
   LearnerSearchIndexRoute: LearnerSearchIndexRoute,
   LearnerSettingsIndexRoute: LearnerSettingsIndexRoute,
+  LearnerShopIndexRoute: LearnerShopIndexRoute,
+  LearnerStreakIndexRoute: LearnerStreakIndexRoute,
   LearnerSubscriptionsIndexRoute: LearnerSubscriptionsIndexRoute,
   LearnerCoursesCourseIdIndexRoute: LearnerCoursesCourseIdIndexRoute,
   LearnerPaymentCancelIndexRoute: LearnerPaymentCancelIndexRoute,

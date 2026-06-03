@@ -757,7 +757,9 @@
       "desc": "Lộ trình học tập có cấu trúc từ người mới đến sẵn sàng nghề nghiệp."
     },
     "log_in": "Đăng nhập",
-    "sign_up": "Đăng ký"
+    "sign_up": "Đăng ký",
+    "diamond_tooltip": "Xem Cửa hàng",
+    "streak_tooltip": "Xem Chuỗi học tập"
   },
   "notification": {
     "title": "Thông báo",
@@ -920,18 +922,17 @@
     "by_creator": "Bởi {{name}}",
     "submitted": "Đã gửi {{date}}"
   },
-  "course_completion": {
-    "lesson": "Bài học",
-    "lab": "Phòng LAB",
-    "check": "Kiểm tra",
-    "course": "Khóa học",
-    "roadmap": "Lộ trình",
-    "certificate": "Chứng chỉ",
-    "public": "Công khai",
-    "private": "Riêng tư",
-    "starter": "Starter",
-    "pro": "Pro",
-    "career": "Career"
+  "shop": {
+    "title": "Cửa hàng Learnify",
+    "coming_soon": "Cửa hàng sẽ sớm được cập nhật!",
+    "message": "Chúc bạn học tốt và tích lũy thật nhiều trước khi cửa hàng hoàn thiện! Sẽ có nhiều thứ xứng đáng với công sức của bạn!",
+    "back": "Quay lại Bảng điều khiển"
+  },
+  "streak": {
+    "title": "Chuỗi học tập",
+    "coming_soon": "Bảo vệ & Tăng cường Chuỗi — Sắp ra mắt!",
+    "message": "Chuỗi học tập hàng ngày của bạn sẽ mở khóa những công cụ mạnh mẽ: đóng băng chuỗi để bảo vệ tiến độ vào những ngày bận rộn, tăng XP để hoàn thành khóa học nhanh hơn, và phần thưởng độc quyền cho chuỗi dài ngày. Hãy kiên trì và gặt hái thành quả!",
+    "back": "Quay lại Bảng điều khiển"
   },
   "course_completion": {
     "title": "Hoàn thành khóa học!",
