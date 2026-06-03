@@ -31,7 +31,7 @@
     gap: toRem(25);
     width: 100%;
 
-    > .controls {
+    .controls {
       width: 100%;
       display: flex;
       gap: toRem(20);
@@ -39,9 +39,9 @@
       align-items: center;
 
       &__left {
-        display: flex;
+        @include flex-gap(8);
+        flex-direction: row;
         align-items: center;
-        gap: toRem(8);
         position: relative;
       }
     }

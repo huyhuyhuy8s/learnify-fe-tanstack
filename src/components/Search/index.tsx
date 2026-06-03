@@ -26,14 +26,14 @@ const Search = (props: TSearchProps) => {
   > = (e) => {
     e.preventDefault();
     const query = trim(value);
-    if (!query) return;
 
     if (onSearch) onSearch(query);
-    else navigate({ to: "/learner/search", search: { q: query } });
+    else if (query) navigate({ to: "/learner/search", search: { q: query } });
   };
 
   const handleClear = () => {
     setValue("");
+    if (onSearch) onSearch("");
     inputRef.current?.focus();
   };
 

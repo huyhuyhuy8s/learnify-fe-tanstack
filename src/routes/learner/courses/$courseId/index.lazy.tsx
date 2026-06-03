@@ -72,7 +72,7 @@ function CourseComponent() {
       !isInstructorOrAdmin
     ) {
       toast.error(t("course_detail.private_course"));
-      navigate({ to: "/learner/courses" });
+      navigate({ to: "/learner/courses", search: { q: "" } });
     }
   }, [getCourseById?.status, isInstructorOrAdmin, navigate, t]);
 

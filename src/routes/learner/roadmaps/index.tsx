@@ -1,7 +1,9 @@
 import "./roadmaps.scss";
 
 import Card from "@/components/Card";
+import Empty from "@/components/Empty";
 import ErrorScene from "@/components/ErrorScene";
+import Icon from "@/components/Icon";
 import Search from "@/components/Search";
 import TetrisLoader from "@/components/TetrisLoader";
 import TextButton from "@/components/TextButton";
@@ -14,10 +16,16 @@ import {
 } from "@tanstack/react-router";
 import { Suspense, useMemo } from "react";
 import { Trans, useTranslation } from "react-i18next";
+import { z } from "zod";
 import CategoryItem from "./-components/CategoryItem";
-import { CATEGORIES } from "./-constants";
+import { CATEGORIES, type TCategoryKey } from "./-constants";
 import RouterComponentHolder from "@/components/RouterComponentHolder";
 import NotFound from "@/components/NotFound";
+
+const searchSchema = z.object({
+  q: z.string().catch(""),
+  category: z.string().optional().catch(undefined),
+});
 
 function RoadmapsErrorComponent() {
   const router = useRouter();
@@ -56,6 +64,7 @@ function RoadmapsErrorComponent() {
 }
 
 export const Route = createFileRoute("/learner/roadmaps/")({
+  validateSearch: searchSchema,
   head: () => createLearnerHead("Roadmaps"),
   errorComponent: RoadmapsErrorComponent,
   pendingComponent: () => <RouterComponentHolder children={<TetrisLoader />} />,
@@ -66,12 +75,14 @@ export const Route = createFileRoute("/learner/roadmaps/")({
 function RoadmapsPage() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const { q, category } = Route.useSearch();
 
   const { data: roadmapData } = useSuspenseAllRoadmaps();
 
+  const activeCategory = category as TCategoryKey | undefined;
+
   const displayRoadmaps = useMemo(() => {
     if (!roadmapData?.roadmap) return [];
-
     return roadmapData.roadmap.map((item) => ({
       id: item.id,
       typeSpecial: "roadmap" as const,
@@ -82,6 +93,42 @@ function RoadmapsPage() {
       percentage: 0,
     }));
   }, [roadmapData]);
+
+  const filteredRoadmaps = useMemo(() => {
+    let result = displayRoadmaps;
+
+    if (q) {
+      const query = q.toLowerCase();
+      result = result.filter(
+        (r) =>
+          r.title.toLowerCase().includes(query) ||
+          (r.description?.toLowerCase() ?? "").includes(query)
+      );
+    }
+
+    if (activeCategory) {
+      const cat = CATEGORIES.find((c) => c.key === activeCategory);
+      if (cat) {
+        const query = q?.toLowerCase() ?? "";
+        result = result.filter((r) => {
+          const text = `${r.title} ${r.description ?? ""}`.toLowerCase();
+          return cat.keywords.some((kw) => text.includes(kw));
+        });
+      }
+    }
+
+    return result;
+  }, [displayRoadmaps, q, activeCategory]);
+
+  const handleCategoryClick = (key: TCategoryKey) => {
+    navigate({
+      to: "/learner/roadmaps",
+      search: {
+        q,
+        category: key === activeCategory ? undefined : key,
+      },
+    });
+  };
 
   return (
     <div className="roadmaps-container">
@@ -99,41 +146,72 @@ function RoadmapsPage() {
         <div className="roadmaps-content">
           <Search
             onSearch={(query) =>
-              navigate({ to: "/learner/roadmaps", search: { q: query } })
+              navigate({
+                to: "/learner/roadmaps",
+                search: { q: query || "", category: category },
+              })
             }
           />
           <div className="roadmaps-container__categories-list">
-            {CATEGORIES.map((item, index) => (
+            {CATEGORIES.map((item) => (
               <CategoryItem
-                key={index}
-                icon={item.icon}
+                key={item.key}
+                icon={item.icon as any}
                 labelKey={item.labelKey}
-                onClick={() => undefined}
+                selected={activeCategory === item.key}
+                onClick={() => handleCategoryClick(item.key)}
               />
             ))}
-          </div>
-
-          <div className="roadmaps-container__list">
-            {displayRoadmaps.map((roadmap) => (
-              <Card
-                key={roadmap.id}
-                typeSpecial={roadmap.typeSpecial}
-                title={roadmap.title}
-                description={roadmap.description}
-                duration={roadmap.duration}
-                status={roadmap.status}
-                percentage={roadmap.percentage}
+            {activeCategory && (
+              <TextButton
+                text={t("courses.filter_clear")}
+                size="tiny"
+                type="secondary"
                 onClick={() =>
                   navigate({
-                    to: "/learner/roadmaps/$roadmapId",
-                    params: {
-                      roadmapId: roadmap.id.toString(),
-                    },
+                    to: "/learner/roadmaps",
+                    search: { q, category: undefined },
                   })
                 }
               />
-            ))}
+            )}
           </div>
+
+          {filteredRoadmaps.length > 0 ? (
+            <div className="roadmaps-container__list">
+              {filteredRoadmaps.map((roadmap) => (
+                <Card
+                  key={roadmap.id}
+                  typeSpecial={roadmap.typeSpecial}
+                  title={roadmap.title}
+                  description={roadmap.description}
+                  duration={roadmap.duration}
+                  status={roadmap.status}
+                  percentage={roadmap.percentage}
+                  onClick={() =>
+                    navigate({
+                      to: "/learner/roadmaps/$roadmapId",
+                      params: {
+                        roadmapId: roadmap.id.toString(),
+                      },
+                    })
+                  }
+                />
+              ))}
+            </div>
+          ) : (
+            <Empty>
+              <Empty.Header>
+                <Empty.Media variant="icon">
+                  <Icon name="close" />
+                </Empty.Media>
+                <Empty.Title>{t("search.no_results")}</Empty.Title>
+                <Empty.Description>
+                  {t("search.no_results_desc")}
+                </Empty.Description>
+              </Empty.Header>
+            </Empty>
+          )}
         </div>
       </Suspense>
     </div>

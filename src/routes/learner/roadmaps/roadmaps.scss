@@ -27,6 +27,7 @@
 
   &__categories-list {
     display: flex;
+    align-items: center;
     gap: toRem(50);
     flex-wrap: wrap;
     justify-content: center;

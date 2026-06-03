@@ -96,10 +96,13 @@ function CoursesPage() {
     [data, isBackendSuccess]
   );
 
-  const filters: TCourseFilters = {
-    courseType: courseType ?? undefined,
-    durationRange: duration ?? undefined,
-  };
+  const filters: TCourseFilters = useMemo(
+    () => ({
+      courseType: courseType ?? undefined,
+      durationRange: duration ?? undefined,
+    }),
+    [courseType, duration]
+  );
 
   const filteredCourses = useMemo(() => {
     let result = allCourses;
@@ -169,7 +172,7 @@ function CoursesPage() {
               navigate({
                 to: "/learner/courses",
                 search: {
-                  q: query || undefined,
+                  q: query,
                   courseType: filters.courseType,
                   duration: filters.durationRange,
                 },
@@ -197,7 +200,8 @@ function CoursesPage() {
                 <TextButton
                   text={t("courses.filter_clear")}
                   size="tiny"
-                  type="secondary"
+                  type="outlined"
+                  icon="close"
                   onClick={clearFilters}
                 />
               )}
