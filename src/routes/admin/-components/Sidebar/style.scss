@@ -1,0 +1,174 @@
+@use "@styles/variables" as *;
+@use "@styles/colors" as *;
+@use "@styles/mixins" as *;
+@use "@styles/functions" as *;
+
+.admin-sidebar {
+  width: toRem(240);
+  height: 100%;
+  flex-shrink: 0;
+  background-color: $white;
+  border-right: toRem(1) solid $neutral-200;
+  @include box-shadow(2, 0, 20, 0);
+
+  display: flex;
+  flex-direction: column;
+  padding: toRem(0) toRem(0) toRem(24) toRem(0);
+  overflow: hidden;
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: toRem(12);
+    padding: toRem(20) toRem(20);
+    border-bottom: toRem(1) solid $neutral-200;
+    margin-bottom: toRem(12);
+    flex-shrink: 0;
+  }
+
+  &__brand-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: toRem(40);
+    height: toRem(40);
+    border-radius: $br-sm;
+    background-color: $navy-600;
+    color: $white;
+    flex-shrink: 0;
+  }
+
+  &__brand-text {
+    font-size: $fs-paragraph;
+    font-weight: $fw-bold;
+    color: $neutral-900;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+
+  &__nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: toRem(0) toRem(12);
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: toRem(2);
+  }
+
+  &__item {
+    width: 100%;
+  }
+
+  &__link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: toRem(12);
+    padding: toRem(11) toRem(12);
+    border-radius: $br-sm;
+    text-decoration: none;
+    @include transition;
+    transition-property: background-color, color;
+
+    .admin-sidebar__icon-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: toRem(32);
+      height: toRem(32);
+      border-radius: $br-xs;
+      color: $neutral-500;
+      flex-shrink: 0;
+      @include transition;
+      transition-property: color;
+    }
+
+    .admin-sidebar__label {
+      font-size: $fs-paragraph;
+      font-weight: $fw-medium;
+      color: $neutral-600;
+      line-height: 1.2;
+      @include transition;
+      transition-property: color, font-weight;
+    }
+
+    &:hover {
+      background-color: $neutral-100;
+
+      .admin-sidebar__icon-wrap {
+        color: $navy-600;
+      }
+
+      .admin-sidebar__label {
+        color: $navy-600;
+      }
+    }
+
+    &--active {
+      background-color: $navy-pastel-100;
+      position: relative;
+
+      .admin-sidebar__icon-wrap {
+        color: $navy-600;
+      }
+
+      .admin-sidebar__label {
+        color: $navy-700;
+        font-weight: $fw-semibold;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: toRem(-12);
+        top: 50%;
+        transform: translateY(-50%);
+        width: toRem(3);
+        height: 60%;
+        border-radius: 0 $br-xs $br-xs 0;
+        background-color: $navy-600;
+      }
+    }
+  }
+
+  &__footer {
+    padding: toRem(16) toRem(12) toRem(0);
+    flex-shrink: 0;
+    border-top: toRem(1) solid $neutral-200;
+    margin-top: auto;
+  }
+
+  &__add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: toRem(8);
+    width: 100%;
+    padding: toRem(11) toRem(16);
+    background-color: $navy-600;
+    color: $white;
+    font-size: $fs-paragraph;
+    font-weight: $fw-semibold;
+    border: none;
+    border-radius: $br-sm;
+    cursor: pointer;
+    @include transition;
+    transition-property: background-color, transform;
+
+    &:hover {
+      background-color: $navy-700;
+      transform: translateY(toRem(-1));
+    }
+
+    &:active {
+      transform: translateY(0);
+      background-color: $navy-800;
+    }
+  }
+}
