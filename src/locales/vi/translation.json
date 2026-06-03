@@ -320,7 +320,20 @@
     "aria_label": "Tìm kiếm",
     "label": "Tìm kiếm khóa học",
     "submit_aria": "Tìm kiếm",
-    "clear_tooltip": "Xóa tìm kiếm"
+    "clear_tooltip": "Xóa tìm kiếm",
+    "results_for": "Kết quả tìm kiếm cho \"{{query}}\"",
+    "section_courses": "Khóa học",
+    "section_roadmaps": "Lộ trình",
+    "section_lessons": "Bài học",
+    "found_courses_zero": "Không tìm thấy khóa học nào",
+    "found_courses_one": "{{count}} khóa học",
+    "found_courses_other": "{{count}} khóa học",
+    "found_roadmaps_one": "{{count}} lộ trình",
+    "found_roadmaps_other": "{{count}} lộ trình",
+    "found_lessons_one": "{{count}} bài học",
+    "found_lessons_other": "{{count}} bài học",
+    "no_results": "Không tìm thấy kết quả",
+    "no_results_desc": "Hãy thử từ khóa khác hoặc duyệt danh mục."
   },
   "footer": {
     "banner_alt": "footer-banner",

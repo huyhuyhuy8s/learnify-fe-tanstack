@@ -121,6 +121,10 @@
         color: $black;
         font-size: toRem(30);
         aspect-ratio: 1;
+
+        [data-theme="dark"] & {
+          color: $white;
+        }
       }
     }
   }

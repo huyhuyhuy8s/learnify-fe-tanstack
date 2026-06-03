@@ -345,3 +345,20 @@ export const GET_COURSE_PRICE_QUERY = `
     }
   }
 `;
+
+export const GET_ALL_LESSONS_QUERY = `
+  query GetAllLessons {
+    getAllLessons {
+      isSuccess
+      count
+      message
+      lessons {
+        id
+        lessonName
+        abstract
+        courseId
+        createdAt
+      }
+    }
+  }
+`;

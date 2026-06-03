@@ -61,7 +61,8 @@ export const useButton = (props: TUseButtonProps) => {
 
   const iconLabel = type === "special" ? t(`special.${typeSpecial}`) : text;
 
-  const toolTipContent = type === "special" ? "" : tooltip;
+  const toolTipContent =
+    type === "special" ? t(`special_tooltip.${typeSpecial}`) : tooltip;
 
   return {
     onClickHandler,

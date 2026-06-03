@@ -4,17 +4,19 @@ import ErrorScene from "@/components/ErrorScene";
 import Icon from "@/components/Icon";
 import TetrisLoader from "@/components/TetrisLoader";
 import TextButton from "@/components/TextButton";
-import {
-  useSuspenseGetAllCourses,
-  type TBackendCourse,
-} from "@/hooks/useCourses";
+import { useGetAllCourses, type TBackendCourse } from "@/hooks/useCourses";
+import { useAllRoadmaps, type TBackendRoadmapItem } from "@/hooks/useRoadmap";
+import { graphqlClient } from "@/lib/graphql";
+import { GET_ALL_LESSONS_QUERY } from "@/graphql/course";
+import { useQuery } from "@tanstack/react-query";
 import { createLearnerHead } from "@/utils";
 import {
   createFileRoute,
   useNavigate,
   useRouter,
 } from "@tanstack/react-router";
-import { Suspense, useMemo } from "react";
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { z } from "zod";
 import "./style.scss";
 
@@ -55,6 +57,21 @@ function SearchErrorComponent() {
   );
 }
 
+type TLessonSearchItem = {
+  id: string;
+  lessonName: string;
+  abstract: string;
+  courseId: string;
+};
+
+type TLessonResponse = {
+  getAllLessons: {
+    isSuccess: boolean;
+    count: number;
+    lessons: TLessonSearchItem[];
+  };
+};
+
 export const Route = createFileRoute("/learner/search/")({
   validateSearch: searchSchema,
   errorComponent: SearchErrorComponent,
@@ -63,75 +80,174 @@ export const Route = createFileRoute("/learner/search/")({
 });
 
 function SearchPage() {
+  const { t } = useTranslation();
   const { q } = Route.useSearch();
   const navigate = useNavigate();
-  const { data } = useSuspenseGetAllCourses(0);
+
+  const { data: courseData, isLoading: coursesLoading } = useGetAllCourses(0);
+  const { data: roadmapData, isLoading: roadmapsLoading } = useAllRoadmaps();
+  const { data: lessonData, isLoading: lessonsLoading } =
+    useQuery<TLessonResponse>({
+      queryKey: ["all-lessons"],
+      queryFn: async () =>
+        graphqlClient.request<TLessonResponse>(GET_ALL_LESSONS_QUERY),
+    });
+
+  const query = q.trim().toLowerCase();
 
   const filteredCourses = useMemo(() => {
-    if (!data?.isSuccess || !q.trim()) return [];
-    const query = q.toLowerCase().trim();
-    return data.courses.filter(
+    if (!courseData?.isSuccess || !query) return [];
+    return courseData.courses.filter(
       (course: TBackendCourse) =>
         course.courseName.toLowerCase().includes(query) ||
         course.abstract?.toLowerCase().includes(query)
     );
-  }, [data, q]);
+  }, [courseData, query]);
 
-  const displayCourses = filteredCourses.map((course: TBackendCourse) => ({
-    id: course.id,
-    typeSpecial: "course" as const,
-    title: course.courseName,
-    description: course.abstract,
-    duration: 45,
-    status: "default" as const,
-    percentage: 0,
-  }));
+  const filteredRoadmaps = useMemo(() => {
+    if (!roadmapData?.isSuccess || !query) return [];
+    return roadmapData.roadmap.filter(
+      (item: TBackendRoadmapItem) =>
+        item.roadMapName.toLowerCase().includes(query) ||
+        item.abstract?.toLowerCase().includes(query)
+    );
+  }, [roadmapData, query]);
+
+  const filteredLessons = useMemo(() => {
+    if (!lessonData?.getAllLessons?.isSuccess || !query) return [];
+    return lessonData.getAllLessons.lessons.filter(
+      (lesson: TLessonSearchItem) =>
+        lesson.lessonName.toLowerCase().includes(query) ||
+        lesson.abstract?.toLowerCase().includes(query)
+    );
+  }, [lessonData, query]);
+
+  const isLoading = coursesLoading || roadmapsLoading || lessonsLoading;
+  const hasQuery = !!query;
+  const hasResults =
+    filteredCourses.length > 0 ||
+    filteredRoadmaps.length > 0 ||
+    filteredLessons.length > 0;
 
   return (
-    <Suspense fallback={<TetrisLoader />}>
-      <div className="search-page">
-        <div className="search-page__header">
-          <h2 className="medium">
-            {q.trim()
-              ? `Showing results for "${q.trim()}"`
-              : "Search for courses"}
-          </h2>
-          <p className="regular">{displayCourses.length} course(s) found</p>
-        </div>
-        {displayCourses.length > 0 ? (
-          <div className="search-page__list">
-            {displayCourses.map((course) => (
-              <Card
-                key={course.id}
-                typeSpecial={course.typeSpecial}
-                title={course.title}
-                description={course.description}
-                duration={course.duration}
-                status={course.status}
-                percentage={course.percentage}
-                onClick={() =>
-                  navigate({
-                    to: "/learner/courses/$courseId",
-                    params: { courseId: course.id.toString() },
-                  })
-                }
-              />
-            ))}
-          </div>
-        ) : q.trim() ? (
-          <Empty>
-            <Empty.Header>
-              <Empty.Media variant="icon">
-                <Icon name="search_off" />
-              </Empty.Media>
-              <Empty.Title>No results found</Empty.Title>
-              <Empty.Description>
-                Try a different search term or browse courses.
-              </Empty.Description>
-            </Empty.Header>
-          </Empty>
-        ) : null}
+    <div className="search-page">
+      <div className="search-page__header">
+        <h2 className="medium">
+          {hasQuery
+            ? t("search.results_for", { query })
+            : t("search.placeholder")}
+        </h2>
       </div>
-    </Suspense>
+
+      {isLoading ? (
+        <TetrisLoader />
+      ) : hasResults ? (
+        <div className="search-page__results">
+          {filteredCourses.length > 0 && (
+            <section className="search-page__section">
+              <div className="search-page__section-header">
+                <h3 className="search-page__section-title">
+                  {t("search.section_courses")}
+                </h3>
+                <span className="search-page__section-count">
+                  {t("search.found_courses", { count: filteredCourses.length })}
+                </span>
+              </div>
+              <div className="search-page__grid">
+                {filteredCourses.map((course: TBackendCourse) => (
+                  <Card
+                    key={course.id}
+                    typeSpecial="course"
+                    title={course.courseName}
+                    description={course.abstract}
+                    duration={45}
+                    status="default"
+                    percentage={0}
+                    onClick={() =>
+                      navigate({
+                        to: "/learner/courses/$courseId",
+                        params: { courseId: course.id.toString() },
+                      })
+                    }
+                  />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {filteredRoadmaps.length > 0 && (
+            <section className="search-page__section">
+              <div className="search-page__section-header">
+                <h3 className="search-page__section-title">
+                  {t("search.section_roadmaps")}
+                </h3>
+                <span className="search-page__section-count">
+                  {t("search.found_roadmaps", {
+                    count: filteredRoadmaps.length,
+                  })}
+                </span>
+              </div>
+              <div className="search-page__grid">
+                {filteredRoadmaps.map((item: TBackendRoadmapItem) => (
+                  <Card
+                    key={item.id}
+                    typeSpecial="roadmap"
+                    title={item.roadMapName}
+                    description={item.abstract}
+                    onClick={() =>
+                      navigate({
+                        to: "/learner/roadmaps/$roadmapId",
+                        params: { roadmapId: item.id.toString() },
+                      })
+                    }
+                  />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {filteredLessons.length > 0 && (
+            <section className="search-page__section">
+              <div className="search-page__section-header">
+                <h3 className="search-page__section-title">
+                  {t("search.section_lessons")}
+                </h3>
+                <span className="search-page__section-count">
+                  {t("search.found_lessons", {
+                    count: filteredLessons.length,
+                  })}
+                </span>
+              </div>
+              <div className="search-page__grid">
+                {filteredLessons.map((lesson: TLessonSearchItem) => (
+                  <Card
+                    key={lesson.id}
+                    typeSpecial="lesson"
+                    title={lesson.lessonName}
+                    description={lesson.abstract}
+                    onClick={() =>
+                      navigate({
+                        to: "/learner/lessons/$lessonId",
+                        params: { lessonId: lesson.id.toString() },
+                      })
+                    }
+                  />
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
+      ) : hasQuery ? (
+        <Empty>
+          <Empty.Header>
+            <Empty.Media variant="icon">
+              <Icon name="close" />
+            </Empty.Media>
+            <Empty.Title>{t("search.no_results")}</Empty.Title>
+            <Empty.Description>{t("search.no_results_desc")}</Empty.Description>
+          </Empty.Header>
+        </Empty>
+      ) : null}
+    </div>
   );
 }
