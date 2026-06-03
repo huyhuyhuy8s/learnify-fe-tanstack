@@ -1,10 +1,11 @@
+import type { TIconName } from "@/components/Icon";
 import type { TStatusCard } from "@/types/global";
 
 const useCardFooterButton = (
   status: TStatusCard
 ): {
   tooltip: string;
-  icon: string;
+  icon: TIconName;
 } => {
   switch (status) {
     case "locked":

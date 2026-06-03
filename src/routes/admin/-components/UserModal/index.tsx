@@ -187,7 +187,7 @@ const UserModal = ({
             onClick={() => {}}
             disabled={isPending}
             loading={isPending}
-            icon={isPending ? "progress_activity" : isEdit ? "save" : "plus"}
+            icon={isPending ? "progress_activity" : isEdit ? "save" : "add"}
             size="medium"
             type="primary"
           />

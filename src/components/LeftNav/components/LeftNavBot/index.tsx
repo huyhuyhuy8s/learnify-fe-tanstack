@@ -1,6 +1,6 @@
 import "./style.scss";
 
-import Icon from "@/components/Icon";
+import Icon, { type TIconName } from "@/components/Icon";
 import IconButton from "@/components/IconButton";
 import { useAuthStore } from "@/store/authStore";
 import { useTheme } from "@/hooks/useTheme";
@@ -24,7 +24,7 @@ const useHydrated = () =>
 type TPortal = {
   key: string;
   path: string;
-  icon: string;
+  icon: TIconName;
   labelKey: string;
 };
 

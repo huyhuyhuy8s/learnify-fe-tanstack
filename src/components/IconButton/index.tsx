@@ -1,15 +1,15 @@
 import "./style.scss";
 import classNames from "classnames";
 import { useState, useMemo, type ButtonHTMLAttributes } from "react";
-import Icon from "@/components/Icon";
+import Icon, { type TIconName } from "@/components/Icon";
 
 type TconButtonProp = {
-  icon: string;
+  icon: TIconName;
   onClick?: () => void;
   type?: "primary" | "special" | "secondary" | "outlined" | "custom";
   state?: "default" | "hover" | "clicked" | "clickedHover";
   shape?: "square" | "circle";
-  specialIcon?: string;
+  specialIcon?: TIconName;
   size?: "tiny" | "small" | "medium" | "large";
   color?: string;
   backgroundColor?: string;

@@ -26,7 +26,7 @@
   display: flex;
   place-items: center;
   justify-content: center;
-  color: $neutral-100;
+  color: $black;
   @include transition;
   transition-property:
     color, background-color, border-color, border-radius,
@@ -42,6 +42,7 @@
   svg {
     @include transition;
     transition-property: color;
+    color: inherit;
   }
 
   span {

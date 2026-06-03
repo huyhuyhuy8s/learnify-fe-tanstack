@@ -1,11 +1,11 @@
 import "./style.scss";
 
 import { useTranslation } from "react-i18next";
-import Icon from "@/components/Icon";
+import Icon, { type TIconName } from "@/components/Icon";
 
 type TActivityItem = {
   id: string;
-  icon: string;
+  icon: TIconName;
   iconMod: "blue" | "green" | "orange" | "red";
   message: string;
   time: string;

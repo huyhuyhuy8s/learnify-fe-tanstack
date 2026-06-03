@@ -1,9 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import Icon from "@/components/Icon";
+import Icon, { type TIconName } from "@/components/Icon";
 import "./style.scss";
 
 type TLeftNavItemProps = {
-  iconName: string;
+  iconName: TIconName;
   label: string;
   href: string;
   className?: string;

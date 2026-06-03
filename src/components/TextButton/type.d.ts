@@ -1,3 +1,4 @@
+import type { TIconName } from "@/components/Icon";
 import type {
   TType,
   TRoundedCorner,
@@ -7,7 +8,7 @@ import type {
 } from "@/types/global";
 
 export type TTextButtonProps = {
-  icon?: string;
+  icon?: TIconName;
   onClick: () => void | Promise<void>;
   leftIcon?: boolean;
   rightIcon?: boolean;
@@ -32,6 +33,6 @@ export type TIconProps = {
   visible: boolean;
   type: TType;
   typeSpecial?: TSpecial;
-  icon?: string;
+  icon?: TIconName;
   color?: string;
 };

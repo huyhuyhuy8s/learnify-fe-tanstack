@@ -1,5 +1,7 @@
+import type { TIconName } from "@/components/Icon";
+
 export type TTopItem = {
-  iconName: string;
+  iconName: TIconName;
   labelKey: string;
   href: string;
 };

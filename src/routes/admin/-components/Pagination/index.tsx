@@ -85,7 +85,6 @@ const Pagination = ({
           ) : (
             <TextButton
               key={page}
-              icon=""
               text={String(page)}
               tooltip={t("admin.pagination.page_tooltip", {
                 page: String(page),

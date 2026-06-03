@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import classnames from "classnames";
 
 import ErrorScene from "@/components/ErrorScene";
-import Icon from "@/components/Icon";
+import Icon, { type TIconName } from "@/components/Icon";
 import TextButton from "@/components/TextButton";
 
 import type { TGraphqlErrorProps } from "./type";
@@ -21,7 +21,7 @@ type GraphQLErrorResponse = {
 
 const ERROR_CONFIG: Record<
   string,
-  { localeKey: string; adviceKey: string; icon: string }
+  { localeKey: string; adviceKey: string; icon: TIconName }
 > = {
   ThrottlerException: {
     localeKey: "errors.throttler_title",

@@ -209,13 +209,23 @@ import visibilitySvg from "@material-symbols/svg-400/rounded/visibility.svg?raw"
 import visibilityFillSvg from "@material-symbols/svg-400/rounded/visibility-fill.svg?raw";
 import visibility_offSvg from "@material-symbols/svg-400/rounded/visibility_off.svg?raw";
 import visibility_offFillSvg from "@material-symbols/svg-400/rounded/visibility_off-fill.svg?raw";
+import calendar_todaySvg from "@material-symbols/svg-400/rounded/calendar_today.svg?raw";
+import calendar_todayFillSvg from "@material-symbols/svg-400/rounded/calendar_today-fill.svg?raw";
+import action_keySvg from "@material-symbols/svg-400/rounded/action_key.svg?raw";
+import action_keyFillSvg from "@material-symbols/svg-400/rounded/action_key-fill.svg?raw";
+import saveSvg from "@material-symbols/svg-400/rounded/save.svg?raw";
+import saveFillSvg from "@material-symbols/svg-400/rounded/save-fill.svg?raw";
+import filter_listSvg from "@material-symbols/svg-400/rounded/filter_list.svg?raw";
+import filter_listFillSvg from "@material-symbols/svg-400/rounded/filter_list-fill.svg?raw";
+import scheduleSvg from "@material-symbols/svg-400/rounded/schedule.svg?raw";
+import scheduleFillSvg from "@material-symbols/svg-400/rounded/schedule-fill.svg?raw";
 
 function extractPath(raw: string) {
   const match = raw.match(/<path d="([^"]+)"/);
   return match?.[1] ?? "";
 }
 
-export const iconPaths: Record<string, { regular: string; fill: string }> = {
+export const iconPaths = {
   account_tree: {
     regular: extractPath(account_treeSvg),
     fill: extractPath(account_treeFillSvg),
@@ -540,4 +550,26 @@ export const iconPaths: Record<string, { regular: string; fill: string }> = {
     regular: extractPath(visibility_offSvg),
     fill: extractPath(visibility_offFillSvg),
   },
-} as const;
+  calendar_today: {
+    regular: extractPath(calendar_todaySvg),
+    fill: extractPath(calendar_todayFillSvg),
+  },
+  action_key: {
+    regular: extractPath(action_keySvg),
+    fill: extractPath(action_keyFillSvg),
+  },
+  save: {
+    regular: extractPath(saveSvg),
+    fill: extractPath(saveFillSvg),
+  },
+  filter_list: {
+    regular: extractPath(filter_listSvg),
+    fill: extractPath(filter_listFillSvg),
+  },
+  schedule: {
+    regular: extractPath(scheduleSvg),
+    fill: extractPath(scheduleFillSvg),
+  },
+};
+
+export type TIconName = keyof typeof iconPaths;
