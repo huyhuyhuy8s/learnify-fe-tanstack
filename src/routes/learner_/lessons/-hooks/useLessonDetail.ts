@@ -1,6 +1,7 @@
 import { useMemo, useEffect } from "react";
 import { useLesson } from "@/hooks/useLesson";
 import useLessonFlow from "@/hooks/useLessonFlow";
+import { useLessonProgress } from "@/hooks/useLessonProgress";
 import { useLayout } from "@/contexts/LayoutContext";
 
 export type TLessonDetail = {
@@ -18,12 +19,18 @@ export type TLessonDetail = {
   skipToQuiz: () => void;
   completeLesson: () => void;
   reset: () => void;
+  progressPercentage: number;
+  handleComplete: () => void;
+  isCourseCompleted: boolean;
 };
 
 const useLessonDetail = (lessonId: string): TLessonDetail => {
   const { data, isLoading } = useLesson(lessonId);
   const { state, startLesson, skipToQA, skipToQuiz, completeLesson, reset } =
     useLessonFlow();
+  const courseId = data?.lesson?.courseId;
+  const { progressPercentage, handleComplete, isCourseCompleted } =
+    useLessonProgress(state, lessonId, courseId);
   const { setLayoutConfigState } = useLayout();
 
   const title = data?.course?.courseName || data?.lesson?.lessonName;
@@ -58,6 +65,9 @@ const useLessonDetail = (lessonId: string): TLessonDetail => {
     skipToQuiz,
     completeLesson,
     reset,
+    progressPercentage,
+    handleComplete,
+    isCourseCompleted,
   };
 };
 

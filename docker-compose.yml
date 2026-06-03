@@ -3,6 +3,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - VITE_GRAPHQL_ENDPOINT
+        - VITE_GOOGLE_CLIENT_ID
+        - VITE_ELEVENLABS_API_KEY
+        - VITE_ELEVENLABS_VOICE_ID
+        - VITE_ELENVENLABS_MODEL_ID
+        - VITE_ELEVENLABS_OUTPUT_FORMAT
+        - VITE_ELENVENLABS_ENABLE_TIMESTAMPS
+        - VITE_EDGETTS_VOICE_ID
+        - VITE_MODEL_CDN_URL
     env_file:
       - .env.production
     restart: unless-stopped

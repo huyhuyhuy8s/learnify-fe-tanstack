@@ -50,14 +50,14 @@ export const BLOG_POSTS: BlogPost[] = [
     tags: ["3D", "Science", "Retention"],
   },
   {
-    id: "teacher-toolkit",
-    title: "The Modern Teacher's Toolkit",
+    id: "instructor-toolkit",
+    title: "The Modern Instructor's Toolkit",
     date: "April 20, 2026",
     excerpt:
       "How educators are leveraging AI-powered analytics and 3D content to create more engaging classrooms.",
     category: "Teaching",
     readTime: "5 min read",
-    tags: ["Teachers", "Analytics", "Classroom"],
+    tags: ["Instructors", "Analytics", "Classroom"],
   },
   {
     id: "institution-partnerships",

@@ -1,24 +1,32 @@
-import ChromaGrid from "@/components/ChromaGrid";
-import Icon from "@/components/Icon";
 import { OptimizeImage } from "@/components/Images";
 import PillTopNav from "@/components/PillTopNav";
 import PixelBlast from "@/components/PixelBlast";
+import { ABOUT_STATS } from "@/mock";
+import AboutStat from "@learner/about/-components/AboutStat";
+import MemberItem from "@learner/about/-components/MemberItem";
 import { teamMembers } from "@/mock";
-import { ABOUT_VALUES, MISSION_TEXT, VISION_TEXT } from "@/mock/about";
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
+import { useAboutAnimations } from "./-hooks/useAboutAnimations";
 
 export const Route = createLazyFileRoute("/about-us/")({
   component: AboutUs,
 });
 
 function AboutUs() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const { headRef, heroRef, directionRef, statsRef, visionRef, teamRef } =
+    useAboutAnimations();
+
   return (
     <div className="about-us">
       <PillTopNav />
       <main className="about-us__content">
-        <section className="about-us__hero">
+        <section className="about-us__head" ref={headRef}>
+          <div className="about-us__head-content">
+            <h1 className="about-us__head-title">{t("about.page_title")}</h1>
+            <h3 className="about-us__head-tagline">{t("about.tagline")}</h3>
+          </div>
           <PixelBlast
             color="#3f5a42"
             variant="square"
@@ -26,88 +34,70 @@ function AboutUs() {
             speed={0.4}
             patternDensity={0.8}
           />
-          <div className="about-us__hero-content">
-            <h1>
-              <Trans
-                key={i18n.language}
-                i18nKey="about_us.title"
-                components={{ Beauty: <span className="beauty" /> }}
-              />
-            </h1>
-            <p>{t("about_us.description")}</p>
-          </div>
         </section>
 
-        <section className="about-us__section">
-          <div className="about-us__grid about-us__grid--2col">
-            <div className="about-us__card about-us__card--featured">
-              <div className="about-us__card-icon">
-                <Icon name="rocket_launch" size="2em" />
-              </div>
-              <h3>{t("about_us.mission_title")}</h3>
-              <p>{t("about_us.mission_text", MISSION_TEXT)}</p>
-            </div>
-            <div className="about-us__card about-us__card--featured">
-              <div className="about-us__card-icon">
-                <Icon name="visibility" size="2em" />
-              </div>
-              <h3>{t("about_us.vision_title")}</h3>
-              <p>{t("about_us.vision_text", VISION_TEXT)}</p>
-            </div>
+        <section className="about-us__story" ref={heroRef}>
+          <div className="about-us__story-content">
+            <p>{t("about.hero_paragraph_1")}</p>
+            <p>{t("about.hero_paragraph_2")}</p>
+            <p>{t("about.hero_paragraph_3")}</p>
           </div>
-        </section>
-
-        <section className="about-us__section about-us__grid--2col">
-          <h2>
-            <Trans
-              key={i18n.language}
-              i18nKey="about_us.values_title"
-              components={{ Beauty: <span className="beauty" /> }}
+          <div className="about-us__story-image">
+            <OptimizeImage
+              priority
+              src="/footer.webp"
+              alt={t("about.hero_alt")}
             />
-          </h2>
-          <div className="about-us__grid about-us__grid--4col">
-            {ABOUT_VALUES.map((val) => (
-              <div key={val.key} className="about-us__card">
-                <div className="about-us__card-icon">
-                  <Icon
-                    name={val.icon}
-                    size="1.5em"
-                    style={{ color: val.iconColor }}
-                  />
-                </div>
-                <h4>{t(`about_us.values.${val.key}.title`, val.title)}</h4>
-                <p>{t(`about_us.values.${val.key}.desc`, val.desc)}</p>
-              </div>
+          </div>
+        </section>
+
+        <hr className="about-us__divider" />
+
+        <section className="about-us__direction" ref={directionRef}>
+          <div className="about-us__direction-heading">
+            <h3>{t("about.direction_title")}</h3>
+            <h3 className="about-us__direction-subtitle">
+              {t("about.direction_subtitle")}
+            </h3>
+          </div>
+          <h4 className="about-us__direction-text">
+            {t("about.direction_text")}
+          </h4>
+        </section>
+
+        <section className="about-us__stats" ref={statsRef}>
+          {ABOUT_STATS.map((stat, index) => (
+            <AboutStat
+              key={`stat-${index}`}
+              index={index + 1}
+              color={stat.color}
+              label={stat.label}
+              value={stat.value}
+            />
+          ))}
+        </section>
+
+        <hr className="about-us__divider" />
+
+        <section className="about-us__vision" ref={visionRef}>
+          <h3 className="about-us__vision-heading">
+            {t("about.vision_heading")}
+          </h3>
+          <h4 className="about-us__vision-text">{t("about.vision_text")}</h4>
+        </section>
+
+        <hr className="about-us__divider" />
+
+        <section className="about-us__team" ref={teamRef}>
+          <h3 className="about-us__team-heading">{t("about.team_heading")}</h3>
+          <h4 className="about-us__team-subtitle">
+            {t("about.team_subtitle")}
+          </h4>
+          <div className="about-us__team-grid">
+            {teamMembers.map((member, index) => (
+              <MemberItem key={`team-${index}`} {...member} />
             ))}
           </div>
-        </section>
-
-        <section className="about-us__section">
-          <h2>
-            <Trans
-              key={i18n.language}
-              i18nKey="about_us.team_title"
-              components={{ Beauty: <span className="beauty" /> }}
-            />
-          </h2>
-          <ChromaGrid
-            radius={300}
-            items={teamMembers.map((m) => ({
-              title: m.name,
-              subtitle: m.jobTitle,
-              handle: m.handle,
-              image: (
-                <OptimizeImage
-                  src={m.image.name}
-                  alt={m.name}
-                  folder={m.image.folder}
-                />
-              ),
-              borderColor: m.borderColor,
-              gradient: m.gradient,
-              url: m.url,
-            }))}
-          />
         </section>
       </main>
     </div>

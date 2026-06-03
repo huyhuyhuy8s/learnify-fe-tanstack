@@ -24,7 +24,7 @@ const Loader = (props: TLoaderProps) => {
   if (disabled) return null;
 
   return (
-    <section className="loader-container">
+    <section className="loader-container" data-lenis-prevent>
       <ScreenLoader
         onPhase1Complete={onPhase1Complete}
         ready={ready}

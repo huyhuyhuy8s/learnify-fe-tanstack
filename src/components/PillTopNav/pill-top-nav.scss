@@ -8,7 +8,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 1;
 
   &__inner {
     display: flex;
@@ -98,7 +98,7 @@
     border: toRem(1) solid to-rgba($white, 0.08);
     box-shadow: 0 toRem(16) toRem(40) to-rgba($black, 0.4);
     padding: toRem(8);
-    z-index: 101;
+    z-index: 2;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }
@@ -198,6 +198,19 @@
     }
 
     &__menu {
+      display: none;
+    }
+
+    &__toggle--menu {
+      display: flex;
+    }
+  }
+}
+
+@include break(xs) {
+  .pill-top-nav {
+    &__action-link,
+    &__action-btn {
       display: none;
     }
   }

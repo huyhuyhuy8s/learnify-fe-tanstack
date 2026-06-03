@@ -11,6 +11,8 @@
   width: 100%;
   padding: toRem(30);
   background-color: $green-100;
+  overflow-x: hidden;
+  position: relative;
 
   &__button {
     display: flex;
@@ -47,6 +49,12 @@
     span {
       font-size: $fs-heading5;
     }
+  }
+
+  &__auth-controls {
+    position: absolute;
+    top: toRem(30);
+    right: toRem(30);
   }
 
   &__card {
@@ -162,6 +170,11 @@
     }
   }
 
+  &__links {
+    display: flex;
+    flex-direction: column;
+  }
+
   &__signup-link {
     text-align: center;
   }
@@ -184,51 +197,26 @@
     justify-content: center;
     place-items: center;
 
-    span {
-      font-size: 5dvw;
-      font-weight: $fw-bold;
-      color: $mode-green;
+    svg {
+      color: $black;
     }
   }
 
   @include break(md) {
     &__card {
+      display: flex;
       flex-direction: column;
       padding: toRem(40);
-      background-position-x: 37.5dvw;
+      background-color: $white;
+      background-image: none;
     }
 
     &__separator {
-      width: 100%;
-      height: 1px;
-      align-self: auto;
+      display: none;
     }
 
     &__right {
-      align-items: center;
-    }
-  }
-
-  @include break(sm) {
-    &__card {
-      background-image: none;
-      display: flex;
-    }
-
-    &__name-row {
-      flex-direction: column;
-    }
-
-    &__logo {
-      position: relative;
-      top: auto;
-      left: auto;
-      justify-content: center;
-      margin-bottom: toRem(10);
-    }
-
-    &__right {
-      display: none !important;
+      display: none;
     }
   }
 }

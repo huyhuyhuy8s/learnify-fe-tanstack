@@ -29,7 +29,7 @@ export const AUDIENCES = [
   },
   {
     icon: "local_library",
-    key: "teachers",
+    key: "instructors",
     to: "/auth/sign-up",
   },
   {

@@ -8,7 +8,7 @@ import {
 import { graphqlClient } from "@/lib/graphql";
 import { COLORS } from "@/styles/colors";
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate, useRouterState } from "@tanstack/react-router";
+import { useRouterState } from "@tanstack/react-router";
 import classnames from "classnames";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -29,7 +29,6 @@ const CourseController = ({ className }: TCourseControllerProps) => {
       return (m?.params as { lessonId?: string })?.lessonId;
     },
   });
-  const navigate = useNavigate();
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 1280px)");
@@ -93,6 +92,7 @@ const CourseController = ({ className }: TCourseControllerProps) => {
         { expanded: isExpanded },
         className
       )}
+      data-lenis-prevent
     >
       {isExpanded ? (
         <div className="course-controller_expanded">
@@ -124,12 +124,9 @@ const CourseController = ({ className }: TCourseControllerProps) => {
                     className={classnames("course-controller_lesson", {
                       active: isActive,
                     })}
-                    onClick={() =>
-                      navigate({
-                        to: "/learner/lessons/$lessonId",
-                        params: { lessonId: lesson.id },
-                      })
-                    }
+                    onClick={() => {
+                      window.location.href = `/learner/lessons/${lesson.id}`;
+                    }}
                   >
                     <Icon
                       name={isActive ? "play_circle" : "radio_button_unchecked"}

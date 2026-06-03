@@ -13,32 +13,25 @@
 
   .#{$class}__content {
     flex-direction: column;
-    padding-top: toRem(64);
+    padding: 10dvh 10dvw;
   }
 
   .#{$class}__hero {
-    display: flex;
     @include transition;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    gap: toRem(20);
+    @include flex-gap(20);
+    place-items: center;
+    place-content: center;
     min-height: 50dvh;
-    padding: toRem(80) toRem(32);
     background-color: $neutral-100;
     border-radius: $br-xl;
     position: relative;
-    overflow: hidden;
 
     h1 {
       color: $black;
       line-height: 1.15;
-      max-width: toRem(700);
     }
 
     p {
-      max-width: toRem(560);
       color: to-rgba($black, 0.75);
       line-height: 1.6;
     }
@@ -46,7 +39,6 @@
 
   .#{$class}__hero-content {
     position: relative;
-    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -55,7 +47,6 @@
 
   .#{$class}__section {
     padding: toRem(80) toRem(32);
-    max-width: toRem(1200);
     margin: 0 auto;
     width: 100%;
 
@@ -67,7 +58,7 @@
 
     &--values,
     &--social {
-      max-width: 100%;
+      width: 100%;
     }
   }
 

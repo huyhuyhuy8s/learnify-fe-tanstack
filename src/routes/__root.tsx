@@ -27,8 +27,15 @@ import { SplitText } from "gsap/SplitText";
 import type LocomotiveScroll from "locomotive-scroll";
 import "locomotive-scroll/dist/locomotive-scroll.css";
 import * as React from "react";
-import { Suspense, lazy, useEffect, useState } from "react";
+import {
+  Suspense,
+  lazy,
+  useEffect,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { Toaster, toast } from "sonner";
+import CubeLoader from "@/components/CubeLoader";
 
 gsap.registerPlugin(SplitText, CustomEase, ScrollTrigger);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
@@ -109,13 +116,20 @@ const Root = createRootRouteWithContext<RouterContext>()({
       <NotFound />
     </RootDocument>
   ),
+  pendingComponent: () => {
+    return (
+      <RootDocument>
+        <CubeLoader />
+      </RootDocument>
+    );
+  },
   component: RootComponent,
 });
 
 function RootComponent() {
-  useTheme();
+  const { theme: currentTheme } = useTheme();
   const setAuth = useAuthStore((state) => state.setAuth);
-  const { auth, theme } = Root.useLoaderData();
+  const { auth, theme: serverTheme } = Root.useLoaderData();
   const [phase1Done, setPhase1Done] = useState(false);
   const [pageLoaded, setPageLoaded] = useState(false);
   const [phase2Done, setPhase2Done] = useState(false);
@@ -192,7 +206,10 @@ function RootComponent() {
   }, []);
 
   return (
-    <RootDocument theme={theme || undefined}>
+    <RootDocument
+      theme={currentTheme}
+      serverTheme={(serverTheme as string) || undefined}
+    >
       <Outlet />
       {!showApp && (
         <Loader
@@ -211,9 +228,11 @@ export const Route = Root;
 function RootDocument({
   children,
   theme,
+  serverTheme,
 }: {
   children: React.ReactNode;
   theme?: string;
+  serverTheme?: string;
 }) {
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
   const [lang, setLang] = useState(() => {
@@ -224,6 +243,12 @@ function RootDocument({
     return "en";
   });
 
+  const hydrated = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
+
   useEffect(() => {
     import("@/i18n").then(({ default: i18nInstance }) => {
       setLang(i18nInstance.language);
@@ -231,14 +256,16 @@ function RootDocument({
     });
   }, []);
 
+  const resolvedTheme = hydrated ? theme : serverTheme || "light";
+
   return (
-    <html lang={lang} data-theme={theme || "light"} suppressHydrationWarning>
+    <html lang={lang} data-theme={resolvedTheme} suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
       <body>
         <GoogleOAuthProvider clientId={googleClientId}>
-          <ThemeProvider value={theme as "light" | "dark" | undefined}>
+          <ThemeProvider value={(serverTheme as "light" | "dark") || undefined}>
             <LayoutProvider>
               <main className="main-app">{children}</main>
             </LayoutProvider>

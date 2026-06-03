@@ -1,6 +1,7 @@
 import { Suspense, lazy } from "react";
 import { useTranslation } from "react-i18next";
 
+import CubeLoader from "@/components/CubeLoader";
 import type { TTeacherAnimation } from "../TeacherAnimation/type";
 import type { TTeacherStatus } from "../TeacherStatusIndicator/type";
 import TeacherAvatar2D from "../TeacherAvatar2D";
@@ -33,6 +34,11 @@ type TTeacherPanelProps = {
   onSelectVoice: (voiceId: string) => void;
   onPreviewVoice: (voiceId: string) => void;
   onToggle3DMode: (enabled: boolean) => void;
+  onReload?: () => void;
+  ttsSpeed?: number;
+  onTtsSpeedChange?: (speed: number) => void;
+  autoScroll?: boolean;
+  onAutoScrollChange?: (enabled: boolean) => void;
 };
 
 const TeacherPanel = (props: TTeacherPanelProps) => {
@@ -66,6 +72,11 @@ const TeacherPanel = (props: TTeacherPanelProps) => {
     onSelectVoice,
     onPreviewVoice,
     onToggle3DMode,
+    onReload,
+    ttsSpeed,
+    onTtsSpeedChange,
+    autoScroll,
+    onAutoScrollChange,
   } = props;
 
   if (state === "complete") return null;
@@ -86,11 +97,22 @@ const TeacherPanel = (props: TTeacherPanelProps) => {
     onSelectVoice,
     onPreviewVoice,
     onToggle3DMode,
+    onReload,
+    ttsSpeed,
+    onTtsSpeedChange,
+    autoScroll,
+    onAutoScrollChange,
   };
 
   if (is3DMode) {
     return (
-      <Suspense fallback={null}>
+      <Suspense
+        fallback={
+          <div className="teacher-panel teacher-panel--fallback">
+            <CubeLoader />
+          </div>
+        }
+      >
         <TeacherContainer
           animation={animation}
           onModelReady={onModelReady}

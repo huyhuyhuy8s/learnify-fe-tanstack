@@ -19,6 +19,7 @@ const ChatHeader = (props: TChatHeaderProps) => {
     onSkipQA,
     onSkipQuiz,
     onFlag,
+    flagged,
     state,
   } = props;
   const { inputRef, wrapperRef, handleInputChange, handleSubmit } =
@@ -88,8 +89,9 @@ const ChatHeader = (props: TChatHeaderProps) => {
               icon="flag"
               onClick={onFlag}
               size="tiny"
-              color={COLORS.white}
-              backgroundColor={COLORS.modeOrange}
+              disabled={flagged}
+              color={flagged ? COLORS.neutral500 : COLORS.white}
+              backgroundColor={flagged ? COLORS.neutral200 : COLORS.modeOrange}
               tooltip={t("chat_header.report_issue")}
             />
           </>

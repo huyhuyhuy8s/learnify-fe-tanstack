@@ -7,7 +7,9 @@ import {
   ENROLL_COURSE_MUTATION,
   GET_USER_ENROLLMENTS_QUERY,
   GET_PROGRESS_QUERY,
+  GET_COURSE_PRICE_QUERY,
 } from "@/graphql/course";
+import { GET_PROFILE } from "@/graphql/user";
 import { CREATE_COMMENT_MUTATION } from "@/graphql/comment";
 import { useAuthStore } from "@/store/authStore";
 import type { TStatusCard } from "@/types/global";
@@ -227,6 +229,61 @@ export function useCourseProgress(userId?: string, courseId?: string) {
   });
 }
 
+export type TLearnerProgress = {
+  completedCoursesCount: number;
+  completedLessonsCount: number;
+};
+
+export function useLearnerProgress(userId?: string) {
+  return useQuery({
+    queryKey: ["learner-progress", userId],
+    queryFn: async () => {
+      if (!userId)
+        return { completedCoursesCount: 0, completedLessonsCount: 0 };
+
+      const profile = await graphqlClient.request<{
+        countSuccessEnrollments: { count: number };
+      }>(GET_PROFILE, { userId });
+      const completedCourses = profile.countSuccessEnrollments.count;
+
+      const enrollmentsRes = await graphqlClient.request<{
+        getUserEnrollments: TEnrollment[];
+      }>(GET_USER_ENROLLMENTS_QUERY, { userId });
+
+      const progressResults = await Promise.all(
+        enrollmentsRes.getUserEnrollments.map((enrollment) =>
+          graphqlClient
+            .request<{
+              getProgressByUserAndCourse: {
+                isSuccess: boolean;
+                progress: TProgressItem[];
+              };
+            }>(GET_PROGRESS_QUERY, {
+              userId,
+              courseId: enrollment.courseId,
+            })
+            .catch(() => ({
+              getProgressByUserAndCourse: { isSuccess: false, progress: [] },
+            }))
+        )
+      );
+
+      const completedLessons = progressResults.reduce(
+        (sum, r) =>
+          sum +
+          (r.getProgressByUserAndCourse.progress[0]?.completedLessons ?? 0),
+        0
+      );
+
+      return {
+        completedCoursesCount: completedCourses,
+        completedLessonsCount: completedLessons,
+      };
+    },
+    enabled: !!userId,
+  });
+}
+
 export function useEnrollCourse() {
   const queryClient = useQueryClient();
 
@@ -257,5 +314,28 @@ export function useEnrollCourse() {
     onError: (error) => {
       toast.error(error.message);
     },
+  });
+}
+
+type GetCoursePriceResponse = {
+  getCoursePrice: {
+    id: string;
+    originalPrice: number;
+    salePrice?: number | null;
+    isFree: boolean;
+  };
+};
+
+export function useCoursePrice(courseId: string) {
+  return useQuery({
+    queryKey: ["coursePrice", courseId],
+    queryFn: async () => {
+      const response = await graphqlClient.request<GetCoursePriceResponse>(
+        GET_COURSE_PRICE_QUERY,
+        { courseId }
+      );
+      return response.getCoursePrice;
+    },
+    enabled: !!courseId,
   });
 }

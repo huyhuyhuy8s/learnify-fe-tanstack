@@ -16,6 +16,10 @@ export type TDecorationCardProps = {
   percentage?: TProgress;
   star?: number;
   shape?: React.ReactNode;
+  onStartClick?: () => void;
+  startText?: string;
+  startIcon?: string;
+  startDisabled?: boolean;
 };
 
 const DecorationCard = (props: TDecorationCardProps) => {
@@ -29,6 +33,10 @@ const DecorationCard = (props: TDecorationCardProps) => {
     percentage = 0,
     star = 0,
     shape = <Arrow size="150px" color={COLORS.modeSalmon} />,
+    onStartClick,
+    startText,
+    startIcon,
+    startDisabled,
   } = props;
 
   return (
@@ -45,6 +53,10 @@ const DecorationCard = (props: TDecorationCardProps) => {
           status={status}
           percentage={percentage}
           star={star}
+          onStartClick={onStartClick}
+          startText={startText}
+          startIcon={startIcon}
+          startDisabled={startDisabled}
         />
       </div>
       <div className="modifier" style={{ backgroundColor }}>

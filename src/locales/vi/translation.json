@@ -2,17 +2,31 @@
   "sidebar": {
     "search": "Tìm kiếm",
     "learnify": "Learnify",
+    "dashboard": "Bảng điều khiển",
     "courses": "Khóa học",
     "roadmaps": "Lộ trình",
     "friends": "Bạn bè",
-    "about": "Giới thiệu"
+    "about": "Giới thiệu",
+    "manage_courses": "Quản lý khóa học",
+    "add_course": "Thêm khóa học",
+    "add_lesson": "Thêm bài học"
   },
   "common": {
     "change_language": "Đổi ngôn ngữ",
     "toggle_dark_mode": "Chuyển giao diện",
     "language": "Ngôn ngữ",
     "switch_to_learner": "Chuyển sang Học viên",
-    "switch_to_teacher": "Chuyển sang Giảng viên"
+    "switch_to_instructor": "Chuyển sang Giảng viên",
+    "switch_to_reviewer": "Chuyển sang Người đánh giá",
+    "switch_to_admin": "Chuyển sang Quản trị viên",
+    "switch_portal": "Chuyển cổng",
+    "menu": "Menu",
+    "close_menu": "Đóng menu",
+    "cancel": "Hủy",
+    "create": "Tạo",
+    "delete": "Xóa",
+    "creating": "Đang tạo...",
+    "deleting": "Đang xóa..."
   },
   "home": {
     "title": "Khai phá <Beauty>Tiềm năng</Beauty> cho tương lai, ngay hôm nay",
@@ -35,7 +49,21 @@
     "badge_path_enroll": "Đăng ký lộ trình",
     "badge_first_lab": "Phòng LAB đầu tiên",
     "more": "Xem thêm →",
-    "progress": "Tiến độ"
+    "progress": "Tiến độ",
+    "welcome_title": "Chào mừng trở lại, <Beauty>{{name}}</Beauty>",
+    "welcome_subtitle": "Quản lý khóa học, theo dõi tiến độ và tương tác với học viên của bạn.",
+    "total_courses": "Tổng khóa học",
+    "total_lessons": "Tổng bài học",
+    "published": "Đã xuất bản",
+    "pending": "Chờ duyệt",
+    "rejected": "Từ chối",
+    "recent_courses": "Khóa học gần đây",
+    "no_courses": "Chưa có khóa học nào. Hãy tạo khóa học đầu tiên!",
+    "quick_actions": "Thao tác nhanh",
+    "create_course": "Tạo khóa học",
+    "manage_courses": "Quản lý khóa học",
+    "switch_learner": "Xem với tư cách Học viên",
+    "pending_reviews": "Chờ xem xét"
   },
   "friends": {
     "tabs": {
@@ -70,12 +98,24 @@
   },
   "errors": {
     "server_error": "Lỗi máy chủ",
+    "load_generic": "Đã xảy ra lỗi khi tải trang này. Vui lòng thử lại.",
     "load_courses": "Không thể tải khóa học lúc này. Đây có thể là sự cố mạng hoặc máy chủ. Vui lòng thử lại.",
     "load_friends": "Không thể tải danh sách bạn bè lúc này. Đây có thể là sự cố mạng hoặc máy chủ. Vui lòng thử lại.",
     "load_roadmap": "Không thể tải lộ trình học lúc này. Đây có thể là sự cố mạng hoặc máy chủ. Vui lòng thử lại.",
     "try_again": "Thử lại",
     "go_back": "Quay lại",
-    "session_expired": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại."
+    "session_expired": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.",
+    "throttler_title": "Quá nhiều yêu cầu",
+    "throttler_advice": "Bạn đang gửi quá nhiều yêu cầu. Vui lòng chờ một lát và thử lại. Giới hạn này tự động đặt lại sau mỗi 10 giây.",
+    "validation_title": "Dữ liệu không hợp lệ",
+    "validation_advice": "Dữ liệu bạn gửi không hợp lệ. Vui lòng kiểm tra lại thông tin và thử lại.",
+    "not_found_title": "Không tìm thấy tài nguyên",
+    "not_found_advice": "Không tìm thấy tài nguyên yêu cầu. Có thể tài nguyên đã bị di chuyển hoặc xóa.",
+    "forbidden_title": "Truy cập bị từ chối",
+    "forbidden_advice": "Bạn không có quyền truy cập tài nguyên này. Vui lòng liên hệ hỗ trợ nếu bạn cho rằng đây là nhầm lẫn.",
+    "bad_request_title": "Yêu cầu không hợp lệ",
+    "bad_request_advice": "Máy chủ không thể xử lý yêu cầu của bạn. Vui lòng thử lại hoặc liên hệ hỗ trợ.",
+    "server_advice": "Đã xảy ra lỗi máy chủ. Nhóm kỹ thuật đã được thông báo. Vui lòng thử lại sau."
   },
   "auth": {
     "login": {
@@ -134,10 +174,72 @@
   },
   "courses": {
     "title": "Khám phá <Beauty>Khóa học tốt nhất</Beauty> dành riêng cho bạn",
-    "description": "Chúng tôi cung cấp nhiều khóa học được thiết kế để giúp bạn đạt được mục tiêu học tập của mình. Dù bạn muốn phát triển kỹ năng mới, thăng tiến sự nghiệp hay khám phá sở thích mới, các khóa học của chúng tôi đều được điều chỉnh để đáp ứng nhu cầu của bạn. Hãy duyệt qua danh mục khóa học và tìm khóa học phù hợp nhất cho bạn ngay hôm nay!",
-    "filter_course": "khóa học",
-    "filter_duration": "thời lượng",
-    "results": "{{count}} kết quả"
+    "description": "Mô tả khóa học",
+    "filter_btn": "Bộ lọc",
+    "filter_type": "Loại khóa học",
+    "filter_free": "Miễn phí",
+    "filter_paid": "Trả phí",
+    "filter_duration_label": "Thời lượng",
+    "filter_duration_30": "30 phút",
+    "filter_duration_45": "45 phút",
+    "filter_duration_60": "60 phút",
+    "filter_duration_120": "2 giờ",
+    "filter_duration_180": "3 giờ +",
+    "filter_clear": "Xóa bộ lọc",
+    "results": "{{count}} kết quả",
+    "results_filtered": "{{filtered}}/{{total}} kết quả",
+    "name": "Tên khóa học",
+    "name_placeholder": "Nhập tên khóa học",
+    "name_required": "Vui lòng nhập tên khóa học",
+    "price": "Giá khóa học",
+    "free_hint": "Giá là 0 — khóa học sẽ miễn phí",
+    "created": "Ngày tạo",
+    "status": "Trạng thái",
+    "status_all": "Tất cả",
+    "status_published": "Đã xuất bản",
+    "status_pending": "Chờ duyệt",
+    "status_rejected": "Từ chối",
+    "description_placeholder": "Nhập mô tả khóa học",
+    "description_required": "Vui lòng nhập mô tả khóa học",
+    "delete_title": "Xóa khóa học",
+    "delete_confirm": "Bạn có chắc chắn muốn xóa khóa học này?",
+    "delete_lesson_title": "Xóa bài học",
+    "delete_lesson_confirm": "Bạn có chắc muốn xóa bài học này?",
+    "lesson_title": "Tiêu đề bài học",
+    "lesson_title_placeholder": "Nhập tiêu đề bài học",
+    "lesson_title_required": "Vui lòng nhập tiêu đề bài học",
+    "lesson_description": "Mô tả bài học",
+    "lesson_desc_placeholder": "Nhập mô tả bài học",
+    "lesson_desc_required": "Vui lòng nhập mô tả bài học",
+    "files": "Tệp tin",
+    "files_click": "Nhấp để tải lên tệp",
+    "files_hint": "Tối đa {{maxFiles}} tệp, mỗi tệp {{maxSize}} (.pdf, .ppt, .pptx)",
+    "files_required": "Vui lòng tải lên ít nhất một tệp",
+    "files_max_count": "Chỉ được phép tối đa {{count}} tệp",
+    "files_type_error": "Chỉ chấp nhận tệp .pdf, .ppt, .pptx",
+    "files_size_error": "{{name}} vượt quá giới hạn {{size}}",
+    "select_course_to_review": "Chọn một khóa học để xem xét",
+    "select_course": "Chọn một khóa học",
+    "select_lesson": "Chọn một bài học",
+    "no_lessons": "Không có bài học",
+    "create": "Tạo khóa học",
+    "creating": "Đang tạo...",
+    "toast": {
+      "course_created": "Tạo khóa học thành công!",
+      "course_deleted": "Xóa khóa học thành công!",
+      "lesson_created": "Tạo bài học thành công!",
+      "lesson_deleted": "Xóa bài học thành công!",
+      "file_uploaded": "Tải file lên thành công!",
+      "course_published": "Xuất bản khóa học thành công!",
+      "course_rejected": "Từ chối khóa học thành công!",
+      "create_failed": "Không thể tạo khóa học: {{message}}",
+      "delete_failed": "Không thể xóa khóa học: {{message}}",
+      "lesson_create_failed": "Không thể tạo bài học: {{message}}",
+      "lesson_delete_failed": "Không thể xóa bài học: {{message}}",
+      "file_upload_failed": "Không thể tải file: {{message}}",
+      "publish_failed": "Không thể xuất bản khóa học: {{message}}",
+      "reject_failed": "Không thể từ chối khóa học: {{message}}"
+    }
   },
   "course_detail": {
     "enroll": "Đăng ký khóa học",
@@ -153,8 +255,33 @@
     "toast_login_feedback": "Vui lòng đăng nhập để gửi đánh giá",
     "no_description": "Không có mô tả",
     "badge_text": "văn bản",
+    "start": "Bắt đầu",
+    "continue": "Tiếp tục",
+    "completed": "Hoàn thành",
+    "private_course": "Khóa học này không khả dụng",
+    "not_published": "Khóa học này chưa được xuất bản",
     "server_error": "Lỗi máy chủ",
-    "load_error": "Đã xảy ra lỗi khi tải khóa học này. Máy chủ gặp sự cố. Vui lòng thử lại sau."
+    "load_error": "Đã xảy ra lỗi khi tải khóa học này. Máy chủ gặp sự cố. Vui lòng thử lại sau.",
+    "buy": "Mua khóa học",
+    "payment_error": "Không thể tạo phiên thanh toán. Vui lòng thử lại!"
+  },
+  "payment": {
+    "success_title": "Thanh toán thành công!",
+    "success_desc": "Thanh toán của bạn đã được xác nhận. Bạn có thể bắt đầu học ngay!",
+    "success_order_label": "Mã đơn hàng:",
+    "success_cta": "Vào học ngay",
+    "processing_title": "Đang xử lý...",
+    "processing_desc": "Vui lòng không đóng trình duyệt trong khi hệ thống đang ghi danh.",
+    "cancel_title": "Thanh toán đã bị hủy",
+    "cancel_desc": "Giao dịch của bạn đã bị hủy. Bạn có thể thử lại hoặc quay lại.",
+    "cancel_order_label": "Mã đơn hàng:",
+    "cancel_status_label": "Trạng thái:",
+    "cancel_status_value": "Đã hủy",
+    "cancel_retry": "Thử lại thanh toán",
+    "cancel_go_back": "Quay lại",
+    "cancel_go_home": "Về trang chủ",
+    "cancel_support": "Bạn gặp vấn đề khi thanh toán?",
+    "cancel_support_link": "Liên hệ hỗ trợ"
   },
   "roadmaps": {
     "headline": "Định hình <Beauty>tương lai của bạn</Beauty> theo cách của riêng bạn",
@@ -202,7 +329,21 @@
     "placeholder": "Tìm kiếm khóa học...",
     "aria_label": "Tìm kiếm",
     "label": "Tìm kiếm khóa học",
-    "submit_aria": "Tìm kiếm"
+    "submit_aria": "Tìm kiếm",
+    "clear_tooltip": "Xóa tìm kiếm",
+    "results_for": "Kết quả tìm kiếm cho \"{{query}}\"",
+    "section_courses": "Khóa học",
+    "section_roadmaps": "Lộ trình",
+    "section_lessons": "Bài học",
+    "found_courses_zero": "Không tìm thấy khóa học nào",
+    "found_courses_one": "{{count}} khóa học",
+    "found_courses_other": "{{count}} khóa học",
+    "found_roadmaps_one": "{{count}} lộ trình",
+    "found_roadmaps_other": "{{count}} lộ trình",
+    "found_lessons_one": "{{count}} bài học",
+    "found_lessons_other": "{{count}} bài học",
+    "no_results": "Không tìm thấy kết quả",
+    "no_results_desc": "Hãy thử từ khóa khác hoặc duyệt danh mục."
   },
   "footer": {
     "banner_alt": "footer-banner",
@@ -265,7 +406,9 @@
   "lesson_complete": {
     "title": "Hoàn thành bài học!",
     "description": "Bạn đã hoàn thành bài học này. Làm tốt lắm!",
-    "back_to_dashboard": "Quay lại Dashboard"
+    "back_to_dashboard": "Quay lại Dashboard",
+    "back_to_course": "Quay lại Khóa học",
+    "next_lesson": "Bài học tiếp theo"
   },
   "chat_message_wrapper": {
     "preparing_lesson": "Đang chuẩn bị bài học của bạn...",
@@ -290,30 +433,22 @@
     "settings": "Cài đặt",
     "switch_2d": "Chuyển sang 2D",
     "switch_3d": "Chuyển sang 3D",
-    "menu": "Điều khiển"
+    "menu": "Điều khiển",
+    "reload": "Tải lại"
   },
   "voice_settings": {
-    "title": "Cài đặt giọng nói",
+    "title": "Cài đặt",
+    "voice_label": "Giọng nói",
+    "speed_label": "Tốc độ TTS",
+    "auto_scroll_label": "Tự động cuộn",
+    "theme_label": "Giao diện",
+    "language_label": "Ngôn ngữ",
+    "dark": "Tối",
+    "light": "Sáng",
     "voices": [
       {
-        "label": "Aria",
-        "description": "Người Mỹ gốc Phi"
-      },
-      {
-        "label": "Charlotte",
-        "description": "Anh"
-      },
-      {
-        "label": "Domi",
-        "description": "Mỹ"
-      },
-      {
-        "label": "Rachel",
-        "description": "Mỹ"
-      },
-      {
-        "label": "Sarah",
-        "description": "Nữ nhẹ nhàng"
+        "label": "Default",
+        "description": "ElevenLabs AI — giọng nói"
       }
     ]
   },
@@ -330,7 +465,8 @@
     "skip_qa": "Chuyển đến Hỏi & Đáp",
     "skip_quiz": "Chuyển đến Bài kiểm tra",
     "complete_lesson": "Hoàn thành bài học",
-    "report_issue": "Báo cáo vấn đề"
+    "report_issue": "Báo cáo vấn đề",
+    "flagged": "Đã báo cáo vấn đề thành công!"
   },
   "chat_input": {
     "placeholder": "Nhập tin nhắn của bạn...",
@@ -419,7 +555,7 @@
       "headline_line3": "Sẵn sàng Nghề nghiệp.",
       "subtitle": "Trợ giảng 3D AI hướng dẫn bạn qua các bài thực hành. Dành cho học viên, giảng viên và các tổ chức giáo dục sẵn sàng chuyển đổi.",
       "learner_cta": "Tôi là Học viên",
-      "teacher_cta": "Tôi là Giảng viên"
+      "instructor_cta": "Tôi là Giảng viên"
     },
     "stats": {
       "title": "Được tin dùng bởi <Beauty>Hàng nghìn</Beauty>"
@@ -452,7 +588,7 @@
         "desc": "Thành thạo kỹ năng qua các bài giảng 3D do AI hướng dẫn và bài thực hành tương tác. Học theo tốc độ của riêng bạn với phản hồi cá nhân hóa.",
         "cta": "Bắt đầu Học"
       },
-      "teachers": {
+      "instructors": {
         "title": "Dành cho Giảng viên",
         "desc": "Tạo khóa học, quản lý học viên và theo dõi tiến độ với phân tích mạnh mẽ. Đưa chương trình giảng dạy của bạn vào cuộc sống với nội dung 3D.",
         "cta": "Bắt đầu Giảng dạy"
@@ -607,7 +743,7 @@
         "category": "Nghiên cứu",
         "readTime": "6 phút đọc"
       },
-      "teacher-toolkit": {
+      "instructor-toolkit": {
         "title": "Bộ công cụ của Giảng viên Hiện đại",
         "excerpt": "Cách giáo viên đang tận dụng phân tích AI và nội dung 3D để tạo ra lớp học hấp dẫn hơn.",
         "category": "Giảng dạy",
@@ -644,6 +780,187 @@
       "desc": "Lộ trình học tập có cấu trúc từ người mới đến sẵn sàng nghề nghiệp."
     },
     "log_in": "Đăng nhập",
-    "sign_up": "Đăng ký"
+    "sign_up": "Đăng ký",
+    "diamond_tooltip": "Xem Cửa hàng",
+    "streak_tooltip": "Xem Chuỗi học tập"
+  },
+  "notification": {
+    "title": "Thông báo",
+    "no_notifications": "Chưa có thông báo nào"
+  },
+  "settings": {
+    "title": "Cài đặt",
+    "theme": "Giao diện",
+    "language": "Ngôn ngữ",
+    "dark": "Tối",
+    "light": "Sáng"
+  },
+  "admin": {
+    "dashboard": {
+      "load_error": "Không thể tải dữ liệu bảng điều khiển."
+    },
+    "welcome": {
+      "greeting_morning": "Chào buổi sáng",
+      "greeting_afternoon": "Chào buổi chiều",
+      "greeting_evening": "Chào buổi tối",
+      "subtitle": "Dưới đây là những gì đang diễn ra trên nền tảng của bạn hôm nay"
+    },
+    "stats": {
+      "total_users": "Tổng người dùng",
+      "today_subscriber": "Người đăng ký hôm nay",
+      "revenue": "Doanh thu",
+      "system_bugs": "Lỗi hệ thống",
+      "trend": "+8.2% so với tháng trước"
+    },
+    "chart": {
+      "title": "Hoạt động người dùng trong 7 ngày",
+      "aria_label": "Biểu đồ đường hoạt động người dùng"
+    },
+    "recent_users": {
+      "title": "Người dùng gần đây",
+      "empty": "Không có người dùng gần đây.",
+      "just_now": "Vừa xong",
+      "min_ago_one": "{{count}} phút trước",
+      "min_ago_other": "{{count}} phút trước",
+      "hr_ago_one": "{{count}} giờ trước",
+      "hr_ago_other": "{{count}} giờ trước",
+      "days_ago_one": "{{count}} ngày trước",
+      "days_ago_other": "{{count}} ngày trước"
+    },
+    "system_activity": {
+      "title": "Hoạt động hệ thống"
+    },
+    "search": {
+      "placeholder": "Tìm kiếm theo tên, email hoặc vai trò...",
+      "clear_tooltip": "Xóa tìm kiếm"
+    },
+    "users": {
+      "title": "Quản lý người dùng",
+      "table": {
+        "id": "ID",
+        "user": "Người dùng",
+        "email": "Email",
+        "role": "Vai trò",
+        "joined": "Tham gia",
+        "actions": "Thao tác",
+        "edit": "Sửa",
+        "delete": "Xóa",
+        "empty": "Không tìm thấy người dùng",
+        "edit_tooltip": "Chỉnh sửa thông tin người dùng",
+        "delete_tooltip": "Xóa vĩnh viễn người dùng này"
+      },
+      "modal": {
+        "create_title": "Tạo người dùng mới",
+        "edit_title": "Chỉnh sửa người dùng",
+        "username": "Tên người dùng",
+        "username_placeholder": "vd: john_doe",
+        "email": "Email",
+        "email_placeholder": "user@example.com",
+        "phone": "Số điện thoại",
+        "phone_placeholder": "+84 000 000 000",
+        "password": "Mật khẩu",
+        "password_placeholder": "Tối thiểu 8 ký tự",
+        "role": "Vai trò",
+        "cancel": "Hủy",
+        "save": "Lưu thay đổi",
+        "create": "Tạo người dùng",
+        "saving": "Đang lưu...",
+        "close_tooltip": "Đóng cửa sổ",
+        "cancel_tooltip": "Hủy thay đổi",
+        "submit_create_tooltip": "Tạo tài khoản người dùng mới",
+        "submit_edit_tooltip": "Lưu thay đổi người dùng"
+      },
+      "delete_confirm": "Bạn có chắc chắn muốn xóa vĩnh viễn người dùng này?"
+    },
+    "pagination": {
+      "showing": "Hiển thị <strong>{{start}}–{{end}}</strong> trên <strong>{{total}}</strong>",
+      "prev_tooltip": "Đến trang trước",
+      "next_tooltip": "Đến trang sau",
+      "page_tooltip": "Đến trang {{page}}"
+    },
+    "sidebar": {
+      "dashboard": "Bảng điều khiển",
+      "user_management": "Quản lý người dùng",
+      "settings": "Cài đặt",
+      "policy": "Chính sách",
+      "add_user": "Thêm người dùng"
+    },
+    "header": {
+      "search_placeholder": "Tìm kiếm người dùng, cài đặt..."
+    },
+    "page_header": {
+      "add_user": "Thêm người dùng",
+      "add_user_tooltip": "Tạo tài khoản người dùng mới"
+    },
+    "toast": {
+      "user_created": "Tạo người dùng thành công!",
+      "user_updated": "Cập nhật người dùng thành công!",
+      "user_deleted": "Xóa người dùng thành công!",
+      "create_failed": "Không thể tạo người dùng: {{message}}",
+      "update_failed": "Không thể cập nhật người dùng: {{message}}",
+      "delete_failed": "Không thể xóa người dùng: {{message}}"
+    }
+  },
+  "card": {
+    "duration_one": "{{count}} phút",
+    "duration_other": "{{count}} phút"
+  },
+  "card_footer_tooltip": {
+    "locked": "Khóa học này đã bị khóa. Vui lòng hoàn thành các khóa học trước để mở khóa.",
+    "completed": "Bạn đã hoàn thành khóa học này.",
+    "default": "Nhấp để vào khóa học."
+  },
+  "special": {
+    "lesson": "Bài học",
+    "lab": "Phòng LAB",
+    "check": "Kiểm tra",
+    "course": "Khóa học",
+    "roadmap": "Lộ trình",
+    "certificate": "Chứng chỉ",
+    "public": "Công khai",
+    "private": "Riêng tư",
+    "starter": "Starter",
+    "pro": "Pro",
+    "career": "Career"
+  },
+  "special_tooltip": {
+    "lesson": "Bài học tập trung vào một mục tiêu học tập.",
+    "lab": "Môi trường thực hành tương tác.",
+    "check": "Kiểm tra nhanh kiến thức với phản hồi tức thì.",
+    "course": "Bộ sưu tập bài học về một chủ đề rộng hơn.",
+    "roadmap": "Hướng dẫn trực quan về lộ trình học tập.",
+    "certificate": "Chứng chỉ số đạt được khi hoàn thành.",
+    "public": "Bài học nền tảng dành cho mọi người.",
+    "private": "Nội dung hạn chế yêu cầu điều kiện trước.",
+    "starter": "Truy cập cơ bản với phòng LAB và huy hiệu.",
+    "pro": "Học tập không giới hạn từ cơ bản đến nâng cao.",
+    "career": "Phát triển sự nghiệp với kỹ năng sẵn sàng làm việc."
+  },
+  "reviewer": {
+    "back_to_list": "Quay lại danh sách",
+    "already_decided": "Khóa học này đã được {{status}}.",
+    "approve": "Phê duyệt khóa học",
+    "reject": "Từ chối khóa học",
+    "what_students_learn": "Học viên sẽ học được gì",
+    "by_creator": "Bởi {{name}}",
+    "submitted": "Đã gửi {{date}}"
+  },
+  "shop": {
+    "title": "Cửa hàng Learnify",
+    "coming_soon": "Cửa hàng sẽ sớm được cập nhật!",
+    "message": "Chúc bạn học tốt và tích lũy thật nhiều trước khi cửa hàng hoàn thiện! Sẽ có nhiều thứ xứng đáng với công sức của bạn!",
+    "back": "Quay lại Bảng điều khiển"
+  },
+  "streak": {
+    "title": "Chuỗi học tập",
+    "coming_soon": "Bảo vệ & Tăng cường Chuỗi — Sắp ra mắt!",
+    "message": "Chuỗi học tập hàng ngày của bạn sẽ mở khóa những công cụ mạnh mẽ: đóng băng chuỗi để bảo vệ tiến độ vào những ngày bận rộn, tăng XP để hoàn thành khóa học nhanh hơn, và phần thưởng độc quyền cho chuỗi dài ngày. Hãy kiên trì và gặt hái thành quả!",
+    "back": "Quay lại Bảng điều khiển"
+  },
+  "course_completion": {
+    "title": "Hoàn thành khóa học!",
+    "subtitle": "Chúc mừng bạn đã hoàn thành khóa học này!",
+    "diamonds_earned": "Bạn nhận được +10 kim cương",
+    "continue": "Tiếp tục"
   }
 }

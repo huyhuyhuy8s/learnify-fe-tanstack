@@ -6,16 +6,18 @@
 .left-nav {
   position: sticky;
   top: 0;
+  display: flex;
+  flex-direction: column;
+  place-items: center;
   justify-content: space-between;
   padding: toRem(20) toRem(15);
-  border-right: toRem(1) solid transparent;
   height: 100dvh;
   width: toRem(67.5 + 30);
   background-color: $white;
   @include transition;
   transition-property: background-color, border-color, margin-left;
   border-right: toRem(1) solid $navy-pastel-200;
-  z-index: 1;
+  z-index: 2;
 
   &.active {
     margin-left: 0;
@@ -27,38 +29,26 @@
 
   @include break(sm) {
     position: fixed;
-    z-index: 1;
-  }
-
-  &.compact {
-    width: toRem(60);
-    padding: toRem(20);
-    height: calc(100dvh - toRem(77));
-  }
-
-  &,
-  &-top,
-  &-bot,
-  &-top__items {
-    display: flex;
-    flex-direction: column;
-    place-items: center;
-  }
-
-  &-top {
-    row-gap: toRem(40);
-
-    &__items {
-      row-gap: toRem(20);
-    }
-  }
-
-  &-bot {
-    row-gap: toRem(24);
   }
 
   .hidden {
     display: none;
+  }
+
+  &__overlay {
+    display: none;
+  }
+}
+
+@include break(sm) {
+  .left-nav__overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: to-rgba($black, 0.45);
+    z-index: 1;
+    @include transition;
+    transition-property: opacity;
   }
 }
 

@@ -1,6 +1,7 @@
-import { useTranslation } from "react-i18next";
+import "./lesson-welcome.scss";
+
 import TextButton from "@/components/TextButton";
-import "./style.scss";
+import { useTranslation } from "react-i18next";
 
 type TLessonWelcomeProps = {
   lessonName?: string;
@@ -31,6 +32,11 @@ const LessonWelcome = (props: TLessonWelcomeProps) => {
         size="medium"
         icon="play"
       />
+      {!modelsReady && (
+        <div className="lesson-welcome__loading">
+          <span>{t("lesson_welcome.tooltip_disabled")}</span>
+        </div>
+      )}
     </div>
   );
 };

@@ -17,13 +17,39 @@
     h2 {
       color: $mode-neutral;
     }
-
-    p {
-      color: $mode-neutral;
-    }
   }
 
-  &__list {
+  &__results {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(32);
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(16);
+  }
+
+  &__section-header {
+    display: flex;
+    align-items: baseline;
+    gap: toRem(12);
+  }
+
+  &__section-title {
+    font-size: $fs-heading5;
+    font-weight: $fw-medium;
+    color: $neutral-900;
+    margin: 0;
+  }
+
+  &__section-count {
+    font-size: $fs-small;
+    color: $neutral-500;
+  }
+
+  &__grid {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(toRem(300), 1fr));
@@ -34,7 +60,7 @@
 
 @include break(md) {
   .search-page {
-    &__list {
+    &__grid {
       grid-template-columns: 1fr;
     }
   }

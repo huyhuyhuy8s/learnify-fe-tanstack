@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import TextButton from "@/components/TextButton";
 import AccountMenuItem from "./components/AccountMenuItem";
 import "./style.scss";
-import type { TSubscription } from "@/routes/learner/subscriptions/-types/type";
-import { SUBSCRIPTIONS } from "@/routes/learner/subscriptions/-constants";
+import type { TSubscription } from "@learner/subscriptions/-types/type";
+import { SUBSCRIPTIONS } from "@learner/subscriptions/-constants";
 
 type TAccountMenuProps = {
   username: string;

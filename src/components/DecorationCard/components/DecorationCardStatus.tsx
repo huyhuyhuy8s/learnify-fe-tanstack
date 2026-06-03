@@ -6,32 +6,33 @@ type TDecorationCardStatusProps = {
   status: TStatusCard;
   percentage: TProgress;
   star: number;
+  onStartClick?: () => void;
+  startText?: string;
+  startIcon?: string;
+  startDisabled?: boolean;
 };
 
 const DecorationCardStatus = (props: TDecorationCardStatusProps) => {
-  const { status, percentage, star } = props;
-
-  const tooltipText =
-    status === "locked"
-      ? "This course is locked"
-      : status === "inProgress"
-        ? "Continue on your study journey"
-        : "Start course";
-
-  const iconButton = status === "completed" ? "check" : "arrow_right_alt";
+  const {
+    percentage,
+    star,
+    onStartClick,
+    startText = "start",
+    startIcon = "arrow_right_alt",
+    startDisabled = false,
+  } = props;
 
   return (
     <div className="status">
       <TextButton
-        text="start"
+        text={startText}
         size="medium"
         type="secondary"
-        icon={iconButton}
+        icon={startIcon}
         backgroundColor={COLORS.white}
         color={COLORS.navy400}
-        onClick={() => {}}
-        disabled={status === "locked"}
-        tooltip={tooltipText}
+        onClick={onStartClick ?? (() => {})}
+        disabled={startDisabled}
       />
       <div className="progress" style={{ backgroundColor: COLORS.white }}>
         <div

@@ -55,11 +55,13 @@ const CourseContext = forwardRef<TCourseContextRef, TCourseContextProps>(
           backgroundColor={COLORS.greenPastel100}
           className="course-context_toggle"
           tooltip={t("course_context.toggle")}
+          data-lenis-prevent
         />
         <div
           className={classnames("course-context", {
             open: isContextOpen,
           })}
+          data-lenis-prevent
         >
           <div className="course-context_header">
             <h4 className="semibold">{t("course_context.title")}</h4>

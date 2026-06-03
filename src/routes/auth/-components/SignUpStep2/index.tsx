@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import classnames from "classnames";
-import { memo } from "react";
+import { memo, useState } from "react";
 import Icon from "@/components/Icon";
 import type { TSignUpStep2Props } from "./type.d";
 import "./style.scss";
@@ -14,6 +14,8 @@ const SignUpStep2 = memo(function SignUpStep2({
   onBack,
 }: TSignUpStep2Props) {
   const { t } = useTranslation();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   return (
     <form
@@ -29,32 +31,52 @@ const SignUpStep2 = memo(function SignUpStep2({
       </button>
 
       <div>
-        <input
-          className={classnames("sign-up__input", {
-            "sign-up__input--error": errors.password,
-          })}
-          type="password"
-          aria-label={t("auth.signup.password_label")}
-          placeholder={t("auth.signup.password_placeholder")}
-          id="sign-up-password"
-          value={data.password}
-          onChange={(e) => onChange("password", e.target.value)}
-        />
+        <div className="sign-up__password-wrapper">
+          <input
+            className={classnames("sign-up__input", {
+              "sign-up__input--error": errors.password,
+            })}
+            type={showPassword ? "text" : "password"}
+            aria-label={t("auth.signup.password_label")}
+            placeholder={t("auth.signup.password_placeholder")}
+            id="sign-up-password"
+            value={data.password}
+            onChange={(e) => onChange("password", e.target.value)}
+          />
+          <button
+            type="button"
+            className="sign-up__password-toggle"
+            onClick={() => setShowPassword(!showPassword)}
+            aria-label={showPassword ? "Hide password" : "Show password"}
+          >
+            <Icon name={showPassword ? "visibility" : "visibility_off"} />
+          </button>
+        </div>
         {errors.password && <p className="sign-up__error">{errors.password}</p>}
       </div>
 
       <div>
-        <input
-          className={classnames("sign-up__input", {
-            "sign-up__input--error": errors.confirmPassword,
-          })}
-          type="password"
-          aria-label={t("auth.signup.confirm_password_label")}
-          placeholder={t("auth.signup.confirm_password_placeholder")}
-          id="sign-up-confirm-password"
-          value={data.confirmPassword}
-          onChange={(e) => onChange("confirmPassword", e.target.value)}
-        />
+        <div className="sign-up__password-wrapper">
+          <input
+            className={classnames("sign-up__input", {
+              "sign-up__input--error": errors.confirmPassword,
+            })}
+            type={showConfirm ? "text" : "password"}
+            aria-label={t("auth.signup.confirm_password_label")}
+            placeholder={t("auth.signup.confirm_password_placeholder")}
+            id="sign-up-confirm-password"
+            value={data.confirmPassword}
+            onChange={(e) => onChange("confirmPassword", e.target.value)}
+          />
+          <button
+            type="button"
+            className="sign-up__password-toggle"
+            onClick={() => setShowConfirm(!showConfirm)}
+            aria-label={showConfirm ? "Hide password" : "Show password"}
+          >
+            <Icon name={showConfirm ? "visibility" : "visibility_off"} />
+          </button>
+        </div>
         {errors.confirmPassword && (
           <p className="sign-up__error">{errors.confirmPassword}</p>
         )}
