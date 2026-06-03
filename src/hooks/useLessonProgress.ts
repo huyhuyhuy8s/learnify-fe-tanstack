@@ -31,8 +31,12 @@ export function useLessonProgress(
   const progressId = progressData?.progress?.[0]?.id;
   const completedLessons = progressData?.progress?.[0]?.completedLessons ?? 0;
   const totalLessons = progressData?.progress?.[0]?.totalLessons ?? 0;
+  const lastCompletedLessonId =
+    progressData?.progress?.[0]?.lastCompletedLessonId;
+  const isAlreadyCompleted = lastCompletedLessonId === lessonId;
 
-  const DIAMOND_PER_LESSON = 10;
+  const DIAMOND_PER_LESSON = 5;
+  const COURSE_COMPLETION_DIAMONDS = 10;
 
   const markCompleteMutation = useMutation({
     mutationFn: async () => {
@@ -90,6 +94,11 @@ export function useLessonProgress(
     },
   });
 
+  const isCourseCompleted =
+    !isAlreadyCompleted &&
+    totalLessons > 0 &&
+    completedLessons + 1 >= totalLessons;
+
   const handleComplete = () => {
     if (!userId || !lessonId) return;
 
@@ -102,11 +111,16 @@ export function useLessonProgress(
           ? (current.currentSteak ?? 0)
           : (current.currentSteak ?? 0) + 1;
 
-      useAuthStore.getState().setAuth({
-        ...current,
-        diamond: (current.diamond ?? 0) + DIAMOND_PER_LESSON,
-        currentSteak: newStreak,
-      });
+      if (!isAlreadyCompleted) {
+        const lessonDiamonds =
+          DIAMOND_PER_LESSON +
+          (isCourseCompleted ? COURSE_COMPLETION_DIAMONDS : 0);
+        useAuthStore.getState().setAuth({
+          ...current,
+          diamond: (current.diamond ?? 0) + lessonDiamonds,
+          currentSteak: newStreak,
+        });
+      }
 
       if (lastDate !== today) {
         localStorage.setItem("lastStreakDate", today);
@@ -122,5 +136,6 @@ export function useLessonProgress(
   return {
     progressPercentage,
     handleComplete,
+    isCourseCompleted,
   };
 }

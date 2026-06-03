@@ -5,14 +5,12 @@
 
 @mixin btn-secondary-states {
   &:hover {
-    border-color: $neutral-900;
-    color: $neutral-900;
+    border-color: $black;
   }
 
   &:active {
-    border-color: $neutral-900;
+    border-color: $black;
     background-color: $neutral-250;
-    color: $neutral-900;
   }
 }
 
@@ -185,30 +183,62 @@
 
   &.typeSecondary {
     $type-secondary-variants: (
-      (neutral, $mode-neutral, null),
-      (yellow, $mode-yellow, $neutral-100),
-      (orange, $mode-orange, $neutral-100),
-      (salmon, $mode-salmon, $neutral-100),
-      (darkGreen, $mode-dark-green, null),
-      (navy, $mode-navy, null),
-      (brown, $mode-brown, null),
-      (green, $mode-green, null),
-      (pastelNeutral, $neutral-pastel-200, null),
-      (pastelYellow, $yellow-pastel-200, $neutral-100),
-      (pastelOrange, $orange-pastel-200, $neutral-100),
-      (pastelSalmon, $salmon-pastel-200, $neutral-100),
-      (pastelDarkGreen, $dark-green-pastel-200, null),
-      (pastelNavy, $navy-pastel-200, null),
-      (pastelBrown, $brown-pastel-200, null),
-      (pastelGreen, $green-pastel-200, null)
+      (neutral, $mode-neutral, null, $neutral-900, $neutral-100),
+      (yellow, $mode-yellow, $neutral-900, $yellow-800, $neutral-100),
+      (orange, $mode-orange, $neutral-900, $orange-800, $neutral-100),
+      (salmon, $mode-salmon, $neutral-900, $salmon-800, $neutral-100),
+      (darkGreen, $mode-dark-green, null, $dark-green-800, $neutral-100),
+      (navy, $mode-navy, $neutral-100, $navy-800, $neutral-100),
+      (brown, $mode-brown, null, $brown-800, $neutral-100),
+      (green, $mode-green, $neutral-100, $green-800, $neutral-100),
+      (pastelNeutral, $neutral-pastel-200, null, $neutral-900, $neutral-100),
+      (
+        pastelYellow,
+        $yellow-pastel-200,
+        $neutral-900,
+        $yellow-800,
+        $neutral-100
+      ),
+      (
+        pastelOrange,
+        $orange-pastel-200,
+        $neutral-900,
+        $orange-800,
+        $neutral-100
+      ),
+      (
+        pastelSalmon,
+        $salmon-pastel-200,
+        $neutral-900,
+        $salmon-800,
+        $neutral-100
+      ),
+      (
+        pastelDarkGreen,
+        $dark-green-pastel-200,
+        null,
+        $dark-green-800,
+        $neutral-100
+      ),
+      (pastelNavy, $navy-pastel-200, $neutral-900, $navy-800, $neutral-100),
+      (pastelBrown, $brown-pastel-200, null, $brown-800, $neutral-100),
+      (pastelGreen, $green-pastel-200, null, $green-800, $neutral-100)
     );
 
-    @each $name, $bg, $color in $type-secondary-variants {
+    @each $name, $bg, $color, $darkBg, $darkColor in $type-secondary-variants {
       &-#{"" + $name} {
         background-color: $bg;
 
         @if $color {
           color: $color;
+        }
+
+        [data-theme="dark"] & {
+          background-color: $darkBg;
+
+          @if $darkColor {
+            color: $darkColor;
+          }
         }
       }
     }

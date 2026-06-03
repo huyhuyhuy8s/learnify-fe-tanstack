@@ -18,8 +18,8 @@ import TopNav from "@/components/TopNav";
 
 export const Route = createFileRoute("/learner")({
   beforeLoad: async () => {
-    const { user } = await getCurrentUserFn();
-    requireAuth({ user, isAuthenticated: !!user });
+    const { user, expired } = await getCurrentUserFn();
+    requireAuth({ user, isAuthenticated: !!user, expired });
   },
   head: () => ({
     ...createLearnerHead("Home"),

@@ -172,7 +172,7 @@
   },
   "courses": {
     "title": "Explore our <Beauty>Best courses</Beauty> only for you",
-    "description": "We offer a wide range of courses designed to help you achieve your learning goals. Whether you're looking to develop new skills, advance your career, or explore new interests, our courses are tailored to meet your needs. Browse through our course catalog and find the perfect course for you today!",
+    "description": "Course Description",
     "filter_course": "course",
     "filter_duration": "duration",
     "results": "{{count}} results",
@@ -187,7 +187,6 @@
     "status_published": "Published",
     "status_pending": "Pending",
     "status_rejected": "Rejected",
-    "description": "Course Description",
     "description_placeholder": "Enter course description",
     "description_required": "Course description is required",
     "delete_title": "Delete Course",
@@ -302,7 +301,8 @@
     "placeholder": "Search for courses...",
     "aria_label": "Search",
     "label": "Search for courses",
-    "submit_aria": "Search"
+    "submit_aria": "Search",
+    "clear_tooltip": "Clear search"
   },
   "footer": {
     "banner_alt": "footer-banner",
@@ -788,7 +788,8 @@
       "title": "System Activity"
     },
     "search": {
-      "placeholder": "Search by name, email or role..."
+      "placeholder": "Search by name, email or role...",
+      "clear_tooltip": "Clear search query"
     },
     "users": {
       "title": "User Management",
@@ -801,7 +802,9 @@
         "actions": "Actions",
         "edit": "Edit",
         "delete": "Delete",
-        "empty": "No users found"
+        "empty": "No users found",
+        "edit_tooltip": "Edit this user's details",
+        "delete_tooltip": "Remove this user permanently"
       },
       "modal": {
         "create_title": "Create New User",
@@ -818,12 +821,19 @@
         "cancel": "Cancel",
         "save": "Save Changes",
         "create": "Create User",
-        "saving": "Saving..."
+        "saving": "Saving...",
+        "close_tooltip": "Close modal",
+        "cancel_tooltip": "Discard changes",
+        "submit_create_tooltip": "Create new user account",
+        "submit_edit_tooltip": "Save changes to user"
       },
       "delete_confirm": "Are you sure you want to permanently delete this user?"
     },
     "pagination": {
-      "showing": "Showing <strong>{{start}}–{{end}}</strong> of <strong>{{total}}</strong>"
+      "showing": "Showing <strong>{{start}}–{{end}}</strong> of <strong>{{total}}</strong>",
+      "prev_tooltip": "Go to previous page",
+      "next_tooltip": "Go to next page",
+      "page_tooltip": "Go to page {{page}}"
     },
     "sidebar": {
       "dashboard": "Dashboard",
@@ -836,7 +846,62 @@
       "search_placeholder": "Search users, settings..."
     },
     "page_header": {
-      "add_user": "Add User"
+      "add_user": "Add User",
+      "add_user_tooltip": "Create a new user account"
     }
+  },
+  "card": {
+    "duration_one": "{{count}} min",
+    "duration_other": "{{count}} mins"
+  },
+  "card_footer_tooltip": {
+    "locked": "This course is locked. Please complete the previous courses to unlock it.",
+    "completed": "You have completed this course.",
+    "default": "Click to enter the course."
+  },
+  "special": {
+    "lesson": "Lesson",
+    "lab": "Lab",
+    "check": "Check",
+    "course": "Course",
+    "roadmap": "Roadmap",
+    "certificate": "Certificate",
+    "public": "Public",
+    "private": "Private",
+    "starter": "Starter",
+    "pro": "Pro",
+    "career": "Career"
+  },
+  "special_tooltip": {
+    "lesson": "A single focused lesson covering one learning objective.",
+    "lab": "Hands-on interactive environment for practice.",
+    "check": "Quick knowledge check with instant feedback.",
+    "course": "Curated collection of lessons on a broader subject.",
+    "roadmap": "Visual guide showing the recommended learning path.",
+    "certificate": "Digital credential earned upon completion.",
+    "public": "Foundational lessons accessible to everyone.",
+    "private": "Restricted content requiring prerequisites.",
+    "starter": "Basic access with hands-on labs and skill badges.",
+    "pro": "Unlimited hands-on learning from beginner to advanced.",
+    "career": "Launch your career with employer-ready skills."
+  },
+  "course_completion": {
+    "lesson": "Lesson",
+    "lab": "Lab",
+    "check": "Check",
+    "course": "Course",
+    "roadmap": "Roadmap",
+    "certificate": "Certificate",
+    "public": "Public",
+    "private": "Private",
+    "starter": "Starter",
+    "pro": "Pro",
+    "career": "Career"
+  },
+  "course_completion": {
+    "title": "Course Completed!",
+    "subtitle": "Congratulations on finishing this course!",
+    "diamonds_earned": "You earned +10 diamonds",
+    "continue": "Continue"
   }
 }

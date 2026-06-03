@@ -33,7 +33,7 @@ function Dashboard() {
         typeSpecial: "course" as const,
         title: course.courseName,
         description: course.abstract,
-        duration: "45 mins",
+        duration: 45,
         status: "default" as const,
         percentage: 0,
         badgeStatus: (course.status === "Published" ? "public" : "private") as

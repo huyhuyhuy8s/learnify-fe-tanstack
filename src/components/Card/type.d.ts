@@ -5,7 +5,7 @@ export type TCourseCardProps = {
   onClick: () => void;
   title: string;
   description?: string;
-  duration?: string;
+  duration?: number;
   typeSpecial?: TSpecial;
   disabled?: boolean;
   status?: TStatusCard;
@@ -16,7 +16,7 @@ export type TCourseCardProps = {
 export type TUseSpecialCardFooterProps = {
   status: "default" | "inProgress" | "completed" | "locked";
   percentage?: number;
-  duration?: string;
+  duration?: number;
   onClick?: () => void;
 };
 export type TUseDecorationCardFooterProps = {

@@ -23,6 +23,7 @@ import {
   GET_LESSONS_BY_COURSE_ID_QUERY,
 } from "@/graphql/course";
 import { useAuthStore } from "@/store";
+import CourseCompletionModal from "../-components/CourseCompletionModal";
 
 export const Route = createLazyFileRoute("/learner_/lessons/$lessonId/")({
   component: LessonDetail,
@@ -41,6 +42,7 @@ function LessonDetail() {
     completeLesson,
     reset,
     handleComplete,
+    isCourseCompleted,
   } = useLessonDetail(lessonId);
   const {
     chatRef,
@@ -103,11 +105,16 @@ function LessonDetail() {
     stopChat();
     skipToQuiz();
   }, [stopChat, skipToQuiz]);
+  const [showCourseModal, setShowCourseModal] = useState(false);
+
   const handleSkipQuiz = useCallback(() => {
     stopChat();
     completeLesson();
     handleComplete();
-  }, [stopChat, completeLesson, handleComplete]);
+    if (isCourseCompleted) {
+      setTimeout(() => setShowCourseModal(true), 500);
+    }
+  }, [stopChat, completeLesson, handleComplete, isCourseCompleted]);
   const handleLessonComplete = useCallback(() => {
     skipToQA();
   }, [skipToQA]);
@@ -242,6 +249,11 @@ function LessonDetail() {
         onTtsSpeedChange={setTtsSpeed}
         autoScroll={autoScroll}
         onAutoScrollChange={setAutoScroll}
+      />
+
+      <CourseCompletionModal
+        isOpen={showCourseModal}
+        onClose={() => setShowCourseModal(false)}
       />
     </div>
   );

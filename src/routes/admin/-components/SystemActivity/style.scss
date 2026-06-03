@@ -71,21 +71,24 @@
     position: relative;
     z-index: 1;
 
+    [data-theme="dark"] & {
+      color: $white;
+    }
+
     &--blue {
       background-color: $navy-pastel-100;
-      color: $navy-600;
     }
+
     &--green {
       background-color: $green-pastel-200;
-      color: $green-700;
     }
+
     &--orange {
       background-color: $orange-pastel-100;
-      color: $orange-700;
     }
+
     &--red {
       background-color: $salmon-pastel-100;
-      color: $salmon-700;
     }
   }
 

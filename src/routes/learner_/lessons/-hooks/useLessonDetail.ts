@@ -21,6 +21,7 @@ export type TLessonDetail = {
   reset: () => void;
   progressPercentage: number;
   handleComplete: () => void;
+  isCourseCompleted: boolean;
 };
 
 const useLessonDetail = (lessonId: string): TLessonDetail => {
@@ -28,11 +29,8 @@ const useLessonDetail = (lessonId: string): TLessonDetail => {
   const { state, startLesson, skipToQA, skipToQuiz, completeLesson, reset } =
     useLessonFlow();
   const courseId = data?.lesson?.courseId;
-  const { progressPercentage, handleComplete } = useLessonProgress(
-    state,
-    lessonId,
-    courseId
-  );
+  const { progressPercentage, handleComplete, isCourseCompleted } =
+    useLessonProgress(state, lessonId, courseId);
   const { setLayoutConfigState } = useLayout();
 
   const title = data?.course?.courseName || data?.lesson?.lessonName;
@@ -69,6 +67,7 @@ const useLessonDetail = (lessonId: string): TLessonDetail => {
     reset,
     progressPercentage,
     handleComplete,
+    isCourseCompleted,
   };
 };
 

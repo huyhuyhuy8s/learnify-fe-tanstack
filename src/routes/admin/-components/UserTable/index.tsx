@@ -1,7 +1,11 @@
+import "./style.scss";
+
 import { useTranslation } from "react-i18next";
 import type { TAdminUser } from "@/hooks/useAdminUsers";
 import Icon from "@/components/Icon";
-import "./style.scss";
+import TextButton from "@/components/TextButton";
+import capitalize from "lodash/capitalize";
+import type { TTypeSecondary } from "@/types/global";
 
 type TUserTableProps = {
   users: TAdminUser[];
@@ -13,11 +17,12 @@ type TUserTableProps = {
   onDelete: (userId: string) => void;
 };
 
-const ROLE_MOD: Record<string, string> = {
-  learner: "blue",
-  teacher: "green",
-  reviewer: "orange",
-  admin: "red",
+const ROLE_MOD: Record<string, TTypeSecondary> = {
+  learner: "pastelNavy",
+  user: "pastelNavy",
+  instructor: "green",
+  reviewer: "yellow",
+  admin: "salmon",
 };
 
 const UserTable = ({
@@ -123,9 +128,15 @@ const UserTable = ({
                 </td>
 
                 <td className="admin-user-table__cell admin-user-table__cell--id">
-                  <span className="admin-user-table__id">
-                    #{user.id.slice(0, 6)}
-                  </span>
+                  <TextButton
+                    className="Admin-user-table__id"
+                    size="tiny"
+                    text={`#${user.id.slice(0, 6)}`}
+                    leftIcon={false}
+                    type="secondary"
+                    onClick={() => {}}
+                    typeSecondary="pastelNavy"
+                  />
                 </td>
 
                 <td className="admin-user-table__cell">
@@ -154,11 +165,19 @@ const UserTable = ({
                 </td>
 
                 <td className="admin-user-table__cell">
-                  <span
-                    className={`admin-user-table__badge admin-user-table__badge--${ROLE_MOD[user.role?.toLowerCase() ?? ""] ?? "blue"}`}
-                  >
-                    {user.role}
-                  </span>
+                  <TextButton
+                    size="tiny"
+                    type="secondary"
+                    className={`admin-user-table__badge admin-user-table__badge--${user.role?.toLowerCase() ?? ""}`}
+                    typeSecondary={
+                      user.role
+                        ? ROLE_MOD[user.role.toLowerCase()]
+                        : "pastelNavy"
+                    }
+                    leftIcon={false}
+                    text={user.role ? capitalize(user.role) : "User"}
+                    onClick={() => {}}
+                  />
                 </td>
 
                 <td className="admin-user-table__cell">
@@ -167,26 +186,22 @@ const UserTable = ({
 
                 <td className="admin-user-table__cell admin-user-table__cell--actions">
                   <div className="admin-user-table__actions">
-                    <button
-                      type="button"
-                      id={`edit-user-btn-${user.id}`}
-                      className="admin-user-table__action-btn admin-user-table__action-btn--edit"
-                      aria-label={`Edit ${user.username}`}
+                    <TextButton
+                      icon="edit"
+                      text={t("admin.users.table.edit")}
+                      tooltip={t("admin.users.table.edit_tooltip")}
                       onClick={() => onEdit(user)}
-                    >
-                      <Icon name="edit" size={15} />
-                      {t("admin.users.table.edit")}
-                    </button>
-                    <button
-                      type="button"
-                      id={`delete-user-btn-${user.id}`}
-                      className="admin-user-table__action-btn admin-user-table__action-btn--delete"
-                      aria-label={`Delete ${user.username}`}
+                      size="tiny"
+                      type="primary"
+                    />
+                    <TextButton
+                      icon="delete"
+                      text={t("admin.users.table.delete")}
+                      tooltip={t("admin.users.table.delete_tooltip")}
                       onClick={() => onDelete(user.id)}
-                    >
-                      <Icon name="delete" size={15} />
-                      {t("admin.users.table.delete")}
-                    </button>
+                      size="tiny"
+                      type="outlined"
+                    />
                   </div>
                 </td>
               </tr>

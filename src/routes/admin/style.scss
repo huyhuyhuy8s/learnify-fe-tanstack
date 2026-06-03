@@ -8,12 +8,14 @@
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
+  width: 100dvw;
 
   .inner {
     display: flex;
     flex-direction: column;
     background-color: $green-100;
-    padding: toRem(100);
+    @include transition;
+    padding: toRem(50) toRem(100);
     gap: 10dvh;
   }
 

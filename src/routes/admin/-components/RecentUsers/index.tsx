@@ -1,18 +1,22 @@
-import { useTranslation } from "react-i18next";
-import type { TFunction } from "i18next";
-import type { TAdminUser } from "@/hooks/useAdminUsers";
 import "./style.scss";
+
+import TextButton from "@/components/TextButton";
+import type { TAdminUser } from "@/hooks/useAdminUsers";
+import type { TTypeSecondary } from "@/types/global";
+import type { TFunction } from "i18next";
+import capitalize from "lodash/capitalize";
+import { useTranslation } from "react-i18next";
 
 type RecentUsersProps = {
   users: TAdminUser[];
 };
 
-const ROLE_MOD: Record<string, string> = {
-  learner: "blue",
-  teacher: "green",
+const ROLE_MOD: Record<string, TTypeSecondary> = {
+  learner: "pastelNavy",
+  user: "pastelNavy",
   instructor: "green",
-  reviewer: "orange",
-  admin: "red",
+  reviewer: "yellow",
+  admin: "salmon",
 };
 
 const getTimeAgo = (date: string, t: TFunction) => {
@@ -62,13 +66,17 @@ const RecentUsers = ({ users }: RecentUsersProps) => {
               <span className="admin-recent-users__email">{user.email}</span>
             </div>
             <div className="admin-recent-users__meta">
-              <span
-                className={`admin-recent-users__role admin-recent-users__role--${
-                  ROLE_MOD[user.role?.toLowerCase() ?? ""] ?? "blue"
-                }`}
-              >
-                {user.role}
-              </span>
+              <TextButton
+                size="tiny"
+                type="secondary"
+                className={`admin-recent-users__role admin-recent-users__role--${user.role?.toLowerCase() ?? ""}`}
+                onClick={() => {}}
+                text={capitalize(user.role || "user")}
+                leftIcon={false}
+                typeSecondary={
+                  ROLE_MOD[user.role?.toLowerCase() ?? ""] ?? "navy"
+                }
+              />
               <span className="admin-recent-users__time">
                 {getTimeAgo(user.createdAt, t)}
               </span>

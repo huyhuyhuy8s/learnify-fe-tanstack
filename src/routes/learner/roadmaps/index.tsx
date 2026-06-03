@@ -73,7 +73,7 @@ function RoadmapsPage() {
       typeSpecial: "roadmap" as const,
       title: item.roadMapName,
       description: item.abstract,
-      duration: "--",
+      duration: undefined,
       status: "default" as const,
       percentage: 0,
     }));

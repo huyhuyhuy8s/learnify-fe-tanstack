@@ -172,7 +172,7 @@
   },
   "courses": {
     "title": "Khám phá <Beauty>Khóa học tốt nhất</Beauty> dành riêng cho bạn",
-    "description": "Chúng tôi cung cấp nhiều khóa học được thiết kế để giúp bạn đạt được mục tiêu học tập của mình. Dù bạn muốn phát triển kỹ năng mới, thăng tiến sự nghiệp hay khám phá sở thích mới, các khóa học của chúng tôi đều được điều chỉnh để đáp ứng nhu cầu của bạn. Hãy duyệt qua danh mục khóa học và tìm khóa học phù hợp nhất cho bạn ngay hôm nay!",
+    "description": "Mô tả khóa học",
     "filter_course": "khóa học",
     "filter_duration": "thời lượng",
     "results": "{{count}} kết quả",
@@ -187,7 +187,6 @@
     "status_published": "Đã xuất bản",
     "status_pending": "Chờ duyệt",
     "status_rejected": "Từ chối",
-    "description": "Mô tả khóa học",
     "description_placeholder": "Nhập mô tả khóa học",
     "description_required": "Vui lòng nhập mô tả khóa học",
     "delete_title": "Xóa khóa học",
@@ -302,7 +301,8 @@
     "placeholder": "Tìm kiếm khóa học...",
     "aria_label": "Tìm kiếm",
     "label": "Tìm kiếm khóa học",
-    "submit_aria": "Tìm kiếm"
+    "submit_aria": "Tìm kiếm",
+    "clear_tooltip": "Xóa tìm kiếm"
   },
   "footer": {
     "banner_alt": "footer-banner",
@@ -788,7 +788,8 @@
       "title": "Hoạt động hệ thống"
     },
     "search": {
-      "placeholder": "Tìm kiếm theo tên, email hoặc vai trò..."
+      "placeholder": "Tìm kiếm theo tên, email hoặc vai trò...",
+      "clear_tooltip": "Xóa tìm kiếm"
     },
     "users": {
       "title": "Quản lý người dùng",
@@ -801,7 +802,9 @@
         "actions": "Thao tác",
         "edit": "Sửa",
         "delete": "Xóa",
-        "empty": "Không tìm thấy người dùng"
+        "empty": "Không tìm thấy người dùng",
+        "edit_tooltip": "Chỉnh sửa thông tin người dùng",
+        "delete_tooltip": "Xóa vĩnh viễn người dùng này"
       },
       "modal": {
         "create_title": "Tạo người dùng mới",
@@ -818,12 +821,19 @@
         "cancel": "Hủy",
         "save": "Lưu thay đổi",
         "create": "Tạo người dùng",
-        "saving": "Đang lưu..."
+        "saving": "Đang lưu...",
+        "close_tooltip": "Đóng cửa sổ",
+        "cancel_tooltip": "Hủy thay đổi",
+        "submit_create_tooltip": "Tạo tài khoản người dùng mới",
+        "submit_edit_tooltip": "Lưu thay đổi người dùng"
       },
       "delete_confirm": "Bạn có chắc chắn muốn xóa vĩnh viễn người dùng này?"
     },
     "pagination": {
-      "showing": "Hiển thị <strong>{{start}}–{{end}}</strong> trên <strong>{{total}}</strong>"
+      "showing": "Hiển thị <strong>{{start}}–{{end}}</strong> trên <strong>{{total}}</strong>",
+      "prev_tooltip": "Đến trang trước",
+      "next_tooltip": "Đến trang sau",
+      "page_tooltip": "Đến trang {{page}}"
     },
     "sidebar": {
       "dashboard": "Bảng điều khiển",
@@ -836,7 +846,62 @@
       "search_placeholder": "Tìm kiếm người dùng, cài đặt..."
     },
     "page_header": {
-      "add_user": "Thêm người dùng"
+      "add_user": "Thêm người dùng",
+      "add_user_tooltip": "Tạo tài khoản người dùng mới"
     }
+  },
+  "card": {
+    "duration_one": "{{count}} phút",
+    "duration_other": "{{count}} phút"
+  },
+  "card_footer_tooltip": {
+    "locked": "Khóa học này đã bị khóa. Vui lòng hoàn thành các khóa học trước để mở khóa.",
+    "completed": "Bạn đã hoàn thành khóa học này.",
+    "default": "Nhấp để vào khóa học."
+  },
+  "special": {
+    "lesson": "Bài học",
+    "lab": "Phòng LAB",
+    "check": "Kiểm tra",
+    "course": "Khóa học",
+    "roadmap": "Lộ trình",
+    "certificate": "Chứng chỉ",
+    "public": "Công khai",
+    "private": "Riêng tư",
+    "starter": "Starter",
+    "pro": "Pro",
+    "career": "Career"
+  },
+  "special_tooltip": {
+    "lesson": "Bài học tập trung vào một mục tiêu học tập.",
+    "lab": "Môi trường thực hành tương tác.",
+    "check": "Kiểm tra nhanh kiến thức với phản hồi tức thì.",
+    "course": "Bộ sưu tập bài học về một chủ đề rộng hơn.",
+    "roadmap": "Hướng dẫn trực quan về lộ trình học tập.",
+    "certificate": "Chứng chỉ số đạt được khi hoàn thành.",
+    "public": "Bài học nền tảng dành cho mọi người.",
+    "private": "Nội dung hạn chế yêu cầu điều kiện trước.",
+    "starter": "Truy cập cơ bản với phòng LAB và huy hiệu.",
+    "pro": "Học tập không giới hạn từ cơ bản đến nâng cao.",
+    "career": "Phát triển sự nghiệp với kỹ năng sẵn sàng làm việc."
+  },
+  "course_completion": {
+    "lesson": "Bài học",
+    "lab": "Phòng LAB",
+    "check": "Kiểm tra",
+    "course": "Khóa học",
+    "roadmap": "Lộ trình",
+    "certificate": "Chứng chỉ",
+    "public": "Công khai",
+    "private": "Riêng tư",
+    "starter": "Starter",
+    "pro": "Pro",
+    "career": "Career"
+  },
+  "course_completion": {
+    "title": "Hoàn thành khóa học!",
+    "subtitle": "Chúc mừng bạn đã hoàn thành khóa học này!",
+    "diamonds_earned": "Bạn nhận được +10 kim cương",
+    "continue": "Tiếp tục"
   }
 }

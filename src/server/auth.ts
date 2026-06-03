@@ -3,7 +3,7 @@ import { useAppSession } from "@/utils/session";
 import { z } from "zod";
 import { getLanguageCookie, getThemeCookie } from "./cookies.server";
 
-const SESSION_TTL = 7 * 24 * 60 * 60 * 1000;
+const SESSION_TTL = 45 * 60 * 1000;
 
 type UserData = {
   id: string | number;

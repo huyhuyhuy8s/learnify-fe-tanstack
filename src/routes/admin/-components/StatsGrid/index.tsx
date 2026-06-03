@@ -1,6 +1,7 @@
-import { useTranslation } from "react-i18next";
-import Icon from "@/components/Icon";
 import "./style.scss";
+
+import Icon from "@/components/Icon";
+import { useTranslation } from "react-i18next";
 
 type StatsGridProps = {
   totalUsers: number;

@@ -1,21 +1,19 @@
 import "./style.scss";
 
-import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { Suspense } from "react";
-
-import { getCurrentUserFn } from "@/server/auth";
-import { requireRole } from "@/utils/authGuard";
-
 import GraphqlError from "@/components/GraphqlError";
 import LeftNav from "@/components/LeftNav";
 import RouterComponentHolder from "@/components/RouterComponentHolder";
 import TetrisLoader from "@/components/TetrisLoader";
 import TopNav from "@/components/TopNav";
+import { getCurrentUserFn } from "@/server/auth";
+import { requireRole } from "@/utils/authGuard";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { Suspense } from "react";
 
 export const Route = createFileRoute("/admin")({
   beforeLoad: async () => {
-    const { user } = await getCurrentUserFn();
-    requireRole("admin")({ user, isAuthenticated: !!user });
+    const { user, expired } = await getCurrentUserFn();
+    requireRole("admin")({ user, isAuthenticated: !!user, expired });
   },
   head: () => ({
     meta: [{ title: "Admin | Learnify" }],

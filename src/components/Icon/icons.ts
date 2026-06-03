@@ -197,6 +197,8 @@ import trending_upSvg from "@material-symbols/svg-400/rounded/trending_up.svg?ra
 import trending_upFillSvg from "@material-symbols/svg-400/rounded/trending_up-fill.svg?raw";
 import trending_downSvg from "@material-symbols/svg-400/rounded/trending_down.svg?raw";
 import trending_downFillSvg from "@material-symbols/svg-400/rounded/trending_down-fill.svg?raw";
+import progress_activitySvg from "@material-symbols/svg-400/rounded/progress_activity.svg?raw";
+import progress_activityFillSvg from "@material-symbols/svg-400/rounded/progress_activity-fill.svg?raw";
 import location_onSvg from "@material-symbols/svg-400/rounded/location_on.svg?raw";
 import location_onFillSvg from "@material-symbols/svg-400/rounded/location_on-fill.svg?raw";
 import account_circleSvg from "@material-symbols/svg-400/rounded/account_circle.svg?raw";
@@ -386,6 +388,10 @@ export const iconPaths: Record<string, { regular: string; fill: string }> = {
   psychology: {
     regular: extractPath(psychologySvg),
     fill: extractPath(psychologyFillSvg),
+  },
+  progress_activity: {
+    regular: extractPath(progress_activitySvg),
+    fill: extractPath(progress_activityFillSvg),
   },
   public: { regular: extractPath(publicSvg), fill: extractPath(publicFillSvg) },
   quick_reference: {

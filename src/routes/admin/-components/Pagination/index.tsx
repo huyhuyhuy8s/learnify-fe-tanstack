@@ -1,6 +1,7 @@
-import { Trans } from "react-i18next";
-import Icon from "@/components/Icon";
+import { Trans, useTranslation } from "react-i18next";
+import TextButton from "@/components/TextButton";
 import "./style.scss";
+import IconButton from "@/components/IconButton";
 
 type TPaginationProps = {
   currentPage: number;
@@ -19,6 +20,8 @@ const Pagination = ({
 }: TPaginationProps) => {
   const startItem = totalItems === 0 ? 0 : (currentPage - 1) * pageSize + 1;
   const endItem = Math.min(currentPage * pageSize, totalItems);
+
+  const { t } = useTranslation();
 
   const getPageNumbers = (): (number | "…")[] => {
     if (totalPages <= 7) {
@@ -61,16 +64,15 @@ const Pagination = ({
       </span>
 
       <div className="admin-pagination__controls">
-        <button
-          type="button"
-          id="pagination-prev-btn"
-          className="admin-pagination__btn admin-pagination__btn--nav"
+        <IconButton
+          icon="chevron_left"
+          text=""
+          tooltip={t("admin.pagination.prev_tooltip")}
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage <= 1}
-          aria-label="Previous page"
-        >
-          <Icon name="chevron_left" size={18} />
-        </button>
+          size="small"
+          type="secondary"
+        />
 
         {getPageNumbers().map((page, idx) =>
           page === "…" ? (
@@ -81,32 +83,29 @@ const Pagination = ({
               …
             </span>
           ) : (
-            <button
+            <TextButton
               key={page}
-              type="button"
-              id={`pagination-page-${page}`}
-              className={`admin-pagination__btn ${
-                page === currentPage ? "admin-pagination__btn--active" : ""
-              }`}
+              icon=""
+              text={String(page)}
+              tooltip={t("admin.pagination.page_tooltip", {
+                page: String(page),
+              })}
               onClick={() => onPageChange(page as number)}
-              aria-label={`Page ${page}`}
-              aria-current={page === currentPage ? "page" : undefined}
-            >
-              {page}
-            </button>
+              size="small"
+              type={page === currentPage ? "primary" : "secondary"}
+            />
           )
         )}
 
-        <button
-          type="button"
-          id="pagination-next-btn"
-          className="admin-pagination__btn admin-pagination__btn--nav"
+        <IconButton
+          icon="chevron_right"
+          text=""
+          tooltip={t("admin.pagination.next_tooltip")}
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage >= totalPages}
-          aria-label="Next page"
-        >
-          <Icon name="chevron_right" size={18} />
-        </button>
+          size="small"
+          type="secondary"
+        />
       </div>
     </div>
   );

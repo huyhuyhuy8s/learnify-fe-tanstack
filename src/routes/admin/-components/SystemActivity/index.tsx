@@ -1,6 +1,7 @@
+import "./style.scss";
+
 import { useTranslation } from "react-i18next";
 import Icon from "@/components/Icon";
-import "./style.scss";
 
 type TActivityItem = {
   id: string;

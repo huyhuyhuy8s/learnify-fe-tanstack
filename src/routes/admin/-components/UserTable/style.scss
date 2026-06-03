@@ -173,48 +173,6 @@
     gap: toRem(6);
   }
 
-  &__action-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: toRem(5);
-    padding: toRem(6) toRem(12);
-    border-radius: $br-xs;
-    font-size: $fs-small;
-    font-weight: $fw-semibold;
-    border: toRem(1) solid transparent;
-    cursor: pointer;
-    @include transition;
-    transition-property: background-color, color, border-color, transform;
-
-    &--edit {
-      background-color: $navy-pastel-100;
-      color: $navy-600;
-      border-color: $navy-pastel-200;
-
-      &:hover {
-        background-color: $navy-600;
-        color: $white;
-        transform: translateY(toRem(-1));
-      }
-    }
-
-    &--delete {
-      background-color: $salmon-pastel-100;
-      color: $salmon-700;
-      border-color: $salmon-pastel-200;
-
-      &:hover {
-        background-color: $salmon-600;
-        color: $white;
-        transform: translateY(toRem(-1));
-      }
-    }
-
-    &:active {
-      transform: translateY(0);
-    }
-  }
-
   &__empty {
     text-align: center;
     padding: toRem(60) toRem(16);

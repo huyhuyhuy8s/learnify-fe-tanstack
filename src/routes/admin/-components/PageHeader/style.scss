@@ -31,31 +31,4 @@
     padding: toRem(2) toRem(8);
     border-radius: $br-xl;
   }
-
-  &__add-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: toRem(8);
-    padding: toRem(10) toRem(20);
-    background-color: $navy-600;
-    color: $white;
-    font-size: $fs-paragraph;
-    font-weight: $fw-semibold;
-    border: none;
-    border-radius: $br-sm;
-    cursor: pointer;
-    white-space: nowrap;
-    @include transition;
-    transition-property: background-color, transform;
-
-    &:hover {
-      background-color: $navy-700;
-      transform: translateY(toRem(-1));
-    }
-
-    &:active {
-      transform: translateY(0);
-      background-color: $navy-800;
-    }
-  }
 }

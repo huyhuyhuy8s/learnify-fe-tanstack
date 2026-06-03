@@ -147,7 +147,7 @@ function CourseComponent() {
           typeSpecial: "lesson" as const,
           title: lesson.lessonName,
           description: lesson.abstract ?? t("course_detail.no_description"),
-          duration: "45 mins",
+          duration: 45,
           status,
           percentage,
         };

@@ -15,8 +15,11 @@ import TopNav from "@/components/TopNav";
 
 export const Route = createFileRoute("/instructor")({
   beforeLoad: async () => {
-    const { user } = await getCurrentUserFn();
-    requireRole("instructor", "admin")({ user, isAuthenticated: !!user });
+    const { user, expired } = await getCurrentUserFn();
+    requireRole(
+      "instructor",
+      "admin"
+    )({ user, isAuthenticated: !!user, expired });
   },
   head: () => ({
     meta: [{ title: "Instructor | Learnify" }],

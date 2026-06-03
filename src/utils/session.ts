@@ -16,7 +16,7 @@ export function useAppSession() {
         (import.meta.env.PROD && process.env.SECURE_COOKIE !== "false"),
       sameSite: "lax",
       httpOnly: true,
-      maxAge: 7 * 24 * 60 * 60,
+      maxAge: 45 * 60,
       path: "/",
     },
   });

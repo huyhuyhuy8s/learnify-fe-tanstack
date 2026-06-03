@@ -56,7 +56,7 @@ function RoadmapItem() {
         typeSpecial: "course" as const,
         title: course.courseName,
         description: course.abstract ?? t("course_detail.no_description"),
-        duration: "45 mins",
+        duration: 45,
         status: (course.status.toLowerCase() === "published"
           ? "default"
           : "locked") as TStatusCard,

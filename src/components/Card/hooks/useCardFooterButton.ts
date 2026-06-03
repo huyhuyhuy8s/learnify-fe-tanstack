@@ -9,18 +9,17 @@ const useCardFooterButton = (
   switch (status) {
     case "locked":
       return {
-        tooltip:
-          "This course is locked. Please complete the previous courses to unlock it.",
+        tooltip: "locked",
         icon: "lock",
       };
     case "completed":
       return {
-        tooltip: "You have completed this course.",
+        tooltip: "completed",
         icon: "check",
       };
     default:
       return {
-        tooltip: "Click to enter the course.",
+        tooltip: "default",
         icon: "arrow_forward",
       };
   }

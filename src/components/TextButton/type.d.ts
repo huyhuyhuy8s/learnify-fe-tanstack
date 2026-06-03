@@ -8,7 +8,7 @@ import type {
 
 export type TTextButtonProps = {
   icon?: string;
-  onClick: () => void;
+  onClick: () => void | Promise<void>;
   leftIcon?: boolean;
   rightIcon?: boolean;
   text: string;

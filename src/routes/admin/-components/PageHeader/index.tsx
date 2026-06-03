@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import Icon from "@/components/Icon";
+import TextButton from "@/components/TextButton";
 import "./style.scss";
 
 type TPageHeaderProps = {
@@ -22,16 +22,13 @@ const PageHeader = ({ title, count, onAddUser }: TPageHeaderProps) => {
         )}
       </div>
 
-      <button
-        id="page-header-add-user-btn"
-        type="button"
-        className="admin-page-header__add-btn"
-        aria-label={t("admin.page_header.add_user")}
+      <TextButton
+        icon="person_add"
+        text={t("admin.page_header.add_user")}
+        tooltip={t("admin.page_header.add_user_tooltip")}
         onClick={onAddUser}
-      >
-        <Icon name="person_add" size={18} />
-        <span>{t("admin.page_header.add_user")}</span>
-      </button>
+        size="medium"
+      />
     </div>
   );
 };

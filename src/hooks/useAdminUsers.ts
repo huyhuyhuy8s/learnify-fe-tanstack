@@ -12,7 +12,7 @@ export type TAdminUser = {
   id: string;
   username: string;
   email: string;
-  role?: string | null;
+  role: string | null;
   avatar?: string | null;
   createdAt: string;
   phoneNumber?: string | null;

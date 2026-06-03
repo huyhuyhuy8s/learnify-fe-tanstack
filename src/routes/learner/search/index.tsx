@@ -82,7 +82,7 @@ function SearchPage() {
     typeSpecial: "course" as const,
     title: course.courseName,
     description: course.abstract,
-    duration: "45 mins",
+    duration: 45,
     status: "default" as const,
     percentage: 0,
   }));
