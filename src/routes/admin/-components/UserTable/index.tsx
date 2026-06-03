@@ -129,13 +129,12 @@ const UserTable = ({
 
                 <td className="admin-user-table__cell admin-user-table__cell--id">
                   <TextButton
-                    className="Admin-user-table__id"
+                    typeSecondary="pastelNavy"
                     size="tiny"
                     text={`#${user.id.slice(0, 6)}`}
                     leftIcon={false}
                     type="secondary"
                     onClick={() => {}}
-                    typeSecondary="pastelNavy"
                   />
                 </td>
 

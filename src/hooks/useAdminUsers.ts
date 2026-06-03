@@ -6,6 +6,7 @@ import {
   UPDATE_ADMIN_USER_MUTATION,
   DELETE_USER_MUTATION,
 } from "@/graphql/admin";
+import i18n from "@/i18n";
 import { toast } from "sonner";
 
 export type TAdminUser = {
@@ -76,10 +77,14 @@ export function useCreateAdminUser() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ADMIN_USERS_KEY });
-      toast.success("User created successfully!");
+      toast.success(i18n.t("admin.users.toast.user_created"));
     },
     onError: (error) => {
-      toast.error(`Failed to create user: ${(error as Error).message}`);
+      toast.error(
+        i18n.t("admin.users.toast.create_failed", {
+          message: (error as Error).message,
+        })
+      );
     },
   });
 }
@@ -97,10 +102,14 @@ export function useUpdateAdminUser() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ADMIN_USERS_KEY });
-      toast.success("User updated successfully!");
+      toast.success(i18n.t("admin.users.toast.user_updated"));
     },
     onError: (error) => {
-      toast.error(`Failed to update user: ${(error as Error).message}`);
+      toast.error(
+        i18n.t("admin.users.toast.update_failed", {
+          message: (error as Error).message,
+        })
+      );
     },
   });
 }
@@ -114,10 +123,14 @@ export function useDeleteAdminUser() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ADMIN_USERS_KEY });
-      toast.success("User deleted successfully!");
+      toast.success(i18n.t("admin.users.toast.user_deleted"));
     },
     onError: (error) => {
-      toast.error(`Failed to delete user: ${(error as Error).message}`);
+      toast.error(
+        i18n.t("admin.users.toast.delete_failed", {
+          message: (error as Error).message,
+        })
+      );
     },
   });
 }

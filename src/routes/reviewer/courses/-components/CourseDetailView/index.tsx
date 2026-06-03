@@ -8,10 +8,12 @@ type TCourseDetailViewProps = {
   course: MockCourseDetail;
   onApprove: () => void;
   onReject: () => void;
+  isPublishing?: boolean;
+  isRejecting?: boolean;
 };
 
 const CourseDetailView = (props: TCourseDetailViewProps) => {
-  const { course, onApprove, onReject } = props;
+  const { course, onApprove, onReject, isPublishing, isRejecting } = props;
 
   return (
     <div className="course-detail-view">
@@ -20,10 +22,11 @@ const CourseDetailView = (props: TCourseDetailViewProps) => {
         <LessonSyllabus lessons={course.lessons} />
       </div>
       <ReviewActionPanel
-        courseId={String(course.id)}
         status={course.status}
         onApprove={onApprove}
         onReject={onReject}
+        isPublishing={isPublishing}
+        isRejecting={isRejecting}
       />
     </div>
   );

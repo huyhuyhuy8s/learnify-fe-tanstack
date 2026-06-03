@@ -9,6 +9,7 @@ import TextButton from "@/components/TextButton";
 import { createLearnerHead } from "@/utils";
 import { courseQueryOptions } from "@/utils/courses";
 import { logger } from "@/utils/logger";
+import RouterComponentHolder from "@/components/RouterComponentHolder";
 
 function CourseErrorComponent() {
   const router = useRouter();
@@ -58,6 +59,6 @@ export const Route = createFileRoute("/learner/courses/$courseId/")({
   head: ({ loaderData }) =>
     createLearnerHead(loaderData?.title ?? "Course Details"),
   errorComponent: CourseErrorComponent,
-  pendingComponent: TetrisLoader,
-  notFoundComponent: NotFound,
+  pendingComponent: () => <RouterComponentHolder children={<TetrisLoader />} />,
+  notFoundComponent: () => <RouterComponentHolder children={<NotFound />} />,
 }).lazy(() => import("./index.lazy").then((m) => m.Route));

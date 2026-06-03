@@ -183,7 +183,8 @@ const UserModal = ({
                 ? t("admin.users.modal.submit_edit_tooltip")
                 : t("admin.users.modal.submit_create_tooltip")
             }
-            onClick={handleSubmit}
+            buttonType="submit"
+            onClick={() => {}}
             disabled={isPending}
             loading={isPending}
             icon={isPending ? "progress_activity" : isEdit ? "save" : "plus"}

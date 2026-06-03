@@ -51,10 +51,14 @@ export function useManageCourses() {
   const { t } = useTranslation();
   const user = useAuthStore((s) => s.user);
   const { data: courses, isLoading } = useGetCoursesByUserId(user?.id ?? "");
-  const createCourse = useCreateCourse();
-  const deleteCourse = useDeleteCourse();
-  const createLesson = useCreateLessonFromAi();
-  const deleteLesson = useDeleteLesson();
+  const { mutate: createCourse, isPending: isCreatingCourse } =
+    useCreateCourse();
+  const { mutate: deleteCourse, isPending: isDeletingCourse } =
+    useDeleteCourse();
+  const { mutate: createLesson, isPending: isCreatingLesson } =
+    useCreateLessonFromAi();
+  const { mutate: deleteLesson, isPending: isDeletingLesson } =
+    useDeleteLesson();
   const uploadDoc = useUploadDocument();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -145,8 +149,10 @@ export function useManageCourses() {
       return;
     }
     setErrors({});
-    const coursePrice = parseInt(coursePriceStr, 10) || 0;
-    createCourse.mutate(
+    const coursePrice = coursePriceStr
+      ? Math.max(0, parseInt(coursePriceStr, 10))
+      : 0;
+    createCourse(
       {
         courseName: result.data.courseName,
         abstract: result.data.abstract,
@@ -267,7 +273,7 @@ export function useManageCourses() {
     const firstPdf =
       lessonFiles.find((f) => f.type === "application/pdf") ?? lessonFiles[0]!;
 
-    createLesson.mutate(
+    createLesson(
       {
         data: {
           course_id: selectedCourseId,
@@ -302,14 +308,14 @@ export function useManageCourses() {
 
   const handleDeleteCourse = useCallback(() => {
     if (!courseToDelete) return;
-    deleteCourse.mutate(courseToDelete, {
+    deleteCourse(courseToDelete, {
       onSuccess: () => setCourseToDelete(null),
     });
   }, [courseToDelete, deleteCourse]);
 
   const handleDeleteLesson = useCallback(() => {
     if (!lessonToDelete) return;
-    deleteLesson.mutate(lessonToDelete, {
+    deleteLesson(lessonToDelete, {
       onSuccess: () => setLessonToDelete(null),
     });
   }, [lessonToDelete, deleteLesson]);
@@ -337,6 +343,10 @@ export function useManageCourses() {
     STATUSES: COURSE_STATUSES,
     filteredCourses,
     isLoading,
+    isCreatingCourse,
+    isDeletingCourse,
+    isCreatingLesson,
+    isDeletingLesson,
     statusFilter,
     setStatusFilter,
     selectedCourseId,

@@ -2,16 +2,11 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "@tanstack/react-router";
 import Icon from "@/components/Icon";
 import type { TBackendCourse } from "@/hooks/useCourses";
+import { tStatus } from "../../courses/-hooks/useManageCourses";
 import "./style.scss";
 
 type TRecentCoursesProps = {
   courses: TBackendCourse[];
-};
-
-const COURSE_STATUS_TRANSLATION_KEYS: Record<string, string> = {
-  Published: "courses.status_published",
-  Pending: "courses.status_pending",
-  Rejected: "courses.status_rejected",
 };
 
 const RecentCourses = ({ courses }: TRecentCoursesProps) => {
@@ -46,10 +41,7 @@ const RecentCourses = ({ courses }: TRecentCoursesProps) => {
                   <span
                     className={`recent-courses__item-status recent-courses__item-status--${course.status.toLowerCase()}`}
                   >
-                    {t(
-                      COURSE_STATUS_TRANSLATION_KEYS[course.status] ??
-                        course.status
-                    )}
+                    {tStatus(t, course.status)}
                   </span>
                   <span className="recent-courses__item-date">
                     {new Date(course.updatedAt).toLocaleDateString()}

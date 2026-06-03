@@ -24,7 +24,9 @@
     "close_menu": "Close menu",
     "cancel": "Cancel",
     "create": "Create",
-    "delete": "Delete"
+    "delete": "Delete",
+    "creating": "Creating...",
+    "deleting": "Deleting..."
   },
   "home": {
     "title": "Unlock your <Beauty>Potential</Beauty> for tomorrow, today",
@@ -211,7 +213,23 @@
     "select_lesson": "Select a lesson",
     "no_lessons": "No lessons",
     "create": "Create Course",
-    "creating": "Creating..."
+    "creating": "Creating...",
+    "toast": {
+      "course_created": "Course created successfully!",
+      "course_deleted": "Course deleted successfully!",
+      "lesson_created": "Lesson created successfully!",
+      "lesson_deleted": "Lesson deleted successfully!",
+      "file_uploaded": "File uploaded successfully!",
+      "course_published": "Course published successfully!",
+      "course_rejected": "Course rejected successfully!",
+      "create_failed": "Failed to create course: {{message}}",
+      "delete_failed": "Failed to delete course: {{message}}",
+      "lesson_create_failed": "Failed to create lesson: {{message}}",
+      "lesson_delete_failed": "Failed to delete lesson: {{message}}",
+      "file_upload_failed": "Failed to upload file: {{message}}",
+      "publish_failed": "Failed to publish course: {{message}}",
+      "reject_failed": "Failed to reject course: {{message}}"
+    }
   },
   "course_detail": {
     "enroll": "Enroll Course",
@@ -848,6 +866,14 @@
     "page_header": {
       "add_user": "Add User",
       "add_user_tooltip": "Create a new user account"
+    },
+    "toast": {
+      "user_created": "User created successfully!",
+      "user_updated": "User updated successfully!",
+      "user_deleted": "User deleted successfully!",
+      "create_failed": "Failed to create user: {{message}}",
+      "update_failed": "Failed to update user: {{message}}",
+      "delete_failed": "Failed to delete user: {{message}}"
     }
   },
   "card": {
@@ -884,6 +910,15 @@
     "starter": "Basic access with hands-on labs and skill badges.",
     "pro": "Unlimited hands-on learning from beginner to advanced.",
     "career": "Launch your career with employer-ready skills."
+  },
+  "reviewer": {
+    "back_to_list": "Back to List",
+    "already_decided": "This course has already been {{status}}.",
+    "approve": "Approve Course",
+    "reject": "Reject Course",
+    "what_students_learn": "What students will learn",
+    "by_creator": "By {{name}}",
+    "submitted": "Submitted {{date}}"
   },
   "course_completion": {
     "lesson": "Lesson",

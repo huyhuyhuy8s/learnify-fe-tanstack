@@ -21,6 +21,7 @@ import {
   DELETE_LESSON_MUTATION,
   UPLOAD_DOCUMENT_MUTATION,
 } from "@/graphql/mutations";
+import i18n from "@/i18n";
 import { toast } from "sonner";
 
 export type TBackendCourse = {
@@ -111,10 +112,14 @@ export function usePublishCourse() {
       queryClient.invalidateQueries({
         queryKey: ["courses", "all"],
       });
-      toast.success("Course published successfully!");
+      toast.success(i18n.t("courses.toast.course_published"));
     },
     onError: (error) => {
-      toast.error(`Failed to publish course: ${(error as Error).message}`);
+      toast.error(
+        i18n.t("courses.toast.publish_failed", {
+          message: (error as Error).message,
+        })
+      );
     },
   });
 }
@@ -130,15 +135,22 @@ export function useRejectCourse() {
       queryClient.invalidateQueries({
         queryKey: ["courses", "all"],
       });
-      toast.success("Course rejected successfully!");
+      toast.success(i18n.t("courses.toast.course_rejected"));
     },
     onError: (error) => {
-      toast.error(`Failed to reject course: ${(error as Error).message}`);
+      toast.error(
+        i18n.t("courses.toast.reject_failed", {
+          message: (error as Error).message,
+        })
+      );
     },
   });
 }
 
-export function useGetCoursesById(courseId: string) {
+export function useGetCoursesById(
+  courseId: string,
+  options?: { enabled?: boolean }
+) {
   return useQuery({
     queryKey: ["courses", "id", courseId],
     queryFn: async () => {
@@ -149,6 +161,7 @@ export function useGetCoursesById(courseId: string) {
       return response;
     },
     staleTime: 0,
+    enabled: options?.enabled ?? true,
   });
 }
 
@@ -226,10 +239,14 @@ export function useCreateCourse() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["courses"] });
-      toast.success("Course created successfully!");
+      toast.success(i18n.t("courses.toast.course_created"));
     },
     onError: (error) => {
-      toast.error(`Failed to create course: ${(error as Error).message}`);
+      toast.error(
+        i18n.t("courses.toast.create_failed", {
+          message: (error as Error).message,
+        })
+      );
     },
   });
 }
@@ -243,10 +260,14 @@ export function useDeleteCourse() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["courses"] });
-      toast.success("Course deleted successfully!");
+      toast.success(i18n.t("courses.toast.course_deleted"));
     },
     onError: (error) => {
-      toast.error(`Failed to delete course: ${(error as Error).message}`);
+      toast.error(
+        i18n.t("courses.toast.delete_failed", {
+          message: (error as Error).message,
+        })
+      );
     },
   });
 }
@@ -266,10 +287,14 @@ export function useCreateLessonFromAi() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["courses"] });
-      toast.success("Lesson created successfully!");
+      toast.success(i18n.t("courses.toast.lesson_created"));
     },
     onError: (error) => {
-      toast.error(`Failed to create lesson: ${(error as Error).message}`);
+      toast.error(
+        i18n.t("courses.toast.lesson_create_failed", {
+          message: (error as Error).message,
+        })
+      );
     },
   });
 }
@@ -283,10 +308,14 @@ export function useDeleteLesson() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["courses"] });
-      toast.success("Lesson deleted successfully!");
+      toast.success(i18n.t("courses.toast.lesson_deleted"));
     },
     onError: (error) => {
-      toast.error(`Failed to delete lesson: ${(error as Error).message}`);
+      toast.error(
+        i18n.t("courses.toast.lesson_delete_failed", {
+          message: (error as Error).message,
+        })
+      );
     },
   });
 }
@@ -296,8 +325,15 @@ export function useUploadDocument() {
     mutationFn: async (variables: { file: File; uploadedBy?: string }) => {
       return await graphqlClient.request(UPLOAD_DOCUMENT_MUTATION, variables);
     },
+    onSuccess: () => {
+      toast.success(i18n.t("courses.toast.file_uploaded"));
+    },
     onError: (error) => {
-      toast.error(`Failed to upload file: ${(error as Error).message}`);
+      toast.error(
+        i18n.t("courses.toast.file_upload_failed", {
+          message: (error as Error).message,
+        })
+      );
     },
   });
 }

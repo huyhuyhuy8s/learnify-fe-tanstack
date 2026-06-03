@@ -29,6 +29,8 @@ function ReviewerManageCoursesPage() {
     statusFilter,
     isLoading,
     isCourseLoading,
+    isPublishing,
+    isRejecting,
     handleSelectCourse,
     handleTabChange,
     handleApprove,
@@ -82,6 +84,8 @@ function ReviewerManageCoursesPage() {
                 course={selectedCourse}
                 onApprove={handleApprove}
                 onReject={handleReject}
+                isPublishing={isPublishing}
+                isRejecting={isRejecting}
               />
             ) : (
               <CourseEmptyState />

@@ -13,9 +13,11 @@
   gap: toRem(16);
 
   &__back {
+    all: unset;
     display: inline-flex;
     align-items: center;
     gap: toRem(6);
+    cursor: pointer;
     font-size: $fs-paragraph;
     font-weight: $fw-medium;
     color: $neutral-600;

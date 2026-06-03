@@ -62,11 +62,13 @@ export function useReviewerManageCourses(opts: {
   const { data: allCourses, isLoading } = useGetAllCourses();
   const courses = allCourses?.courses;
 
-  const query = useGetCoursesById(selectedCourseId ?? "");
+  const query = useGetCoursesById(selectedCourseId ?? "", {
+    enabled: !!selectedCourseId,
+  });
   const courseData = query.data as TCourseDetailResponse | undefined;
   const isFetching = query.isFetching;
-  const { mutate: publishCourse } = usePublishCourse();
-  const { mutate: rejectCourse } = useRejectCourse();
+  const { mutate: publishCourse, isPending: isPublishing } = usePublishCourse();
+  const { mutate: rejectCourse, isPending: isRejecting } = useRejectCourse();
 
   const filteredCourses = useMemo(() => {
     if (!courses) return [];
@@ -119,6 +121,8 @@ export function useReviewerManageCourses(opts: {
     statusFilter,
     isLoading,
     isCourseLoading,
+    isPublishing,
+    isRejecting,
     handleSelectCourse,
     handleTabChange,
     handleApprove,

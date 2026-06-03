@@ -102,12 +102,4 @@
     color: $neutral-700;
     line-height: 1.5;
   }
-
-  &__check {
-    color: $green-600;
-    font-weight: $fw-bold;
-    font-size: $fs-paragraph;
-    flex-shrink: 0;
-    margin-top: toRem(1);
-  }
 }

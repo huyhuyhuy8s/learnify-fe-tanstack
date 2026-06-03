@@ -16,6 +16,8 @@ import { Suspense, useMemo } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import CategoryItem from "./-components/CategoryItem";
 import { CATEGORIES } from "./-constants";
+import RouterComponentHolder from "@/components/RouterComponentHolder";
+import NotFound from "@/components/NotFound";
 
 function RoadmapsErrorComponent() {
   const router = useRouter();
@@ -56,6 +58,8 @@ function RoadmapsErrorComponent() {
 export const Route = createFileRoute("/learner/roadmaps/")({
   head: () => createLearnerHead("Roadmaps"),
   errorComponent: RoadmapsErrorComponent,
+  pendingComponent: () => <RouterComponentHolder children={<TetrisLoader />} />,
+  notFoundComponent: () => <RouterComponentHolder children={<NotFound />} />,
   component: RoadmapsPage,
 });
 

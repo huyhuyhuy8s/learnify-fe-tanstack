@@ -4,9 +4,11 @@ import classnames from "classnames";
 import { useManageCourses, tStatus } from "./-hooks/useManageCourses";
 
 import Icon from "@/components/Icon";
+import IconButton from "@/components/IconButton";
 import Modal from "@/components/Modal";
 import SplitPanel from "@/components/SplitPanel";
 import TetrisLoader from "@/components/TetrisLoader";
+import TextButton from "@/components/TextButton";
 import LessonDetail from "./-components/LessonDetail";
 
 import "./style.scss";
@@ -22,6 +24,10 @@ function ManageCoursesPage() {
     filteredCourses,
     isLoading,
     isCourseLoading,
+    isCreatingCourse,
+    isDeletingCourse,
+    isCreatingLesson,
+    isDeletingLesson,
     statusFilter,
     setStatusFilter,
     selectedCourseId,
@@ -150,18 +156,22 @@ function ManageCoursesPage() {
             )}
           </label>
           <div className="manage-courses__form-actions">
-            <button
-              className="manage-courses__form-cancel"
+            <TextButton
+              text={t("common.cancel")}
               onClick={closeAddCourse}
-            >
-              {t("common.cancel")}
-            </button>
-            <button
-              className="manage-courses__form-submit"
+              size="medium"
+              type="secondary"
+            />
+            <TextButton
+              text={
+                isCreatingCourse ? t("common.creating") : t("common.create")
+              }
               onClick={handleAddCourse}
-            >
-              {t("common.create")}
-            </button>
+              disabled={isCreatingCourse}
+              loading={isCreatingCourse}
+              size="medium"
+              type="primary"
+            />
           </div>
         </div>
       </Modal>
@@ -174,18 +184,22 @@ function ManageCoursesPage() {
         <div className="manage-courses__confirm">
           <p>{t("courses.delete_confirm")}</p>
           <div className="manage-courses__form-actions">
-            <button
-              className="manage-courses__form-cancel"
+            <TextButton
+              text={t("common.cancel")}
               onClick={closeDeleteCourse}
-            >
-              {t("common.cancel")}
-            </button>
-            <button
-              className="manage-courses__form-submit manage-courses__form-submit--danger"
+              size="medium"
+              type="secondary"
+            />
+            <TextButton
+              text={
+                isDeletingCourse ? t("common.deleting") : t("common.delete")
+              }
               onClick={handleDeleteCourse}
-            >
-              {t("common.delete")}
-            </button>
+              disabled={isDeletingCourse}
+              loading={isDeletingCourse}
+              size="medium"
+              type="primary"
+            />
           </div>
         </div>
       </Modal>
@@ -287,12 +301,13 @@ function ManageCoursesPage() {
                     <span className="manage-courses__file-size">
                       {(file.size / 1024 / 1024).toFixed(1)}MB
                     </span>
-                    <button
-                      className="manage-courses__file-remove"
+                    <TextButton
+                      icon="close"
+                      text=""
                       onClick={() => removeFile(i)}
-                    >
-                      <Icon name="close" size={14} />
-                    </button>
+                      size="tiny"
+                      type="secondary"
+                    />
                   </div>
                 ))}
               </div>
@@ -300,18 +315,23 @@ function ManageCoursesPage() {
           </div>
 
           <div className="manage-courses__form-actions">
-            <button
-              className="manage-courses__form-cancel"
+            <TextButton
+              text={t("common.cancel")}
               onClick={closeAddLesson}
-            >
-              {t("common.cancel")}
-            </button>
-            <button
-              className="manage-courses__form-submit"
+              disabled={isCreatingLesson}
+              size="medium"
+              type="secondary"
+            />
+            <TextButton
+              text={
+                isCreatingLesson ? t("common.creating") : t("common.create")
+              }
               onClick={handleAddLesson}
-            >
-              {t("common.create")}
-            </button>
+              disabled={isCreatingLesson}
+              loading={isCreatingLesson}
+              size="medium"
+              type="primary"
+            />
           </div>
         </div>
       </Modal>
@@ -324,18 +344,23 @@ function ManageCoursesPage() {
         <div className="manage-courses__confirm">
           <p>{t("courses.delete_lesson_confirm")}</p>
           <div className="manage-courses__form-actions">
-            <button
-              className="manage-courses__form-cancel"
+            <TextButton
+              text={t("common.cancel")}
               onClick={closeDeleteLesson}
-            >
-              {t("common.cancel")}
-            </button>
-            <button
-              className="manage-courses__form-submit manage-courses__form-submit--danger"
+              disabled={isDeletingLesson}
+              size="medium"
+              type="secondary"
+            />
+            <TextButton
+              text={
+                isDeletingLesson ? t("common.deleting") : t("common.delete")
+              }
               onClick={handleDeleteLesson}
-            >
-              {t("common.delete")}
-            </button>
+              disabled={isDeletingLesson}
+              loading={isDeletingLesson}
+              size="medium"
+              type="primary"
+            />
           </div>
         </div>
       </Modal>
@@ -363,12 +388,12 @@ function ManageCoursesPage() {
               <TetrisLoader size="md" speed="fast" />
             ) : (
               <>
-                <button
-                  className="manage-courses__add-btn"
+                <TextButton
+                  icon="add"
+                  text={t("sidebar.add_course")}
                   onClick={openAddCourse}
-                >
-                  <Icon name="add" /> {t("sidebar.add_course")}
-                </button>
+                  size="small"
+                />
                 {filteredCourses.map((course) => (
                   <div
                     key={course.id}
@@ -396,15 +421,14 @@ function ManageCoursesPage() {
                         {tStatus(t, course.status)}
                       </span>
                     </div>
-                    <button
-                      className="manage-courses__item-delete"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        openDeleteCourse(course.id);
-                      }}
-                    >
-                      <Icon name="delete" size={18} />
-                    </button>
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <IconButton
+                        icon="delete"
+                        size="small"
+                        type="secondary"
+                        onClick={() => openDeleteCourse(course.id)}
+                      />
+                    </div>
                   </div>
                 ))}
               </>
@@ -420,12 +444,12 @@ function ManageCoursesPage() {
               <TetrisLoader size="md" speed="fast" />
             ) : (
               <>
-                <button
-                  className="manage-courses__add-btn"
+                <TextButton
+                  icon="add"
+                  text={t("sidebar.add_lesson")}
                   onClick={openAddLesson}
-                >
-                  <Icon name="add" /> {t("sidebar.add_lesson")}
-                </button>
+                  size="small"
+                />
                 {lessons.length > 0 ? (
                   lessons.map((lesson) => (
                     <div
@@ -450,15 +474,14 @@ function ManageCoursesPage() {
                           ).toLocaleDateString()}
                         </small>
                       </div>
-                      <button
-                        className="manage-courses__item-delete"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          openDeleteLesson(lesson.id);
-                        }}
-                      >
-                        <Icon name="delete" size={18} />
-                      </button>
+                      <div onClick={(e) => e.stopPropagation()}>
+                        <IconButton
+                          icon="delete"
+                          size="small"
+                          type="secondary"
+                          onClick={() => openDeleteLesson(lesson.id)}
+                        />
+                      </div>
                     </div>
                   ))
                 ) : (

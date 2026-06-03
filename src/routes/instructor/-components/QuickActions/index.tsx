@@ -11,7 +11,7 @@ const QuickActions = () => {
     {
       icon: "add" as const,
       labelKey: "dashboard.create_course",
-      onClick: () => navigate({ to: "/instructor/courses/create" }),
+      onClick: () => navigate({ to: "/instructor/courses" }),
       accent: "green",
     },
     {

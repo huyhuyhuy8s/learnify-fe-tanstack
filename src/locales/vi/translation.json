@@ -24,7 +24,9 @@
     "close_menu": "Đóng menu",
     "cancel": "Hủy",
     "create": "Tạo",
-    "delete": "Xóa"
+    "delete": "Xóa",
+    "creating": "Đang tạo...",
+    "deleting": "Đang xóa..."
   },
   "home": {
     "title": "Khai phá <Beauty>Tiềm năng</Beauty> cho tương lai, ngay hôm nay",
@@ -211,7 +213,23 @@
     "select_lesson": "Chọn một bài học",
     "no_lessons": "Không có bài học",
     "create": "Tạo khóa học",
-    "creating": "Đang tạo..."
+    "creating": "Đang tạo...",
+    "toast": {
+      "course_created": "Tạo khóa học thành công!",
+      "course_deleted": "Xóa khóa học thành công!",
+      "lesson_created": "Tạo bài học thành công!",
+      "lesson_deleted": "Xóa bài học thành công!",
+      "file_uploaded": "Tải file lên thành công!",
+      "course_published": "Xuất bản khóa học thành công!",
+      "course_rejected": "Từ chối khóa học thành công!",
+      "create_failed": "Không thể tạo khóa học: {{message}}",
+      "delete_failed": "Không thể xóa khóa học: {{message}}",
+      "lesson_create_failed": "Không thể tạo bài học: {{message}}",
+      "lesson_delete_failed": "Không thể xóa bài học: {{message}}",
+      "file_upload_failed": "Không thể tải file: {{message}}",
+      "publish_failed": "Không thể xuất bản khóa học: {{message}}",
+      "reject_failed": "Không thể từ chối khóa học: {{message}}"
+    }
   },
   "course_detail": {
     "enroll": "Đăng ký khóa học",
@@ -848,6 +866,14 @@
     "page_header": {
       "add_user": "Thêm người dùng",
       "add_user_tooltip": "Tạo tài khoản người dùng mới"
+    },
+    "toast": {
+      "user_created": "Tạo người dùng thành công!",
+      "user_updated": "Cập nhật người dùng thành công!",
+      "user_deleted": "Xóa người dùng thành công!",
+      "create_failed": "Không thể tạo người dùng: {{message}}",
+      "update_failed": "Không thể cập nhật người dùng: {{message}}",
+      "delete_failed": "Không thể xóa người dùng: {{message}}"
     }
   },
   "card": {
@@ -884,6 +910,15 @@
     "starter": "Truy cập cơ bản với phòng LAB và huy hiệu.",
     "pro": "Học tập không giới hạn từ cơ bản đến nâng cao.",
     "career": "Phát triển sự nghiệp với kỹ năng sẵn sàng làm việc."
+  },
+  "reviewer": {
+    "back_to_list": "Quay lại danh sách",
+    "already_decided": "Khóa học này đã được {{status}}.",
+    "approve": "Phê duyệt khóa học",
+    "reject": "Từ chối khóa học",
+    "what_students_learn": "Học viên sẽ học được gì",
+    "by_creator": "Bởi {{name}}",
+    "submitted": "Đã gửi {{date}}"
   },
   "course_completion": {
     "lesson": "Bài học",

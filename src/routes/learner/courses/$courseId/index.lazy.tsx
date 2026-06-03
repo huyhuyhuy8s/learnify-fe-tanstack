@@ -201,7 +201,7 @@ function CourseComponent() {
     enrollCourseMutation.mutate({ courseId, userId });
   }, [userId, courseId, enrollCourseMutation, t]);
 
-  const handlePayment = () => {
+  const handlePayment = useCallback(() => {
     if (!userId) {
       toast.error(t("course_detail.toast_login_enroll"));
       return;
@@ -217,7 +217,7 @@ function CourseComponent() {
         toast.error(t("course_detail.payment_error"));
       },
     });
-  };
+  }, [courseId, createPaymentMutation, t, userId]);
 
   const startButtonText = useMemo(() => {
     if (!isEnrolled) {
@@ -230,7 +230,15 @@ function CourseComponent() {
     if (currentProgressPercentage >= 100) return t("course_detail.completed");
     if (currentProgressPercentage > 0) return t("course_detail.continue");
     return t("course_detail.start");
-  }, [isEnrolled, isPaidCourse, coursePrice, currentProgressPercentage, t]);
+  }, [
+    isEnrolled,
+    currentProgressPercentage,
+    t,
+    isPaidCourse,
+    coursePrice?.salePrice,
+    coursePrice?.originalPrice,
+    i18n.language,
+  ]);
 
   const startButtonIcon = useMemo(() => {
     if (!isEnrolled) return isPaidCourse ? "shopping_cart" : "school";
