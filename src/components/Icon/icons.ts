@@ -183,6 +183,20 @@ import headset_micSvg from "@material-symbols/svg-400/rounded/headset_mic.svg?ra
 import headset_micFillSvg from "@material-symbols/svg-400/rounded/headset_mic-fill.svg?raw";
 import handshakeSvg from "@material-symbols/svg-400/rounded/handshake.svg?raw";
 import handshakeFillSvg from "@material-symbols/svg-400/rounded/handshake-fill.svg?raw";
+import dashboardSvg from "@material-symbols/svg-400/rounded/dashboard.svg?raw";
+import dashboardFillSvg from "@material-symbols/svg-400/rounded/dashboard-fill.svg?raw";
+import editSvg from "@material-symbols/svg-400/rounded/edit.svg?raw";
+import editFillSvg from "@material-symbols/svg-400/rounded/edit-fill.svg?raw";
+import person_offSvg from "@material-symbols/svg-400/rounded/person_off.svg?raw";
+import person_offFillSvg from "@material-symbols/svg-400/rounded/person_off-fill.svg?raw";
+import paymentsSvg from "@material-symbols/svg-400/rounded/payments.svg?raw";
+import paymentsFillSvg from "@material-symbols/svg-400/rounded/payments-fill.svg?raw";
+import bug_reportSvg from "@material-symbols/svg-400/rounded/bug_report.svg?raw";
+import bug_reportFillSvg from "@material-symbols/svg-400/rounded/bug_report-fill.svg?raw";
+import trending_upSvg from "@material-symbols/svg-400/rounded/trending_up.svg?raw";
+import trending_upFillSvg from "@material-symbols/svg-400/rounded/trending_up-fill.svg?raw";
+import trending_downSvg from "@material-symbols/svg-400/rounded/trending_down.svg?raw";
+import trending_downFillSvg from "@material-symbols/svg-400/rounded/trending_down-fill.svg?raw";
 import location_onSvg from "@material-symbols/svg-400/rounded/location_on.svg?raw";
 import location_onFillSvg from "@material-symbols/svg-400/rounded/location_on-fill.svg?raw";
 import account_circleSvg from "@material-symbols/svg-400/rounded/account_circle.svg?raw";
@@ -471,6 +485,34 @@ export const iconPaths: Record<string, { regular: string; fill: string }> = {
   handshake: {
     regular: extractPath(handshakeSvg),
     fill: extractPath(handshakeFillSvg),
+  },
+  dashboard: {
+    regular: extractPath(dashboardSvg),
+    fill: extractPath(dashboardFillSvg),
+  },
+  edit: {
+    regular: extractPath(editSvg),
+    fill: extractPath(editFillSvg),
+  },
+  person_off: {
+    regular: extractPath(person_offSvg),
+    fill: extractPath(person_offFillSvg),
+  },
+  payments: {
+    regular: extractPath(paymentsSvg),
+    fill: extractPath(paymentsFillSvg),
+  },
+  bug_report: {
+    regular: extractPath(bug_reportSvg),
+    fill: extractPath(bug_reportFillSvg),
+  },
+  trending_up: {
+    regular: extractPath(trending_upSvg),
+    fill: extractPath(trending_upFillSvg),
+  },
+  trending_down: {
+    regular: extractPath(trending_downSvg),
+    fill: extractPath(trending_downFillSvg),
   },
   location_on: {
     regular: extractPath(location_onSvg),
