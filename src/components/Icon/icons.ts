@@ -219,6 +219,19 @@ import filter_listSvg from "@material-symbols/svg-400/rounded/filter_list.svg?ra
 import filter_listFillSvg from "@material-symbols/svg-400/rounded/filter_list-fill.svg?raw";
 import scheduleSvg from "@material-symbols/svg-400/rounded/schedule.svg?raw";
 import scheduleFillSvg from "@material-symbols/svg-400/rounded/schedule-fill.svg?raw";
+import hourglass_emptySvg from "@material-symbols/svg-400/rounded/hourglass_empty.svg?raw";
+import hourglass_emptyFillSvg from "@material-symbols/svg-400/rounded/hourglass_empty-fill.svg?raw";
+import keySvg from "@material-symbols/svg-400/rounded/key.svg?raw";
+import keyFillSvg from "@material-symbols/svg-400/rounded/key-fill.svg?raw";
+
+const expand_moreSvg =
+  '<svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path d="M469-359q-5-2-10-7L261-564q-9-9-9-21t9-21q9-9 21.5-9t21.5 9l176 176 176-176q9-9 21-9t21 9q9 9 9 21.5t-9 21.5L501-366q-5 5-10 7t-11 2q-6 0-11-2Z"/></svg>';
+
+const expand_lessSvg =
+  '<svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path d="M480-543 304-367q-9 9-21.5 9.5T261-366q-9-9-9-21.5t9-21.5l198-198q5-5 10-7t11-2q6 0 11 2t10 7l197 197q9 9 9.5 21t-8.5 21q-9 9-21.5 9t-21.5-9L480-543Z"/></svg>';
+
+const playSvg =
+  '<svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path d="M320-258v-450q0-14 9-22t21-8q4 0 8 1t8 3l354 226q7 5 10.5 11t3.5 14q0 8-3.5 14T720-458L366-232q-4 2-8 3t-8 1q-12 0-21-8t-9-22Zm60-225Zm0 171 269-171-269-171v342Z"/></svg>';
 
 function extractPath(raw: string) {
   const match = raw.match(/<path d="([^"]+)"/);
@@ -569,6 +582,26 @@ export const iconPaths = {
   schedule: {
     regular: extractPath(scheduleSvg),
     fill: extractPath(scheduleFillSvg),
+  },
+  expand_more: {
+    regular: extractPath(expand_moreSvg),
+    fill: extractPath(expand_moreSvg),
+  },
+  expand_less: {
+    regular: extractPath(expand_lessSvg),
+    fill: extractPath(expand_lessSvg),
+  },
+  hourglass_empty: {
+    regular: extractPath(hourglass_emptySvg),
+    fill: extractPath(hourglass_emptyFillSvg),
+  },
+  key: {
+    regular: extractPath(keySvg),
+    fill: extractPath(keyFillSvg),
+  },
+  play: {
+    regular: extractPath(playSvg),
+    fill: extractPath(playSvg),
   },
 };
 

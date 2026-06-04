@@ -1,4 +1,10 @@
-export const HOW_IT_WORKS = [
+import type { TIconName } from "@/components/Icon";
+
+export const HOW_IT_WORKS: {
+  step: string;
+  icon: TIconName;
+  key: string;
+}[] = [
   {
     step: "01",
     icon: "search",
@@ -21,7 +27,11 @@ export const HOW_IT_WORKS = [
   },
 ];
 
-export const AUDIENCES = [
+export const AUDIENCES: {
+  icon: TIconName;
+  key: string;
+  to: string;
+}[] = [
   {
     icon: "school",
     key: "learners",

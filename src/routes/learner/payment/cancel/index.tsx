@@ -32,7 +32,7 @@ function PaymentCancelComponent() {
   const { t } = useTranslation();
 
   const handleRetry = () => {
-    navigate({ to: "/learner/courses" });
+    navigate({ to: "/learner/courses", search: { q: "" } });
   };
 
   const handleGoBack = () => {

@@ -1,14 +1,14 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import Icon from "@/components/Icon";
+import Icon, { type TIconName } from "@/components/Icon";
 import { Trans, useTranslation } from "react-i18next";
 
 import "./LandingHow.scss";
 
 interface HowItWorksStep {
   step: string;
-  icon: string;
+  icon: TIconName;
   key: string;
 }
 

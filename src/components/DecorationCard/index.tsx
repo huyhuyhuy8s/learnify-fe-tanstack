@@ -4,6 +4,7 @@ import type { TProgress, TSpecial, TStatusCard } from "@/types/global";
 import DecorationCardContext from "./components/DecorationCardContext";
 import DecorationCardStatus from "./components/DecorationCardStatus";
 import { Arrow } from "@/components/Shapes";
+import type { TIconName } from "@/components/Icon";
 
 export type TDecorationCardProps = {
   className?: string;
@@ -55,7 +56,7 @@ const DecorationCard = (props: TDecorationCardProps) => {
           star={star}
           onStartClick={onStartClick}
           startText={startText}
-          startIcon={startIcon}
+          startIcon={startIcon as TIconName}
           startDisabled={startDisabled}
         />
       </div>

@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon, { type TIconName } from "@/components/Icon";
 import TextButton from "@/components/TextButton";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -9,7 +9,7 @@ import { Trans, useTranslation } from "react-i18next";
 import "./LandingAudience.scss";
 
 interface Audience {
-  icon: string;
+  icon: TIconName;
   key: string;
   to: string;
 }

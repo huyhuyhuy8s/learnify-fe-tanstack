@@ -41,6 +41,7 @@ function TeacherHome() {
           onClick={() =>
             navigate({
               to: "/learner/courses",
+              search: { q: "" },
             })
           }
         />

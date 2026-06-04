@@ -1,6 +1,6 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import CustomLink from "@/components/CustomLink";
-import Icon from "@/components/Icon";
+import Icon, { type TIconName } from "@/components/Icon";
 import PillTopNav from "@/components/PillTopNav";
 import PixelBlast from "@/components/PixelBlast";
 import { CONTACT_INFO, SOCIAL_LINKS } from "@/mock/contact";
@@ -45,7 +45,7 @@ function Contact() {
             {CONTACT_INFO.map((item) => (
               <div key={item.key} className="contact__card">
                 <div className="contact__card-icon">
-                  <Icon name={item.icon} size="2em" />
+                  <Icon name={item.icon as TIconName} size="2em" />
                 </div>
                 <h3>{t(`contact_info.${item.key}.label`, item.label)}</h3>
                 {item.href ? (
@@ -72,7 +72,7 @@ function Contact() {
                 className="contact__social"
                 aria-label={t(`social_links.${social.key}`, social.name)}
               >
-                <Icon name={social.icon} size="1.5em" />
+                <Icon name={social.icon as TIconName} size="1.5em" />
                 <span>{t(`social_links.${social.key}`, social.name)}</span>
               </a>
             ))}

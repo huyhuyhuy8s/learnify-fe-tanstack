@@ -4,10 +4,10 @@ export type TDropdownMenuOption = {
 };
 
 export type TDropdownMenuProps = {
-  icon: string;
+  icon: import("@/components/Icon").TIconName;
   title: string;
   options: TDropdownMenuOption[];
-  iconOption: string;
+  iconOption: import("@/components/Icon").TIconName;
   className?: string;
   style?: React.CSSProperties;
   buttonBackgroundColor: string;

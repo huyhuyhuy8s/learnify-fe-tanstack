@@ -103,7 +103,7 @@ function PaymentSuccessComponent() {
   const isSuccess = searchParams.status === "PAID" && !searchParams.cancel;
 
   const handleStartLearning = useCallback(
-    () => navigate({ to: "/learner/courses" }),
+    () => navigate({ to: "/learner/courses", search: { q: "" } }),
     [navigate]
   );
 

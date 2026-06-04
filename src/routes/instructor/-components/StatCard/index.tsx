@@ -1,8 +1,8 @@
-import Icon from "@/components/Icon";
+import Icon, { type TIconName } from "@/components/Icon";
 import "./style.scss";
 
 type TStatCardProps = {
-  icon: string;
+  icon: TIconName;
   label: string;
   value: number;
   accent: string;

@@ -34,8 +34,8 @@ const Footer = () => {
           <div className="navigation">
             <p className="footer-section-label">{t("footer.navigation")}</p>
             <div className="navigation-context">
-              <Link to="/learner/courses">{t("footer.courses")}</Link>
-              <Link to="/learner/roadmaps">{t("footer.roadmaps")}</Link>
+              <Link to="/learner/courses" search={{ q: "" }}>{t("footer.courses")}</Link>
+              <Link to="/learner/roadmaps" search={{ q: "" }}>{t("footer.roadmaps")}</Link>
               <Link to="/learner/friends">{t("footer.friends")}</Link>
               <Link to="/learner/about">{t("footer.about")}</Link>
             </div>

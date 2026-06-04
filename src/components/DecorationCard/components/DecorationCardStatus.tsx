@@ -1,6 +1,7 @@
 import TextButton from "@/components/TextButton";
 import { COLORS } from "@/styles/colors";
 import type { TProgress, TStatusCard } from "@/types/global";
+import type { TIconName } from "@/components/Icon";
 
 type TDecorationCardStatusProps = {
   status: TStatusCard;
@@ -8,7 +9,7 @@ type TDecorationCardStatusProps = {
   star: number;
   onStartClick?: () => void;
   startText?: string;
-  startIcon?: string;
+  startIcon?: TIconName;
   startDisabled?: boolean;
 };
 

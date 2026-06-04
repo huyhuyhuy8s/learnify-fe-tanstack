@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon, { type TIconName } from "@/components/Icon";
 import TextButton from "@/components/TextButton";
 import { Trans, useTranslation } from "react-i18next";
 import SubscriptionButton from "../SubscriptionButton";
@@ -7,7 +7,7 @@ import "./style.scss";
 type TSubscriptionCardProps = {
   type: "Starter" | "Pro" | "Career";
   trial?: boolean;
-  icon: string;
+  icon: TIconName;
   disabled?: boolean;
 };
 

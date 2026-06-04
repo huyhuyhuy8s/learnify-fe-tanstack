@@ -1,9 +1,9 @@
 import classnames from "classnames";
 import "./style.scss";
-import Icon from "@/components/Icon";
+import Icon, { type TIconName } from "@/components/Icon";
 import type { TTeacherStatus, TTeacherStatusIndicatorProps } from "./type.d";
 
-const STATUS_ICONS: Record<TTeacherStatus, string> = {
+const STATUS_ICONS: Record<TTeacherStatus, TIconName> = {
   idle: "voice_over_off",
   thinking: "cognition",
   speaking: "record_voice_over",
