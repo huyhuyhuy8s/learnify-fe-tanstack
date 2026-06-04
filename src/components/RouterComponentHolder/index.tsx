@@ -16,7 +16,7 @@ function RouterComponentHolder(props: TRouterComponentHolder) {
         height: "100%",
         width: "100%",
         minHeight: "70dvh",
-        minWidth: "90dvw",
+        minWidth: "80dvw",
         maxHeight: "100dvh",
         maxWidth: "100dvw",
         display: "flex",
