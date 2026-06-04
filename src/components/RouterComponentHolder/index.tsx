@@ -15,8 +15,13 @@ function RouterComponentHolder(props: TRouterComponentHolder) {
         marginTop: "-50px",
         height: "100%",
         width: "100%",
+        minHeight: "70dvh",
+        minWidth: "90dvw",
+        maxHeight: "100dvh",
+        maxWidth: "100dvw",
         display: "flex",
         placeContent: "center",
+        placeItems: "center",
         ...props.style,
       }}
     >

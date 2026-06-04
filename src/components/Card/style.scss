@@ -59,6 +59,7 @@
     justify-content: space-between;
     gap: toRem(10);
     flex-wrap: wrap;
+    color: $black;
 
     .progress {
       border-radius: $br-rounded;
